@@ -7,9 +7,9 @@ const PLANS = {
 
 // Simulated current user — swap this with real auth data from your backend
 const CURRENT_USER = {
-  name: 'Animesh Subedi',
-  email: 'animesh@example.com',
-  initials: 'AS',
+  name: 'Jane Smith',
+  email: 'jane@example.com',
+  initials: 'JS',
   plan: 'free'   // 'free' | 'analyst' | 'enterprise'
 };
 
@@ -75,7 +75,7 @@ function renderDashboards() {
 
   grid.innerHTML = dashboards
     .slice()
-    .sort((a, b) => b.updatedAt - a.updatedAt)
+    .sort((a, b) => b.createdAt - a.createdAt)
     .map(d => dashCardHTML(d))
     .join('');
 
@@ -83,7 +83,7 @@ function renderDashboards() {
 }
 
 function dashCardHTML(d) {
-  const date = new Date(d.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const date = new Date(d.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   const tagsHTML = d.tags.slice(0, 3).map(t => `<span class="tag-chip">${t}</span>`).join('');
   const extraTags = d.tags.length > 3 ? `<span class="tag-chip">+${d.tags.length - 3}</span>` : '';
 
@@ -97,7 +97,7 @@ function dashCardHTML(d) {
       </div>
       <div class="dash-card-body">
         <div class="dash-card-name">${escHtml(d.name)}</div>
-        <div class="dash-card-meta">Updated ${date} · ${capitalize(d.design)} layout</div>
+        <div class="dash-card-meta">Created ${date} · ${capitalize(d.design)} layout</div>
         <div class="dash-card-tags">${tagsHTML}${extraTags}</div>
       </div>
     </div>
@@ -223,6 +223,9 @@ function createDashboard() {
   const name = document.getElementById('dashName').value.trim();
   const desc = document.getElementById('dashDesc').value.trim();
 
+  // Dashboards are immutable after creation — no editing allowed.
+  // Users must delete and create a new dashboard to change topic or settings.
+  // This prevents bypassing the per-plan dashboard limit via edits.
   const dash = {
     id: 'dash_' + Date.now(),
     name,
@@ -230,7 +233,6 @@ function createDashboard() {
     tags: [...tags],
     design: selectedDesign || 'overview',
     createdAt: Date.now(),
-    updatedAt: Date.now()
   };
 
   dashboards.push(dash);
@@ -310,10 +312,7 @@ function confirmDelete() {
 
 // ── OPEN DASHBOARD ────────────────────────────────────────────
 function openDashboard(id) {
-  const dash = dashboards.find(d => d.id === id);
-  if (!dash) return;
-  // TODO: route to the actual dashboard view page
-  alert(`Opening "${dash.name}"\n\nThis will navigate to the dashboard view page once built.`);
+  window.location.href = `dashboard.html?id=${id}`;
 }
 
 // ── LIMIT BANNER ──────────────────────────────────────────────
@@ -350,7 +349,31 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Close modals on overlay click
+// ── USER DROPDOWN ─────────────────────────────────────────────
+function toggleUserMenu(e) {
+  e.stopPropagation();
+  const row = document.getElementById('userRow');
+  const dropdown = document.getElementById('userDropdown');
+  const isOpen = dropdown.classList.contains('open');
+  closeUserMenu();
+  if (!isOpen) {
+    dropdown.classList.add('open');
+    row.classList.add('open');
+  }
+}
+
+function closeUserMenu() {
+  document.getElementById('userDropdown').classList.remove('open');
+  document.getElementById('userRow').classList.remove('open');
+}
+
+function handleLogout() {
+  // TODO: clear session/token then redirect to landing page
+  window.location.href = 'index.html';
+}
+
+// Close dropdown when clicking anywhere else
+document.addEventListener('click', () => closeUserMenu());
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
