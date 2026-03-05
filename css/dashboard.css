@@ -161,6 +161,7 @@ body {
   transition: background 0.15s, color 0.15s;
 }
 .dropdown-item:hover { background: var(--border); color: var(--white); }
+.dropdown-item.active { background: rgba(0, 213, 255, 0.337); color: var(--accent); }
 .dropdown-icon { font-size: 0.85rem; width: 18px; text-align: center; }
 .dropdown-divider { height: 1px; background: var(--border); margin: 2px 0; }
 .dropdown-logout { color: var(--muted); }
