@@ -1,0 +1,172 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "user_id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("user_id")
+);
+
+-- CreateTable
+CREATE TABLE "Board" (
+    "board_id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
+    "board_name" VARCHAR(50) NOT NULL,
+    "description" VARCHAR(500),
+    "last_updated_at" TIMESTAMP(3) NOT NULL,
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "Board_pkey" PRIMARY KEY ("board_id")
+);
+
+-- CreateTable
+CREATE TABLE "Channel" (
+    "channel_id" VARCHAR(50) NOT NULL,
+    "channel_title" VARCHAR(500) NOT NULL,
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "Channel_pkey" PRIMARY KEY ("channel_id")
+);
+
+-- CreateTable
+CREATE TABLE "Video" (
+    "video_id" VARCHAR(20) NOT NULL,
+    "board_id" INTEGER NOT NULL,
+    "channel_id" VARCHAR(50) NOT NULL,
+    "title" VARCHAR(500) NOT NULL,
+    "description" TEXT,
+    "view_count" INTEGER NOT NULL,
+    "duration_seconds" INTEGER,
+    "published_at" TIMESTAMP(3) NOT NULL,
+    "processed" BOOLEAN NOT NULL DEFAULT false,
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "Video_pkey" PRIMARY KEY ("video_id")
+);
+
+-- CreateTable
+CREATE TABLE "Transcript" (
+    "transcript_id" SERIAL NOT NULL,
+    "video_id" VARCHAR(20) NOT NULL,
+    "channel_id" VARCHAR(50),
+    "video_title" VARCHAR(500) NOT NULL,
+    "transcript" TEXT NOT NULL,
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "Transcript_pkey" PRIMARY KEY ("transcript_id")
+);
+
+-- CreateTable
+CREATE TABLE "TranscriptChunk" (
+    "chunk_id" SERIAL NOT NULL,
+    "transcript_id" INTEGER NOT NULL,
+    "video_title" VARCHAR(500) NOT NULL,
+    "chunk_text" TEXT NOT NULL,
+    "chunk_number" INTEGER NOT NULL,
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "TranscriptChunk_pkey" PRIMARY KEY ("chunk_id")
+);
+
+-- CreateTable
+CREATE TABLE "Comment" (
+    "comment_id" VARCHAR(50) NOT NULL,
+    "video_id" VARCHAR(20) NOT NULL,
+    "commenter_name" VARCHAR(50) NOT NULL,
+    "comment_text" VARCHAR(500) NOT NULL,
+    "published_date" VARCHAR(500) NOT NULL,
+    "is_reply" BOOLEAN NOT NULL DEFAULT false,
+    "top_level_comment_id" VARCHAR(50),
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "Comment_pkey" PRIMARY KEY ("comment_id")
+);
+
+-- CreateTable
+CREATE TABLE "Claim" (
+    "claim_id" VARCHAR(20) NOT NULL,
+    "video_id" VARCHAR(20) NOT NULL,
+    "narrative_id" UUID,
+    "video_title" VARCHAR(500) NOT NULL,
+    "claim_text" TEXT NOT NULL,
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "Claim_pkey" PRIMARY KEY ("claim_id")
+);
+
+-- CreateTable
+CREATE TABLE "Narrative" (
+    "narrative_id" UUID NOT NULL,
+    "board_id" INTEGER NOT NULL,
+    "title" VARCHAR(500) NOT NULL,
+    "summary" TEXT,
+    "topic_label" VARCHAR(200),
+    "claim_count" INTEGER NOT NULL DEFAULT 0,
+    "first_seen_at" TIMESTAMP(3),
+    "last_seen_at" TIMESTAMP(3),
+
+    CONSTRAINT "Narrative_pkey" PRIMARY KEY ("narrative_id")
+);
+
+-- CreateTable
+CREATE TABLE "BoardChannel" (
+    "board_id" INTEGER NOT NULL,
+    "channel_id" VARCHAR(50) NOT NULL,
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "BoardChannel_pkey" PRIMARY KEY ("board_id","channel_id")
+);
+
+-- CreateTable
+CREATE TABLE "Keyword" (
+    "keyword_id" SERIAL NOT NULL,
+    "board_id" INTEGER NOT NULL,
+    "keyword" VARCHAR(50) NOT NULL,
+    "processed_at" TIMESTAMP(3),
+
+    CONSTRAINT "Keyword_pkey" PRIMARY KEY ("keyword_id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Transcript_video_id_key" ON "Transcript"("video_id");
+
+-- AddForeignKey
+ALTER TABLE "Board" ADD CONSTRAINT "Board_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Video" ADD CONSTRAINT "Video_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Video" ADD CONSTRAINT "Video_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Transcript" ADD CONSTRAINT "Transcript_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Transcript" ADD CONSTRAINT "Transcript_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TranscriptChunk" ADD CONSTRAINT "TranscriptChunk_transcript_id_fkey" FOREIGN KEY ("transcript_id") REFERENCES "Transcript"("transcript_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Claim" ADD CONSTRAINT "Claim_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Claim" ADD CONSTRAINT "Claim_narrative_id_fkey" FOREIGN KEY ("narrative_id") REFERENCES "Narrative"("narrative_id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Narrative" ADD CONSTRAINT "Narrative_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BoardChannel" ADD CONSTRAINT "BoardChannel_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BoardChannel" ADD CONSTRAINT "BoardChannel_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Keyword" ADD CONSTRAINT "Keyword_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE RESTRICT ON UPDATE CASCADE;
