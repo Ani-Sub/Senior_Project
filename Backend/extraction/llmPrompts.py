@@ -106,12 +106,12 @@ def build_synthesis_prompt(all_results: list[dict]) -> str:
     """
     structured_input = json.dumps(all_results, indent=2)
 
-    return f"""You are an analytical assistant synthesizing intelligence across multiple YouTube videos.
+    return f"""You are a JSON-generating assistant. Synthesize the following YouTube video analyses.
 
 Below is structured data extracted from {len(all_results)} videos.
 
-Respond with a SINGLE JSON object — no preamble, no explanation, no markdown, no bold headers.
-Start your response with {{ and end with }}. Nothing else.
+RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO EXPLANATION. NO MARKDOWN.
+YOUR ENTIRE RESPONSE MUST START WITH {{ AND END WITH }}. NOTHING ELSE.
 
 The JSON must have exactly these keys:
 {{
