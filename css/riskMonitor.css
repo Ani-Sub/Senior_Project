@@ -1,0 +1,151 @@
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:16px;
+margin-bottom:30px;
+}
+
+.stat-card{
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:10px;
+padding:18px;
+}
+
+.stat-card h3{
+font-size:0.8rem;
+color:var(--muted);
+margin-bottom:6px;
+}
+
+.stat-num{
+font-size:1.8rem;
+color:var(--white);
+}
+
+.stat-sub{
+font-size:0.7rem;
+color:var(--muted);
+}
+
+.danger{color:#ef4444}
+.warn{color:#f59e0b}
+.safe{color:#10b981}
+
+
+/* CHART */
+
+.chart-card{
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:12px;
+padding:24px;
+margin-bottom:30px;
+}
+
+
+/* SEARCH */
+
+.search-box input{
+width:100%;
+padding:12px;
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:8px;
+color:var(--white);
+margin-bottom:30px;
+}
+
+
+/* CREATOR CARDS */
+
+.creator-list{
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+.creator-card{
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:12px;
+padding:18px;
+}
+
+.creator-header{
+display:flex;
+align-items:center;
+gap:16px;
+}
+
+.avatar{
+width:44px;
+height:44px;
+background:var(--surface2);
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:"DM Mono";
+color:var(--accent);
+}
+
+.creator-info h3{
+color:var(--white);
+font-size:1rem;
+}
+
+.creator-info p{
+font-size:0.75rem;
+color:var(--muted);
+}
+
+.risk-score{
+margin-left:auto;
+font-size:1.5rem;
+font-weight:600;
+}
+
+.risk-score span{
+display:block;
+font-size:0.6rem;
+color:var(--muted);
+}
+
+
+/* FLAGS */
+
+.violation-section{
+margin-top:14px;
+border-top:1px solid var(--border);
+padding-top:10px;
+}
+
+.violation-title{
+font-size:0.75rem;
+margin-bottom:8px;
+}
+
+.flags{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+}
+
+.flag{
+font-size:0.65rem;
+padding:4px 8px;
+background:rgba(239,68,68,0.1);
+border:1px solid rgba(239,68,68,0.3);
+border-radius:20px;
+color:#ef4444;
+}
+
+
+/* VERIFIED */
+
+.verified{
+margin-top:12px;
+font-size:0.75rem;
+color:#10b981;
+}
