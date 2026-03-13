@@ -128,8 +128,11 @@ body {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
   margin-top: 4px;
 }
+.user-row:hover { background: var(--surface2); }
 
 .user-avatar {
   width: 32px; height: 32px;
@@ -148,18 +151,40 @@ body {
 .user-name { font-size: 0.78rem; color: var(--white); font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .user-email { font-size: 0.65rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.logout-btn {
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 0.85rem;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: color 0.15s;
-  flex-shrink: 0;
+.user-chevron { color: var(--muted); font-size: 1.1rem; transition: transform 0.2s; flex-shrink: 0; }
+.user-row.open .user-chevron { transform: rotate(90deg); color: var(--accent); }
+
+.user-dropdown {
+  display: none;
+  flex-direction: column;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  margin: 4px 12px 0;
+  overflow: hidden;
+  animation: dropIn 0.18s ease;
 }
-.logout-btn:hover { color: var(--text); }
+.user-dropdown.open { display: flex; }
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 14px;
+  font-size: 0.82rem; color: var(--text);
+  text-decoration: none; background: none; border: none;
+  width: 100%; text-align: left; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.15s, color 0.15s;
+}
+.dropdown-item:hover     { background: var(--border); color: var(--white); }
+.dropdown-icon           { font-size: 0.85rem; width: 18px; text-align: center; }
+.dropdown-divider        { height: 1px; background: var(--border); margin: 2px 0; }
+.dropdown-logout         { color: var(--muted); }
+.dropdown-logout:hover   { color: var(--danger); background: rgba(239,68,68,0.08); }
 
 /* ── MAIN ── */
 .main {

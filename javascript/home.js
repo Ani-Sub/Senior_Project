@@ -7,9 +7,9 @@ const PLANS = {
 
 // Simulated current user — swap this with real auth data from your backend
 const CURRENT_USER = {
-  name: 'Jane Smith',
-  email: 'jane@example.com',
-  initials: 'JS',
+  name: 'Animesh Subedi',
+  email: 'animesh@example.com',
+  initials: 'AS',
   plan: 'free'   // 'free' | 'analyst' | 'enterprise'
 };
 
@@ -363,13 +363,13 @@ function toggleUserMenu(e) {
 }
 
 function closeUserMenu() {
-  document.getElementById('userDropdown').classList.remove('open');
-  document.getElementById('userRow').classList.remove('open');
+  document.getElementById('userDropdown')?.classList.remove('open');
+  document.getElementById('userRow')?.classList.remove('open');
 }
 
 function handleLogout() {
   // TODO: clear session/token then redirect to landing page
-  window.location.href = 'index.html';
+  window.location.href = '../index.html';
 }
 
 // Close dropdown when clicking anywhere else

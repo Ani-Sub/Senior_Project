@@ -2,12 +2,12 @@
 // TODO: Replace with real API calls to /api/v1/dashboards/:id
 
 const MOCK_NARRATIVES = [
-  { id: 'n1', name: 'AGI Timeline Debate',        claims: 312, color: '#00d4ff', direction: 'rising'   },
-  { id: 'n2', name: 'LLM Benchmark Disputes',     claims: 248, color: '#ff6b35', direction: 'peaking'  },
-  { id: 'n3', name: 'Open Source vs Closed',      claims: 195, color: '#22c55e', direction: 'stable'   },
-  { id: 'n4', name: 'AI Safety Concerns',         claims: 167, color: '#f59e0b', direction: 'rising'   },
-  { id: 'n5', name: 'Model Cost & Efficiency',    claims: 143, color: '#a78bfa', direction: 'declining' },
-  { id: 'n6', name: 'Regulation & Policy',        claims: 98,  color: '#f472b6', direction: 'peaking'  },
+  { id: 'n1', name: 'AGI Timeline Debate',        claims: 312, color: '#00d4ff', direction: 'rising',   change: +24 },
+  { id: 'n2', name: 'LLM Benchmark Disputes',     claims: 248, color: '#ff6b35', direction: 'peaking',  change: +8  },
+  { id: 'n3', name: 'Open Source vs Closed',      claims: 195, color: '#22c55e', direction: 'stable',   change: +2  },
+  { id: 'n4', name: 'AI Safety Concerns',         claims: 167, color: '#f59e0b', direction: 'rising',   change: +31 },
+  { id: 'n5', name: 'Model Cost & Efficiency',    claims: 143, color: '#a78bfa', direction: 'declining', change: -14 },
+  { id: 'n6', name: 'Regulation & Policy',        claims: 98,  color: '#f472b6', direction: 'peaking',  change: +5  },
 ];
 
 const MOCK_CLAIMS = [
@@ -167,7 +167,7 @@ function renderTrends() {
   document.getElementById('risingList').innerHTML = rising.map(n => `
     <div class="rising-item">
       <div class="rising-name">${n.name}</div>
-      <div class="rising-stat">↑ ${Math.floor(Math.random()*30)+10}% vs last week · ${n.claims} claims</div>
+      <div class="rising-stat">↑ ${n.change}% vs last week · ${n.claims} claims</div>
     </div>
   `).join('');
 }
@@ -354,7 +354,7 @@ function closeUserMenu() {
   document.getElementById('userRow')?.classList.remove('open');
 }
 
-function handleLogout() { window.location.href = 'index.html'; }
+function handleLogout() { window.location.href = '../index.html'; }
 
 document.addEventListener('click', () => closeUserMenu());
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });
