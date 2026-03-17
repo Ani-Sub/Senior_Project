@@ -1,0 +1,70 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify backend folder exists
+        run: test -d backend
+
+      - name: Syntax check backend Python files
+        run: python -m compileall backend
+
+  frontend-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify frontend folder exists
+        run: test -d frontend
+
+      - name: Syntax check frontend Python files
+        run: python -m compileall frontend
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [backend-check, frontend-check]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Deploy placeholder
+        run: echo "Deploying application..."
+
+
+
+
+      
+
+       
+
+
+
+
+
+
+
+
+       
+      
