@@ -2,6 +2,7 @@ import logging
 from datetime import datetime, timezone, timedelta
 from config import youtube
 from ytAPI.channelExtract import search_channels, filter_channels
+from utility.debugLog import log_videos_raw, log_videos_filtered
 
 log = logging.getLogger(__name__)
 
@@ -15,7 +16,7 @@ def get_published_after(days: int) -> str:
 def get_recent_channel_videos(
     channel_id: str,
     days: int = 30,
-    max_results: int = 10
+    max_results: int = 5
 ) -> list[str]:
     """Fetch video IDs from a channel published within the last N days."""
     published_after = get_published_after(days)
@@ -33,10 +34,14 @@ def get_recent_channel_videos(
 
 def filter_videos(
     video_ids: list[str],
+    channel_title: str = "unknown",
     min_views: int = 10_000,
     keywords: list[str] | None = None
 ) -> list[str]:
-    """Filter videos by minimum view count and keyword match in title."""
+    """
+    Filter videos by minimum view count and keyword match in title.
+    Logs both accepted and rejected videos with rejection reasons.
+    """
     if not video_ids:
         return []
     if keywords is None:
@@ -48,12 +53,31 @@ def filter_videos(
     ).execute()
 
     selected = []
-    for item in response["items"]:
-        views = int(item["statistics"].get("viewCount", 0))
-        title = item["snippet"]["title"].lower()
-        if views >= min_views and any(k.lower() in title for k in keywords):
-            selected.append(item["id"])
+    rejected = []
 
+    for item in response["items"]:
+        vid_id = item["id"]
+        views = int(item["statistics"].get("viewCount", 0))
+        title = item["snippet"]["title"]
+        title_lower = title.lower()
+        keyword_match = any(k.lower() in title_lower for k in keywords)
+
+        if views >= min_views and keyword_match:
+            selected.append(vid_id)
+        else:
+            reasons = []
+            if views < min_views:
+                reasons.append(f"views={views:,} < min={min_views:,}")
+            if not keyword_match:
+                reasons.append(f"no keyword match (keywords={keywords}, title='{title}')")
+            rejected.append({
+                "video_id": vid_id,
+                "title": title,
+                "views": views,
+                "reasons": reasons
+            })
+
+    log_videos_filtered(channel_title, selected, rejected)
     return selected
 
 
@@ -78,12 +102,16 @@ def discover_videos(
     for channel in channels:
         log.info(f"Getting recent videos for: {channel['title']}")
         vids = get_recent_channel_videos(channel["channel_id"], days=days, max_results=5)
-        filtered = filter_videos(vids, min_views=video_view_min, keywords=video_keywords)
+        log_videos_raw(channel["title"], channel["channel_id"], vids)
+        filtered = filter_videos(
+            vids,
+            channel_title=channel["title"],
+            min_views=video_view_min,
+            keywords=video_keywords
+        )
         all_video_ids.extend(filtered)
 
     return all_video_ids
-
-
 
 
 

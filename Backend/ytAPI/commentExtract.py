@@ -1,5 +1,6 @@
 import logging
 from config import youtube
+from utility.debugLog import log_comments
 
 log = logging.getLogger(__name__)
 
@@ -36,8 +37,11 @@ def get_comments(video_id: str, max_comments: int = 30) -> list[dict]:
 
         # Sort by likes descending and return top N
         comments.sort(key=lambda x: x["likes"], reverse=True)
+        comments = comments[:max_comments]
+
+        log_comments(video_id, comments)
         log.info(f"  → Fetched {len(comments)} comments for {video_id}")
-        return comments[:max_comments]
+        return comments
 
     except Exception as e:
         log.warning(f"Comments unavailable for {video_id}: {e}")

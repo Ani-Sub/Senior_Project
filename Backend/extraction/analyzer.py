@@ -4,6 +4,12 @@ import requests
 from config import LLM_URL, LLM_MODEL
 from utility.parser import parse_json_response
 from utility.chunker import chunk_text
+from utility.debugLog import (
+    log_llm_prompt,
+    log_llm_response,
+    log_llm_synthesis_prompt,
+    log_llm_synthesis_response
+)
 from extraction.llmPrompts import (
     build_extraction_prompt,
     build_comment_prompt,
@@ -57,12 +63,17 @@ def analyze_video(
     for i, chunk in enumerate(chunks):
         log.info(f"  → Extracting transcript chunk {i + 1}/{len(chunks)}")
         prompt = build_extraction_prompt(chunk, video_id)
+
+        log_llm_prompt("transcript", video_id, i + 1, prompt)
         raw = call_llm(prompt, num_predict=1500)
 
         if not raw:
+            log_llm_response("transcript", video_id, i + 1, "(no response)", None)
             continue
 
         parsed = parse_json_response(raw)
+        log_llm_response("transcript", video_id, i + 1, raw, parsed)
+
         if not parsed:
             log.warning(f"  → Skipping unparseable chunk {i + 1}")
             continue
@@ -80,10 +91,14 @@ def analyze_video(
     if comments:
         log.info(f"  → Extracting claims from {len(comments)} comments")
         comment_prompt = build_comment_prompt(comments, all_claims, video_id)
+
+        log_llm_prompt("comments", video_id, None, comment_prompt)
         raw = call_llm(comment_prompt, num_predict=1500)
 
         if raw:
             parsed = parse_json_response(raw)
+            log_llm_response("comments", video_id, None, raw, parsed)
+
             if parsed:
                 comment_claims = parsed.get("comment_claims", [])
                 for claim in comment_claims:
@@ -92,6 +107,8 @@ def analyze_video(
                 log.info(f"  → Added {len(comment_claims)} comment claims")
             else:
                 log.warning("  → Comment extraction produced unparseable output")
+        else:
+            log_llm_response("comments", video_id, None, "(no response)", None)
     else:
         log.info("  → No comments available for this video")
 
@@ -146,12 +163,17 @@ def synthesize_trends(all_results: list[dict]) -> dict | None:
         return None
 
     prompt = build_synthesis_prompt(all_results)
+
+    log_llm_synthesis_prompt(prompt)
     raw = call_llm(prompt, num_predict=2000)
 
     if not raw:
+        log_llm_synthesis_response("(no response)", None)
         return None
 
     parsed = parse_json_response(raw)
+    log_llm_synthesis_response(raw, parsed)
+
     if not parsed:
         log.error("Synthesis output could not be parsed as JSON.")
         log.debug(f"Raw synthesis output:\n{raw}")
