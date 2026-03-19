@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/home.css">
+<link rel="stylesheet" href="../css/profileLoggedIn.css">
+<link rel="stylsheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+
+<!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-dot"></div>
+      NarrativeIQ
+    </div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-item">
+        <span class="nav-icon">⊞</span> Home
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">📊</span> My Dashboards
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">📈</span> Trends
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">🧩</span> Narratives
+      </a>
+      <a href="riskMonitor.html" class="nav-item">
+        <span class="nav-icon">⚠️</span> Risk Monitor
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="supportLoggedIn.html" class="nav-item">
+        <span class="nav-icon">❓</span> Help Center
+      </a>
+      <div class="user-row" id="userRow" onclick="toggleUserMenu(event)">
+        <div class="user-avatar">AS</div>
+        <div class="user-info">
+          <div class="user-name">Animesh Subedi</div>
+          <div class="user-email">animesh@example.com</div>
+        </div>
+        <span class="user-chevron" id="userChevron">›</span>
+      </div>
+      <div class="user-dropdown" id="userDropdown">
+        <a href="profileLoggedIn.html" class="dropdown-item active"><span class="dropdown-icon">👤</span> Profile</a>
+        <a href="settings.html" class="dropdown-item"><span class="dropdown-icon">⚙️</span> Settings</a>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item dropdown-logout" onclick="handleLogout()"><span class="dropdown-icon">↩</span> Log Out</button>
+      </div>
+    </div>
+  </aside>
+
+  <script src="../javascript/dashboard.js"></script>
+
+<!-- MAIN -->
+<main class="main">
+
+<div class="main-header">
+<div>
+<h1 class="page-title">Profile</h1>
+<p class="page-sub">Manage your account information</p>
+</div>
+</div>
+
+
+<!-- PROFILE INFO -->
+<section class="section">
+
+<div class="profile-card">
+
+<div class="profile-header">
+<div class="avatar">MN</div>
+
+<div>
+<h2 id="displayName2">My Name</h2>
+<p class="muted" id="displayEmail2">example@email.com</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ACCOUNT DETAILS -->
+<section class="section">
+
+<div class="profile-card">
+
+<h3 class="card-title">Account Details</h3>
+
+<div class="profile-grid">
+
+<div class="form-group">
+<label>Full Name</label>
+<input type="text" id="fullName">
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" id="email">
+</div>
+
+<div class="form-group">
+<label>Phone</label>
+<input type="text" id="phone">
+</div>
+
+<div class="form-group">
+<label>Location</label>
+<input type="text" id="location">
+</div>
+
+</div>
+
+<button class="btn btn-primary" id="saveBtn">Save Changes</button>
+
+<p class="status-text" id="saveStatus"></p>
+
+</div>
+
+</section>
+
+
+<!-- STATS -->
+<section class="section">
+
+<div class="profile-card">
+
+<h3 class="card-title">Usage Overview</h3>
+
+<div class="stats-row">
+
+<div class="stat-box">
+<div class="stat-value">24</div>
+<div class="stat-label">Videos Summarized</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-value">320</div>
+<div class="stat-label">Minutes Saved</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-value accent">Free</div>
+<div class="stat-label">Current Plan</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<script src="../javascript/profileLoggedIn.js"></script>
+</body>
+</html>
