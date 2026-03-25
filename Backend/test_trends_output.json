@@ -1,0 +1,1086 @@
+{
+  "generated_at": "2026-03-25T19:05:06.621679",
+  "test_mode": true,
+  "video_count": 10,
+  "synthesis": {
+    "common_topics": [
+      "AI Coding",
+      "Job Impact",
+      "LLMs",
+      "Tech Industry",
+      "AI Safety"
+    ],
+    "repeated_claims": [
+      {
+        "text": "AI coding assistants are changing developer workflows",
+        "videos": [
+          "vid_003",
+          "vid_007",
+          "vid_008"
+        ],
+        "type": "factual"
+      },
+      {
+        "text": "Junior developer roles will be affected",
+        "videos": [
+          "vid_003",
+          "vid_005",
+          "vid_009"
+        ],
+        "type": "prediction"
+      }
+    ],
+    "high_confidence_claims": [
+      {
+        "text": "Microsoft reports 55% coding time reduction with Copilot",
+        "video_id": "vid_010",
+        "confidence": 0.92
+      }
+    ],
+    "shared_narrative": "AI coding assistants are rapidly transforming software development, with major implications for developer productivity, hiring practices, and the future of programming education.",
+    "overall_trends": [
+      "Increasing concern about job displacement",
+      "Growing enterprise adoption of AI coding tools",
+      "Debate over the future of coding education"
+    ]
+  },
+  "trends": {
+    "granularity": "weekly",
+    "time_range": {
+      "start": "2026-02-03T00:00:00Z",
+      "end": "2026-03-11T00:00:00Z"
+    },
+    "overall": {
+      "video_count": 10,
+      "trend": {
+        "pattern": "surge",
+        "confidence": 1.0,
+        "peak_period": "2026-W09",
+        "peak_value": 900000,
+        "start_period": "2026-W05",
+        "end_period": "2026-W10",
+        "total_periods": 6,
+        "description": "Activity surged 10.6x from 2026-W05 to 2026-W10."
+      },
+      "timeline": [
+        {
+          "period": "2026-W05",
+          "period_start_iso": "2026-02-02",
+          "period_start_ts": 1769990400,
+          "video_count": 1,
+          "total_views": 45000,
+          "total_likes": 3200,
+          "total_comments": 890,
+          "engagement_ratio": 0.0909,
+          "claim_count": 2,
+          "avg_confidence": 0.775
+        },
+        {
+          "period": "2026-W06",
+          "period_start_iso": "2026-02-09",
+          "period_start_ts": 1770595200,
+          "video_count": 1,
+          "total_views": 38000,
+          "total_likes": 2100,
+          "total_comments": 450,
+          "engagement_ratio": 0.0671,
+          "claim_count": 2,
+          "avg_confidence": 0.675
+        },
+        {
+          "period": "2026-W07",
+          "period_start_iso": "2026-02-16",
+          "period_start_ts": 1771200000,
+          "video_count": 2,
+          "total_views": 305000,
+          "total_likes": 23900,
+          "total_comments": 5400,
+          "engagement_ratio": 0.0961,
+          "claim_count": 5,
+          "avg_confidence": 0.78
+        },
+        {
+          "period": "2026-W08",
+          "period_start_iso": "2026-02-23",
+          "period_start_ts": 1771804800,
+          "video_count": 2,
+          "total_views": 315000,
+          "total_likes": 25200,
+          "total_comments": 7000,
+          "engagement_ratio": 0.1022,
+          "claim_count": 3,
+          "avg_confidence": 0.873
+        },
+        {
+          "period": "2026-W09",
+          "period_start_iso": "2026-03-02",
+          "period_start_ts": 1772409600,
+          "video_count": 2,
+          "total_views": 900000,
+          "total_likes": 70000,
+          "total_comments": 20500,
+          "engagement_ratio": 0.1006,
+          "claim_count": 5,
+          "avg_confidence": 0.816
+        },
+        {
+          "period": "2026-W10",
+          "period_start_iso": "2026-03-09",
+          "period_start_ts": 1773014400,
+          "video_count": 2,
+          "total_views": 475000,
+          "total_likes": 36000,
+          "total_comments": 11000,
+          "engagement_ratio": 0.0989,
+          "claim_count": 4,
+          "avg_confidence": 0.812
+        }
+      ]
+    },
+    "by_narrative": [
+      {
+        "narrative": "Primary narrative",
+        "description": "AI coding assistants are rapidly transforming software development, with major implications for developer productivity, hiring practices, and the future of programming education.",
+        "video_count": 10,
+        "pattern": "surge",
+        "peak_period": "2026-W09",
+        "confidence": 1.0,
+        "trend_description": "Activity surged 10.6x from 2026-W05 to 2026-W10.",
+        "timeline": [
+          {
+            "period": "2026-W05",
+            "period_start_iso": "2026-02-02",
+            "period_start_ts": 1769990400,
+            "video_count": 1,
+            "total_views": 45000,
+            "total_likes": 3200,
+            "total_comments": 890,
+            "engagement_ratio": 0.0909,
+            "claim_count": 2,
+            "avg_confidence": 0.775
+          },
+          {
+            "period": "2026-W06",
+            "period_start_iso": "2026-02-09",
+            "period_start_ts": 1770595200,
+            "video_count": 1,
+            "total_views": 38000,
+            "total_likes": 2100,
+            "total_comments": 450,
+            "engagement_ratio": 0.0671,
+            "claim_count": 2,
+            "avg_confidence": 0.675
+          },
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 2,
+            "total_views": 305000,
+            "total_likes": 23900,
+            "total_comments": 5400,
+            "engagement_ratio": 0.0961,
+            "claim_count": 5,
+            "avg_confidence": 0.78
+          },
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 2,
+            "total_views": 315000,
+            "total_likes": 25200,
+            "total_comments": 7000,
+            "engagement_ratio": 0.1022,
+            "claim_count": 3,
+            "avg_confidence": 0.873
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 2,
+            "total_views": 900000,
+            "total_likes": 70000,
+            "total_comments": 20500,
+            "engagement_ratio": 0.1006,
+            "claim_count": 5,
+            "avg_confidence": 0.816
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 2,
+            "total_views": 475000,
+            "total_likes": 36000,
+            "total_comments": 11000,
+            "engagement_ratio": 0.0989,
+            "claim_count": 4,
+            "avg_confidence": 0.812
+          }
+        ]
+      },
+      {
+        "narrative": "AI Coding",
+        "description": "Discussion around: AI Coding",
+        "video_count": 8,
+        "pattern": "peak",
+        "peak_period": "2026-W09",
+        "confidence": 1.0,
+        "trend_description": "Activity peaked at 2026-W09, rising 3.0x before declining.",
+        "timeline": [
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 2,
+            "total_views": 305000,
+            "total_likes": 23900,
+            "total_comments": 5400,
+            "engagement_ratio": 0.0961,
+            "claim_count": 5,
+            "avg_confidence": 0.78
+          },
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 2,
+            "total_views": 315000,
+            "total_likes": 25200,
+            "total_comments": 7000,
+            "engagement_ratio": 0.1022,
+            "claim_count": 3,
+            "avg_confidence": 0.873
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 2,
+            "total_views": 900000,
+            "total_likes": 70000,
+            "total_comments": 20500,
+            "engagement_ratio": 0.1006,
+            "claim_count": 5,
+            "avg_confidence": 0.816
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 2,
+            "total_views": 475000,
+            "total_likes": 36000,
+            "total_comments": 11000,
+            "engagement_ratio": 0.0989,
+            "claim_count": 4,
+            "avg_confidence": 0.812
+          }
+        ]
+      },
+      {
+        "narrative": "Job Impact",
+        "description": "Discussion around: Job Impact",
+        "video_count": 6,
+        "pattern": "surge",
+        "peak_period": "2026-W09",
+        "confidence": 1.0,
+        "trend_description": "Activity surged 3.8x from 2026-W07 to 2026-W10.",
+        "timeline": [
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 1,
+            "total_views": 125000,
+            "total_likes": 8900,
+            "total_comments": 2300,
+            "engagement_ratio": 0.0896,
+            "claim_count": 3,
+            "avg_confidence": 0.767
+          },
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 1,
+            "total_views": 220000,
+            "total_likes": 18000,
+            "total_comments": 5200,
+            "engagement_ratio": 0.1055,
+            "claim_count": 2,
+            "avg_confidence": 0.85
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 2,
+            "total_views": 900000,
+            "total_likes": 70000,
+            "total_comments": 20500,
+            "engagement_ratio": 0.1006,
+            "claim_count": 5,
+            "avg_confidence": 0.816
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 2,
+            "total_views": 475000,
+            "total_likes": 36000,
+            "total_comments": 11000,
+            "engagement_ratio": 0.0989,
+            "claim_count": 4,
+            "avg_confidence": 0.812
+          }
+        ]
+      },
+      {
+        "narrative": "LLMs",
+        "description": "Discussion around: LLMs",
+        "video_count": 2,
+        "pattern": "surge",
+        "peak_period": "2026-W09",
+        "confidence": 1.0,
+        "trend_description": "Activity surged 4.2x from 2026-W07 to 2026-W09.",
+        "timeline": [
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 1,
+            "total_views": 125000,
+            "total_likes": 8900,
+            "total_comments": 2300,
+            "engagement_ratio": 0.0896,
+            "claim_count": 3,
+            "avg_confidence": 0.767
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 1,
+            "total_views": 520000,
+            "total_likes": 42000,
+            "total_comments": 12000,
+            "engagement_ratio": 0.1038,
+            "claim_count": 3,
+            "avg_confidence": 0.8
+          }
+        ]
+      },
+      {
+        "narrative": "Tech Industry",
+        "description": "Discussion around: Tech Industry",
+        "video_count": 2,
+        "pattern": "stable",
+        "peak_period": "2026-W08",
+        "confidence": 0.0,
+        "trend_description": "Activity remained relatively stable across 2 periods.",
+        "timeline": [
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 1,
+            "total_views": 220000,
+            "total_likes": 18000,
+            "total_comments": 5200,
+            "engagement_ratio": 0.1055,
+            "claim_count": 2,
+            "avg_confidence": 0.85
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 1,
+            "total_views": 185000,
+            "total_likes": 14000,
+            "total_comments": 3200,
+            "engagement_ratio": 0.093,
+            "claim_count": 2,
+            "avg_confidence": 0.85
+          }
+        ]
+      },
+      {
+        "narrative": "AI Safety",
+        "description": "Discussion around: AI Safety",
+        "video_count": 2,
+        "pattern": "stable",
+        "peak_period": "2026-W05",
+        "confidence": 0.0,
+        "trend_description": "Activity remained relatively stable across 2 periods.",
+        "timeline": [
+          {
+            "period": "2026-W05",
+            "period_start_iso": "2026-02-02",
+            "period_start_ts": 1769990400,
+            "video_count": 1,
+            "total_views": 45000,
+            "total_likes": 3200,
+            "total_comments": 890,
+            "engagement_ratio": 0.0909,
+            "claim_count": 2,
+            "avg_confidence": 0.775
+          },
+          {
+            "period": "2026-W06",
+            "period_start_iso": "2026-02-09",
+            "period_start_ts": 1770595200,
+            "video_count": 1,
+            "total_views": 38000,
+            "total_likes": 2100,
+            "total_comments": 450,
+            "engagement_ratio": 0.0671,
+            "claim_count": 2,
+            "avg_confidence": 0.675
+          }
+        ]
+      }
+    ],
+    "by_topic": {
+      "AI Safety": {
+        "video_count": 2,
+        "trend": {
+          "pattern": "stable",
+          "confidence": 0.0,
+          "peak_period": "2026-W05",
+          "peak_value": 45000,
+          "start_period": "2026-W05",
+          "end_period": "2026-W06",
+          "total_periods": 2,
+          "description": "Activity remained relatively stable across 2 periods."
+        },
+        "timeline": [
+          {
+            "period": "2026-W05",
+            "period_start_iso": "2026-02-02",
+            "period_start_ts": 1769990400,
+            "video_count": 1,
+            "total_views": 45000,
+            "total_likes": 3200,
+            "total_comments": 890,
+            "engagement_ratio": 0.0909,
+            "claim_count": 2,
+            "avg_confidence": 0.775
+          },
+          {
+            "period": "2026-W06",
+            "period_start_iso": "2026-02-09",
+            "period_start_ts": 1770595200,
+            "video_count": 1,
+            "total_views": 38000,
+            "total_likes": 2100,
+            "total_comments": 450,
+            "engagement_ratio": 0.0671,
+            "claim_count": 2,
+            "avg_confidence": 0.675
+          }
+        ]
+      },
+      "Machine Learning": {
+        "video_count": 1,
+        "trend": {
+          "pattern": "insufficient_data",
+          "confidence": 0.0,
+          "peak_period": "2026-W05",
+          "peak_value": 45000,
+          "start_period": "2026-W05",
+          "end_period": "2026-W05",
+          "total_periods": 1,
+          "description": "Not enough data points to detect a trend pattern."
+        },
+        "timeline": [
+          {
+            "period": "2026-W05",
+            "period_start_iso": "2026-02-02",
+            "period_start_ts": 1769990400,
+            "video_count": 1,
+            "total_views": 45000,
+            "total_likes": 3200,
+            "total_comments": 890,
+            "engagement_ratio": 0.0909,
+            "claim_count": 2,
+            "avg_confidence": 0.775
+          }
+        ]
+      },
+      "Regulation": {
+        "video_count": 1,
+        "trend": {
+          "pattern": "insufficient_data",
+          "confidence": 0.0,
+          "peak_period": "2026-W06",
+          "peak_value": 38000,
+          "start_period": "2026-W06",
+          "end_period": "2026-W06",
+          "total_periods": 1,
+          "description": "Not enough data points to detect a trend pattern."
+        },
+        "timeline": [
+          {
+            "period": "2026-W06",
+            "period_start_iso": "2026-02-09",
+            "period_start_ts": 1770595200,
+            "video_count": 1,
+            "total_views": 38000,
+            "total_likes": 2100,
+            "total_comments": 450,
+            "engagement_ratio": 0.0671,
+            "claim_count": 2,
+            "avg_confidence": 0.675
+          }
+        ]
+      },
+      "AI Coding": {
+        "video_count": 8,
+        "trend": {
+          "pattern": "peak",
+          "confidence": 1.0,
+          "peak_period": "2026-W09",
+          "peak_value": 900000,
+          "start_period": "2026-W07",
+          "end_period": "2026-W10",
+          "total_periods": 4,
+          "description": "Activity peaked at 2026-W09, rising 3.0x before declining."
+        },
+        "timeline": [
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 2,
+            "total_views": 305000,
+            "total_likes": 23900,
+            "total_comments": 5400,
+            "engagement_ratio": 0.0961,
+            "claim_count": 5,
+            "avg_confidence": 0.78
+          },
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 2,
+            "total_views": 315000,
+            "total_likes": 25200,
+            "total_comments": 7000,
+            "engagement_ratio": 0.1022,
+            "claim_count": 3,
+            "avg_confidence": 0.873
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 2,
+            "total_views": 900000,
+            "total_likes": 70000,
+            "total_comments": 20500,
+            "engagement_ratio": 0.1006,
+            "claim_count": 5,
+            "avg_confidence": 0.816
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 2,
+            "total_views": 475000,
+            "total_likes": 36000,
+            "total_comments": 11000,
+            "engagement_ratio": 0.0989,
+            "claim_count": 4,
+            "avg_confidence": 0.812
+          }
+        ]
+      },
+      "Job Impact": {
+        "video_count": 6,
+        "trend": {
+          "pattern": "surge",
+          "confidence": 1.0,
+          "peak_period": "2026-W09",
+          "peak_value": 900000,
+          "start_period": "2026-W07",
+          "end_period": "2026-W10",
+          "total_periods": 4,
+          "description": "Activity surged 3.8x from 2026-W07 to 2026-W10."
+        },
+        "timeline": [
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 1,
+            "total_views": 125000,
+            "total_likes": 8900,
+            "total_comments": 2300,
+            "engagement_ratio": 0.0896,
+            "claim_count": 3,
+            "avg_confidence": 0.767
+          },
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 1,
+            "total_views": 220000,
+            "total_likes": 18000,
+            "total_comments": 5200,
+            "engagement_ratio": 0.1055,
+            "claim_count": 2,
+            "avg_confidence": 0.85
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 2,
+            "total_views": 900000,
+            "total_likes": 70000,
+            "total_comments": 20500,
+            "engagement_ratio": 0.1006,
+            "claim_count": 5,
+            "avg_confidence": 0.816
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 2,
+            "total_views": 475000,
+            "total_likes": 36000,
+            "total_comments": 11000,
+            "engagement_ratio": 0.0989,
+            "claim_count": 4,
+            "avg_confidence": 0.812
+          }
+        ]
+      },
+      "LLMs": {
+        "video_count": 2,
+        "trend": {
+          "pattern": "surge",
+          "confidence": 1.0,
+          "peak_period": "2026-W09",
+          "peak_value": 520000,
+          "start_period": "2026-W07",
+          "end_period": "2026-W09",
+          "total_periods": 2,
+          "description": "Activity surged 4.2x from 2026-W07 to 2026-W09."
+        },
+        "timeline": [
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 1,
+            "total_views": 125000,
+            "total_likes": 8900,
+            "total_comments": 2300,
+            "engagement_ratio": 0.0896,
+            "claim_count": 3,
+            "avg_confidence": 0.767
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 1,
+            "total_views": 520000,
+            "total_likes": 42000,
+            "total_comments": 12000,
+            "engagement_ratio": 0.1038,
+            "claim_count": 3,
+            "avg_confidence": 0.8
+          }
+        ]
+      },
+      "Developer Tools": {
+        "video_count": 1,
+        "trend": {
+          "pattern": "insufficient_data",
+          "confidence": 0.0,
+          "peak_period": "2026-W07",
+          "peak_value": 180000,
+          "start_period": "2026-W07",
+          "end_period": "2026-W07",
+          "total_periods": 1,
+          "description": "Not enough data points to detect a trend pattern."
+        },
+        "timeline": [
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 1,
+            "total_views": 180000,
+            "total_likes": 15000,
+            "total_comments": 3100,
+            "engagement_ratio": 0.1006,
+            "claim_count": 2,
+            "avg_confidence": 0.8
+          }
+        ]
+      },
+      "Tech Industry": {
+        "video_count": 2,
+        "trend": {
+          "pattern": "stable",
+          "confidence": 0.0,
+          "peak_period": "2026-W08",
+          "peak_value": 220000,
+          "start_period": "2026-W08",
+          "end_period": "2026-W10",
+          "total_periods": 2,
+          "description": "Activity remained relatively stable across 2 periods."
+        },
+        "timeline": [
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 1,
+            "total_views": 220000,
+            "total_likes": 18000,
+            "total_comments": 5200,
+            "engagement_ratio": 0.1055,
+            "claim_count": 2,
+            "avg_confidence": 0.85
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 1,
+            "total_views": 185000,
+            "total_likes": 14000,
+            "total_comments": 3200,
+            "engagement_ratio": 0.093,
+            "claim_count": 2,
+            "avg_confidence": 0.85
+          }
+        ]
+      },
+      "Startups": {
+        "video_count": 1,
+        "trend": {
+          "pattern": "insufficient_data",
+          "confidence": 0.0,
+          "peak_period": "2026-W08",
+          "peak_value": 95000,
+          "start_period": "2026-W08",
+          "end_period": "2026-W08",
+          "total_periods": 1,
+          "description": "Not enough data points to detect a trend pattern."
+        },
+        "timeline": [
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 1,
+            "total_views": 95000,
+            "total_likes": 7200,
+            "total_comments": 1800,
+            "engagement_ratio": 0.0947,
+            "claim_count": 1,
+            "avg_confidence": 0.92
+          }
+        ]
+      },
+      "GPT-5": {
+        "video_count": 1,
+        "trend": {
+          "pattern": "insufficient_data",
+          "confidence": 0.0,
+          "peak_period": "2026-W09",
+          "peak_value": 520000,
+          "start_period": "2026-W09",
+          "end_period": "2026-W09",
+          "total_periods": 1,
+          "description": "Not enough data points to detect a trend pattern."
+        },
+        "timeline": [
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 1,
+            "total_views": 520000,
+            "total_likes": 42000,
+            "total_comments": 12000,
+            "engagement_ratio": 0.1038,
+            "claim_count": 3,
+            "avg_confidence": 0.8
+          }
+        ]
+      },
+      "Education": {
+        "video_count": 1,
+        "trend": {
+          "pattern": "insufficient_data",
+          "confidence": 0.0,
+          "peak_period": "2026-W10",
+          "peak_value": 290000,
+          "start_period": "2026-W10",
+          "end_period": "2026-W10",
+          "total_periods": 1,
+          "description": "Not enough data points to detect a trend pattern."
+        },
+        "timeline": [
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 1,
+            "total_views": 290000,
+            "total_likes": 22000,
+            "total_comments": 7800,
+            "engagement_ratio": 0.1028,
+            "claim_count": 2,
+            "avg_confidence": 0.775
+          }
+        ]
+      }
+    },
+    "by_claim_type": {
+      "factual": {
+        "total_claims": 8,
+        "trend": {
+          "pattern": "peak",
+          "confidence": 1.0,
+          "peak_period": "2026-W09",
+          "peak_value": 3,
+          "start_period": "2026-W05",
+          "end_period": "2026-W10",
+          "total_periods": 5,
+          "description": "Activity peaked at 2026-W09, rising 3.0x before declining."
+        },
+        "timeline": [
+          {
+            "period": "2026-W05",
+            "period_start_iso": "2026-02-02",
+            "period_start_ts": 1769990400,
+            "video_count": 1,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 1,
+            "avg_confidence": 0.85
+          },
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 2,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 2,
+            "avg_confidence": 0.825
+          },
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 1,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 1,
+            "avg_confidence": 0.88
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 3,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 3,
+            "avg_confidence": 0.85
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 1,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 1,
+            "avg_confidence": 0.78
+          }
+        ]
+      },
+      "opinion": {
+        "total_claims": 4,
+        "trend": {
+          "pattern": "surge",
+          "confidence": 1.0,
+          "peak_period": "2026-W10",
+          "peak_value": 2,
+          "start_period": "2026-W05",
+          "end_period": "2026-W10",
+          "total_periods": 3,
+          "description": "Activity surged 2.0x from 2026-W05 to 2026-W10."
+        },
+        "timeline": [
+          {
+            "period": "2026-W05",
+            "period_start_iso": "2026-02-02",
+            "period_start_ts": 1769990400,
+            "video_count": 1,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 1,
+            "avg_confidence": 0.7
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 1,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 1,
+            "avg_confidence": 0.65
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 2,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 2,
+            "avg_confidence": 0.775
+          }
+        ]
+      },
+      "prediction": {
+        "total_claims": 4,
+        "trend": {
+          "pattern": "stable",
+          "confidence": 1.0,
+          "peak_period": "2026-W06",
+          "peak_value": 2,
+          "start_period": "2026-W06",
+          "end_period": "2026-W07",
+          "total_periods": 2,
+          "description": "Activity remained relatively stable across 2 periods."
+        },
+        "timeline": [
+          {
+            "period": "2026-W06",
+            "period_start_iso": "2026-02-09",
+            "period_start_ts": 1770595200,
+            "video_count": 2,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 2,
+            "avg_confidence": 0.675
+          },
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 2,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 2,
+            "avg_confidence": 0.675
+          }
+        ]
+      },
+      "statistic": {
+        "total_claims": 5,
+        "trend": {
+          "pattern": "peak",
+          "confidence": 1.0,
+          "peak_period": "2026-W08",
+          "peak_value": 2,
+          "start_period": "2026-W07",
+          "end_period": "2026-W10",
+          "total_periods": 4,
+          "description": "Activity peaked at 2026-W08, rising 2.0x before declining."
+        },
+        "timeline": [
+          {
+            "period": "2026-W07",
+            "period_start_iso": "2026-02-16",
+            "period_start_ts": 1771200000,
+            "video_count": 1,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 1,
+            "avg_confidence": 0.9
+          },
+          {
+            "period": "2026-W08",
+            "period_start_iso": "2026-02-23",
+            "period_start_ts": 1771804800,
+            "video_count": 2,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 2,
+            "avg_confidence": 0.87
+          },
+          {
+            "period": "2026-W09",
+            "period_start_iso": "2026-03-02",
+            "period_start_ts": 1772409600,
+            "video_count": 1,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 1,
+            "avg_confidence": 0.88
+          },
+          {
+            "period": "2026-W10",
+            "period_start_iso": "2026-03-09",
+            "period_start_ts": 1773014400,
+            "video_count": 1,
+            "total_views": 0,
+            "total_likes": 0,
+            "total_comments": 0,
+            "engagement_ratio": 0.0,
+            "claim_count": 1,
+            "avg_confidence": 0.92
+          }
+        ]
+      }
+    }
+  }
+}

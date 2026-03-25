@@ -9,7 +9,7 @@ def get_comments(video_id: str, max_comments: int = 30) -> list[dict]:
     """
     Fetch top comments for a video, sorted by relevance (likes-weighted).
     Filters out very short comments unlikely to contain claims.
-    Returns a list of dicts with 'text' and 'likes'.
+    Returns a list of dicts with 'text', 'likes', and 'published_at'.
     """
     try:
         response = youtube.commentThreads().list(
@@ -25,6 +25,7 @@ def get_comments(video_id: str, max_comments: int = 30) -> list[dict]:
             snippet = item["snippet"]["topLevelComment"]["snippet"]
             likes = snippet.get("likeCount", 0)
             text = snippet.get("textDisplay", "").strip()
+            published_at = snippet.get("publishedAt")  # ISO 8601 timestamp
 
             # Skip very short comments — unlikely to contain claims
             if len(text) < 20:
@@ -32,7 +33,8 @@ def get_comments(video_id: str, max_comments: int = 30) -> list[dict]:
 
             comments.append({
                 "text": text,
-                "likes": likes
+                "likes": likes,
+                "published_at": published_at
             })
 
         # Sort by likes descending and return top N

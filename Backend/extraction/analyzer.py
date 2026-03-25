@@ -125,13 +125,34 @@ def analyze_video(
     }
 
 
-def process_videos(video_ids: list[str], max_comments: int = 30) -> list[dict]:
-    """Run the full extraction pipeline across a list of video IDs."""
+def process_videos(
+    videos: list[dict], 
+    max_comments: int = 30,
+    assess_risk: bool = True,
+    llm_verify_risk: bool = True
+) -> list[dict]:
+    """
+    Run the full extraction pipeline across a list of video metadata dicts.
+    
+    Each video dict should contain:
+        video_id, title, channel_title, published_at,
+        view_count, like_count, comment_count, duration
+    
+    Args:
+        videos: List of video metadata dicts
+        max_comments: Maximum comments to fetch per video
+        assess_risk: Whether to run risk assessment
+        llm_verify_risk: Whether to use LLM for borderline risk cases
+    
+    Returns:
+        Results with video metadata, claims, and risk assessment.
+    """
     from ytAPI.transcriptExtract import get_transcript
     from ytAPI.commentExtract import get_comments
 
     all_results = []
-    for vid in video_ids:
+    for video in videos:
+        vid = video["video_id"]
         log.info(f"\nProcessing video: {vid}")
 
         transcript = get_transcript(vid)
@@ -142,6 +163,23 @@ def process_videos(video_ids: list[str], max_comments: int = 30) -> list[dict]:
         result = analyze_video(vid, transcript, comments)
 
         if result:
+            # Merge video metadata into result for trend analysis
+            result["video_metadata"] = {
+                "title": video.get("title"),
+                "channel_title": video.get("channel_title"),
+                "published_at": video.get("published_at"),
+                "view_count": video.get("view_count"),
+                "like_count": video.get("like_count"),
+                "comment_count": video.get("comment_count"),
+                "duration": video.get("duration"),
+            }
+            # Also store comment timestamps for finer-grained trend analysis
+            result["comment_timestamps"] = [c.get("published_at") for c in comments if c.get("published_at")]
+            
+            # Store raw content for risk assessment
+            result["_transcript"] = transcript
+            result["_comments"] = comments
+            
             all_results.append(result)
             log.info(
                 f"  ✓ {result['claim_count']} total claims "
