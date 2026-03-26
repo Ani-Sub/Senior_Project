@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trends — NarrativeIQ</title>
+  <link rel="stylesheet" href="../css/trends.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-dot"></div>
+      NarrativeIQ
+    </div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-item">
+        <span class="nav-icon">⊞</span> Home
+      </a>
+      <a href="home.html" class="nav-item">
+        <span class="nav-icon">📊</span> My Dashboards
+      </a>
+      <a href="trends.html" class="nav-item active">
+        <span class="nav-icon">📈</span> Trends
+      </a>
+      <a href="narratives.html" class="nav-item">
+        <span class="nav-icon">🧩</span> Narratives
+      </a>
+      <a href="claims.html" class="nav-item">
+        <span class="nav-icon">💬</span> Claims
+      </a>
+      <a href="riskMonitor.html" class="nav-item">
+        <span class="nav-icon">⚠️</span> Risk Monitor
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="supportLoggedIn.html" class="nav-item">
+        <span class="nav-icon">❓</span> Help Center
+      </a>
+      <div class="user-row" id="userRow" onclick="toggleUserMenu(event)">
+        <div class="user-avatar">AS</div>
+        <div class="user-info">
+          <div class="user-name">Animesh Subedi</div>
+          <div class="user-email">animesh@example.com</div>
+        </div>
+        <span class="user-chevron" id="userChevron">›</span>
+      </div>
+      <div class="user-dropdown" id="userDropdown">
+        <a href="profileLoggedIn.html" class="dropdown-item"><span class="dropdown-icon">👤</span> Profile</a>
+        <a href="settings.html" class="dropdown-item"><span class="dropdown-icon">⚙️</span> Settings</a>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item dropdown-logout" onclick="handleLogout()"><span class="dropdown-icon">↩</span> Log Out</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-title-row">
+          <h1 class="page-title">TRENDS</h1>
+          <span class="page-live-badge">● LIVE</span>
+        </div>
+        <p class="page-subtitle">Narrative activity across all dashboards and topics</p>
+      </div>
+      <div class="page-header-right">
+        <!-- Dashboard / topic selector -->
+        <div class="selector-group">
+          <label class="selector-label">Dashboard</label>
+          <div class="custom-select" id="dashSelector" onclick="toggleDashDropdown(event)">
+            <span id="dashSelectorLabel">AI Industry Trends</span>
+            <span class="select-chevron">›</span>
+            <div class="select-dropdown" id="dashDropdown">
+              <div class="select-option active" onclick="selectDash(this, 'all')">All Dashboards</div>
+              <div class="select-option" onclick="selectDash(this, 'd1')">AI Industry Trends</div>
+              <div class="select-option" onclick="selectDash(this, 'd2')">Crypto Market Watch</div>
+              <div class="select-option" onclick="selectDash(this, 'd3')">Climate Policy Tracker</div>
+            </div>
+          </div>
+        </div>
+        <div class="range-toggle">
+          <button class="range-btn" onclick="setRange(this,'2w')">2W</button>
+          <button class="range-btn active" onclick="setRange(this,'1m')">1M</button>
+          <button class="range-btn" onclick="setRange(this,'3m')">3M</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAT STRIP -->
+    <div class="stat-strip">
+      <div class="strip-stat">
+        <div class="strip-value">6</div>
+        <div class="strip-label">Active Narratives</div>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-stat">
+        <div class="strip-value accent">3</div>
+        <div class="strip-label">Rising This Week</div>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-stat">
+        <div class="strip-value">1,284</div>
+        <div class="strip-label">Total Claims</div>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-stat">
+        <div class="strip-value warning">2</div>
+        <div class="strip-label">Peaking Narratives</div>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-stat">
+        <div class="strip-value danger">1</div>
+        <div class="strip-label">Declining</div>
+      </div>
+    </div>
+
+    <!-- MAIN TREND CHART -->
+    <div class="chart-card">
+      <div class="card-header">
+        <div class="card-title">Narrative Activity Over Time</div>
+        <div class="chart-legend" id="trendsLegend"></div>
+      </div>
+      <canvas id="mainTrendsChart" height="110"></canvas>
+    </div>
+
+    <!-- BOTTOM PANELS -->
+    <div class="trends-bottom">
+
+      <!-- NARRATIVE BREAKDOWN TABLE -->
+      <div class="breakdown-card">
+        <div class="card-header">
+          <div class="card-title">Narrative Breakdown</div>
+          <span class="view-all" onclick="window.location.href='narratives.html'">View all →</span>
+        </div>
+        <div class="breakdown-table" id="breakdownTable">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- RISING / DECLINING SUMMARY -->
+      <div class="summary-col">
+        <div class="summary-card">
+          <div class="card-header" style="margin-bottom:14px">
+            <div class="card-title">Rising This Week</div>
+            <span class="dir-badge rising">↑</span>
+          </div>
+          <div class="summary-list" id="risingPanel"></div>
+        </div>
+        <div class="summary-card">
+          <div class="card-header" style="margin-bottom:14px">
+            <div class="card-title">Declining</div>
+            <span class="dir-badge declining">↓</span>
+          </div>
+          <div class="summary-list" id="decliningPanel"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="../javascript/trends.js"></script>
+</body>
+</html>
