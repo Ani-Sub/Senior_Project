@@ -1,3 +1,6 @@
+
+//DONT THINK WE NEED THIS PAGE ANYMORE
+
 // Fade-in animation on scroll
 const faders = document.querySelectorAll(".fade-in");
 
