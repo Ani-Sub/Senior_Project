@@ -37,9 +37,10 @@ def filter_videos(
     channel_title: str = "unknown",
     min_views: int = 10_000,
     keywords: list[str] | None = None
-) -> list[str]:
+) -> list[dict]:
     """
     Filter videos by minimum view count and keyword match in title.
+    Returns rich video metadata objects for trend analysis.
     Logs both accepted and rejected videos with rejection reasons.
     """
     if not video_ids:
@@ -57,13 +58,26 @@ def filter_videos(
 
     for item in response["items"]:
         vid_id = item["id"]
-        views = int(item["statistics"].get("viewCount", 0))
-        title = item["snippet"]["title"]
+        stats = item["statistics"]
+        snippet = item["snippet"]
+        
+        views = int(stats.get("viewCount", 0))
+        title = snippet["title"]
         title_lower = title.lower()
         keyword_match = any(k.lower() in title_lower for k in keywords)
 
         if views >= min_views and keyword_match:
-            selected.append(vid_id)
+            # Return rich metadata for trend analysis
+            selected.append({
+                "video_id": vid_id,
+                "title": title,
+                "channel_title": snippet.get("channelTitle", channel_title),
+                "published_at": snippet.get("publishedAt"),  # ISO 8601 timestamp
+                "view_count": views,
+                "like_count": int(stats.get("likeCount", 0)),
+                "comment_count": int(stats.get("commentCount", 0)),
+                "duration": item["contentDetails"].get("duration"),  # ISO 8601 duration
+            })
         else:
             reasons = []
             if views < min_views:
@@ -77,7 +91,8 @@ def filter_videos(
                 "reasons": reasons
             })
 
-    log_videos_filtered(channel_title, selected, rejected)
+    # Log just the IDs for compatibility with existing debug logs
+    log_videos_filtered(channel_title, [v["video_id"] for v in selected], rejected)
     return selected
 
 
@@ -87,10 +102,14 @@ def discover_videos(
     video_view_min: int,
     video_keywords: list[str],
     days: int = 30
-) -> list[str]:
+) -> list[dict]:
     """
     Full discovery pipeline:
     search channels → filter by size → get recent videos → filter by views/keywords
+    
+    Returns list of video metadata dicts with keys:
+        video_id, title, channel_title, published_at, 
+        view_count, like_count, comment_count, duration
     """
     log.info("Searching channels...")
     channel_ids = search_channels(search_keywords)
@@ -98,7 +117,7 @@ def discover_videos(
     log.info("Filtering channels...")
     channels = filter_channels(channel_ids, min_subscribers=channel_sub_min)
 
-    all_video_ids = []
+    all_videos = []
     for channel in channels:
         log.info(f"Getting recent videos for: {channel['title']}")
         vids = get_recent_channel_videos(channel["channel_id"], days=days, max_results=5)
@@ -109,9 +128,9 @@ def discover_videos(
             min_views=video_view_min,
             keywords=video_keywords
         )
-        all_video_ids.extend(filtered)
+        all_videos.extend(filtered)
 
-    return all_video_ids
+    return all_videos
 
 
 
