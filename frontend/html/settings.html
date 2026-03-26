@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/home.css">
+<link rel="stylesheet" href="../css/settings.css">
+</head>
+
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-dot"></div>
+      NarrativeIQ
+    </div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-item">⊞ Home</a>
+      <a href="dashboard.html" class="nav-item">📊 My Dashboards</a>
+      <a href="trends.html" class="nav-item">📈 Trends</a>
+      <a href="narratives.html" class="nav-item">🧩 Narratives</a>
+      <a href="claims.html" class="nav-item">💬 Claims</a>
+      <a href="riskMonitor.html" class="nav-item">⚠️ Risk Monitor</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="supportLoggedIn.html" class="nav-item">❓ Help Center</a>
+      <div class="user-row" id="userRow" onclick="toggleUserMenu(event)">
+        <div class="user-avatar">AS</div>
+        <div class="user-info">
+          <div class="user-name">Animesh Subedi</div>
+          <div class="user-email">animesh@example.com</div>
+        </div>
+        <span class="user-chevron" id="userChevron">›</span>
+      </div>
+      <div class="user-dropdown" id="userDropdown">
+        <a href="profileLoggedIn.html" class="dropdown-item">👤 Profile</a>
+        <a href="settings.html" class="dropdown-item active">⚙️ Settings</a>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item dropdown-logout" onclick="handleLogout()">↩ Log Out</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="main-header">
+      <h1 class="page-title">Settings</h1>
+      <p class="page-sub">Manage your subscription, password, and notifications</p>
+    </div>
+
+    <section class="section settings-grid">
+
+      <!-- Subscription -->
+      <div class="setting-card">
+        <h3>Subscription</h3>
+        <h4>Current Plan: <strong>Free</strong></h4>
+        <div class="stat-label">Select new plan</div>
+        <select id="planSelect">
+          <option value="free">Free</option>
+          <option value="pro">Analyst - $49/month</option>
+          <option value="pro">Enterprise - $199/month</option>
+        </select>
+        <button class="btn btn-primary" id="updatePlanBtn">Update Plan</button>
+        <p class="status-text" id="planStatus"></p>
+      </div>
+
+      <!-- Password -->
+      <div class="setting-card">
+        <h3>Change Password</h3>
+        <input type="password" placeholder="Old password" id="newPassword">
+        <input type="password" placeholder="New password" id="newPassword">
+        <input type="password" placeholder="Confirm new password" id="newPassword">
+        <button class="btn btn-primary" id="savePasswordBtn">Save Password</button>
+        <p class="status-text" id="passwordStatus"></p>
+      </div>
+
+      <!-- Email Notifications -->
+      <div class="setting-card">
+        <h3>Email Notifications</h3>
+        <div class="stat-label">Enable Email Notifications</div>
+        <select id="emailNotif">
+          <option value="enabled">Enabled</option>
+          <option value="disabled">Disabled</option>
+        </select>
+        <button class="btn btn-primary" id="saveNotifBtn">Save</button>
+      </div>
+
+      <!-- Account Actions -->
+      <div class="setting-card">
+        <h3>Account Removal</h3>
+        <button class="btn btn-danger" id="deactivateAccountBtn">Deactivate Account</button>
+      </div>
+
+    </section>
+  </main>
+
+<script src="../javascript/dashboard.js"></script>
+<script src="../javascript/profileLoggedIn.js"></script>
+<script src="javascript/api.js"></script>
+<script src="javascript/settings.js"></script>
+</body>
+</html>

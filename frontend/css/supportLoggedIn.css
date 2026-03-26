@@ -25,6 +25,11 @@ color:var(--text);
 margin-bottom:10px;
 }
 
+.support-card:hover{
+  border-color:rgba(0,212,255,0.3);
+  transform:translateY(-2px);
+}
+
 form label{
 display:block;
 font-size:.7rem;
@@ -46,6 +51,7 @@ color:var(--white);
 font-family:'DM Sans',sans-serif;
 resize:none;
 }
+
 
 form input:focus,
 form textarea:focus{
