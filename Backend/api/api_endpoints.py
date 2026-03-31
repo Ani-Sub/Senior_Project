@@ -1,6 +1,14 @@
-from fastapi import FastAPI
+import os
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import Session, sessionmaker
+from typing import List, Annotated
+
+
+load_dotenv()
 
 #Request Bodies
 class SignupBody(BaseModel):
@@ -37,36 +45,50 @@ app.add_middleware(
 )
 
 
+
+# Database connection
+
+engine = create_engine(os.getenv("DATABASE_URL"))
+SessionLocal = sessionmaker(autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+db_dependency = Annotated[Session, Depends(get_db)]
+
+
+
 #Authentication Methods
 @app.post("/api/v1/auth/signup")
-async def signup(body: SignupBody):
+async def signup(body: SignupBody, db: db_dependency):
+    
+    initials = "".join(word[0].upper() for word in body.name.split())
+
+    t = text("INSERT INTO \"User\" (name, email, initials, password) VALUES (:name, :email, :initials, :password) RETURNING *")
+    result = db.execute(t, {"name": body.name, "email": body.email, "initials": initials, "password": body.password}).fetchone()
+    db.commit()
+    
     return {
         "token": "fake token",
-        "user": {
-            "user_id": "user 1",
-            "name": "Test Name",
-            "email": "Test Email",
-            "initials": "TN",
-            "plan": "free",
-            "role": "user",
-            "created_at": "2025-01-01T00:00:00Z"
-        }
+        "user": dict(result)
     }
 
 
 @app.post("/api/v1/auth/login")
-async def login(body: LoginBody):
+async def login(body: LoginBody, db: db_dependency):
+    
+    t = text("SELECT * FROM \"User\" WHERE email = :email AND password = :password")
+    result = db.execute(t, {"email": body.email, "password": body.password}).fetchone()
+    
+    if not result:
+        raise HTTPException(status_code=401, detail={"error": "unauthorized", "message": "Invalid Login Information"})
     return {
-        "token": "fake-jwt-token",
-        "user": {
-            "user_id": "user 1",
-            "name": "Test Name",
-            "email": "Test Email",
-            "initials": "TN",
-            "plan": "free",
-            "role": "user",
-            "created_at": "2025-01-01T00:00:00Z"
-        }
+        "token": "fake token",
+        "user": dict(result)
     }
 
 @app.post("/api/v1/auth/logout")
@@ -76,39 +98,40 @@ async def logout():
     }
 
 @app.get("/api/v1/auth/me")
-async def me():
-    return {
-        "user_id": "user 1",
-        "name": "Test Name",
-        "email": "Test Email",
-        "initials": "TN",
-        "plan": "free",
-        "role": "user",
-        "created_at": "2025-01-01T00:00:00Z"
-    }
+async def me(db: db_dependency):
+    
+    t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
+    result = db.execute(t, {"user_id": 1}).fetchone()
+    
+    if not result:
+        raise HTTPException(status_code=404, detail={"error": "not_found", "message": "User not found"})
+    return dict(result)
 
 
 
-
+# dashboard methods                                                WIP
 @app.get("/api/v1/dashboards")
-def get_dashboards():
-    return [
-        {
-            "dashboard_id": "dashboard-id 1",
-            "user_id": "user 1",
-            "name": "AI Trends",
-            "description": "Tracking AI narratives on YouTube",
-            "search_terms": ["artificial intelligence", "LLM"],
-            "layout": "overview",
-            "created_at": "2025-01-01T00:00:00Z"
-        }
-    ]
+def get_dashboards(db: db_dependency):
+    
+    t = text("SELECT * FROM \"Board\" WHERE user_id = :user_id")
+    dashboards = db.execute(t, {"user_id": 1}).fetchall()
+    
+    result = []
+    for board in dashboards:
+        tempBoard = dict(board)
+        t = text("SELECT keyword FROM \"Keyword\" WHERE board_id = :board_id")
+        keywords = db.execute(t, {"board_id": tempBoard["board_id"]}).fetchall()
+
+        tempBoard["keywords"] = [row["keyword"] for row in keywords]
+        result.append(tempBoard)
+    
+    return result
 
 
 
 
 @app.post("/api/v1/dashboards")
-def create_dashboard(body: CreateDashboardBody):
+def create_dashboard(body: CreateDashboardBody, db: db_dependency):
     return {
         "dashboard_id": "dashboard-id 2",
         "user_id": "user 1",
