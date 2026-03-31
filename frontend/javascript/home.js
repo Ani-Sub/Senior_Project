@@ -368,8 +368,7 @@ function closeUserMenu() {
 }
 
 function handleLogout() {
-  // TODO: clear session/token then redirect to landing page
-  window.location.href = '../index.html';
+  authActions.logout();
 }
 
 // Close dropdown when clicking anywhere else
