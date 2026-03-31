@@ -13,23 +13,40 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Plan {
+  free
+  analyst
+  enterprise
+}
+
 model User {
-  user_id     Int   @id @default(autoincrement()) 
+  user_id     String   @id @default(uuid()) @db.Uuid
   name        String  
-  email       String
+  email       String   @unique
+  initials    String
+  plan        Plan     @default(free)
+  role        String
   password    String
   created_at  DateTime @default(now())
 
   boards Board[]
 }
 
+
+enum Layout {
+  overview
+  trends
+  claims
+}
+
 model Board {
-  board_id        Int       @id @default(autoincrement())
-  user_id         Int
-  board_name      String    @db.VarChar(50)
+  board_id        String    @id @default(uuid()) @db.Uuid
+  user_id         String
+  board_name      String    @db.VarChar(500)
   description     String?   @db.VarChar(500)
+  layout          Layout    @default(overview)
   last_updated_at DateTime  @updatedAt
-  processed_at    DateTime?
+  created_at      DateTime?
 
   user          User           @relation(fields: [user_id], references: [user_id])
   videos        Video[]
@@ -39,9 +56,22 @@ model Board {
 }
 
 
+enum RiskLevel {
+  low
+  medium
+  high
+}
+
+
 model Channel {
-  channel_id    String    @id @db.VarChar(50)
-  channel_title String    @db.VarChar(500)
+  channel_id    String    @id @db.VarChar(500)
+  channel_name  String    @db.VarChar(500)
+  total_claims  Integer
+  flagged_claims  Integer
+  accuracy_rate  Float
+  risk_level     RiskLevel
+  risk_score     Float
+  last_assessed_at DateTime  @updatedAt
   processed_at  DateTime?
 
   videos        Video[]
@@ -105,13 +135,24 @@ model Comment {
   video Video @relation(fields: [video_id], references: [video_id])
 }
 
+enum ClaimType {
+  factual
+  opinion
+}
+
+
 model Claim {
-  claim_id     String    @id @db.VarChar(20)
-  video_id     String    @db.VarChar(20)
-  narrative_id String?   @db.Uuid
-  video_title  String    @db.VarChar(500)
-  claim_text   String    @db.Text
-  processed_at DateTime?
+  claim_id          String    @id @default(uuid()) @db.Uuid
+  video_id          String    
+  narrative_id      String?   @db.Uuid
+  video_title       String    @db.VarChar(500)
+  claim_text        String    @db.Text
+  claim_type        ClaimType
+  confidence_score  Float
+  risk_level        RiskLevel
+  processed_at      DateTime?
+  is_verified       Boolean
+  accuracy_rating   Float?
 
   video     Video      @relation(fields: [video_id], references: [video_id])
   narrative Narrative? @relation(fields: [narrative_id], references: [narrative_id])
@@ -124,7 +165,7 @@ model Narrative {
   summary            String?                   @db.Text
   topic_label        String?                   @db.VarChar(200)
   claim_count        Int                       @default(0)
-  // centroid_embedding Unsupported("vector(1536)")?
+  color              String
   first_seen_at      DateTime?
   last_seen_at       DateTime?
 
@@ -144,10 +185,10 @@ model BoardChannel {
 }
 
 model Keyword {
-  keyword_id   Int       @id @default(autoincrement())
+  keyword_id   String    @id @default(uuid()) @db.Uuid
   board_id     Int
   keyword      String    @db.VarChar(50)
-  processed_at DateTime?
+  processed_at DateTime? @default(now())
 
   board Board @relation(fields: [board_id], references: [board_id])
 }
