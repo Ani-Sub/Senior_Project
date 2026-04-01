@@ -185,37 +185,56 @@ def get_claim(claim_id: str):
             "accuracy_rating": None
     }
 
-
+# Added narratives endpoint (Backend)
 @app.get("/api/v1/dashboards/{dashboard_id}/narratives")
 def get_narratives(dashboard_id: str):
-    return [
-        {
-            "narrative_id": "narritive-id 1",
-            "title": "AI Replacing Developers",
-            "summary": "Some Summary",
-            "topic_label": "Artificial Intelligence",
-            "claim_count": 42,
+    data = load_json("test_trends_output.json")
+    narratives = data["trends"]["by_narrative"]
+
+    result = []
+    for i, narrative in enumerate(narratives, start=1):
+        timeline = narrative.get("timeline", [])
+
+        result.append({
+            "narrative_id": f"narrative-{i}",
+            "title": narrative.get("narrative", ""),
+            "summary": narrative.get("description", ""),
+            "topic_label": narrative.get("narrative", ""),
+            "claim_count": sum(point.get("claim_count", 0) for point in timeline),
             "color": "#00d4ff",
-            "first_seen_at": "2025-01-10T00:00:00Z",
-            "last_seen_at": "2025-03-10T00:00:00Z"
-        }
-    ]
+            "first_seen_at": timeline[0]["period_start_iso"] if timeline else None,
+            "last_seen_at": timeline[-1]["period_start_iso"] if timeline else None
+        })
+
+    return result
  
+from fastapi import HTTPException
+
+# Added narrative details endpoint (Backend)
 @app.get("/api/v1/narratives/{narrative_id}")
 def get_narrative(narrative_id: str):
-    return {
-        "narrative_id": "narritive-id 1",
-        "title": "AI Replacing Developers",
-        "summary": "Some Summary",
-        "topic_label": "Artificial Intelligence",
-        "claim_count": 42,
-        "color": "#00d4ff",
-        "first_seen_at": "2025-01-10T00:00:00Z",
-        "last_seen_at": "2025-03-10T00:00:00Z",
-        "claims": ["some claim"]
-    }
+    data = load_json("test_trends_output.json")
+    narratives = data["trends"]["by_narrative"]
 
-# Modified
+    for i, narrative in enumerate(narratives, start=1):
+        current_id = f"narrative-{i}"
+        if current_id == narrative_id:
+            timeline = narrative.get("timeline", [])
+            return {
+                "narrative_id": current_id,
+                "title": narrative.get("narrative", ""),
+                "summary": narrative.get("description", ""),
+                "topic_label": narrative.get("narrative", ""),
+                "claim_count": sum(point.get("claim_count", 0) for point in timeline),
+                "color": "#00d4ff",
+                "first_seen_at": timeline[0]["period_start_iso"] if timeline else None,
+                "last_seen_at": timeline[-1]["period_start_iso"] if timeline else None,
+                "claims": []
+            }
+
+    raise HTTPException(status_code=404, detail="Narrative not found")
+
+# Added trends endpoint (Backend)
 @app.get("/api/v1/dashboards/{dashboard_id}/trends")
 def get_trends(dashboard_id: str, range: str = "3m"):
     data = load_json("test_trends_output.json")
@@ -238,14 +257,14 @@ def get_trends(dashboard_id: str, range: str = "3m"):
         "description": trend_info["description"]
     }
 
-# Added risk overview endpoint
+# Added risk overview endpoint (Backend)
 @app.get("/api/v1/dashboards/{dashboard_id}/risk/overview")
 def get_risk_overview(dashboard_id: str):
     data = load_json("test_risk_output.json")
 
     return data["risk_summary"]["aggregate"]
 
-# Added risks video endpoint
+# Added risks video endpoint (Backend)
 @app.get("/api/v1/dashboards/{dashboard_id}/risk/videos")
 def get_risk_videos(dashboard_id: str):
     data = load_json("test_risk_output.json")
