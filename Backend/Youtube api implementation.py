@@ -1,102 +1,338 @@
-import googleapiclient.discovery
-from datetime import datetime, timezone, timedelta
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import json
-from youtube_transcript_api import YouTubeTranscriptApi
 
-# days = 183 which is half a year (365 days) rounded up
-Time_Window = (datetime.now(timezone.utc) - timedelta(days=183)).strftime("%Y-%m-%dT%H:%M:%SZ")
+# Load json
+def load_json(file):
+    with open(file, "r") as f:
+        return json.load(f)
 
-# insert api key when using 
-API_KEY = ""
+#Request Bodies
+class SignupBody(BaseModel):
+    name: str
+    email: str
+    password: str
 
+class LoginBody(BaseModel):
+    email: str
+    password: str
 
-YouTubeTranscriptApiInstance = YouTubeTranscriptApi()
-
-Youtube_Channel_IDS = [
-    "UCKWaEZ-_VweaEx1j62do_vQ",
-    "@freecodecamp"
-
-]
-
-Key_Words = [
-    "Artificial",
-    "Intelligence"
-]
-
-def main():
-    
-    youtube = googleapiclient.discovery.build("youtube", "v3", developerKey=API_KEY)
-
-# find the channel IDs
-    channel_ids = []
-
-    for id in Youtube_Channel_IDS:
-        request = youtube.search().list(
-                part="snippet",
-                maxResults=1,
-                type="channel",
-                q=id
-            )
-        response = request.execute()
-        
-        for item in response["items"]:
-            channel_ids.append(item["snippet"]["channelId"])
+class CreateDashboardBody(BaseModel):
+    name: str
+    description: str | None = None
+    search_terms: list[str]
+    layout: str
+ 
+class UpdateUserBody(BaseModel):
+    name: str | None = None
+    email: str | None = None
+    current_password: str | None = None
+    new_password: str | None = None
 
 
+#Create app
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+    allow_credentials=True
+)
 
 
-# search for videos
-    Key_Words_Query = " ".join(Key_Words)
-    videos = []
-    for channel in channel_ids:
-        request = youtube.search().list(
-            part="snippet",
-            maxResults=5,
-            channelId=channel,
-            type="video",
-            publishedAfter=Time_Window,
-            q=Key_Words_Query
-        )
-        response = request.execute()
-        
-        for video in response["items"]:
-            videos.append(video["id"]["videoId"])
+#Authentication Methods
+@app.post("/api/v1/auth/signup")
+async def signup(body: SignupBody):
+    return {
+        "token": "fake token",
+        "user": {
+            "user_id": "user 1",
+            "name": "Test Name",
+            "email": "Test Email",
+            "initials": "TN",
+            "plan": "free",
+            "role": "user",
+            "created_at": "2025-01-01T00:00:00Z"
+        }
+    }
 
-# filter videos above 5k views
-    filteredVideos = []
-    request1 = youtube.videos().list(
-            part="snippet,statistics",
-            id=",".join(videos)
-        )
-    response1 = request1.execute()
 
-    for i in response1["items"]:
-        numViews = int(i["statistics"]["viewCount"])
-        transcriptChunks = YouTubeTranscriptApiInstance.fetch(i["id"])
-        fullTranscript = " ".join([chunk.text for chunk in transcriptChunks])
+@app.post("/api/v1/auth/login")
+async def login(body: LoginBody):
+    return {
+        "token": "fake-jwt-token",
+        "user": {
+            "user_id": "user 1",
+            "name": "Test Name",
+            "email": "Test Email",
+            "initials": "TN",
+            "plan": "free",
+            "role": "user",
+            "created_at": "2025-01-01T00:00:00Z"
+        }
+    }
 
-        if numViews > 5000:
-            filteredVideos.append(
+@app.post("/api/v1/auth/logout")
+async def logout():
+    return {
+        "Message": "Logged Out"
+    }
+
+@app.get("/api/v1/auth/me")
+async def me():
+    return {
+        "user_id": "user 1",
+        "name": "Test Name",
+        "email": "Test Email",
+        "initials": "TN",
+        "plan": "free",
+        "role": "user",
+        "created_at": "2025-01-01T00:00:00Z"
+    }
+
+
+
+
+@app.get("/api/v1/dashboards")
+def get_dashboards():
+    return [
+        {
+            "dashboard_id": "dashboard-id 1",
+            "user_id": "user 1",
+            "name": "AI Trends",
+            "description": "Tracking AI narratives on YouTube",
+            "search_terms": ["artificial intelligence", "LLM"],
+            "layout": "overview",
+            "created_at": "2025-01-01T00:00:00Z"
+        }
+    ]
+
+
+
+
+@app.post("/api/v1/dashboards")
+def create_dashboard(body: CreateDashboardBody):
+    return {
+        "dashboard_id": "dashboard-id 2",
+        "user_id": "user 1",
+        "name": "Dashboard 2",
+        "description": "Second dashboard",
+        "search_terms": ["Dashboard", "Size"],
+        "layout": "trends",
+        "created_at": "2025-01-01T00:00:00Z"
+    }
+ 
+@app.get("/api/v1/dashboards/{dashboard_id}")
+def get_dashboard(dashboard_id: str):
+    return {
+        "dashboard_id": "dashboard-id 1",
+        "user_id": "user 1",
+        "name": "AI Trends",
+        "description": "Tracking AI on YouTube",
+        "search_terms": ["artificial intelligence", "LLM"],
+        "layout": "overview",
+        "created_at": "2025-01-01T00:00:00Z"
+    }
+ 
+@app.delete("/api/v1/dashboards/{dashboard_id}")
+def delete_dashboard(dashboard_id: str):
+    return {"Message": "Dashboard deleted"}
+ 
+
+@app.get("/api/v1/dashboards/{dashboard_id}/claims")
+def get_claims(dashboard_id: str):
+    return {
+        "page": 1,
+        "limit": 20,
+        "total": 1,
+        "claims": [
             {
-                "id": i["id"],
-                "Video Title": i["snippet"]["title"],
-                "Published Date": i["snippet"]["publishedAt"],
-                "Channel Title": i["snippet"]["channelTitle"],
-                "View Count": i["statistics"]["viewCount"],
-                "Processed Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "Transcript": fullTranscript
-            })
+                "claim_id": "claim-id 1",
+                "video_id": "video-id 1",
+                "channel_id": "channel-id 1",
+                "channel_name": "Technology channel",
+                "claim_text": "Some claim",
+                "claim_type": "factual",
+                "confidence_score": 0.87,
+                "risk_level": "medium",
+                "narrative_id": "narritive-id 1",
+                "narrative_name": "AI Technology name",
+                "published_at": "2025-03-01T00:00:00Z",
+                "is_verified": False,
+                "accuracy_rating": None
+            }
+        ]
+    }
+ 
+@app.get("/api/v1/claims/{claim_id}")
+def get_claim(claim_id: str):
+    return {
+        "claim_id": "claim-id 1",
+            "video_id": "video-id 1",
+            "channel_id": "channel-id 1",
+            "channel_name": "Technology channel",
+            "claim_text": "Some claim",
+            "claim_type": "factual",
+            "confidence_score": 0.87,
+            "risk_level": "medium",
+            "narrative_id": "narritive-id 1",
+            "narrative_name": "AI Technology name",
+            "published_at": "2025-03-01T00:00:00Z",
+            "is_verified": False,
+            "accuracy_rating": None
+    }
 
-    
-    with open("filtered_videos_tester.json", "w", encoding="utf-8") as f:
-        json.dump(filteredVideos, f, ensure_ascii=False, indent=2)
+# Added narratives endpoint (Backend)
+@app.get("/api/v1/dashboards/{dashboard_id}/narratives")
+def get_narratives(dashboard_id: str):
+    data = load_json("test_trends_output.json")
+    narratives = data["trends"]["by_narrative"]
 
-    
+    result = []
+    for i, narrative in enumerate(narratives, start=1):
+        timeline = narrative.get("timeline", [])
 
-if __name__ == "__main__":
-    main()
+        result.append({
+            "narrative_id": f"narrative-{i}",
+            "title": narrative.get("narrative", ""),
+            "summary": narrative.get("description", ""),
+            "topic_label": narrative.get("narrative", ""),
+            "claim_count": sum(point.get("claim_count", 0) for point in timeline),
+            "color": "#00d4ff",
+            "first_seen_at": timeline[0]["period_start_iso"] if timeline else None,
+            "last_seen_at": timeline[-1]["period_start_iso"] if timeline else None
+        })
 
-    with open("filtered_videos_tester.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
+    return result
+ 
+from fastapi import HTTPException
 
-    print(data)
+# Added narrative details endpoint (Backend)
+@app.get("/api/v1/narratives/{narrative_id}")
+def get_narrative(narrative_id: str):
+    data = load_json("test_trends_output.json")
+    narratives = data["trends"]["by_narrative"]
+
+    for i, narrative in enumerate(narratives, start=1):
+        current_id = f"narrative-{i}"
+        if current_id == narrative_id:
+            timeline = narrative.get("timeline", [])
+            return {
+                "narrative_id": current_id,
+                "title": narrative.get("narrative", ""),
+                "summary": narrative.get("description", ""),
+                "topic_label": narrative.get("narrative", ""),
+                "claim_count": sum(point.get("claim_count", 0) for point in timeline),
+                "color": "#00d4ff",
+                "first_seen_at": timeline[0]["period_start_iso"] if timeline else None,
+                "last_seen_at": timeline[-1]["period_start_iso"] if timeline else None,
+                "claims": []
+            }
+
+    raise HTTPException(status_code=404, detail="Narrative not found")
+
+# Added trends endpoint (Backend)
+@app.get("/api/v1/dashboards/{dashboard_id}/trends")
+def get_trends(dashboard_id: str, range: str = "3m"):
+    data = load_json("test_trends_output.json")
+    timeline = data["trends"]["overall"]["timeline"]
+    trend_info = data["trends"]["overall"]["trend"]
+
+    return {
+        "labels": [t["period"] for t in timeline],
+        "datasets": [
+            {
+                "narrative_id": "overall-trend",
+                "label": "Overall Trend",
+                "color": "#00d4ff",
+                "data": [t["total_views"] for t in timeline],
+                "direction": trend_info["pattern"]
+            }
+        ],
+        "pattern": trend_info["pattern"],
+        "peak_period": trend_info["peak_period"],
+        "description": trend_info["description"]
+    }
+
+# Added risk overview endpoint (Backend)
+@app.get("/api/v1/dashboards/{dashboard_id}/risk/overview")
+def get_risk_overview(dashboard_id: str):
+    data = load_json("test_risk_output.json")
+
+    return data["risk_summary"]["aggregate"]
+
+# Added risks video endpoint (Backend)
+@app.get("/api/v1/dashboards/{dashboard_id}/risk/videos")
+def get_risk_videos(dashboard_id: str):
+    data = load_json("test_risk_output.json")
+    return data["risk_summary"]["per_video"]
+
+
+@app.get("/api/v1/dashboards/{dashboard_id}/creators")
+def get_creators(dashboard_id: str):
+    return [
+        {
+            "channel_id": "channel-id 1",
+            "channel_name": "Technology channel",
+            "total_claims": 38,
+            "flagged_claims": 12,
+            "accuracy_rate": 0.68,
+            "risk_level": "medium",
+            "risk_score": 5.4,
+            "last_assessed_at": "2025-03-10T00:00:00Z"
+        }
+    ]
+ 
+@app.get("/api/v1/creators/{channel_id}/risk")
+def get_creator_risk(channel_id: str):
+    return {
+        "channel_id": "channel-id 1",
+        "channel_name": "Technology channel",
+        "total_claims": 38,
+        "flagged_claims": 12,
+        "accuracy_rate": 0.68,
+        "risk_level": "medium",
+        "risk_score": 5.4,
+        "last_assessed_at": "2025-03-10T00:00:00Z"
+    }
+
+
+
+
+
+
+@app.get("/api/v1/users/me")
+def get_user():
+    return {
+        "user_id": "user 1",
+        "name": "Test User",
+        "email": "Test Email",
+        "initials": "TN",
+        "plan": "free",
+        "role": "user",
+        "created_at": "2025-01-01T00:00:00Z"
+    }
+ 
+@app.patch("/api/v1/users/me")
+def update_user(body: UpdateUserBody):
+    return {
+        "user_id": "user 1",
+        "name": "Test Name" or "Temp Name",
+        "email": "Test Email" or "Temp Email",
+        "initials": "TN",
+        "plan": "free",
+        "role": "user",
+        "created_at": "2025-01-01T00:00:00Z"
+    }
+ 
+@app.get("/api/v1/users/me/plan")
+def get_plan():
+    return {
+        "plan": "free",
+        "plan_name": "Free Plan",
+        "dashboard_limit": 1,
+        "dashboards_used": 1
+    }
