@@ -44,6 +44,7 @@ model Board {
   user_id         String    @db.Uuid
   board_name      String    @db.VarChar(500)
   description     String?   @db.VarChar(500)
+  search_terms    String[]
   layout          Layout    @default(overview)
   last_updated_at DateTime  @updatedAt
   created_at      DateTime  @default(now())
@@ -52,7 +53,6 @@ model Board {
   videos        Video[]
   narratives    Narrative[]
   boardChannels BoardChannel[]
-  keywords      Keyword[]
 }
 
 
@@ -81,7 +81,7 @@ model Channel {
 
 model Video {
   video_id         String    @id @db.VarChar(20)
-  board_id         String
+  board_id         String    @db.Uuid
   channel_id       String    @db.VarChar(50)
   title            String    @db.VarChar(500)
   description      String?   @db.Text
@@ -150,7 +150,7 @@ model Claim {
   claim_type        ClaimType
   confidence_score  Float
   risk_level        RiskLevel
-  processed_at      DateTime?
+  processed_at      DateTime  @default(now())
   is_verified       Boolean
   accuracy_rating   Float?
 
@@ -160,21 +160,21 @@ model Claim {
 
 model Narrative {
   narrative_id       String                    @id @default(uuid()) @db.Uuid
-  board_id           String
+  board_id           String                    @db.Uuid
   title              String                    @db.VarChar(500)
   summary            String?                   @db.Text
   topic_label        String?                   @db.VarChar(200)
   claim_count        Int                       @default(0)
   color              String
-  first_seen_at      DateTime?
-  last_seen_at       DateTime?
+  first_seen_at      DateTime                  @default(now())
+  last_seen_at       DateTime                  @updatedAt
 
   board  Board   @relation(fields: [board_id], references: [board_id])
   claims Claim[]
 }
 
 model BoardChannel {
-  board_id     String
+  board_id     String    @db.Uuid
   channel_id   String    @db.VarChar(50)
   processed_at DateTime?
 
@@ -182,13 +182,4 @@ model BoardChannel {
   channel Channel @relation(fields: [channel_id], references: [channel_id])
 
   @@id([board_id, channel_id])
-}
-
-model Keyword {
-  keyword_id   String    @id @default(uuid()) @db.Uuid
-  board_id     String
-  keyword      String    @db.VarChar(50)
-  processed_at DateTime? @default(now())
-
-  board Board @relation(fields: [board_id], references: [board_id])
 }
