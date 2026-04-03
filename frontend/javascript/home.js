@@ -10,7 +10,7 @@ const CURRENT_USER = {
   name: 'Animesh Subedi',
   email: 'animesh@example.com',
   initials: 'AS',
-  plan: 'free'   // 'free' | 'analyst' | 'enterprise'
+  plan: 'analyst'   // 'free' | 'analyst' | 'enterprise'
 };
 
 // ── STATE ────────────────────────────────────────────────────

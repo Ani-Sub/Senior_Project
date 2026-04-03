@@ -7,7 +7,6 @@
 <title>Creator Risk Monitor</title>
 
 <link rel="stylesheet" href="../css/riskMonitor.css">
-<link rel="stylesheet" href="../css/dashboard.css">
 <link rel="stylesheet" href="../css/home.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
@@ -85,25 +84,25 @@
 
 <div class="stat-card">
 <h3>High Risk</h3>
-<p class="stat-num danger">17</p>
-<span class="stat-sub">3 fewer than last week</span>
+<p class="stat-num danger" id="statHighRisk"></p>
+<span class="stat-sub">Creators flagged high risk</span>
 </div>
 
 <div class="stat-card">
 <h3>Under Review</h3>
-<p class="stat-num warn">28</p>
-<span class="stat-sub">Pending analysis</span>
+<p class="stat-num warn" id="statReview"></p>
+<span class="stat-sub">Moderate risk creators</span>
 </div>
 
 <div class="stat-card">
 <h3>Verified</h3>
-<p class="stat-num safe">80</p>
+<p class="stat-num safe" id="statVerified"></p>
 <span class="stat-sub">Low risk creators</span>
 </div>
 
 <div class="stat-card">
 <h3>Total Channels</h3>
-<p class="stat-num">170</p>
+<p class="stat-num" id="statTotal"></p>
 <span class="stat-sub">Active monitored channels</span>
 </div>
 
@@ -135,118 +134,14 @@ placeholder="Search creators..."
 
 
 <!-- CREATOR LIST -->
-<section class="creator-list">
-
-
-<!-- CREATOR CARD -->
-<div class="creator-card" data-name="healthmiracleguru">
-
-<div class="creator-header">
-
-<div class="avatar">HM</div>
-
-<div class="creator-info">
-
-<h3>HealthMiracleGuru</h3>
-<p>@healthmiracles • 234K subscribers</p>
-
-</div>
-
-<div class="risk-score danger">
-87
-<span>Risk</span>
-</div>
-
-</div>
-
-
-<div class="violation-section">
-
-<div class="violation-title">⚠ Violations Detected</div>
-
-<div class="flags">
-
-<span class="flag">Unverified Health Claims</span>
-<span class="flag">Misleading Thumbnail</span>
-<span class="flag">Missing Affiliate Disclosure</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="creator-card" data-name="cryptomillionaire">
-
-<div class="creator-header">
-
-<div class="avatar">CM</div>
-
-<div class="creator-info">
-<h3>CryptoMillionaire</h3>
-<p>@cryptogains • 567K subscribers</p>
-</div>
-
-<div class="risk-score critical">
-94
-<span>Risk</span>
-</div>
-
-</div>
-
-<div class="violation-section">
-
-<div class="violation-title">⚠ Violations Detected</div>
-
-<div class="flags">
-
-<span class="flag">Pump & Dump Scheme</span>
-<span class="flag">Financial Scam Risk</span>
-<span class="flag">Fake Testimonials</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="creator-card" data-name="sciencedaily">
-
-<div class="creator-header">
-
-<div class="avatar">SD</div>
-
-<div class="creator-info">
-<h3>ScienceDaily</h3>
-<p>@sciencedaily • 2.1M subscribers</p>
-</div>
-
-<div class="risk-score safe">
-8
-<span>Risk</span>
-</div>
-
-</div>
-
-<div class="verified">
-
-✔ Verified creator — no violations detected
-
-</div>
-
-</div>
-
-</section>
+<div id="pagination"></div>
+<section class="creator-list" id="creatorList"></section>
 
 
 </main>
 
 
-<script src="javascript/api.js"></script>
+<script src="../javascript/api.js"></script>
 <script src="../javascript/riskMonitor.js"></script>
 
 </body>

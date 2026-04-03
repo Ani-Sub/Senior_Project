@@ -56,6 +56,66 @@ color:var(--white);
 margin-bottom:30px;
 }
 
+/* ── PAGINATION ───────────────────────────────────────────── */
+#pagination {
+  margin-top: 28px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Base Button */
+.page-btn {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-family: 'DM Mono', monospace;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover */
+.page-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0,212,255,0.06);
+}
+
+/* Active Page */
+.page-btn.active {
+  background: rgba(0,212,255,0.12);
+  border-color: rgba(0,212,255,0.35);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(0,212,255,0.15);
+}
+
+/* Disabled (Prev/Next) */
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Optional: subtle glow on active */
+.page-btn.active:hover {
+  background: rgba(0,212,255,0.18);
+}
+
+.page-btn.nav {
+  font-size: 0.85rem;
+  padding: 0 12px;
+}
+
 
 /* CREATOR CARDS */
 
