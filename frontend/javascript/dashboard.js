@@ -36,31 +36,44 @@ let overviewChartInstance = null;
 let trendsChartInstance = null;
 
 // ── INIT ─────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  loadDashboardMeta();
+document.addEventListener('DOMContentLoaded', async () => {
+  auth.requireAuth();
+  await loadDashboardMeta();
   renderOverview();
   renderTrends();
   renderClaims();
 });
 
-// ── LOAD DASHBOARD META FROM localStorage ────────────────────
-function loadDashboardMeta() {
+// ── LOAD DASHBOARD META FROM API ─────────────────────────────
+async function loadDashboardMeta() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
+
+  // Fill sidebar user info from session
+  const user = auth.getUser();
+  if (user) {
+    const avatarEl = document.querySelector('.user-avatar');
+    const nameEl   = document.querySelector('.user-name');
+    const emailEl  = document.querySelector('.user-email');
+    if (avatarEl) avatarEl.textContent = getInitials(user.name);
+    if (nameEl)   nameEl.textContent   = user.name;
+    if (emailEl)  emailEl.textContent  = user.email;
+  }
+
   let dash = null;
 
-  try {
-    const all = JSON.parse(localStorage.getItem('niq_dashboards')) || [];
-    dash = all.find(d => d.id === id);
-  } catch {}
+  if (id) {
+    const { data, error } = await api.get(`/dashboards/${id}`);
+    if (!error) dash = data;
+  }
 
-  // Fallback to mock if no match
+  // Fallback if no id or API failed
   if (!dash) {
     dash = {
       name: 'AI Industry Trends',
       layout: 'overview',
-      tags: ['GPT-5', 'OpenAI', 'AGI', 'LLM'],
-      updatedAt: Date.now()
+      search_terms: ['GPT-5', 'OpenAI', 'AGI', 'LLM'],
+      created_at: new Date().toISOString()
     };
   }
 
@@ -68,12 +81,11 @@ function loadDashboardMeta() {
   document.getElementById('dashLayout').textContent = layoutLabel(dash.layout);
   // createdAt is immutable — dashboards cannot be edited after creation.
   // To change topic/settings the user must delete and create a new dashboard.
-  document.getElementById('dashUpdated').textContent = 'Created ' + new Date(dash.createdAt || dash.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  document.getElementById('dashUpdated').textContent = 'Created ' + new Date(dash.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
   const chips = document.getElementById('searchTermChips');
-  chips.innerHTML = (dash.tags || []).map(t => `<span class="term-chip">${t}</span>`).join('');
+  chips.innerHTML = (dash.search_terms || []).map(t => `<span class="term-chip">${t}</span>`).join('');
 
-  // Set the saved layout as default
   switchLayout(dash.layout || 'overview');
 }
 
@@ -354,7 +366,7 @@ function closeUserMenu() {
   document.getElementById('userRow')?.classList.remove('open');
 }
 
-function handleLogout() { window.location.href = 'index.html'; }
+function handleLogout() { authActions.logout(); }
 
 document.addEventListener('click', () => closeUserMenu());
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });

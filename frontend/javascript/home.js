@@ -5,29 +5,24 @@ const PLANS = {
   enterprise: { name: 'Enterprise', limit: Infinity }
 };
 
-// Simulated current user — swap this with real auth data from your backend
-const CURRENT_USER = {
-  name: 'Animesh Subedi',
-  email: 'animesh@example.com',
-  initials: 'AS',
-  plan: 'free'   // 'free' | 'analyst' | 'enterprise'
-};
-
 // ── STATE ────────────────────────────────────────────────────
-let dashboards = loadDashboards();
+let dashboards = [];
 let tags = [];
 let selectedDesign = null;
 let pendingDeleteId = null;
 let currentStep = 1;
 
 // ── INIT ─────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  auth.requireAuth();
+  await initDashboards();
   applyUserInfo();
   renderDashboards();
   setupTagInput();
 
   document.getElementById('newDashboardBtn').addEventListener('click', () => {
-    const plan = PLANS[CURRENT_USER.plan];
+    const user = auth.getUser();
+    const plan = PLANS[user?.plan] || PLANS.free;
     if (dashboards.length >= plan.limit) {
       showLimitBanner();
     } else {
@@ -36,9 +31,35 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ── LOAD DASHBOARDS FROM API ──────────────────────────────────
+async function initDashboards() {
+  const { data, error } = await api.get('/dashboards');
+  if (error) {
+    dashboards = [];
+    return;
+  }
+  dashboards = (data || []).map(normalizeDashboard);
+}
+
+// Map backend field names to what the UI expects
+function normalizeDashboard(d) {
+  return {
+    id:          d.dashboard_id,
+    name:        d.name,
+    description: d.description,
+    tags:        d.search_terms || [],
+    design:      d.layout || 'overview',
+    createdAt:   new Date(d.created_at).getTime(),
+  };
+}
+
 // ── USER INFO ─────────────────────────────────────────────────
 function applyUserInfo() {
-  const plan = PLANS[CURRENT_USER.plan];
+  const user = auth.getUser();
+  if (!user) return;
+
+  const planKey = user.plan || 'free';
+  const plan = PLANS[planKey] || PLANS.free;
   const used = dashboards.length;
   const limit = plan.limit === Infinity ? '∞' : plan.limit;
 
@@ -46,15 +67,23 @@ function applyUserInfo() {
   document.getElementById('sidebarPlanLimit').textContent = `${used} / ${limit} dashboards`;
 
   // Hide upgrade link for enterprise
-  if (CURRENT_USER.plan === 'enterprise') {
+  if (planKey === 'enterprise') {
     document.getElementById('upgradeLink').style.display = 'none';
   }
 
   // Greet by first name
-  const firstName = CURRENT_USER.name.split(' ')[0];
+  const firstName = (user.name || '').split(' ')[0];
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
   document.querySelector('.page-title').textContent = `${greeting}, ${firstName}`;
+
+  // Fill sidebar user info
+  const avatarEl = document.querySelector('.user-avatar');
+  const nameEl   = document.querySelector('.user-name');
+  const emailEl  = document.querySelector('.user-email');
+  if (avatarEl) avatarEl.textContent = getInitials(user.name);
+  if (nameEl)   nameEl.textContent   = user.name;
+  if (emailEl)  emailEl.textContent  = user.email;
 }
 
 // ── RENDER DASHBOARDS ─────────────────────────────────────────
@@ -132,7 +161,8 @@ function previewHTML(design) {
 }
 
 function updateSidebarLimit() {
-  const plan = PLANS[CURRENT_USER.plan];
+  const user = auth.getUser();
+  const plan = PLANS[user?.plan] || PLANS.free;
   const used = dashboards.length;
   const limit = plan.limit === Infinity ? '∞' : plan.limit;
   document.getElementById('sidebarPlanLimit').textContent = `${used} / ${limit} dashboards`;
@@ -161,7 +191,6 @@ function resetForm() {
 }
 
 function goStep(n) {
-  // Validate before advancing
   if (n === 2 && currentStep === 1) {
     const name = document.getElementById('dashName').value.trim();
     if (!name) {
@@ -185,7 +214,6 @@ function goStep(n) {
 
   currentStep = n;
 
-  // Show/hide steps
   for (let i = 1; i <= 3; i++) {
     document.getElementById(`step${i}`).style.display = i === n ? 'block' : 'none';
     const ind = document.getElementById(`step-ind-${i}`);
@@ -212,8 +240,9 @@ function populateReview() {
   document.getElementById('reviewDesign').textContent = selectedDesign ? designLabels[selectedDesign] : '—';
 }
 
-function createDashboard() {
-  const plan = PLANS[CURRENT_USER.plan];
+async function createDashboard() {
+  const user = auth.getUser();
+  const plan = PLANS[user?.plan] || PLANS.free;
   if (dashboards.length >= plan.limit) {
     closeNewModal();
     showLimitBanner();
@@ -223,20 +252,24 @@ function createDashboard() {
   const name = document.getElementById('dashName').value.trim();
   const desc = document.getElementById('dashDesc').value.trim();
 
-  // Dashboards are immutable after creation — no editing allowed.
-  // Users must delete and create a new dashboard to change topic or settings.
-  // This prevents bypassing the per-plan dashboard limit via edits.
-  const dash = {
-    id: 'dash_' + Date.now(),
+  const btn = document.querySelector('#step3 .btn-primary');
+  if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
+
+  const { data, error } = await api.post('/dashboards', {
     name,
     description: desc,
-    tags: [...tags],
-    design: selectedDesign || 'overview',
-    createdAt: Date.now(),
-  };
+    search_terms: [...tags],
+    layout: selectedDesign || 'overview',
+  });
 
-  dashboards.push(dash);
-  saveDashboards();
+  if (btn) { btn.disabled = false; btn.textContent = '✓ Create Dashboard'; }
+
+  if (error) {
+    showFormError(error);
+    return;
+  }
+
+  dashboards.push(normalizeDashboard(data));
   closeNewModal();
   renderDashboards();
 }
@@ -303,9 +336,13 @@ function closeDeleteModal() {
   document.getElementById('deleteModal').classList.remove('active');
 }
 
-function confirmDelete() {
+async function confirmDelete() {
+  const { error } = await api.delete(`/dashboards/${pendingDeleteId}`);
+  if (error) {
+    closeDeleteModal();
+    return;
+  }
   dashboards = dashboards.filter(d => d.id !== pendingDeleteId);
-  saveDashboards();
   closeDeleteModal();
   renderDashboards();
 }
@@ -318,22 +355,10 @@ function openDashboard(id) {
 // ── LIMIT BANNER ──────────────────────────────────────────────
 function showLimitBanner() {
   const banner = document.getElementById('limitBanner');
-  const plan = PLANS[CURRENT_USER.plan];
+  const user = auth.getUser();
+  const plan = PLANS[user?.plan] || PLANS.free;
   document.getElementById('limitPlanName').textContent = plan.name;
   banner.style.display = 'flex';
-}
-
-// ── PERSISTENCE (localStorage) ───────────────────────────────
-function saveDashboards() {
-  localStorage.setItem('niq_dashboards', JSON.stringify(dashboards));
-}
-
-function loadDashboards() {
-  try {
-    return JSON.parse(localStorage.getItem('niq_dashboards')) || [];
-  } catch {
-    return [];
-  }
 }
 
 // ── HELPERS ───────────────────────────────────────────────────
@@ -371,7 +396,6 @@ function handleLogout() {
   authActions.logout();
 }
 
-// Close dropdown when clicking anywhere else
 document.addEventListener('click', () => closeUserMenu());
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
   overlay.addEventListener('click', (e) => {
@@ -382,7 +406,6 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
   });
 });
 
-// Close on Escape
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
