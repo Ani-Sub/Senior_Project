@@ -341,3 +341,12 @@ def get_plan(db: db_dependency):
         "dashboard_limit": plan_limits[userProfile["plan"]],
         "dashboards_used": numDashboards
     }
+
+
+
+
+
+
+# change create dashboard to make sure that if a user cannot make more boards an error pops up
+# change delete dashboard to update number of dashboards left for user
+# implement get claims and trends query
