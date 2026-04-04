@@ -30,13 +30,15 @@
   - Made the column `first_seen_at` on table `Narrative` required. This step will fail if there are existing NULL values in that column.
   - Made the column `last_seen_at` on table `Narrative` required. This step will fail if there are existing NULL values in that column.
   - Added the required column `initials` to the `User` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `role` to the `User` table without a default value. This is not possible if the table is not empty.
   - Changed the type of `user_id` on the `User` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
   - Changed the type of `board_id` on the `Video` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
 
 */
 -- CreateEnum
 CREATE TYPE "Plan" AS ENUM ('free', 'analyst', 'enterprise');
+
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('user', 'admin');
 
 -- CreateEnum
 CREATE TYPE "Layout" AS ENUM ('overview', 'trends', 'claims');
@@ -120,7 +122,7 @@ ALTER COLUMN "last_seen_at" SET NOT NULL;
 ALTER TABLE "User" DROP CONSTRAINT "User_pkey",
 ADD COLUMN     "initials" TEXT NOT NULL,
 ADD COLUMN     "plan" "Plan" NOT NULL DEFAULT 'free',
-ADD COLUMN     "role" TEXT NOT NULL,
+ADD COLUMN     "role" "Role" NOT NULL DEFAULT 'user',
 DROP COLUMN "user_id",
 ADD COLUMN     "user_id" UUID NOT NULL,
 ADD CONSTRAINT "User_pkey" PRIMARY KEY ("user_id");

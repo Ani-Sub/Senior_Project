@@ -19,13 +19,18 @@ enum Plan {
   enterprise
 }
 
+enum Role {
+  user
+  admin
+}
+
 model User {
   user_id     String   @id @default(uuid()) @db.Uuid
   name        String  
   email       String   @unique
   initials    String
   plan        Plan     @default(free)
-  role        String
+  role        Role     @default(user)
   password    String
   created_at  DateTime @default(now())
 
