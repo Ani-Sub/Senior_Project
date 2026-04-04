@@ -44,8 +44,8 @@ async function initDashboards() {
 // Map backend field names to what the UI expects
 function normalizeDashboard(d) {
   return {
-    id:          d.dashboard_id,
-    name:        d.name,
+    id:          d.board_id,
+    name:        d.board_name,
     description: d.description,
     tags:        d.search_terms || [],
     design:      d.layout || 'overview',
