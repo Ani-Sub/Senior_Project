@@ -15,7 +15,7 @@ CREATE TYPE "ClaimType" AS ENUM ('factual', 'opinion');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "user_id" UUID NOT NULL,
+    "user_id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "initials" TEXT NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Board" (
-    "board_id" UUID NOT NULL,
+    "board_id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "user_id" UUID NOT NULL,
     "board_name" VARCHAR(500) NOT NULL,
     "description" VARCHAR(500),
@@ -112,7 +112,7 @@ CREATE TABLE "Comment" (
 
 -- CreateTable
 CREATE TABLE "Claim" (
-    "claim_id" UUID NOT NULL,
+    "claim_id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "video_id" TEXT NOT NULL,
     "narrative_id" UUID,
     "video_title" VARCHAR(500) NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE "Claim" (
 
 -- CreateTable
 CREATE TABLE "Narrative" (
-    "narrative_id" UUID NOT NULL,
+    "narrative_id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "board_id" UUID NOT NULL,
     "title" VARCHAR(500) NOT NULL,
     "summary" TEXT,
