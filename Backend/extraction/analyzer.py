@@ -1,7 +1,7 @@
 import json
 import logging
 import requests
-from config import LLM_URL, LLM_MODEL
+from config import LLM_URL, LLM_MODEL, LLM_NUM_PREDICT
 from utility.parser import parse_json_response
 from utility.chunker import chunk_text
 from utility.debugLog import (
@@ -19,8 +19,11 @@ from extraction.llmPrompts import (
 log = logging.getLogger(__name__)
 
 
-def call_llm(prompt: str, num_predict: int = 1200) -> str | None:
+def call_llm(prompt: str, num_predict: int | None = None) -> str | None:
     """Send a prompt to the local Ollama instance and return the response string."""
+    if num_predict is None:
+        num_predict = LLM_NUM_PREDICT
+    
     try:
         response = requests.post(
             LLM_URL,
@@ -33,7 +36,7 @@ def call_llm(prompt: str, num_predict: int = 1200) -> str | None:
                     "num_predict": num_predict
                 }
             },
-            timeout=120
+            timeout=180  # Increased timeout for longer responses
         )
         response.raise_for_status()
         return response.json()["response"]
@@ -65,7 +68,7 @@ def analyze_video(
         prompt = build_extraction_prompt(chunk, video_id)
 
         log_llm_prompt("transcript", video_id, i + 1, prompt)
-        raw = call_llm(prompt, num_predict=1500)
+        raw = call_llm(prompt)
 
         if not raw:
             log_llm_response("transcript", video_id, i + 1, "(no response)", None)
@@ -93,7 +96,7 @@ def analyze_video(
         comment_prompt = build_comment_prompt(comments, all_claims, video_id)
 
         log_llm_prompt("comments", video_id, None, comment_prompt)
-        raw = call_llm(comment_prompt, num_predict=1500)
+        raw = call_llm(comment_prompt)
 
         if raw:
             parsed = parse_json_response(raw)
@@ -203,7 +206,7 @@ def synthesize_trends(all_results: list[dict]) -> dict | None:
     prompt = build_synthesis_prompt(all_results)
 
     log_llm_synthesis_prompt(prompt)
-    raw = call_llm(prompt, num_predict=2000)
+    raw = call_llm(prompt)
 
     if not raw:
         log_llm_synthesis_response("(no response)", None)
