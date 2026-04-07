@@ -27,6 +27,7 @@ youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 #=====================================
 LLM_MODEL = "llama3"
 LLM_URL = "http://localhost:11434/api/generate"
+LLM_NUM_PREDICT = 2500  # Max tokens for LLM response (increase if JSON truncation occurs)
 
 #=====================================
 # chunking parameters

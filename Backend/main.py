@@ -21,11 +21,13 @@ def run_pipeline(
     max_comments: int = 30,
     trend_granularity: Granularity = "weekly",
     assess_risk: bool = True,
-    llm_verify_risk: bool = True
+    llm_verify_risk: bool = True,
+    use_cache: bool = True,
+    cache_max_age_days: int = 30
 ) -> dict | None:
     """
     Run the full YouTube intelligence pipeline:
-    1. Discover relevant videos
+    1. Discover relevant videos (with quota optimization via RSS + cache)
     2. Extract claims from transcripts + comments
     3. Synthesize cross-video narrative
     4. Analyze temporal trends
@@ -42,6 +44,8 @@ def run_pipeline(
         trend_granularity: Time granularity for trend analysis ("daily" or "weekly")
         assess_risk: Whether to run risk assessment on content
         llm_verify_risk: Whether to use LLM for borderline risk cases
+        use_cache: Use channel cache + RSS feeds to reduce API quota (default: True)
+        cache_max_age_days: Days before cached channels expire (default: 30)
     """
  
     # ── Debug log init ──────────────────────────────────────
@@ -49,13 +53,15 @@ def run_pipeline(
     log.info(f"Debug log: {debug_path}")
  
     try:
-        # ── Step 1: Discovery ───────────────────────────────────
+        # ── Step 1: Discovery (with quota optimization) ────────
         discovered_videos = discover_videos(
             search_keywords=search_keywords,
             channel_sub_min=channel_sub_min,
             video_view_min=video_view_min,
             video_keywords=video_keywords,
-            days=days
+            days=days,
+            use_cache=use_cache,
+            cache_max_age_days=cache_max_age_days
         )
         log.info(f"\nDiscovered {len(discovered_videos)} videos\n")
  
@@ -97,7 +103,7 @@ def run_pipeline(
             llm_fn = call_llm if llm_verify_risk else None
             
             for result in all_results:
-                vid = result.get("video_id")
+                vid: str = result["video_id"]
                 transcript = result.get("_transcript", "")
                 comments = result.get("_comments", [])
                 
@@ -180,7 +186,9 @@ if __name__ == "__main__":
         max_comments=30,
         trend_granularity="weekly",
         assess_risk=True,
-        llm_verify_risk=True
+        llm_verify_risk=True,
+        use_cache=True,           # Use RSS feeds for cached channels (saves quota)
+        cache_max_age_days=30     # Re-search after 30 days
     )
 
 
