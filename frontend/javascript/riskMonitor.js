@@ -1,7 +1,7 @@
 const ITEMS_PER_PAGE = 6;
 let currentPage = 1;
 
-// 🔥 DUMMY DATA (matches your DB: Channel = creator)
+// DUMMY DATA (matches your DB: Channel = creator)
 let creators = [
   { id: "channel_1", name: "TechWorld", handle: "@techworld", subs: "1.2M subscribers", risk: 72, violations: ["misinfo"] },
   { id: "channel_2", name: "Daily News Hub", handle: "@dailyhub", subs: "850K subscribers", risk: 45, violations: [] },
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // const dashboardId = getDashboardId();
 
-  // 🔌 FUTURE BACKEND WIRING
+  // FUTURE BACKEND WIRING
   /*
   creators = await fetchCreators(dashboardId);
   */
