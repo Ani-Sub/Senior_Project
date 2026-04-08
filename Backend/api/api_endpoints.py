@@ -74,7 +74,7 @@ async def signup(body: SignupBody, db: db_dependency):
     
     return {
         "token": "fake token",
-        "user": dict(result)
+        "user": dict(result._mapping)
     }
 
 
@@ -88,7 +88,7 @@ async def login(body: LoginBody, db: db_dependency):
         raise HTTPException(status_code=401, detail={"error": "unauthorized", "message": "Invalid Login Information"})
     return {
         "token": "fake token",
-        "user": dict(result)
+        "user": dict(result._mapping)
     }
 
 @app.post("/api/v1/auth/logout")
@@ -105,7 +105,7 @@ async def me(db: db_dependency):
     
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "User not found"})
-    return dict(result)
+    return dict(result._mapping)
 
 
 
@@ -118,7 +118,7 @@ def get_dashboards(db: db_dependency):
     
     result = []
     for board in dashboards:
-        tempBoard = dict(board)
+        tempBoard = dict(board._mapping)
         result.append(tempBoard)
     
     return result
@@ -133,7 +133,7 @@ def create_dashboard(body: CreateDashboardBody, db: db_dependency):
     result = db.execute(t, {"user_id": 1, "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
     db.commit()
 
-    return dict(result)
+    return dict(result._mapping)
  
 @app.get("/api/v1/dashboards/{dashboard_id}")
 def get_dashboard(dashboard_id: str, db: db_dependency):
@@ -144,7 +144,7 @@ def get_dashboard(dashboard_id: str, db: db_dependency):
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "Dashboard not found"})
     
-    return dict(result)
+    return dict(result._mapping)
  
 @app.delete("/api/v1/dashboards/{dashboard_id}")
 def delete_dashboard(dashboard_id: str, db: db_dependency):
@@ -191,7 +191,7 @@ def get_claim(claim_id: str, db: db_dependency):
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "Claim not found"})
     
 
-    return dict(result)
+    return dict(result._mapping)
 
 
 @app.get("/api/v1/dashboards/{dashboard_id}/narratives")
@@ -202,7 +202,7 @@ def get_narratives(dashboard_id: str, db: db_dependency):
     
     result = []
     for narrative in narratives:
-        tempNarrative = dict(narrative)
+        tempNarrative = dict(narrative._mapping)
         result.append(tempNarrative)
     
     return result
@@ -221,10 +221,10 @@ def get_narrative(narrative_id: str, db: db_dependency):
     claims = db.execute(t, {"narrative_id": narrative_id}).fetchall()
 
 
-    result = dict(narrative)
+    result = dict(narrative._mapping)
     result["claims"] = []
     for claim in claims:
-        tempClaim = dict(claim)
+        tempClaim = dict(claim._mapping)
         result["claims"].append(tempClaim)
 
     return result
@@ -255,7 +255,7 @@ def get_creators(dashboard_id: str, db: db_dependency):
     
     result = []
     for channel in channels:
-        tempChannel = dict(channel)
+        tempChannel = dict(channel._mapping)
         result.append(tempChannel)
     
     return result
@@ -270,7 +270,7 @@ def get_creator_risk(channel_id: str, db: db_dependency):
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "Creator not found"})
 
-    return dict(result)
+    return dict(result._mapping)
 
 
 
@@ -286,7 +286,7 @@ def get_user(db: db_dependency):
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "User not found"})
     
-    return dict(result)
+    return dict(result._mapping)
 
 
 
@@ -303,7 +303,7 @@ def update_user(body: UpdateUserBody, db: db_dependency):
         newInitials = "".join(word[0].upper() for word in body.name.split())
 
 
-    if body.current_password == dict(password)["password"] and body.new_password:
+    if body.current_password == dict(password._mapping)["password"] and body.new_password:
 
         t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), password = :password WHERE user_id = :user_id RETURNING *")
         result = db.execute(t, {"user_id": 1, "name": body.name, "email": body.email, "initials": newInitials, "password": body.new_password}).fetchone()
@@ -315,7 +315,7 @@ def update_user(body: UpdateUserBody, db: db_dependency):
 
     db.commit()
 
-    return dict(result)
+    return dict(result._mapping)
     
 
 
@@ -325,11 +325,11 @@ def get_plan(db: db_dependency):
     
     t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
     userProfile = db.execute(t, {"user_id": 1}).fetchone()
-    userProfile = dict(userProfile)
+    userProfile = dict(userProfile._mapping)
 
     t = text("SELECT COUNT(*) AS num FROM \"Board\" WHERE user_id = :user_id")
     numDashboards = db.execute(t, {"user_id": 1}).fetchone()
-    numDashboards = dict(numDashboards)["num"]
+    numDashboards = dict(numDashboards._mapping)["num"]
     
         
     plan_names = {"free": "Free Plan", "analyst": "Analyst Plan", "enterprise": "Enterprise Plan"}
