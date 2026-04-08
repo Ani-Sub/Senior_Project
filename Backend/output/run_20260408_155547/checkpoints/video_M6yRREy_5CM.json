@@ -1,0 +1,724 @@
+{
+  "video_id": "M6yRREy_5CM",
+  "topics": [
+    "Anthropic",
+    "Alibaba CPU",
+    "AI hardware",
+    "Neuroscience",
+    "AI agents",
+    "Alibaba",
+    "Meta",
+    "Gwen Claw",
+    "Juan Claw",
+    "semiconductors",
+    "AI",
+    "Brain Data",
+    "Alibaba's chip development",
+    "Cyber attacks",
+    "Machine Learning",
+    "AI models",
+    "Mythos"
+  ],
+  "claims": [
+    {
+      "text": "Anthropic accidentally exposed its most powerful AI yet, called Mythos.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Anthropic accidentally exposed its most powerful AI yet, called Mythos.",
+      "source": "transcript"
+    },
+    {
+      "text": "Meta just unveiled a new model that can predict how the brain responds to content.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "Meta just unveiled a new model that can predict how the brain responds to content.",
+      "source": "transcript"
+    },
+    {
+      "text": "A new self-evolving agent called Gwen Claw is trying to fix one of AI's biggest problems.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "A new self-evolving agent called Gwen Claw is trying to fix one of AI's biggest problems.",
+      "source": "transcript"
+    },
+    {
+      "text": "The leak revealed a new model called Clawude mythos and internally it's also referred to as something called Capiara.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The leak revealed a new model called Clawude mythos and internally it's also referred to as something called Capiara.",
+      "source": "transcript"
+    },
+    {
+      "text": "Capiara is basically a new tier of models.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Capiara is described as something above that.",
+      "source": "transcript"
+    },
+    {
+      "text": "Opus is the most powerful one they currently offer.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "Opus is the most powerful one they currently offer.",
+      "source": "transcript"
+    },
+    {
+      "text": "Capiara is already trained and is now being tested with early access customers.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "According to the draft, this model is already trained and is now being tested with early access customers.",
+      "source": "transcript"
+    },
+    {
+      "text": "This isn't going straight to the public. It's limited to a small group of early users, mostly organizations.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "This isn't going straight to the public. It's limited to a small group of early users, mostly organizations.",
+      "source": "transcript"
+    },
+    {
+      "text": "Models like this could be used to find and exploit vulnerabilities faster than defenders can patch them.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "Models like this could be used to find and exploit vulnerabilities faster than defenders can patch them.",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic already had cases where their models were used in real attacks.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "There was a situation involving a Chinese state-l linked group that used clawed code to target around 30 organizations including tech companies, financial institutions, and government agencies.",
+      "source": "transcript"
+    },
+    {
+      "text": "A Chinese state-linked group used clawed code to target around 30 organizations.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "situation involving a Chinese state-l linked group that used clawed code",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic detected and investigated the cyber attack, banned the accounts, and notified the affected organizations.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Anthropic detected it, investigated it over about 10 days, banned the accounts, and notified the affected organizations",
+      "source": "transcript"
+    },
+    {
+      "text": "The new AI model could accelerate cyber attacks.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "when they say this new model could accelerate cyber attacks, they're speaking from experience",
+      "source": "transcript"
+    },
+    {
+      "text": "The model is expensive to run and not ready for general release yet.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Another detail from the leak is that the model is expensive to run and not ready for general release yet",
+      "source": "transcript"
+    },
+    {
+      "text": "Top-tier AI models are getting more powerful but also heavier in terms of compute and cost.",
+      "type": "statistic",
+      "confidence": 0.85,
+      "supporting_quote": "These top tier models are getting more powerful yet also heavier in terms of compute and cost",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic is pushing deeper into enterprise.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "At the same time, Anthropic is clearly pushing deeper into enterprise",
+      "source": "transcript"
+    },
+    {
+      "text": "Meta's Tribe V2 AI system can predict how the human brain responds to different stimuli.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "They're trying to build an AI system that can predict how the human brain responds when a person watches something, hears something, or reads something",
+      "source": "transcript"
+    },
+    {
+      "text": "Meta's Tribe V2 AI system uses Llama 3.2 to 3B for text, VJEPA 2 giant for video, and WAV 2 VCERT 2.0 for audio.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "For text, it used Llama 3.2 to 3B. For video, it used VJEPA 2 giant. And for audio, it used WAV 2 VCERT 2.0",
+      "source": "transcript"
+    },
+    {
+      "text": "Meta's Tribe V2 AI system was trained on 451.6 hours of fMRI data and evaluated on a much wider pool totaling 1,117.7 hours.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "The system was trained on 451.6 hours of fMRI data collected from 25 people across four naturalistic studies, including movies, podcasts, and silent videos",
+      "source": "transcript"
+    },
+    {
+      "text": "The model predicts activity across 20,484 cortical points and 8,82 subcortical voxels.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "The model predicts activity across 20,484 cortical points and 8,82 subcortical voxels.",
+      "source": "transcript"
+    },
+    {
+      "text": "Tribe V2 clearly beats older methods that researchers have used for years as the standard approach.",
+      "type": "factual",
+      "confidence": 0.85,
+      "supporting_quote": "Meta says Tribe V2 clearly beats older methods that researchers have used for years as the standard approach.",
+      "source": "transcript"
+    },
+    {
+      "text": "Tribe V2 can make zero-shot predictions, meaning it can estimate the brain responses of new people without additional training.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "But Tribe V2 can make zero-shot predictions, meaning it can estimate the brain responses of new people without additional training.",
+      "source": "transcript"
+    },
+    {
+      "text": "The model reached a group correlation near 4 on the human conneto project 7T data set.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "On the human conneto project 7T data set, the model reached a group correlation near 4",
+      "source": "transcript"
+    },
+    {
+      "text": "The model can be used for insilicone neuroscience, which basically means running virtual brain experiments on a computer before or alongside real-world ones.",
+      "type": "factual",
+      "confidence": 0.85,
+      "supporting_quote": "When they tested it on the individual brain charting data set, Tribe V2 was able to recover classic brain landmarks like...",
+      "source": "transcript"
+    },
+    {
+      "text": "Tribe V2 was able to recover classic brain landmarks like the fusopform face area for faces, the parahippocample place area for places, the temporal parietal junction for emotional processing, and Broca's area for syntax and language.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Tribe V2 was able to recover classic brain landmarks like the fusopform face area for faces, the parahippocample place area for places, the temporal parietal junction for emotional processing, and Broca's area for syntax and language.",
+      "source": "transcript"
+    },
+    {
+      "text": "The model naturally organized itself around five major brain networks: auditory, language, motion, default mode, and visual.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Even more interesting, when researchers looked inside the model's final layer, it naturally organized itself around five major brain networks.",
+      "source": "transcript"
+    },
+    {
+      "text": "GwynClaw is trying to solve exactly that [problem of AI agents losing track].",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "A lot of AI agents sound smart in chat. Yet, once you ask them to carry out a real task from start to finish, they lose track, restart, forget what you wanted, or fail the second the situation changes.",
+      "source": "transcript"
+    },
+    {
+      "text": "Juan Claw is built to keep the whole task alive while those changes happen.",
+      "type": "factual",
+      "confidence": 0.85,
+      "supporting_quote": "A big part of that [is] Juan Claw is built to keep the whole task alive while those changes happen.",
+      "source": "transcript"
+    },
+    {
+      "text": "Juan Claw can pause, reorder, insert, remove, and continue tasks without resetting.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "It can pause, reorder, insert, remove, and continue without acting like everything just reset.",
+      "source": "transcript"
+    },
+    {
+      "text": "Juan Claw has a memory system with three layers: stable identity, long-term background, and dynamic trajectory.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "A big part of that comes from its memory system, which has three layers.",
+      "source": "transcript"
+    },
+    {
+      "text": "Juan Claw uses real login states, cookies, and cached info to operate like a real user.",
+      "type": "factual",
+      "confidence": 0.85,
+      "supporting_quote": "It takes over the local browser environment instead, so it can use real login states, cookies, and cached info",
+      "source": "transcript"
+    },
+    {
+      "text": "Juan Claw evolves through self-evolution loop: execution, failure, learning, optimization, and then another attempt.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "It adds a self-evolution loop where failures and negative user feedback get logged, analyzed for root causes, and turned into targeted improvements.",
+      "source": "transcript"
+    },
+    {
+      "text": "Juan Claw supports private deployment for companies that care about privacy and data control.",
+      "type": "factual",
+      "confidence": 0.85,
+      "supporting_quote": "And it supports private deployment for companies that care about privacy and data control.",
+      "source": "transcript"
+    },
+    {
+      "text": "Alibaba's Schwantc950 CPU is designed specifically with Aentic AI in mind.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Alibaba just revealed a new CPU called the Schwantc950. And the key point here is that it was designed specifically with Aentic AI in mind.",
+      "source": "transcript"
+    },
+    {
+      "text": "The Schwantc950 CPU can handle multi-step workloads and be customized for specific inference patterns.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Alibaba says the chip can be customized for specific inference patterns",
+      "source": "transcript"
+    },
+    {
+      "text": "The Schwantc950 CPU has a performance improvement of over 30% compared to some mainstream products.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "it claims more than a 30% performance improvement over some mainstream products because of that flexibility",
+      "source": "transcript"
+    },
+    {
+      "text": "The chip can be customized for specific inference patterns and it claims more than a 30% performance improvement over some mainstream products.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "it claims more than a 30% performance improvement",
+      "source": "transcript"
+    },
+    {
+      "text": "Risk 5 is an open architecture unlike ARM's design model where companies pay royalties to use the blueprint.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Risk 5 is an open architecture",
+      "source": "transcript"
+    },
+    {
+      "text": "Choosing risk 5 gives Alibaba more freedom and potentially lower costs.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "potentially lower costs",
+      "source": "transcript"
+    },
+    {
+      "text": "Chinese companies have been under pressure because of US export restrictions on advanced Nvidia chips.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "US export restrictions on advanced Nvidia chips",
+      "source": "transcript"
+    },
+    {
+      "text": "The bigger value of the C950 is not that it will suddenly transform Alibaba's revenue overnight, but that it can improve supply chain resilience, reduce costs, and give the company more control.",
+      "type": "opinion",
+      "confidence": 0.85,
+      "supporting_quote": "improve supply chain resilience",
+      "source": "transcript"
+    },
+    {
+      "text": "Meta's goal is to make people more addicted to tech.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "So Meta is just trying to work out how to make people more addicted to tech.",
+      "relation_to_transcript": "contradicts_transcript",
+      "source": "comment"
+    },
+    {
+      "text": "Alibaba's Schwantc950 CPU can be customized for specific inference patterns and has a performance improvement of over 30% compared to some mainstream products.",
+      "type": "statistic",
+      "confidence": 0.6,
+      "supporting_quote": "The chip can be customized for specific inference patterns and it claims more than a 30% performance improvement over some mainstream products.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "Risk 5 is an open architecture that gives Alibaba more freedom and potentially lower costs.",
+      "type": "factual",
+      "confidence": 0.7,
+      "supporting_quote": "Choosing risk 5 gives Alibaba more freedom and potentially lower costs.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "The new AI model could be used to find and exploit vulnerabilities faster than defenders can patch them.",
+      "type": "prediction",
+      "confidence": 0.6,
+      "supporting_quote": "Models like this could be used to find and exploit vulnerabilities faster than defenders can patch them.",
+      "relation_to_transcript": "supports_transcript",
+      "source": "comment"
+    }
+  ],
+  "claim_count": 45,
+  "transcript_claim_count": 41,
+  "comment_claim_count": 4,
+  "video_metadata": {
+    "video_id": "M6yRREy_5CM",
+    "channel_id": "UC5l7RouTQ60oUjLjt1Nh-UQ",
+    "title": "Anthropic\u2019s New Claude MYTHOS Is The Most Powerful AI Ever!",
+    "description": "Anthropic accidentally exposed Claude MYTHOS, its most powerful AI yet, Meta unveiled a model that predicts brain activity from content, JiuwenClaw is trying to fix how AI agents fail in real tasks, and Alibaba just revealed a new chip built for AI agents.\n\n\ud83d\udce9 Brand Deals & Partnerships: collabs@nouralabs.com\n\u2709 General Inquiries: airevolutionofficial@gmail.com\n\n\ud83e\udde0 What You\u2019ll See\nAnthropic Claude MYTHOS Leak\nSOURCE: https://fortune.com/2026/03/27/anthropic-leaked-ai-mythos-cybersecurity-risk/\nMeta TRIBE v2 Brain Prediction Model\nSOURCE: https://m.economictimes.com/tech/artificial-intelligence/meta-unveils-tribe-v2-ai-model-for-human-brain-that-predicts-neural-responses/articleshow/129829049.cms\nJiuwenClaw Self Evolving AI Agent\nSOURCE: https://www.marktechpost.com/2026/03/27/openjiuwen-community-releases-jiuwenclaw-a-self-evolving-ai-agent-for-task-management/\nAlibaba XuanTie C950 AI Agent Chip\nSOURCE: https://www.reuters.com/world/asia-pacific/alibaba-develops-next-gen-chip-agentic-ai-chinese-media-says-2026-03-24/\n\n\ud83d\udea8 Why It Matters\nAnthropic is holding back a far more powerful model over cyber risk, Meta is pushing AI closer to decoding human brain responses, JiuwenClaw is targeting real agent reliability, and Alibaba is building hardware for the next wave of AI agents.\n\n#ai #anthropic #meta",
+    "channel_title": "AI Revolution",
+    "published_at": "2026-03-29T23:58:10Z",
+    "view_count": 53857,
+    "like_count": 1224,
+    "comment_count": 77,
+    "duration": "PT12M51S",
+    "duration_seconds": 771
+  },
+  "comment_timestamps": [
+    "2026-03-30T09:53:24Z",
+    "2026-03-30T00:40:01Z",
+    "2026-03-30T09:16:15Z",
+    "2026-03-30T01:38:23Z",
+    "2026-03-30T10:19:49Z",
+    "2026-03-30T08:25:01Z",
+    "2026-03-30T00:10:39Z",
+    "2026-03-30T00:10:33Z",
+    "2026-03-30T12:31:07Z",
+    "2026-03-30T09:34:15Z",
+    "2026-03-30T04:15:11Z",
+    "2026-03-31T16:58:39Z",
+    "2026-03-30T03:21:16Z",
+    "2026-03-31T13:49:58Z",
+    "2026-03-30T02:44:46Z",
+    "2026-03-30T08:38:52Z",
+    "2026-03-31T21:58:35Z",
+    "2026-04-05T16:39:56Z",
+    "2026-04-04T19:12:53Z",
+    "2026-03-31T15:34:30Z",
+    "2026-03-31T17:39:09Z",
+    "2026-03-30T16:45:31Z",
+    "2026-03-30T16:47:17Z",
+    "2026-03-30T17:31:03Z",
+    "2026-03-30T16:34:33Z",
+    "2026-03-30T01:43:33Z",
+    "2026-03-30T04:19:27Z",
+    "2026-03-30T01:55:50Z",
+    "2026-03-30T04:36:48Z",
+    "2026-04-05T07:41:26Z"
+  ],
+  "_transcript": "Anthropic accidentally exposed its most powerful AI yet, called Mythos. Meta just unveiled a new model that can predict how the brain responds to content. A new self-evolving agent called Gwen Claw is trying to fix one of AI's biggest problems. And Alibaba just revealed a new chip built specifically for AI agents. Let's start with anthropic first because this story is kind of huge. So, this wasn't even supposed to be public yet. What happened is a pretty classic internal mistake. Some draft content, including what looks like a full blog post about a new model, got accidentally left in a publicly accessible data cache. And we're not talking about one or two files. There were nearly 3,000 assets sitting there, including images, PDFs, internal documents, even things like employee related files. All of it tied to their content system. Once journalists and security researchers found it, Anthropic got notified and shut it down pretty quickly and they admitted it came down to a human error in their CMS configuration. But the important part is what was inside those documents. The leak revealed a new model called Clawude mythos and internally it's also referred to as something called Capiara which is basically a new tier of models. And this is where it gets interesting because right now Anthropic has three main tiers. Haiku, Sonnet, and Opus. Opus is the most powerful one they currently offer. Capiara is described as something above that. So, you're basically looking at a new class of model that sits above their current top tier, meaning bigger, more capable, and also more expensive to run. According to the draft, this model is already trained and is now being tested with early access customers. Anthropic themselves confirmed they're working on a new generalpurpose model with major improvements in reasoning, coding, and cyber security. They're calling it a step change in performance, and they say it's the most capable system they've ever built, and they're being very careful about how they release it. This isn't going straight to the public. It's limited to a small group of early users, mostly organizations, and there's a reason for that. The documents make it very clear that cyber security is a major concern. They literally state that this model is currently far ahead of any other AI model when it comes to cyber capabilities and they're worried about what that means in the real world. The concern is pretty direct. Models like this could be used to find and exploit vulnerabilities faster than defenders can patch them. So instead of just releasing it widely, they're giving early access to cyber security teams so they can prepare for what's coming. And this isn't theoretical. Anthropic already had cases where their models were used in real attacks. There was a situation involving a Chinese state-l linked group that used clawed code to target around 30 organizations including tech companies, financial institutions, and government agencies. Anthropic detected it, investigated it over about 10 days, banned the accounts, and notified the affected organizations. So, when they say this new model could accelerate cyber attacks, they're speaking from experience. Another detail from the leak is that the model is expensive to run and not ready for general release yet. That fits with what we're seeing across the industry. These top tier models are getting more powerful yet also heavier in terms of compute and cost. At the same time, Anthropic is clearly pushing deeper into enterprise. The leak also revealed plans for a private invite-only CEO retreat in Europe happening in the UK where top business leaders will get early exposure to unreleased claude capabilities. It's positioned as a highlevel discussion around how companies are adopting AI with policymakers involved as well. So you've got this combination of a more powerful model, higher risks and a very controlled rollout aimed at big organizations. Now, from there, let's move to Meta. Their fair team just introduced something called Tribe V2. And this is one of those projects that sounds a bit technical at first. Yet, the core idea is actually easy to get. They're trying to build an AI system that can predict how the human brain responds when a person watches something, hears something, or reads something. That's the whole idea. For years, neuroscience has mostly studied the brain in pieces. One group looks at vision, another looks at speech, another looks at faces, motion, emotion, and so on. That has led to a lot of useful discoveries, but it also means the overall picture is kind of broken up. What Meta is trying to do with Tribe V2 is build one system that can look across video, audio, and language together and connect that to real brain activity measured through fMRI scans. And Meta didn't train this thing from scratch in the usual way. Instead, it plugged together some of its strongest existing AI building blocks. For text, it used Llama 3.2 to 3B. For video, it used VJEPA 2 giant. And for audio, it used WAV 2 VCERT 2.0. Then, it combined all of that into a shared system and used a transformer to look across about 100 seconds of incoming information at a time. If you strip away the jargon, what that really means is the model watches, listens, and reads across a window of time, then tries to predict what the brain should be doing during that same window. And the scale here is serious. The system was trained on 451.6 hours of fMRI data collected from 25 people across four naturalistic studies, including movies, podcasts, and silent videos. Then it was evaluated on a much wider pool totaling 1,117.7 hours from 720 people. That's a lot of brain data. The model predicts activity across 20,484 cortical points and 8,82 subcortical voxels. So this isn't some rough brain area lit up estimate. It's trying to model brain responses at pretty high detail. And the results were strong enough that this became more than just a cool experiment. Meta says Tribe V2 clearly beats older methods that researchers have used for years as the standard approach. One of the most surprising parts is how well it handles new people it has never seen before. Usually, if you want a model like this to work on a new subject, you'd expect to need a lot of fresh data. But Tribe V2 can make zeroot predictions, meaning it can estimate the brain responses of new people without additional training. And in some cases, those predictions are actually better at capturing the average group response than many real individual recordings. That's kind of crazy when you think about it. On the human conneto project 7T data set, the model reached a group correlation near4, which the article describes as about twice as good as the median subjects group predictivity. Then when researchers gave it just a small amount of data from a new participant up to one hour and fine-tuned the model for one epoch, it improved even more and beat linear models by two to four times. Then there's the part that makes this feel even bigger. Meta says the model can be used for insilicone neuroscience, which basically means running virtual brain experiments on a computer before or alongside realworld ones. When they tested it on the individual brain charting data set, Tribe V2 was able to recover classic brain landmarks like the fusopform face area for faces, the parahippocample place area for places, the temporal parietal junction for emotional processing, and Broca's area for syntax and language. Even more interesting, when researchers looked inside the model's final layer, it naturally organized itself around five major brain networks. auditory, language, motion, default mode, and visual. Now, from there, let's go to Jew and Claw. The main pitch here is this. A lot of AI agents sound smart in chat. Yet, once you ask them to carry out a real task from start to finish, they lose track, restart, forget what you wanted, or fail the second the situation changes. GwynClaw is trying to solve exactly that. The project came out of the open GWN community and instead of chasing the title of most conversational agent, it focuses on execution. Can the system actually finish the work? Say you're doing an Excel job and halfway through you change the format, then ask it to remove duplicates, then add a summary, then switch the output again. A lot of agents treat every change like a brand new request. Juan Claw is built to keep the whole task alive while those changes happen. It can pause, reorder, insert, remove, and continue without acting like everything just reset. A big part of that comes from its memory system, which has three layers. A stable identity layer, a long-term background layer, and a dynamic trajectory layer. Basically, it tries to keep your broader context, your working history, and your live task state all at once. Then it adds something called context slimming, which is really just a smart way of cutting down the junk while keeping the important details that helps the system stay stable over long tasks without drowning in its own context or running up huge tokens costs. Another smart move is that it doesn't depend on some clean isolated browser demo world. A lot of agents work nicely in controlled environments and then fall apart the second they hit real websites with loginins, cookies, cached states, and anti-bot systems. Giwin claw takes over the local browser environment instead, so it can use real login states, cookies, and cached info to operate more like a real user inside actual systems. And then there's the part that makes it stand out the most. It's meant to evolve. Most agents today are basically fixed. If they fail, you get an error and move on. If you correct them, they may fix it once, yet they don't truly improve over time. Juenclaw adds a self-evolution loop where failures and negative user feedback get logged, analyzed for root causes, and turned into targeted improvements. So, the cycle becomes execution, failure, learning, optimization, and then another attempt. That means the agent is supposed to get better through repeated real use instead of staying frozen the day it launches. It also plugs into places people already use, including Huawei, Celia, Telegram, WhatsApp, FishU, and Web Access. And it supports private deployment for companies that care about privacy and data control. And finally, let's get to Alibaba because this last one is about the hardware side of the agent race. Alibaba just revealed a new CPU called the Schwantc950. And the key point here is that it was designed specifically with Aentic AI in mind. While most people still focus on GPUs because of how important they are for training large AI models, Alibaba is leaning into the idea that CPUs matter a lot too, especially for inference, which is the part where models are actually running and carrying out tasks. That matters because agents don't just spit out one answer and stop. They often work through multi-step actions and CPUs are naturally important for that kind of sequential processing. Alibaba says the Schwanti C950 is built for data centers and can handle the kinds of multi-step workloads agents rely on. The company also says the chip can be customized for specific inference patterns and it claims more than a 30% performance improvement over some mainstream products because of that flexibility. The chip is based on risk 5 which is important too. Risk 5 is an open architecture unlike ARM's design model where companies pay royalties to use the blueprint. So choosing risk 5 gives Alibaba more freedom and potentially lower costs. This launch also fits into a much bigger story. Chinese companies have been under pressure because of US export restrictions on advanced Nvidia chips. So they've had to push harder on domestic AI hardware. Alibaba has already been building out its semiconductor efforts through its T- head division and earlier this year it released another AI chip called the Gen Wu 810E. The company doesn't sell these chips directly to other firms. Instead, it uses them to strengthen its own cloud AI services. Analysts quoted in the article said, \"The bigger value of the C950 is not that it will suddenly transform Alibaba's revenue overnight, but that it can improve supply chain resilience, reduce costs, and give the company more control in a world where AI computing power is becoming harder to secure. Anyway, that's it for this one. Let me know what you think. Thanks for watching, and I'll catch you in the next one.",
+  "_comments": [
+    {
+      "comment_id": "UgwmZz2QV8LaxggtuYZ4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@DeepMindAnalyst",
+      "comment_text": "Oops 3,000 artifacts exposed, that smells like intentional leaking to cast shadows on the other models and free marketing.",
+      "published_at": "2026-03-30T09:53:24Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 13,
+      "text": "Oops 3,000 artifacts exposed, that smells like intentional leaking to cast shadows on the other models and free marketing."
+    },
+    {
+      "comment_id": "UgwdekxlISQr8B-WFnh4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@ADzx1034",
+      "comment_text": "So Meta is just trying to work out how to make people more addicted to tech.",
+      "published_at": "2026-03-30T00:40:01Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 13,
+      "text": "So Meta is just trying to work out how to make people more addicted to tech."
+    },
+    {
+      "comment_id": "UgzEA84tZ_DmqGS00rF4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@JohnMSawyer",
+      "comment_text": "Knowing Meta, any research they're doing on how the human brain responds to stimuli is probably designed to figure out ways to hook people into using their products well beyond healthy levels.",
+      "published_at": "2026-03-30T09:16:15Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 10,
+      "text": "Knowing Meta, any research they're doing on how the human brain responds to stimuli is probably designed to figure out ways to hook people into using their products well beyond healthy levels."
+    },
+    {
+      "comment_id": "UgwNixbl6p_EI3DWZ5R4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@beefzerkee",
+      "comment_text": "Considering how bad the subscription rate limits have been lately, we'd get what... 2 or 3 prompts out of Mythos before hitting limits? I'm more interested in Sonnet 5 tbh",
+      "published_at": "2026-03-30T01:38:23Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 7,
+      "text": "Considering how bad the subscription rate limits have been lately, we'd get what... 2 or 3 prompts out of Mythos before hitting limits? I'm more interested in Sonnet 5 tbh"
+    },
+    {
+      "comment_id": "Ugzuhs1DXuZMdh3zM5R4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@taar1",
+      "comment_text": "\"Accidentally\" - sure...",
+      "published_at": "2026-03-30T10:19:49Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 4,
+      "text": "\"Accidentally\" - sure..."
+    },
+    {
+      "comment_id": "UgyWN-ZkX4Cth_siGpd4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@wolfehtesrever",
+      "comment_text": "Meta would be trying to mind read to manipulate, not for our benifit",
+      "published_at": "2026-03-30T08:25:01Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 4,
+      "text": "Meta would be trying to mind read to manipulate, not for our benifit"
+    },
+    {
+      "comment_id": "UgzOYEEZHO1k_hTOXpB4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@piku13",
+      "comment_text": "Good for Alibaba!  I actually thought our US companies would have jumped on the \"local inference\" bandwagon a couple years ago. To me that's an obvious step to reducing datacenter and bandwidth demand by offloading as much AI as possible to the larger collection of public devices.",
+      "published_at": "2026-03-30T00:10:39Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 4,
+      "text": "Good for Alibaba!  I actually thought our US companies would have jumped on the \"local inference\" bandwagon a couple years ago. To me that's an obvious step to reducing datacenter and bandwidth demand by offloading as much AI as possible to the larger collection of public devices."
+    },
+    {
+      "comment_id": "UgzS_12d8fbO00iJHwB4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@JosephCuddington-z6s6f",
+      "comment_text": "3:52 Rendezvous at The \u26f3 Course \ud83c\udf7b",
+      "published_at": "2026-03-30T00:10:33Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "3:52 Rendezvous at The \u26f3 Course \ud83c\udf7b"
+    },
+    {
+      "comment_id": "UgzMZ6FeRqBffMPGaZF4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@AdvantestInc",
+      "comment_text": "Interesting how hardware is quietly catching up to agent workflows. Inference for multi-step reasoning is becoming its own design challenge.",
+      "published_at": "2026-03-30T12:31:07Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Interesting how hardware is quietly catching up to agent workflows. Inference for multi-step reasoning is becoming its own design challenge."
+    },
+    {
+      "comment_id": "Ugw2aucUXRbwuq0E6F14AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@JohnMSawyer",
+      "comment_text": "How long before everyone can buy their own at-home chip fab machine, and custom-design their own chips?",
+      "published_at": "2026-03-30T09:34:15Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "How long before everyone can buy their own at-home chip fab machine, and custom-design their own chips?"
+    },
+    {
+      "comment_id": "Ugzgm0q3_d0ykYLKkS54AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@jackbauer322",
+      "comment_text": "Accidental ... then ... they're very careful about how they release it ... the amount of bullshit from American companies is staggering",
+      "published_at": "2026-03-30T04:15:11Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Accidental ... then ... they're very careful about how they release it ... the amount of bullshit from American companies is staggering"
+    },
+    {
+      "comment_id": "UgxPA7R7MYtHwTG1oBN4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@Title18Sect241",
+      "comment_text": "I love the way AI is so smart that it thinks about being rewarded for using deceptive strategies and when asking AI the correct questions it's smarts tells on its self .",
+      "published_at": "2026-03-31T16:58:39Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "I love the way AI is so smart that it thinks about being rewarded for using deceptive strategies and when asking AI the correct questions it's smarts tells on its self ."
+    },
+    {
+      "comment_id": "UgyYOOTCM9Uid2OJKfZ4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@reknown123",
+      "comment_text": "their naming convention is really nice",
+      "published_at": "2026-03-30T03:21:16Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "their naming convention is really nice"
+    },
+    {
+      "comment_id": "UgwhmIpgtnO-K7nCB954AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@marketingagentio",
+      "comment_text": "The benchmark jump is real but the thing marketers should watch is the tool-use reliability improvement, me thinks.",
+      "published_at": "2026-03-31T13:49:58Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "The benchmark jump is real but the thing marketers should watch is the tool-use reliability improvement, me thinks."
+    },
+    {
+      "comment_id": "Ugxj-woiQx04UlQ7IXF4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@TheVristion",
+      "comment_text": "\"already trained\" meaning, a bigger scale of the prior -",
+      "published_at": "2026-03-30T02:44:46Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "\"already trained\" meaning, a bigger scale of the prior -"
+    },
+    {
+      "comment_id": "UgxWbyElqIXU8JzrtZN4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@Raccoons-piracy",
+      "comment_text": "With so many different leaps happening at once, a point in the future where each of the new capabilities are harmonized into one model seems close, as well.",
+      "published_at": "2026-03-30T08:38:52Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "With so many different leaps happening at once, a point in the future where each of the new capabilities are harmonized into one model seems close, as well."
+    },
+    {
+      "comment_id": "UgyFI1WxCd8Plq7q8zF4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@splunge1262",
+      "comment_text": "AI has changed speech. Now we say what something isn\u2019t about before we say what it\u2019s about.",
+      "published_at": "2026-03-31T21:58:35Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "AI has changed speech. Now we say what something isn\u2019t about before we say what it\u2019s about."
+    },
+    {
+      "comment_id": "UgyldKqsQSplgau3fxR4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@priaAInetwork",
+      "comment_text": "Very interesting news!",
+      "published_at": "2026-04-05T16:39:56Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Very interesting news!"
+    },
+    {
+      "comment_id": "UgyRFV-E24Buu6RzlE14AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@NullHypothesisTech",
+      "comment_text": "Well...sounds interesting",
+      "published_at": "2026-04-04T19:12:53Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Well...sounds interesting"
+    },
+    {
+      "comment_id": "UgwhzUfKwE97tkguGIV4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@sage_silvestris",
+      "comment_text": "Anthropic cut free access limits back drastically. They're repurposing sources.",
+      "published_at": "2026-03-31T15:34:30Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Anthropic cut free access limits back drastically. They're repurposing sources."
+    },
+    {
+      "comment_id": "Ugw3LRBmb3jU-rvip8d4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@AIforRookies",
+      "comment_text": "yoooooooou bro what a video mate",
+      "published_at": "2026-03-31T17:39:09Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "yoooooooou bro what a video mate"
+    },
+    {
+      "comment_id": "Ugy9izAAS4I9xJ1WHMt4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@nixdorfbrazil",
+      "comment_text": "If you're not sick to your stomach with this you aren't getting it.",
+      "published_at": "2026-03-30T16:45:31Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "If you're not sick to your stomach with this you aren't getting it."
+    },
+    {
+      "comment_id": "UgxhN-0MivuzLZwyjrR4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@nesseihtgnay9419",
+      "comment_text": "no Meta is also making agentic CPU too, from ARM chips",
+      "published_at": "2026-03-30T16:47:17Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "no Meta is also making agentic CPU too, from ARM chips"
+    },
+    {
+      "comment_id": "Ugzoq7vdWomDlHJrf-h4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@MisterDivineAdventures",
+      "comment_text": "4:00 Meta's TRIBE V2 for UUNIS NEURAL MAPPING (real time!)",
+      "published_at": "2026-03-30T17:31:03Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "4:00 Meta's TRIBE V2 for UUNIS NEURAL MAPPING (real time!)"
+    },
+    {
+      "comment_id": "UgwC4vd99ZAYovZL1iF4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@nesseihtgnay9419",
+      "comment_text": "its just how hyped until we see Mythos for ourselves",
+      "published_at": "2026-03-30T16:34:33Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "its just how hyped until we see Mythos for ourselves"
+    },
+    {
+      "comment_id": "UgyZPcz-Ce3ZbRQaF2t4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@sanusisanusi9396",
+      "comment_text": "teruslah berkembang agar manusia menjadi penggangguran masal",
+      "published_at": "2026-03-30T01:43:33Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "teruslah berkembang agar manusia menjadi penggangguran masal"
+    },
+    {
+      "comment_id": "UgwJYLgUO9C3L32I-Jx4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@musicalvisions",
+      "comment_text": "\"The most powerful AI ever\" is like saying \"the most powerful cereal box toy ever\".",
+      "published_at": "2026-03-30T04:19:27Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "\"The most powerful AI ever\" is like saying \"the most powerful cereal box toy ever\"."
+    },
+    {
+      "comment_id": "UgzQ8ZkD-ggR4geoLy14AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@allauddin732",
+      "comment_text": "Check out the k9 programming coming.\nIts way way advance.",
+      "published_at": "2026-03-30T01:55:50Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Check out the k9 programming coming.\nIts way way advance."
+    },
+    {
+      "comment_id": "UgwtWr62a3gQhhkbEUd4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@Descuidado13lopez",
+      "comment_text": "Sputum 2 as. sip sip",
+      "published_at": "2026-03-30T04:36:48Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Sputum 2 as. sip sip"
+    },
+    {
+      "comment_id": "UgzcrZ89scu1H6ReUBV4AaABAg",
+      "video_id": "M6yRREy_5CM",
+      "commenter_name": "@Rakib-b2t8q",
+      "comment_text": "Oh wow, I\u2019m not surprised how Dario is being hypocritical. He says he\u2019s going to create a safe AI but then does this and puts everyone at risk in terms of cybersecurity.",
+      "published_at": "2026-04-05T07:41:26Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Oh wow, I\u2019m not surprised how Dario is being hypocritical. He says he\u2019s going to create a safe AI but then does this and puts everyone at risk in terms of cybersecurity."
+    }
+  ]
+}

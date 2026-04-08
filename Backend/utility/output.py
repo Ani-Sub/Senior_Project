@@ -13,6 +13,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from utility.embeddings import calculate_centroid
+
 log = logging.getLogger(__name__)
 
 
@@ -37,7 +39,7 @@ class OutputManager:
             └── risk_flags.json
     """
     
-    def __init__(self, output_dir: str = "output"):
+    def __init__(self, output_dir: str | Path = "output"):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.run_dir = Path(output_dir) / f"run_{timestamp}"
         self.checkpoint_dir = self.run_dir / "checkpoints"
@@ -143,10 +145,16 @@ class OutputManager:
         """
         log.info("Exporting database-ready files...")
         
+        processed_at = datetime.now().isoformat()
+        
         # Extract and flatten data
         channels = self._extract_channels(video_results)
-        videos = self._extract_videos(video_results)
-        claims = self._extract_claims(video_results)
+        videos = self._extract_videos(video_results, processed_at)
+        transcripts = self._extract_transcripts(video_results, processed_at)
+        transcript_chunks = self._extract_transcript_chunks(video_results, processed_at)
+        comments = self._extract_comments(video_results, processed_at)
+        claims = self._extract_claims(video_results, processed_at)
+        claim_embeddings = self._extract_claim_embeddings(video_results)
         narratives = self._extract_narratives(synthesis, video_results)
         narrative_videos = self._extract_narrative_videos(synthesis)
         risk_flags = self._extract_risk_flags(risk)
@@ -158,8 +166,22 @@ class OutputManager:
         self._save_json(self.db_ready_dir / "videos.json", videos)
         log.info(f"  ✓ videos.json ({len(videos)} records)")
         
+        self._save_json(self.db_ready_dir / "transcripts.json", transcripts)
+        log.info(f"  ✓ transcripts.json ({len(transcripts)} records)")
+        
+        self._save_json(self.db_ready_dir / "transcript_chunks.json", transcript_chunks)
+        log.info(f"  ✓ transcript_chunks.json ({len(transcript_chunks)} records)")
+        
+        self._save_json(self.db_ready_dir / "comments.json", comments)
+        log.info(f"  ✓ comments.json ({len(comments)} records)")
+        
         self._save_json(self.db_ready_dir / "claims.json", claims)
         log.info(f"  ✓ claims.json ({len(claims)} records)")
+        
+        # Save embeddings separately (large vectors)
+        if claim_embeddings:
+            self._save_json(self.db_ready_dir / "claim_embeddings.json", claim_embeddings)
+            log.info(f"  ✓ claim_embeddings.json ({len(claim_embeddings)} records)")
         
         self._save_json(self.db_ready_dir / "narratives.json", narratives)
         log.info(f"  ✓ narratives.json ({len(narratives)} records)")
@@ -185,10 +207,13 @@ class OutputManager:
         # Save run metadata
         metadata = {
             "run_id": self.run_dir.name,
-            "created_at": datetime.now().isoformat(),
+            "created_at": processed_at,
             "search_params": search_params,
             "video_count": len(videos),
+            "transcript_count": len(transcripts),
+            "comment_count": len(comments),
             "claim_count": len(claims),
+            "claim_embedding_count": len(claim_embeddings),
             "narrative_count": len(narratives),
             "risk_flag_count": len(risk_flags)
         }
@@ -200,35 +225,102 @@ class OutputManager:
         channels = {}
         for result in video_results:
             meta = result.get("video_metadata", {})
+            channel_id = meta.get("channel_id")
             channel_title = meta.get("channel_title")
-            if channel_title and channel_title not in channels:
-                channels[channel_title] = {
-                    "channel_title": channel_title,
-                    # channel_id would need to be added to video_metadata
+            
+            if channel_id and channel_id not in channels:
+                channels[channel_id] = {
+                    "channel_id": channel_id,
+                    "channel_title": channel_title or "",
                 }
         return list(channels.values())
     
-    def _extract_videos(self, video_results: list[dict]) -> list[dict]:
+    def _extract_videos(self, video_results: list[dict], processed_at: str) -> list[dict]:
         """Extract video metadata in flat format."""
         videos = []
         for result in video_results:
             meta = result.get("video_metadata", {})
             videos.append({
                 "video_id": result.get("video_id"),
+                "channel_id": meta.get("channel_id"),
                 "title": meta.get("title"),
-                "channel_title": meta.get("channel_title"),
-                "published_at": meta.get("published_at"),
+                "description": meta.get("description", ""),
                 "view_count": meta.get("view_count"),
-                "like_count": meta.get("like_count"),
-                "comment_count": meta.get("comment_count"),
-                "duration": meta.get("duration"),
-                "claim_count": result.get("claim_count", 0),
-                "transcript_claim_count": result.get("transcript_claim_count", 0),
-                "comment_claim_count": result.get("comment_claim_count", 0)
+                "duration_seconds": meta.get("duration_seconds"),
+                "published_at": meta.get("published_at"),
+                "processed": True,
+                "processed_at": processed_at,
             })
         return videos
     
-    def _extract_claims(self, video_results: list[dict]) -> list[dict]:
+    def _extract_transcripts(self, video_results: list[dict], processed_at: str) -> list[dict]:
+        """Extract transcripts for each video."""
+        transcripts = []
+        transcript_id = 1
+        
+        for result in video_results:
+            video_id = result.get("video_id")
+            transcript_text = result.get("_transcript", "")
+            
+            if transcript_text:
+                transcripts.append({
+                    "transcript_id": transcript_id,
+                    "video_id": video_id,
+                    "transcript": transcript_text,
+                    "processed_at": processed_at,
+                })
+                transcript_id += 1
+        
+        return transcripts
+    
+    def _extract_transcript_chunks(self, video_results: list[dict], processed_at: str) -> list[dict]:
+        """Extract transcript chunks for each video."""
+        from utility.chunker import chunk_text
+        
+        chunks = []
+        chunk_id = 1
+        transcript_id = 1
+        
+        for result in video_results:
+            transcript_text = result.get("_transcript", "")
+            
+            if transcript_text:
+                video_chunks = chunk_text(transcript_text)
+                for chunk_number, chunk_text_content in enumerate(video_chunks, start=1):
+                    chunks.append({
+                        "chunk_id": chunk_id,
+                        "transcript_id": transcript_id,
+                        "chunk_text": chunk_text_content,
+                        "chunk_number": chunk_number,
+                        "processed_at": processed_at,
+                    })
+                    chunk_id += 1
+                transcript_id += 1
+        
+        return chunks
+    
+    def _extract_comments(self, video_results: list[dict], processed_at: str) -> list[dict]:
+        """Extract comments from all videos."""
+        comments = []
+        
+        for result in video_results:
+            video_comments = result.get("_comments", [])
+            
+            for comment in video_comments:
+                comments.append({
+                    "comment_id": comment.get("comment_id"),
+                    "video_id": comment.get("video_id"),
+                    "commenter_name": comment.get("commenter_name", ""),
+                    "comment_text": comment.get("comment_text") or comment.get("text", ""),
+                    "published_at": comment.get("published_at"),
+                    "is_reply": comment.get("is_reply", False),
+                    "top_level_comment_id": comment.get("top_level_comment_id"),
+                    "processed_at": processed_at,
+                })
+        
+        return comments
+    
+    def _extract_claims(self, video_results: list[dict], processed_at: str) -> list[dict]:
         """Extract all claims with auto-generated IDs."""
         claims = []
         claim_id = 1
@@ -239,56 +331,112 @@ class OutputManager:
                 claims.append({
                     "claim_id": claim_id,
                     "video_id": video_id,
+                    "narrative_id": None,  # To be linked later
                     "claim_text": claim.get("text"),
-                    "claim_type": claim.get("type"),
-                    "confidence": claim.get("confidence"),
-                    "source": claim.get("source"),  # "transcript" or "comment"
-                    "supporting_quote": claim.get("supporting_quote"),
-                    "narrative_id": None  # To be linked later
+                    "processed_at": processed_at,
                 })
                 claim_id += 1
         
         return claims
+    
+    def _extract_claim_embeddings(self, video_results: list[dict]) -> list[dict]:
+        """Extract claim embeddings in a separate file (large vectors)."""
+        embeddings = []
+        claim_id = 1
+        
+        for result in video_results:
+            for claim in result.get("claims", []):
+                embedding = claim.get("embedding")
+                if embedding:
+                    embeddings.append({
+                        "claim_id": claim_id,
+                        "embedding": embedding,
+                    })
+                claim_id += 1
+        
+        return embeddings
     
     def _extract_narratives(
         self, 
         synthesis: dict | None, 
         video_results: list[dict]
     ) -> list[dict]:
-        """Extract narratives from synthesis in DB-ready format."""
+        """Extract narratives from synthesis in DB-ready format with centroid embeddings."""
         narratives_out = []
         
         if not synthesis:
             return narratives_out
         
+        # Build video lookup for timestamps and claims
+        video_lookup = {r.get("video_id"): r for r in video_results}
+        
         # New structure: synthesis has "narratives" array
         for narrative in synthesis.get("narratives", []):
             video_ids = narrative.get("video_ids", [])
             
-            # Count claims for videos in this narrative
+            # Collect claims, timestamps, and embeddings for this narrative
             claim_count = 0
-            for result in video_results:
-                if result.get("video_id") in video_ids:
+            timestamps = []
+            embeddings = []
+            
+            for vid in video_ids:
+                if vid in video_lookup:
+                    result = video_lookup[vid]
                     claim_count += result.get("claim_count", 0)
+                    pub_at = result.get("video_metadata", {}).get("published_at")
+                    if pub_at:
+                        timestamps.append(pub_at)
+                    
+                    # Collect embeddings from claims
+                    for claim in result.get("claims", []):
+                        emb = claim.get("embedding")
+                        if emb:
+                            embeddings.append(emb)
+            
+            timestamps.sort()
+            
+            # Calculate centroid from all claim embeddings
+            centroid = calculate_centroid(embeddings) if embeddings else None
             
             narratives_out.append({
                 "narrative_id": narrative.get("id"),
-                "name": narrative.get("name"),
+                "title": narrative.get("name"),  # Schema uses "title"
                 "summary": narrative.get("summary"),
-                "video_ids": video_ids,
-                "video_count": len(video_ids),
-                "claim_count": claim_count
+                "topic_label": narrative.get("name"),  # Use name as topic label
+                "claim_count": claim_count,
+                "centroid_embedding": centroid,
+                "first_seen_at": timestamps[0] if timestamps else None,
+                "last_seen_at": timestamps[-1] if timestamps else None,
             })
         
         # Also include overall summary as a special narrative
         if synthesis.get("overall_summary"):
+            all_timestamps = []
+            all_embeddings = []
+            
+            for result in video_results:
+                pub_at = result.get("video_metadata", {}).get("published_at")
+                if pub_at:
+                    all_timestamps.append(pub_at)
+                
+                # Collect all embeddings
+                for claim in result.get("claims", []):
+                    emb = claim.get("embedding")
+                    if emb:
+                        all_embeddings.append(emb)
+            
+            all_timestamps.sort()
+            overall_centroid = calculate_centroid(all_embeddings) if all_embeddings else None
+            
             narratives_out.insert(0, {
                 "narrative_id": "overall",
-                "name": "Overall Summary",
+                "title": "Overall Summary",
                 "summary": synthesis.get("overall_summary"),
-                "video_ids": [r.get("video_id") for r in video_results],
-                "video_count": len(video_results),
-                "claim_count": sum(r.get("claim_count", 0) for r in video_results)
+                "topic_label": "Overall",
+                "claim_count": sum(r.get("claim_count", 0) for r in video_results),
+                "centroid_embedding": overall_centroid,
+                "first_seen_at": all_timestamps[0] if all_timestamps else None,
+                "last_seen_at": all_timestamps[-1] if all_timestamps else None,
             })
         
         return narratives_out

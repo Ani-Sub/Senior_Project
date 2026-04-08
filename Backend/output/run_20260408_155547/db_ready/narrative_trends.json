@@ -1,0 +1,29 @@
+[
+  {
+    "narrative_id": "narrative_1",
+    "name": "AI Advancements and Applications",
+    "video_count": 2,
+    "pattern": "decline",
+    "confidence": 1.0,
+    "peak_period": "2026-W11",
+    "description": "Activity declined 76% from 2026-W11 to 2026-W12."
+  },
+  {
+    "narrative_id": "narrative_2",
+    "name": "AI in Robotics and Automation",
+    "video_count": 2,
+    "pattern": "decline",
+    "confidence": 1.0,
+    "peak_period": "2026-W11",
+    "description": "Activity declined 72% from 2026-W11 to 2026-W13."
+  },
+  {
+    "narrative_id": "narrative_3",
+    "name": "AI in Healthcare and Rehabilitation",
+    "video_count": 2,
+    "pattern": "decline",
+    "confidence": 1.0,
+    "peak_period": "2026-W11",
+    "description": "Activity declined 78% from 2026-W11 to 2026-W12."
+  }
+]

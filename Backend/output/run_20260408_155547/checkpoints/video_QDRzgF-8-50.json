@@ -1,0 +1,927 @@
+{
+  "video_id": "QDRzgF-8-50",
+  "topics": [
+    "wind-powered robots",
+    "sustainability",
+    "service robots",
+    "robotics",
+    "machine learning",
+    "self-sufficient robots",
+    "exoskeletons",
+    "muscle tissue engineering",
+    "remote or extraterrestrial settings",
+    "public deployment",
+    "AI",
+    "industrial settings",
+    "modular design",
+    "artificial intelligence",
+    "3D printing",
+    "signal processing",
+    "prosthetics",
+    "humanoid robots"
+  ],
+  "claims": [
+    {
+      "text": "South Korea showed off a humanoid that can run, jump, play soccer, and moonwalk.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "So, this week in robotics got kind of ridiculous. South Korea just showed off a humanoid that can run, jump, play soccer, and moonwalk.",
+      "source": "transcript"
+    },
+    {
+      "text": "China is teaching humanoids to play tennis and even chase record-breaking sprint speeds.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "China is teaching humanoids to play tennis and even chase record-breaking sprint speeds.",
+      "source": "transcript"
+    },
+    {
+      "text": "UB is now trying to mass-produce 10,000 humanoid robots with semens.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "UB is now trying to mass-produce 10,000 humanoid robots with semens.",
+      "source": "transcript"
+    },
+    {
+      "text": "One restaurant robot turned a simple dance into total chaos.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "One restaurant robot turned a simple dance into total chaos.",
+      "source": "transcript"
+    },
+    {
+      "text": "Another robot reads human brain signals to stop mistakes before they happen.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Another robot reads human brain signals to stop mistakes before they happen.",
+      "source": "transcript"
+    },
+    {
+      "text": "A windpowered machine is trying to explore brutal terrain without batteries.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "A windpowered machine is trying to explore brutal terrain without batteries.",
+      "source": "transcript"
+    },
+    {
+      "text": "Scientists built a swimming robot powered by self-trained living muscle.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Scientists built a swimming robot powered by self-trained living muscle.",
+      "source": "transcript"
+    },
+    {
+      "text": "A fully compostable robot can survive over 1 million uses before breaking down in soil.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "A fully compostable robot can survive over 1 million uses before breaking down in soil.",
+      "source": "transcript"
+    },
+    {
+      "text": "And a new robotic hand is getting much closer to real human style dexterity.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "And a new robotic hand is getting much closer to real human style dexterity.",
+      "source": "transcript"
+    },
+    {
+      "text": "The robot weighs about 165 lbs or 75 kg, stands around 5'5, and was built by the dynamic robot control and design laboratory at KISS under Hwan Park.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The robot weighs about 165 lbs or 75 kg, stands around 5'5, and was built by the dynamic robot control and design laboratory at KISS under Hwan Park.",
+      "source": "transcript"
+    },
+    {
+      "text": "They are trying to own the full system.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "So, this is not just a flashy shell built around bot components. They are trying to own the full system.",
+      "source": "transcript"
+    },
+    {
+      "text": "It uses a quasi direct drive setup with high torque motors and low gear ratios, which helps it react faster and move more smoothly.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "It uses a quasi direct drive setup with high torque motors and low gear ratios, which helps it react faster and move more smoothly.",
+      "source": "transcript"
+    },
+    {
+      "text": "The robot can already run at about 12 km per hour on flat ground and climb steps over 30 cm high.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The robot can already run at about 12 km per hour on flat ground and climb steps over 30 cm high.",
+      "source": "transcript"
+    },
+    {
+      "text": "Park says the next goal is around 14 kmh. plus ladder climbing and getting over 40 cm steps.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "Park says the next goal is around 14 kmh. plus ladder climbing and getting over 40 cm steps.",
+      "source": "transcript"
+    },
+    {
+      "text": "The knee actuator can hit 320 Newton meters of peak torque, while the ankle actuator is tuned for fast response and stability.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The knee actuator can hit 320 Newton meters of peak torque, while the ankle actuator is tuned for fast response and stability.",
+      "source": "transcript"
+    },
+    {
+      "text": "On the software side, KISS trained it with deep reinforcement learning mixed with human motion data, which is why it moves in a much smoother, more natural way than a lot of AIdriven humanoids.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "On the software side, KISS trained it with deep reinforcement learning mixed with human motion data, which is why it moves in a much smoother, more natural way than a lot of AIdriven humanoids.",
+      "source": "transcript"
+    },
+    {
+      "text": "The system also uses motor operating region modeling, so the simulation matches the real hardware, and the robot can even handle uneven terrain using propriception alone without depending on cameras.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The system also uses motor operating region modeling, so the simulation matches the real hardware, and the robot can even handle uneven terrain using propriception alone without depending on cameras.",
+      "source": "transcript"
+    },
+    {
+      "text": "Case says the long-term goal is a full humanoid with an upper body that can work alongside people in industrial settings.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "Case says the long-term goal is a full humanoid with an upper body that can work alongside people in industrial settings.",
+      "source": "transcript"
+    },
+    {
+      "text": "And the lab is also building a framework called Doflow to let robots learn practical tasks directly from human demonstrations.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "And the lab is also building a framework called Doflow to let robots learn practical tasks directly from human demonstrations.",
+      "source": "transcript"
+    },
+    {
+      "text": "The lab is building a framework called Doflow to let robots learn practical tasks directly from human demonstrations.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "And the lab is also building a framework called Doflow...",
+      "source": "transcript"
+    },
+    {
+      "text": "In many robotic systems, movement alone eats around 20% of the battery.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "In many robotic systems, movement alone eats around 20% of the battery.",
+      "source": "transcript"
+    },
+    {
+      "text": "Wanderbot is a lowcost, modular, fully 3D printed robot designed for exactly those kinds of places.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Wanderbot is a lowcost, modular, fully 3D printed robot...",
+      "source": "transcript"
+    },
+    {
+      "text": "Because it is fully 3D printed, broken parts could theoretically be replaced on site instead of waiting for expensive resupply missions.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Because it is fully 3D printed, broken parts could theoretically be replaced...",
+      "source": "transcript"
+    },
+    {
+      "text": "The next big step is maneuverability because the team still needs to teach it how to turn properly.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "Now, on the other side of the spectrum, robotics also gave us a perfect reminder that public deployment is still messy.",
+      "source": "transcript"
+    },
+    {
+      "text": "A service robot at a Heidiow hot pot restaurant in Certino caused a chaotic scene after moving too close to diners and knocking dishes all over the place during a dance performance.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "A service robot at a Heidiow hot pot restaurant in Certino...",
+      "source": "transcript"
+    },
+    {
+      "text": "The machine is believed to be an Agibot X2, the same type shown at CES 2026 earlier this year.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The machine is believed to be an Agibot X2...",
+      "source": "transcript"
+    },
+    {
+      "text": "Robots that look great in controlled demos can become a problem fast in crowded, unpredictable, realworld spaces.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "Maybe that is true, though it still points to the same issue.",
+      "source": "transcript"
+    },
+    {
+      "text": "That is a big deal because robotic systems usually love perfect data and real life rarely provides that.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "That is a big deal because robotic systems usually love perfect data...",
+      "source": "transcript"
+    },
+    {
+      "text": "Robotic systems usually love perfect data and real life rarely gives you that.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "That is a big deal because robotic systems usually love perfect data and real life rarely gives you that.",
+      "source": "transcript"
+    },
+    {
+      "text": "Leighton breaks tennis into smaller pieces like forehands, backhands, shuffles, and crossover steps.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Leighton breaks tennis into smaller pieces like forehands, backhands, shuffles, and crossover steps.",
+      "source": "transcript"
+    },
+    {
+      "text": "The team collected about 5 hours of motion data from amateur players using a compact motion capture setup.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "The team collected about 5 hours of motion data from amateur players using a compact motion capture setup,",
+      "source": "transcript"
+    },
+    {
+      "text": "After that, reinforcement learning and large-scale simulation trained the system to react to incoming balls while keeping its movements natural.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "After that, reinforcement learning and large-scale simulation trained the system to react to incoming balls while keeping its movements natural.",
+      "source": "transcript"
+    },
+    {
+      "text": "It managed multi-shot rallies with humans from both fourcourt and backcourt positions.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "In real world testing, it managed multi-shot rallies with humans from both fourcourt and backcourt positions.",
+      "source": "transcript"
+    },
+    {
+      "text": "It reached a peak success rate of 96.5%, consistently returning balls near target locations.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Across 10,000 trials, it reached a peak success rate of 96.5%, consistently returning balls near target locations.",
+      "source": "transcript"
+    },
+    {
+      "text": "Robots are now learning fast, dynamic sports from messy human data, and that could scale well beyond tennis into things like soccer and even parkour.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "That could scale well beyond tennis into things like soccer and even parkour.",
+      "source": "transcript"
+    },
+    {
+      "text": "China's humanoid scene is also chasing outright speed.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "China's humanoid scene is also chasing outright speed.",
+      "source": "transcript"
+    },
+    {
+      "text": "Unitry founder Wong Shing said humanoid robots may soon rival or even beat the fastest human ever in sprinting.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "Unitry founder Wong Shing said humanoid robots may soon rival or even beat the fastest human ever in sprinting.",
+      "source": "transcript"
+    },
+    {
+      "text": "In February, Jang University and Jingshi Technology revealed a full-size humanoid called Bolt that can hit 10 meters per second.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "In February, Jang University and Jingshi Technology revealed a full-size humanoid called Bolt that can hit 10 meters per second.",
+      "source": "transcript"
+    },
+    {
+      "text": "For context, Usain Bolt's 100 meter world record averaged around 10.44 m/s.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "For context, Usain Bolt's 100 meter world record averaged around 10.44 m/s.",
+      "source": "transcript"
+    },
+    {
+      "text": "Wong even said that by around midyear, humanoid robots, especially in China, may run the 100 m in under 10 seconds.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "Wong even said that by around midyear, humanoid robots, especially in China, may run the 100 m in under 10 seconds.",
+      "source": "transcript"
+    },
+    {
+      "text": "High-speed bipeedal running is brutally difficult because everything has to stay perfectly synchronized.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "High-speed bipeedal running is brutally difficult because everything has to stay perfectly synchronized.",
+      "source": "transcript"
+    },
+    {
+      "text": "Balance, force, timing, sensing, and control all have to work together with almost no room for error.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "High-speed bipeedal running is brutally difficult because everything has to stay perfectly synchronized.",
+      "source": "transcript"
+    },
+    {
+      "text": "Wang also admitted that the biggest weakness in the whole field is still generalization.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Wang also admitted that the biggest weakness in the whole field is still generalization.",
+      "source": "transcript"
+    },
+    {
+      "text": "Robots can perform beautifully in controlled settings and then struggle badly when the world becomes unpredictable.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "Robots can perform beautifully in controlled settings and then struggle badly when the world becomes unpredictable.",
+      "source": "transcript"
+    },
+    {
+      "text": "That is still the hardest wall embodied AI has to get through.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "That is still the hardest wall embodied AI has to get through.",
+      "source": "transcript"
+    },
+    {
+      "text": "Two engineered muscle tissues are connected so they pull against each other as they naturally contract during development.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "hat two engineered muscle tissues are connected",
+      "source": "transcript"
+    },
+    {
+      "text": "The muscles are effectively exercising themselves.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "So instead of needing an outside system to train them, the muscles are effectively exercising themselves.",
+      "source": "transcript"
+    },
+    {
+      "text": "A major jump in performance was produced by the self-training approach.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "That self-training approach produced a major jump in performance",
+      "source": "transcript"
+    },
+    {
+      "text": "Ostrobot reached 467 mm per minute, which is the fastest ever reported for a skeletal muscle-driven robot.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Ostrobot reached 467 mm per minute, which the team says is the fastest ever reported for a skeletal muscle-driven robot",
+      "source": "transcript"
+    },
+    {
+      "text": "The trained muscles achieved 7.05tonons of maximum force and 8.51 mtons per square millimeter of stress.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The trained muscles also achieved 7.05tonons 05 mton of maximum force and 8.51 mtons per square millimeter of stress",
+      "source": "transcript"
+    },
+    {
+      "text": "The robot uses a single trained muscle to drive flexible tails and swims more than three times faster than versions powered by standard muscle tissue.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The robot uses a single trained muscle to drive flexible tails and swims more than three times faster than versions powered by standard muscle tissue",
+      "source": "transcript"
+    },
+    {
+      "text": "Researchers could also control the robot using electrical signals and even trigger it to start and stop using sound cues like clapping.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Researchers could also control the robot using electrical signals and even trigger it to start and stop using sound cues like clapping",
+      "source": "transcript"
+    },
+    {
+      "text": "Mass production is another huge theme.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "Now, UB signed a strategic cooperation agreement with Seaman's digital industry software to help scale humanoid robot production and reach 10,000 units per year in 2026",
+      "source": "transcript"
+    },
+    {
+      "text": "UB signed a strategic cooperation agreement with Seaman's digital industry software to help scale humanoid robot production and reach 10,000 units per year in 2026.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Now, UB signed a strategic cooperation agreement with Seaman's digital industry software to help scale humanoid robot production and reach 10,000 units per year in 2026",
+      "source": "transcript"
+    },
+    {
+      "text": "Total humanoid robot orders topped 1.4 billion yuan in 2025.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Reuters reported that total humanoid robot orders topped 1.4 billion yuan in 2025",
+      "source": "transcript"
+    },
+    {
+      "text": "Designing one impressive robot for a demo is one thing, but producing thousands of them reliably, affordably, and at high quality is something else entirely.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "This is where the humanoid race starts getting very real",
+      "source": "transcript"
+    },
+    {
+      "text": "Seammens is expected to help build the digital backbone for that push, covering everything from product design and simulation to process planning and manufacturing management.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Seammens is expected to help build the digital backbone for that push",
+      "source": "transcript"
+    },
+    {
+      "text": "Oklahoma State University researchers are working on robots that can read human brain signals to catch mistakes before they happen.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Their neuradaptive control system uses an EEG cap to detect error related potentials or ARPs",
+      "source": "transcript"
+    },
+    {
+      "text": "The team built an adaptive decoding model because everybody's brain signals are different.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "They also use signal temporal logic as a safety framework.",
+      "source": "transcript"
+    },
+    {
+      "text": "dy's brain signals are different.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "dy's brain signals are different.",
+      "source": "transcript"
+    },
+    {
+      "text": "The system has to learn general patterns and then adjust to the user.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "So, the system has to learn general patterns and then adjust to the user.",
+      "source": "transcript"
+    },
+    {
+      "text": "Signal temporal logic is used as a safety framework.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "basically giving the robot a strict behavioral rulebook while still letting it respond to human brain signals",
+      "source": "transcript"
+    },
+    {
+      "text": "The same idea could eventually help prosthetics and exoskeletons respond much more naturally to what a user actually intends.",
+      "type": "prediction",
+      "confidence": 0.7,
+      "supporting_quote": "Beyond industrial robotics, the same idea could eventually help prosthetics and exoskeletons respond much more naturally to what a user actually intends.",
+      "source": "transcript"
+    },
+    {
+      "text": "A team from Soul National University, So Gang University, and Johannes Kepler University Lind developed what they describe as the first fully compostable soft robot.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "A team from Soul National University. So Gang University and Johannes Kepler University Lind developed what they describe as the first fully compostable soft robot that still delivers practical durability.",
+      "source": "transcript"
+    },
+    {
+      "text": "The robot's frame uses poly or PGS, a biodegradable elastimemer with low hysteresus and strong elastic recovery.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Its PGSbased bending actuator maintained performance over 1 million actuation cycles, which is a serious durability mark for something designed to eventually disappear.",
+      "source": "transcript"
+    },
+    {
+      "text": "The whole system broke down within a few months and left no toxic residue under industrial composting conditions.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Under industrial composting conditions, the whole system broke down within a few months and left no toxic residue.",
+      "source": "transcript"
+    },
+    {
+      "text": "The researchers also integrated sensors for curvature, strain, touch, temperature, humidity, and pH along with heaters, electrical stimulators, and drug delivery modules.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "All inside a single soft robotic finger.",
+      "source": "transcript"
+    },
+    {
+      "text": "Robotic hands are one of the toughest parts of humanoid design.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "They need dexterity, compliance, safety, and low weight all at the same time.",
+      "source": "transcript"
+    },
+    {
+      "text": "The hand uses back drivable joints which helps it absorb impacts and interact more safely with the world.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Talo says the hand uses back drivable joints which helps it absorb impacts and interact more safely with the world.",
+      "source": "transcript"
+    },
+    {
+      "text": "The global market for humanoid five-finger robotic hands could hit $876 million by 2030.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "Reports say the global market for humanoid five-finger robotic hands could hit $876 million by 2030.",
+      "source": "transcript"
+    },
+    {
+      "text": "The global market for humanoid five-finger robotic hands could hit $876 million by 2030.",
+      "type": "prediction",
+      "confidence": 1.0,
+      "supporting_quote": "Reports say...",
+      "source": "transcript"
+    },
+    {
+      "text": "Robots are now learning fast, dynamic sports from messy human data, and that could scale well beyond tennis into things like soccer and even parkour.",
+      "type": "factual",
+      "confidence": 0.7,
+      "supporting_quote": "...Robots that look great in controlled demos can become a problem fast in crowded, unpredictable, realworld spaces.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "China's humanoid scene is also chasing outright speed.",
+      "type": "factual",
+      "confidence": 0.6,
+      "supporting_quote": "...Unitry founder Wong Shing said humanoid robots may soon rival or even beat the fastest human ever in sprinting.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "The biggest weakness in the whole field is still generalization.",
+      "type": "opinion",
+      "confidence": 0.5,
+      "supporting_quote": "...Robots can perform beautifully in controlled settings and then struggle badly when the world becomes unpredictable.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    }
+  ],
+  "claim_count": 74,
+  "transcript_claim_count": 71,
+  "comment_claim_count": 3,
+  "video_metadata": {
+    "video_id": "QDRzgF-8-50",
+    "channel_id": "UC5l7RouTQ60oUjLjt1Nh-UQ",
+    "title": "China\u2019s New AI Robots Just Broke The Human Skill Barrier",
+    "description": "This week in robotics got kind of ridiculous. South Korea showed off a humanoid that can run, jump, play soccer, and moonwalk, China pushed humanoids deeper into tennis, sprinting, and human-like motion, and UBTech is now aiming to mass-produce 10,000 humanoid robots with Siemens. On top of that, a restaurant robot caused chaos in public, another robot reads human brain signals to stop mistakes before they happen, and new breakthroughs in biohybrid robots, compostable soft robots, and robotic hands made the whole week feel way more serious than usual.\n\n\ud83d\udce9 Brand Deals & Partnerships: collabs@nouralabs.com\n\u2709 General Inquiries: airevolutionofficial@gmail.com\n\n\ud83e\udde0 What You\u2019ll See\n0:00 Intro\n0:52 KAIST Humanoid v0.7\nSOURCE: https://www.kaist.ac.kr/newsen/html/news/?skey=keyword&sval=Humanoid\n3:05 WANDER-bot Wind Robot\nSOURCE: https://www.cranfield.ac.uk/press/news-2026/wind-powered-robot-could-enable-long-term-exploration-of-hostile-environments\n4:21 Haidilao Robot Chaos\nSOURCE: https://abc7news.com/post/viral-video-dancing-robot-restrained-staff-cupertino-restaurant-haidilao-hot-pot-causing-chaos/18736333/\n5:36 LATENT Tennis Robot\nSOURCE: https://zzk273.github.io/LATENT/\n7:03 Bolt Sprint Humanoid\nSOURCE: https://hic.zju.edu.cn/hicenglish/2026/0204/c82671a3132666/page.htm\n8:14 OstraBot Muscle Swimmer\nSOURCE: https://news.nus.edu.sg/what-a-flex-swimming-robot/\n9:27 UBTech Siemens Robot Push\nSOURCE: https://www.sz.gov.cn/en_szgov/business/news/content/post_12689428.html\n10:34 Brain Signal Robot Control\nSOURCE: https://news.okstate.edu/articles/engineering-architecture-technology/2026/osu_research_uses_brain_signals_to_improve_robot_decision_making\n11:49 Compostable Soft Robot\nSOURCE: https://www.eurekalert.org/news-releases/1120196\nTesollo DG-5F-S Hand\nSOURCE: https://en.tesollo.com/dg-5f-s/\n\n\ud83d\udea8 Why It Matters\nThis is bigger than a few flashy robot demos. Humanoids are getting faster, more athletic, and more useful, while companies are also starting to build the manufacturing systems needed to produce them at real scale. At the same time, public safety, human-robot interaction, and real-world deployment are becoming much bigger issues as these machines move out of the lab and into everyday environments.\n\n#ai #ainews #robots",
+    "channel_title": "AI Revolution",
+    "published_at": "2026-03-22T23:47:52Z",
+    "view_count": 250431,
+    "like_count": 2742,
+    "comment_count": 148,
+    "duration": "PT14M31S",
+    "duration_seconds": 871
+  },
+  "comment_timestamps": [
+    "2026-03-26T12:35:58Z",
+    "2026-03-22T23:57:49Z",
+    "2026-03-23T18:12:10Z",
+    "2026-03-23T00:11:04Z",
+    "2026-03-22T23:54:12Z",
+    "2026-03-23T01:00:21Z",
+    "2026-03-23T03:25:43Z",
+    "2026-03-23T17:39:26Z",
+    "2026-03-26T14:44:20Z",
+    "2026-03-28T04:18:49Z",
+    "2026-03-23T00:58:32Z",
+    "2026-03-25T07:22:38Z",
+    "2026-03-23T03:53:02Z",
+    "2026-03-23T03:13:06Z",
+    "2026-03-23T02:17:14Z",
+    "2026-03-23T22:23:52Z",
+    "2026-03-25T11:53:09Z",
+    "2026-03-23T17:05:20Z",
+    "2026-03-24T18:46:27Z",
+    "2026-03-23T14:52:52Z",
+    "2026-03-27T04:30:50Z",
+    "2026-03-23T01:27:28Z",
+    "2026-03-23T16:31:52Z",
+    "2026-03-28T07:12:12Z",
+    "2026-03-24T21:00:44Z",
+    "2026-03-25T09:49:19Z",
+    "2026-03-25T21:28:33Z",
+    "2026-03-24T11:22:48Z",
+    "2026-03-25T13:04:14Z",
+    "2026-03-24T10:08:07Z"
+  ],
+  "_transcript": "So, this week in robotics got kind of ridiculous. South Korea just showed off a humanoid that can run, jump, play soccer, and moonwalk. China is teaching humanoids to play tennis and even chase record-breaking sprint speeds. UB is now trying to mass-roduce 10,000 humanoid robots with semens. One restaurant robot turned a simple dance into total chaos. Another robot reads human brain signals to stop mistakes before they happen. A windpowered machine is trying to explore brutal terrain without batteries. Scientists built a swimming robot powered by self-trained living muscle. A fully compostable robot can survive over 1 million uses before breaking down in soil. And a new robotic hand is getting much closer to real human style dexterity. So yeah, this is one of those weeks where robotics kept dropping headline after headline. All right, let's start with this. Cast in South Korea just showed off its humanoid V0.7 and this thing looked way more athletic than most humanoids people are used to seeing. In the field test, the robot was running across a soccer pitch, jumping, taking shots on goal, and casually throwing in dance moves like a moonwalk. That alone makes the demo stand out because most humanoid videos still feel careful, slow, and a little stiff. This one looked fast, balanced, and actually confident. The robot weighs about 165 lbs or 75 kg, stands around 5'5, and was built by the dynamic robot control and design laboratory at KISS under Hwan Park. One of the biggest things here is that the team says it developed all the core parts itself, including the motors, motor drivers, and gearboxes. So, this is not just a flashy shell built around bot components. They are trying to own the full system. It uses a quasi direct drive setup with high torque motors and low gear ratios, which helps it react faster and move more smoothly. And it also has a custom 3K compound planetary gearbox designed to pack a lot of reduction into a compact single stage design. That setup gives it serious performance. The robot can already run at about 12 km per hour on flat ground and climb steps over 30 cm high. Park says the next goal is around 14 kmh. plus ladder climbing and getting over 40 cm steps. The knee actuator can hit 320 Newton meters of peak torque, while the ankle actuator is tuned for fast response and stability. On the software side, KISS trained it with deep reinforcement learning mixed with human motion data, which is why it moves in a much smoother, more natural way than a lot of AIdriven humanoids. The system also uses motor operating region modeling, so the simulation matches the real hardware, and the robot can even handle uneven terrain using propriception alone without depending on cameras. Case says the long-term goal is a full humanoid with an upper body that can work alongside people in industrial settings. And the lab is also building a framework called Doflow to let robots learn practical tasks directly from human demonstrations. Then you jump to a completely different idea. Cranfield University built a robot called Wanderbot that moves using wind instead of draining batteries. That sounds simple, though it is actually a pretty clever answer to a real problem. In many robotic systems, movement alone eats around 20% of the battery. That becomes a huge limitation for long missions in deserts, polar regions, or other planets. Wanderbot is a lowcost, modular, fully 3D printed robot designed for exactly those kinds of places. It uses a Savonius wind turbine and a Jansen linkage, the same multi-legged mechanism people know from Theo Jansen's StrandBon. The whole point is simplicity and repairability. Dr. Sarab Upadi described it as a first step towards self-sufficient robots that can go where humans cannot easily stay or maintain equipment for long. Because it is fully 3D printed, broken parts could theoretically be replaced on site instead of waiting for expensive resupply missions. That matters a lot in remote or extraterrestrial settings. Right now, it is still a low TRL prototype, though it already got attention at the European Space Ay's Astra Conference 2025. The next big step is maneuverability because the team still needs to teach it how to turn properly. Now, on the other side of the spectrum, robotics also gave us a perfect reminder that public deployment is still messy. A service robot at a Heidiow hot pot restaurant in Certino caused a chaotic scene after moving too close to diners and knocking dishes all over the place during a dance performance. In the video, the robot starts swinging its arms erratically, smashing plates, sending chopsticks and dishwear flying, and forcing staff members to rush in and physically stop it. One employee even appeared to look at her phone during the incident, likely trying to control or shut the robot down remotely. The machine is believed to be an Agibot X2, the same type shown at CES 2026 earlier this year. The reason people reacted so strongly is obvious. This was a hot pot restaurant, so there were boiling containers of soup sitting right on the tables. If the robot had knocked those over, this could have been much worse than a few broken dishes. Heidi Lao later told NBC News that the robot had not malfunctioned and that it had been brought too close to the table at a guest's request, which limited its movement. Maybe that is true, though it still points to the same issue. Robots that look great in controlled demos can become a problem fast in crowded, unpredictable, realworld spaces. Then there is sports. A team in China working with Galbat built a training system called Leighton that teaches humanoid robots to play tennis using imperfect human motion data. That is a big deal because robotic systems usually love perfect data and real life rarely gives you that. Instead of trying to capture everything with perfect detail, Leighton breaks tennis into smaller pieces like forehands, backhands, shuffles, and crossover steps. The team collected about 5 hours of motion data from amateur players using a compact motion capture setup, then used that to build a latent action space that helps the robot interpret and combine the motions more effectively. After that, reinforcement learning and large-scale simulation trained the system to react to incoming balls while keeping its movements natural. The final model was deployed on a Unitri G1 humanoid robot and in real world testing, it managed multi-shot rallies with humans from both fourcourt and backcourt positions. Across 10,000 trials, it reached a peak success rate of 96.5%, consistently returning balls near target locations. It still is not ready for full competitive play and right now it depends on motion capture in the real world. Though the researchers say future versions could use active vision and multi-agent training. The bigger point is that robots are now learning fast, dynamic sports from messy human data, and that could scale well beyond tennis into things like soccer and even parkour. At the same time, China's humanoid scene is also chasing outright speed. Unitry founder Wong Shing said humanoid robots may soon rival or even beat the fastest human ever in sprinting. That sounds crazy until you look at the numbers. In February, Jang University and Jingshi Technology revealed a full-size humanoid called Bolt that can hit 10 meters per second. For context, Usain Bolt's 100 meter world record averaged around 10.44 m/s. So, the gap is no longer massive. Wong even said that by around midyear, humanoid robots, especially in China, may run the 100 m in under 10 seconds. That is still a huge claim and there is a lot left to prove. High-speed bipeedal running is brutally difficult because everything has to stay perfectly synchronized. Balance, force, timing, sensing, and control all have to work together with almost no room for error. Wang also admitted that the biggest weakness in the whole field is still generalization. Robots can perform beautifully in controlled settings and then struggle badly when the world becomes unpredictable. That is still the hardest wall embodied AI has to get through. Then you have one of the strangest projects in the bunch and honestly one of the coolest. Researchers at the National University of Singapore built a fish inspired robot called Ostrobot powered by lab grown muscle that basically trains itself. The trick is that two engineered muscle tissues are connected so they pull against each other as they naturally contract during development. So instead of needing an outside system to train them, the muscles are effectively exercising themselves. That self-training approach produced a major jump in performance. Ostrobot reached 467 mm per minute, which the team says is the fastest ever reported for a skeletal muscle-driven robot. The trained muscles also achieved 7.05tonons 05 mton of maximum force and 8.51 mtons per square millimeter of stress, which is much stronger than what this field usually gets. The robot uses a single trained muscle to drive flexible tails and swims more than three times faster than versions powered by standard muscle tissue. Researchers could also control the robot using electrical signals and even trigger it to start and stop using sound cues like clapping. That makes it a lot more useful than older bio-hybrid robots that often looked weak or hard to control. Mass production is another huge theme. Now, UB signed a strategic cooperation agreement with Seaman's digital industry software to help scale humanoid robot production and reach 10,000 units per year in 2026. The deal was signed in Shenzhen on March 16th and combines UBC's robotics work with Seaman's experience in digital manufacturing, simulation, and industrial software. UB founder Joe Gian says orders have surged this year, and Reuters reported that total humanoid robot orders topped 1.4 billion yuan in 2025. This is where the humanoid race starts getting very real. Designing one impressive robot for a demo is one thing. Producing thousands of them reliably, affordably, and at high quality is something else entirely. Seammens is expected to help build the digital backbone for that push, covering everything from product design and simulation to process planning and manufacturing management. That may sound less exciting than a sprinting robot, though it is probably one of the most important shifts happening right now. This is the part where humanoids start trying to become an industry, not just a viral clip. Then there is Oklahoma State University where researchers are working on robots that can read human brain signals to catch mistakes before they happen. Their neuradaptive control system uses an EEG cap to detect error related potentials or ARPs, which are signals the brain produces the moment a person realizes something is going wrong, often before they physically react. Once the system detects that signal, the robot can slow down, stop, or hand back control within milliseconds. That matters a lot in dangerous environments like nuclear cleanup or deep sea inspections where a small mistake can turn into major damage fast. The team built an adaptive decoding model because everybody's brain signals are different. So, the system has to learn general patterns and then adjust to the user. They also use signal temporal logic as a safety framework. basically giving the robot a strict behavioral rulebook while still letting it respond to human brain signals. The testing is being done with NVIDIA Isaac Lab and Isaac Ross using RTX Pro 6000GPUs for realtime signal processing and simulation. Beyond industrial robotics, the same idea could eventually help prosthetics and exoskeletons respond much more naturally to what a user actually intends. Sustainability is starting to matter more, too. A team from Soul National University. So Gang University and Johannes Kepler University Lind developed what they describe as the first fully compostable soft robot that still delivers practical durability. The robot's frame uses poly or PGS, a biodegradable elastimemer with low hysteresus and strong elastic recovery. Its PGSbased bending actuator maintained performance over 1 million actuation cycles, which is a serious durability mark for something designed to eventually disappear. Even the electronics are biodegradable. Instead of normal metal and semiconductor parts, the team used biodegradable inorganic electronics that decompose along with the structure. Under industrial composting conditions, the whole system broke down within a few months and left no toxic residue. Plant growth tests even showed that the compost was safe and usable. The researchers also integrated sensors for curvature, strain, touch, temperature, humidity, and pH along with heaters, electrical stimulators, and drug delivery modules. All inside a single soft robotic finger. So, this is not some toy eco demo. It is a serious attempt to solve the waste problem robotics is going to face at scale. And finally, robotic hands. South Korean company Tasalo introduced a compact five-finger hand called DG5FS designed for humanoid and industrial systems. It has 20 degrees of freedom, measures 21 cm, and weighs just 880 g or about 1.94 lb. That is impressive because robotic hands are one of the toughest parts of humanoid design. They need dexterity, compliance, safety, and low weight all at the same time. And that is a brutal combination to get right. Talo says the hand uses back drivable joints which helps it absorb impacts and interact more safely with the world. And the company also offers a simpler 15 degree of freedom version for teams that want an easier control problem. At the same time, Samsung is building out its own hand lab and chasing tendon-driven designs with tactile sensing so robotic hands can detect pressure, texture, and tiny slips the way human hands do. That whole category is becoming extremely important, especially with Tesla, Figure, and everyone else pushing generalpurpose humanoids. Reports say the global market for humanoid five-finger robotic hands could hit $876 million by 2030. So, yeah, this was not a normal robotics week. Anyway, drop your take below, subscribe if you want more updates like this, and I'll catch you in the next one.",
+  "_comments": [
+    {
+      "comment_id": "UgxLAlvlN1tXXRebv2t4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@chel9117",
+      "comment_text": "I\u2019ve been following robotics and embodied AI close enough to stop being surprised easily, and even this week felt like the timeline sped up!",
+      "published_at": "2026-03-26T12:35:58Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 115,
+      "text": "I\u2019ve been following robotics and embodied AI close enough to stop being surprised easily, and even this week felt like the timeline sped up!"
+    },
+    {
+      "comment_id": "UgyZrH8HmkwUKKSehr54AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@alterworlds1629",
+      "comment_text": "Holy shit, KAIST is insane. By FAR the most realistic stride/movement I've seen, and the most capable.\nNow we just need to make an AI capable of doing those thing without it being sequenced/pre-programmed.\nLooking forward to seeing what they can do with hands.",
+      "published_at": "2026-03-22T23:57:49Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 18,
+      "text": "Holy shit, KAIST is insane. By FAR the most realistic stride/movement I've seen, and the most capable.\nNow we just need to make an AI capable of doing those thing without it being sequenced/pre-programmed.\nLooking forward to seeing what they can do with hands."
+    },
+    {
+      "comment_id": "Ugzh1xfEwOpRjAQOrxh4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@Babsza",
+      "comment_text": "How do we know these examples are not actually A.I videos when they are also shown with big cables attached to them ?",
+      "published_at": "2026-03-23T18:12:10Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 15,
+      "text": "How do we know these examples are not actually A.I videos when they are also shown with big cables attached to them ?"
+    },
+    {
+      "comment_id": "Ugx6yitJL51fyo_DWQV4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@MusabAlBadawi",
+      "comment_text": "I guess we are going to be playing Fifa sport games with robots now... Just give me that controller! lol",
+      "published_at": "2026-03-23T00:11:04Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 8,
+      "text": "I guess we are going to be playing Fifa sport games with robots now... Just give me that controller! lol"
+    },
+    {
+      "comment_id": "UgxK-BHXolbsMrLav7p4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@oHelmy3131",
+      "comment_text": "I cant wait till we can make this available for people who lost both of their legs!",
+      "published_at": "2026-03-22T23:54:12Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 6,
+      "text": "I cant wait till we can make this available for people who lost both of their legs!"
+    },
+    {
+      "comment_id": "UgwhHRK0IZDBquluFll4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@Gai-i5x",
+      "comment_text": "Agibot X2 are remote controlled via a human controller with pre-programmed movement routines.  No AI brain is used, but this video makes you think it was an AI out of control.",
+      "published_at": "2026-03-23T01:00:21Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 5,
+      "text": "Agibot X2 are remote controlled via a human controller with pre-programmed movement routines.  No AI brain is used, but this video makes you think it was an AI out of control."
+    },
+    {
+      "comment_id": "Ugx2785tP8ghW6g4EBF4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@taiconan8857",
+      "comment_text": "4:38 I'm no expert, but she's laughing, and the arm motions look synced... did she just accidentally put it in \"dance mode??\" \ud83d\ude02",
+      "published_at": "2026-03-23T03:25:43Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 4,
+      "text": "4:38 I'm no expert, but she's laughing, and the arm motions look synced... did she just accidentally put it in \"dance mode??\" \ud83d\ude02"
+    },
+    {
+      "comment_id": "UgzLuyaEnsBLBP8e2NB4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@George-p4t",
+      "comment_text": "No.\nCant love,\nFeel empathy\nEnjoy the beauty of nature,\nHad no imagination, or sensitivity to others unique journey.\n\nCant run a farm\nOr spend 6 months in a forest, let alone swim and save lives.\n\nOh and it doesn't heal itself either",
+      "published_at": "2026-03-23T17:39:26Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 4,
+      "text": "No.\nCant love,\nFeel empathy\nEnjoy the beauty of nature,\nHad no imagination, or sensitivity to others unique journey.\n\nCant run a farm\nOr spend 6 months in a forest, let alone swim and save lives.\n\nOh and it doesn't heal itself either"
+    },
+    {
+      "comment_id": "UgynMPRdii72H7ngdHF4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@mustangsupersnake7848",
+      "comment_text": "KAIST on the football field: The grass is clearly computer generated. If you want to make a convincing demo, also put humans in the same video recording as the robot.",
+      "published_at": "2026-03-26T14:44:20Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 3,
+      "text": "KAIST on the football field: The grass is clearly computer generated. If you want to make a convincing demo, also put humans in the same video recording as the robot."
+    },
+    {
+      "comment_id": "UgyvECD_Bkzp3Qf8IJB4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@PilotMikeR",
+      "comment_text": "What could possibly go wrong!?!",
+      "published_at": "2026-03-28T04:18:49Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 3,
+      "text": "What could possibly go wrong!?!"
+    },
+    {
+      "comment_id": "UgwODsvrXSs_cx4CW6J4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@synchro505",
+      "comment_text": "Great coverage as always, @AI Revolution.",
+      "published_at": "2026-03-23T00:58:32Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 3,
+      "text": "Great coverage as always, @AI Revolution."
+    },
+    {
+      "comment_id": "Ugz56HqxFZogfGbRpuF4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@atomictime9410",
+      "comment_text": "To Gen Z and Gen A...Meet your replacements.",
+      "published_at": "2026-03-25T07:22:38Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 3,
+      "text": "To Gen Z and Gen A...Meet your replacements."
+    },
+    {
+      "comment_id": "UgxyJecXE0eyL-Nm4Z14AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@DrReginaldFinleySr",
+      "comment_text": "1:56 Black Knight vibes here.",
+      "published_at": "2026-03-23T03:53:02Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "1:56 Black Knight vibes here."
+    },
+    {
+      "comment_id": "Ugw1d7d8wOGPnfS6s5V4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@EricTiedemann-k6o",
+      "comment_text": "Getting closer to what I call to be genuine AGI.",
+      "published_at": "2026-03-23T03:13:06Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "Getting closer to what I call to be genuine AGI."
+    },
+    {
+      "comment_id": "Ugzixr5_SLsTKdNiXd54AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@JYComputerServices",
+      "comment_text": "Nice content. Author\u2019s avatar looks creepy",
+      "published_at": "2026-03-23T02:17:14Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "Nice content. Author\u2019s avatar looks creepy"
+    },
+    {
+      "comment_id": "UgwGpfWGsCAxGveES5d4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@GGnYY",
+      "comment_text": "If all Ai robot companies collaborated, imagine what they could create.",
+      "published_at": "2026-03-23T22:23:52Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "If all Ai robot companies collaborated, imagine what they could create."
+    },
+    {
+      "comment_id": "UgwBw1GCRiW5mBEtj3N4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@BusoKrenix",
+      "comment_text": "It's so weird that they are going all in on mass production even though there are clear safety risks, like they are asking to get sued, might be easy money for people once they roll out in the public.",
+      "published_at": "2026-03-25T11:53:09Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "It's so weird that they are going all in on mass production even though there are clear safety risks, like they are asking to get sued, might be easy money for people once they roll out in the public."
+    },
+    {
+      "comment_id": "UgwOwqftSDII1p37WB54AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@Gabrilos505",
+      "comment_text": "We are moving ever so closely to having our own Tactical Dolls... nice.",
+      "published_at": "2026-03-23T17:05:20Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "We are moving ever so closely to having our own Tactical Dolls... nice."
+    },
+    {
+      "comment_id": "UgwexnnI5m-JVTM5lIF4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@Holzschnitzen-hr",
+      "comment_text": "Ganz gleich was man auf dieser Welt auch unternimmt , Roboter und wenn sie in ihrer Beweglichkeit oder Interaktionen werden NIE fie F\u00e4higkeiten eines Menschen erreichen.",
+      "published_at": "2026-03-24T18:46:27Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Ganz gleich was man auf dieser Welt auch unternimmt , Roboter und wenn sie in ihrer Beweglichkeit oder Interaktionen werden NIE fie F\u00e4higkeiten eines Menschen erreichen."
+    },
+    {
+      "comment_id": "Ugzw3AfLRbIYNM3PrwN4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@katjejoek",
+      "comment_text": "How long will it take for UBtech to no longer need Siemens?",
+      "published_at": "2026-03-23T14:52:52Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "How long will it take for UBtech to no longer need Siemens?"
+    },
+    {
+      "comment_id": "Ugx3ICSIjHV3MjgLpkp4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@golague",
+      "comment_text": "I\u2019ll believe it when I see it,",
+      "published_at": "2026-03-27T04:30:50Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "I\u2019ll believe it when I see it,"
+    },
+    {
+      "comment_id": "Ugzyotxssx5BcnwT4ad4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@Vastlee",
+      "comment_text": "UB Tech is trying to mass produce 10,000 humanoid robots with seman! 0:16\ud83e\udd23",
+      "published_at": "2026-03-23T01:27:28Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "UB Tech is trying to mass produce 10,000 humanoid robots with seman! 0:16\ud83e\udd23"
+    },
+    {
+      "comment_id": "UgznfSVg1vArvZF-xxt4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@NextPhasePod",
+      "comment_text": "This week in robotics was actually insane! The pace of progress is getting hard to keep up with...",
+      "published_at": "2026-03-23T16:31:52Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "This week in robotics was actually insane! The pace of progress is getting hard to keep up with..."
+    },
+    {
+      "comment_id": "UgxHH8nVwzZpXoGG3094AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@ClintochX",
+      "comment_text": "We got a robot that moon walk before GTA 6",
+      "published_at": "2026-03-28T07:12:12Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "We got a robot that moon walk before GTA 6"
+    },
+    {
+      "comment_id": "UgxjkbK6eyYOqdGd2XF4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@maninkamiller2109",
+      "comment_text": "2:54 work alongside people? Riiight- not replace anyone",
+      "published_at": "2026-03-24T21:00:44Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "2:54 work alongside people? Riiight- not replace anyone"
+    },
+    {
+      "comment_id": "Ugy8oSWcgGSqeVD5Ihd4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@maksymedel2569",
+      "comment_text": "Flat surface for robot's feet is a mistake.",
+      "published_at": "2026-03-25T09:49:19Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Flat surface for robot's feet is a mistake."
+    },
+    {
+      "comment_id": "Ugyra_uFN8ske6xQC-d4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@mak-mikko-karjalainen",
+      "comment_text": "Oh, did remote controllers grow some extra fingers?",
+      "published_at": "2026-03-25T21:28:33Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Oh, did remote controllers grow some extra fingers?"
+    },
+    {
+      "comment_id": "UgymSdWnbLd8TXD14Ht4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@gilbryans",
+      "comment_text": "All Robots need to have clearly marked OFF Switches or Buttons!",
+      "published_at": "2026-03-24T11:22:48Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "All Robots need to have clearly marked OFF Switches or Buttons!"
+    },
+    {
+      "comment_id": "UgynOsAZU8iOL6sCpFd4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@randalorser8683",
+      "comment_text": "That tell you that the robot doesn't know how understand the environment around it to understand danger to humans or itself",
+      "published_at": "2026-03-25T13:04:14Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "That tell you that the robot doesn't know how understand the environment around it to understand danger to humans or itself"
+    },
+    {
+      "comment_id": "UgwqCcsmTtmTarimGwh4AaABAg",
+      "video_id": "QDRzgF-8-50",
+      "commenter_name": "@MaksimKruglikov-w2j",
+      "comment_text": "Humanity chose this path, although there was an opportunity to take a different road, the Puranas described, there were civilizations that made high progress but lost spirituality and they had to search a lot through galaxies for their children.",
+      "published_at": "2026-03-24T10:08:07Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Humanity chose this path, although there was an opportunity to take a different road, the Puranas described, there were civilizations that made high progress but lost spirituality and they had to search a lot through galaxies for their children."
+    }
+  ]
+}

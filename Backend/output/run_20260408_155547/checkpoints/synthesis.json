@@ -1,0 +1,33 @@
+{
+  "narratives": [
+    {
+      "id": "narrative_1",
+      "name": "AI Advancements and Applications",
+      "summary": "This narrative highlights the advancements and applications of AI, including humanoid robots that can perform tasks like tennis and sprinting.",
+      "video_ids": [
+        "QDRzgF-8-50",
+        "GiVtPpEVdCY"
+      ]
+    },
+    {
+      "id": "narrative_2",
+      "name": "AI in Robotics and Automation",
+      "summary": "This narrative explores the role of AI in robotics and automation, including the development of humanoid robots that can perform tasks like service work and industrial settings.",
+      "video_ids": [
+        "QDRzgF-8-50",
+        "x2l7W9aTc5k"
+      ]
+    },
+    {
+      "id": "narrative_3",
+      "name": "AI in Healthcare and Rehabilitation",
+      "summary": "This narrative highlights the applications of AI in healthcare and rehabilitation, including the development of prosthetics and exoskeletons that can respond to human brain signals.",
+      "video_ids": [
+        "QDRzgF-8-50",
+        "M6yRREy_5CM"
+      ]
+    }
+  ],
+  "high_confidence_claims": [],
+  "overall_summary": ""
+}

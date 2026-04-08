@@ -30,6 +30,13 @@ LLM_URL = "http://localhost:11434/api/generate"
 LLM_NUM_PREDICT = 2500  # Max tokens for LLM response (increase if JSON truncation occurs)
 
 #=====================================
+# embeddings (Ollama)
+#=====================================
+EMBEDDING_MODEL = "nomic-embed-text"  # Run: ollama pull nomic-embed-text
+EMBEDDING_URL = "http://localhost:11434/api/embeddings"
+EMBEDDING_DIMENSIONS = 768  # nomic-embed-text outputs 768 dimensions
+
+#=====================================
 # chunking parameters
 #=====================================
 CHUNK_SIZE = 3000
