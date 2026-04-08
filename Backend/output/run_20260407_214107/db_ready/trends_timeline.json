@@ -1,0 +1,38 @@
+[
+  {
+    "period": "2026-W11",
+    "period_start_iso": "2026-03-16",
+    "period_start_ts": 1773637200,
+    "video_count": 1,
+    "total_views": 5838,
+    "total_likes": 149,
+    "total_comments": 19,
+    "engagement_ratio": 0.0288,
+    "claim_count": 81,
+    "avg_confidence": 0.838
+  },
+  {
+    "period": "2026-W12",
+    "period_start_iso": "2026-03-23",
+    "period_start_ts": 1774242000,
+    "video_count": 1,
+    "total_views": 8071,
+    "total_likes": 264,
+    "total_comments": 13,
+    "engagement_ratio": 0.0343,
+    "claim_count": 54,
+    "avg_confidence": 0.825
+  },
+  {
+    "period": "2026-W13",
+    "period_start_iso": "2026-03-30",
+    "period_start_ts": 1774846800,
+    "video_count": 2,
+    "total_views": 17126,
+    "total_likes": 469,
+    "total_comments": 20,
+    "engagement_ratio": 0.0286,
+    "claim_count": 180,
+    "avg_confidence": 0.859
+  }
+]

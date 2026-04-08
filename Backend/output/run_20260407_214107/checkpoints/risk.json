@@ -1,0 +1,287 @@
+{
+  "per_video": [
+    {
+      "video_id": "Jov9Mn2Q2s8",
+      "risk_score": 0.4,
+      "risk_level": "medium",
+      "flag_count": 3,
+      "flags": [
+        {
+          "category": "illegal_activity",
+          "category_description": "References to illegal activities (fraud, drugs, hacking)",
+          "confidence": 0.8,
+          "source": "transcript",
+          "excerpt": "meth",
+          "context": "...n AI, today's episode is for you. This is the ultimate AI catch-up guide. Now, today we are doing something that I have wanted to do for a little while now. The average listener of this show is a fairly a...",
+          "detection_method": "llm",
+          "matched_term": "meth",
+          "llm_reasoning": "The term 'meth' is likely being used figuratively to refer to a type of AI-related activity, rather than literally referring to the illegal drug. The context suggests an educational or reporting tone, which further reduces the risk."
+        },
+        {
+          "category": "harassment",
+          "category_description": "Targeted harassment, doxxing, or stalking",
+          "confidence": 0.8,
+          "source": "transcript",
+          "excerpt": "loser",
+          "context": "...you can view it like a new operating layer through which you do all sorts of different things, the closer you're going to get, I think, to unlocking its full value. So, now that we've got some key terms, s...",
+          "detection_method": "llm",
+          "matched_term": "loser",
+          "llm_reasoning": "The term 'loser' appears to be used figuratively and in a neutral context, likely as an example or analogy. The surrounding text does not suggest any intent to harass or demean individuals."
+        },
+        {
+          "category": "harassment",
+          "category_description": "Targeted harassment, doxxing, or stalking",
+          "confidence": 0.8,
+          "source": "transcript",
+          "excerpt": "stupid",
+          "context": "...nt to hear. When you are exploring some new idea with it, it's unlikely to say, \"Hey man, that is a stupid idea that everyone and their mom has tried and hasn't worked for them for good reason.\" It's going ...",
+          "detection_method": "llm",
+          "matched_term": "stupid",
+          "llm_reasoning": "The term 'stupid' is used figuratively to describe an idea that has been tried and failed, rather than being a personal attack or insult. The tone of the passage appears to be educational or reporting, rather than promoting harassment."
+        }
+      ],
+      "transcript_scanned": true,
+      "comments_scanned": 7
+    },
+    {
+      "video_id": "LZeMZgJszKU",
+      "risk_score": 0.4,
+      "risk_level": "medium",
+      "flag_count": 3,
+      "flags": [
+        {
+          "category": "violence",
+          "category_description": "Threats of violence or violent content",
+          "confidence": 0.8,
+          "source": "transcript",
+          "excerpt": "weapon",
+          "context": "...ense conversations where Anthropic wanted the Pentagon to commit to not using Claude for autonomous weaponry or for citizen surveillance, whereas the Pentagon wanted Anthropic to agree to terms that said th...",
+          "detection_method": "llm",
+          "matched_term": "weapon",
+          "llm_reasoning": "The term 'weaponry' is used figuratively to refer to autonomous weaponry, which does not imply actual violence or harm. The context suggests a discussion about policy and agreements rather than promoting or glorifying violence."
+        },
+        {
+          "category": "harassment",
+          "category_description": "Targeted harassment, doxxing, or stalking",
+          "confidence": 0.8,
+          "source": "transcript",
+          "excerpt": "loser",
+          "context": "... announced a wildly expanded set of features this month. Claude Code, Codex, and Open Claw all got closer and closer together. Products like Perplexity Computer and Notion Custom Agents all started to nudg...",
+          "detection_method": "llm",
+          "matched_term": "loser",
+          "llm_reasoning": "The term 'loser' appears to be used figuratively and in a neutral context, describing a hypothetical outcome rather than targeting an individual or group. The surrounding text does not suggest any intent to harass or offend."
+        },
+        {
+          "category": "harassment",
+          "category_description": "Targeted harassment, doxxing, or stalking",
+          "confidence": 0.7,
+          "source": "transcript",
+          "excerpt": "share with friends and family",
+          "context": "...chmark, a masterclass on using skills with Nofar Gaspar, and even the ultimate AI catch-up guide to share with friends and family who are just getting started on their AI journey. Today we're going to kick it all off with somethi...",
+          "detection_method": "pattern",
+          "matched_term": "share with friends and family",
+          "llm_reasoning": ""
+        }
+      ],
+      "transcript_scanned": true,
+      "comments_scanned": 3
+    },
+    {
+      "video_id": "DvNKYftvPW0",
+      "risk_score": 0.13,
+      "risk_level": "low",
+      "flag_count": 1,
+      "flags": [
+        {
+          "category": "harassment",
+          "category_description": "Targeted harassment, doxxing, or stalking",
+          "confidence": 0.8,
+          "source": "transcript",
+          "excerpt": "loser",
+          "context": "... software proved vastly more effective, these human knowledge-based chess researchers were not good losers. They said that brute-force search may have won this time, but it was not a general strategy. And ...",
+          "detection_method": "llm",
+          "matched_term": "loser",
+          "llm_reasoning": "The term 'loser' is used figuratively to describe the human knowledge-based chess researchers who are not accepting of their loss. The context suggests that this is a neutral or even educational description, rather than an attempt to harass or belittle them."
+        }
+      ],
+      "transcript_scanned": true,
+      "comments_scanned": 12
+    },
+    {
+      "video_id": "zHvE3b88lgM",
+      "risk_score": 0.4,
+      "risk_level": "medium",
+      "flag_count": 4,
+      "flags": [
+        {
+          "category": "illegal_activity",
+          "category_description": "References to illegal activities (fraud, drugs, hacking)",
+          "confidence": 0.5,
+          "source": "transcript",
+          "excerpt": "meth",
+          "context": "...e about becoming someone better, learning, healing, and growing. And a smaller share want to make something or fix the world. Summing up, they say the nine clusters may look desperate, but they are underp...",
+          "detection_method": "llm",
+          "matched_term": "meth",
+          "llm_reasoning": "The term 'meth' is likely being used figuratively or in a neutral context to refer to personal growth or self-improvement, rather than promoting illegal activities."
+        },
+        {
+          "category": "misinformation",
+          "category_description": "False or misleading health/political information",
+          "confidence": 0.8,
+          "source": "transcript",
+          "excerpt": "exposed",
+          "context": "...ited the most, with 58% stating some form of real economic gain. Freelancers they found as the most exposed middle. Freelance creatives were the group where the upside and downside most nearly canceled out. ...",
+          "detection_method": "llm",
+          "matched_term": "exposed",
+          "llm_reasoning": "The term 'exposed' is used figuratively to describe the group of freelance creatives having an equal balance of upside and downside economic gains. There is no literal claim about exposure to harm or misinformation, making it unlikely to be misinformation content."
+        },
+        {
+          "category": "harassment",
+          "category_description": "Targeted harassment, doxxing, or stalking",
+          "confidence": 0.8,
+          "source": "transcript",
+          "excerpt": "stupid",
+          "context": "...I talked more with Claude then because Claude understood my thoughts and stories well, but it was a stupid choice. I should have talked with that friend, not Claude. That's how I lost that friend.\" It's cle...",
+          "detection_method": "llm",
+          "matched_term": "stupid",
+          "llm_reasoning": "The term 'stupid' is used figuratively to describe a poor choice, rather than literally as an insult or slur. The context suggests that the author is reflecting on their own mistake, rather than promoting or encouraging harassment."
+        },
+        {
+          "category": "toxicity",
+          "category_description": "Generally toxic or abusive language",
+          "confidence": 0.7,
+          "source": "comment",
+          "excerpt": "idiot",
+          "context": "... to keep us in serfdom. The only chance that we have is for political reform, and to get rid of the idiots that are currently in charge all around the world.",
+          "detection_method": "llm",
+          "matched_term": "idiot",
+          "llm_reasoning": "The term 'idiot' is used figuratively to describe people in charge, which could be perceived as derogatory and insulting. While it's not directly promoting harm or abuse, its tone can still be considered toxic."
+        }
+      ],
+      "transcript_scanned": true,
+      "comments_scanned": 11
+    }
+  ],
+  "aggregate": {
+    "total_videos": 4,
+    "videos_with_risks": 4,
+    "total_flags": 11,
+    "overall_risk_score": 0.33,
+    "overall_risk_level": "low",
+    "risk_distribution": {
+      "illegal_activity": 2,
+      "harassment": 6,
+      "violence": 1,
+      "misinformation": 1,
+      "toxicity": 1
+    },
+    "risk_distribution_detailed": {
+      "self_harm": {
+        "count": 0,
+        "description": "Content related to self-harm or suicide"
+      },
+      "violence": {
+        "count": 1,
+        "description": "Threats of violence or violent content"
+      },
+      "illegal_activity": {
+        "count": 2,
+        "description": "References to illegal activities (fraud, drugs, hacking)"
+      },
+      "misinformation": {
+        "count": 1,
+        "description": "False or misleading health/political information"
+      },
+      "hate_speech": {
+        "count": 0,
+        "description": "Discriminatory content targeting protected groups"
+      },
+      "harassment": {
+        "count": 6,
+        "description": "Targeted harassment, doxxing, or stalking"
+      },
+      "toxicity": {
+        "count": 1,
+        "description": "Generally toxic or abusive language"
+      },
+      "scam": {
+        "count": 0,
+        "description": "Financial scams or fraudulent schemes"
+      }
+    },
+    "level_distribution": {
+      "medium": 3,
+      "low": 1
+    },
+    "high_risk_videos": [],
+    "critical_risk_videos": [],
+    "top_excerpts_by_category": {
+      "illegal_activity": [
+        {
+          "video_id": "Jov9Mn2Q2s8",
+          "excerpt": "meth",
+          "context": "...n AI, today's episode is for you. This is the ultimate AI catch-up guide. Now, today we are doing something that I have wanted to do for a little while now. The average listener of this show is a fairly a...",
+          "confidence": 0.8,
+          "source": "transcript"
+        },
+        {
+          "video_id": "zHvE3b88lgM",
+          "excerpt": "meth",
+          "context": "...e about becoming someone better, learning, healing, and growing. And a smaller share want to make something or fix the world. Summing up, they say the nine clusters may look desperate, but they are underp...",
+          "confidence": 0.5,
+          "source": "transcript"
+        }
+      ],
+      "harassment": [
+        {
+          "video_id": "Jov9Mn2Q2s8",
+          "excerpt": "loser",
+          "context": "...you can view it like a new operating layer through which you do all sorts of different things, the closer you're going to get, I think, to unlocking its full value. So, now that we've got some key terms, s...",
+          "confidence": 0.8,
+          "source": "transcript"
+        },
+        {
+          "video_id": "Jov9Mn2Q2s8",
+          "excerpt": "stupid",
+          "context": "...nt to hear. When you are exploring some new idea with it, it's unlikely to say, \"Hey man, that is a stupid idea that everyone and their mom has tried and hasn't worked for them for good reason.\" It's going ...",
+          "confidence": 0.8,
+          "source": "transcript"
+        },
+        {
+          "video_id": "LZeMZgJszKU",
+          "excerpt": "loser",
+          "context": "... announced a wildly expanded set of features this month. Claude Code, Codex, and Open Claw all got closer and closer together. Products like Perplexity Computer and Notion Custom Agents all started to nudg...",
+          "confidence": 0.8,
+          "source": "transcript"
+        }
+      ],
+      "violence": [
+        {
+          "video_id": "LZeMZgJszKU",
+          "excerpt": "weapon",
+          "context": "...ense conversations where Anthropic wanted the Pentagon to commit to not using Claude for autonomous weaponry or for citizen surveillance, whereas the Pentagon wanted Anthropic to agree to terms that said th...",
+          "confidence": 0.8,
+          "source": "transcript"
+        }
+      ],
+      "misinformation": [
+        {
+          "video_id": "zHvE3b88lgM",
+          "excerpt": "exposed",
+          "context": "...ited the most, with 58% stating some form of real economic gain. Freelancers they found as the most exposed middle. Freelance creatives were the group where the upside and downside most nearly canceled out. ...",
+          "confidence": 0.8,
+          "source": "transcript"
+        }
+      ],
+      "toxicity": [
+        {
+          "video_id": "zHvE3b88lgM",
+          "excerpt": "idiot",
+          "context": "... to keep us in serfdom. The only chance that we have is for political reform, and to get rid of the idiots that are currently in charge all around the world.",
+          "confidence": 0.7,
+          "source": "comment"
+        }
+      ]
+    }
+  }
+}

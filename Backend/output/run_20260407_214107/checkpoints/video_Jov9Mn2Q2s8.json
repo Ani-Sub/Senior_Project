@@ -1,0 +1,725 @@
+{
+  "video_id": "Jov9Mn2Q2s8",
+  "topics": [
+    "context",
+    "domain-specific questions",
+    "infographic creation",
+    "UX problem",
+    "machine learning",
+    "work",
+    "Claw Camp",
+    "AI",
+    "chatbots",
+    "AI build partner",
+    "ChatGPT",
+    "peace",
+    "AI usage pulse survey",
+    "model training",
+    "verification",
+    "decision-making",
+    "output",
+    "human feedback",
+    "prompting expert",
+    "Open Claw",
+    "building tools",
+    "image generation",
+    "AI research",
+    "iterative tool",
+    "AI applications",
+    "Anthropic",
+    "agents",
+    "knowledge work",
+    "automation tools",
+    "AI strategy",
+    "natural language processing",
+    "specialized AI models",
+    "judgment",
+    "industry-specific agents",
+    "large language models",
+    "content creation",
+    "AIDB New Year's program",
+    "autonomy",
+    "OpenAI",
+    "writing with AI"
+  ],
+  "claims": [
+    {
+      "text": "The average listener of this show is a fairly advanced AI user.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "For example, in our February AI usage pulse survey, 97% of the respondents were using AI every day...",
+      "source": "transcript"
+    },
+    {
+      "text": "In a 4-week span alone between February and March, this show grew 50% in terms of listeners and downloads.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "In a 4-week span alone between February and March, this show grew 50% in terms of listeners and downloads.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI is software that takes inputs and creates things.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "When we talk about AI, what are we referring to? In short, in terms of how you'll experience it, AI is software that takes inputs and creates things.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI can do research, write documents, fill in and interact with spreadsheets, create pictures, or create movies.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "It can do research, it can write documents, it can fill in and interact with spreadsheets, it can create pictures, it can create movies.",
+      "source": "transcript"
+    },
+    {
+      "text": "Sometimes we use AI like an assistant, where we tell it precisely what we want and it does that thing for us.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Sometimes we use it like an assistant, where we tell it precisely what we want and it does that thing for us.",
+      "source": "transcript"
+    },
+    {
+      "text": "Sometimes we treat AI more like an employee, where we give it a goal we have and it figures out how to go and do that.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Sometimes we treat it more like an employee, where we give it a goal we have and it figures out how to go and do that.",
+      "source": "transcript"
+    },
+    {
+      "text": "A key term you'll hear a lot is model, which is short for large language model.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "A key term that you're going to hear a lot is model, which is short for large language model.",
+      "source": "transcript"
+    },
+    {
+      "text": "Models are trained on a combination of external data and human feedback.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Models are trained on a combination of external data, basically corpuses of human creation, writing, images, et cetera, with a big dose of human feedback as an addition.",
+      "source": "transcript"
+    },
+    {
+      "text": "Different models have different strengths and weaknesses.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Different models have different approaches to training, different approaches to that human feedback process, different amounts of data they're trained on, different types of data they're trained on.",
+      "source": "transcript"
+    },
+    {
+      "text": "The average company can't put their best models front and center due to cost and data intensity.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Because models cost a lot to serve and are pretty data-intensive, the average company like Anthropic, who makes Claude, or OpenAI, who makes ChatGPT, is not going to be able to put their best models front and center.",
+      "source": "transcript"
+    },
+    {
+      "text": "The default free tier models are often a step behind the state of the art.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "A lot of the default free tier models are a step behind the state of the art.",
+      "source": "transcript"
+    },
+    {
+      "text": "Power users use different models for different jobs.",
+      "type": "statistic",
+      "confidence": 0.8,
+      "supporting_quote": "The users who respond to those surveys use on average about 3 and 1/2 different models.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI isn't all that good due to a stale experience or criticism from people who don't like AI.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "This is a pretty common reason people cite for not trying AI, and it's usually a byproduct of either A, that being a weird strand of criticism from people who don't like AI that tends to have outsized mind share and media share, or even more prominently, it's just a byproduct of a stale experience.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI is really good at a lot of things right now.",
+      "type": "opinion",
+      "confidence": 0.85,
+      "supporting_quote": "A meaningful portion of the tasks that comprise the day-to-day of pretty much any knowledge worker at this point are things that AI can do quite well or be frankly exceedingly helpful for.",
+      "source": "transcript"
+    },
+    {
+      "text": "Capabilities are doubling roughly every 4 months.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "capabilities are doubling roughly every 4 months",
+      "source": "transcript"
+    },
+    {
+      "text": "AI allows for the creation of a huge amount of content of all types, writing, analysis, images, et cetera.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "And what is absolutely true is that AI allows for the creation of a huge amount of content of all types, writing, analysis, images, et cetera.",
+      "source": "transcript"
+    },
+    {
+      "text": "Not all AI content is going to be good.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "And not all of that content is going to be good",
+      "source": "transcript"
+    },
+    {
+      "text": "When people outsource their thinking and judgment to AI, it can absolutely be problematic.",
+      "type": "opinion",
+      "confidence": 0.85,
+      "supporting_quote": "When people outsource their thinking and judgment to AI, it can absolutely be problematic",
+      "source": "transcript"
+    },
+    {
+      "text": "AI actually beat human writing more than 50% of the time in a recent New York Times study.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "More than 50% of the time, AI actually beat human writing",
+      "source": "transcript"
+    },
+    {
+      "text": "State-of-the-art models went from 21.8% hallucination to just about 0.7% hallucination between 2021 and 2025.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "Between 2021 and 2025, state-of-the-art models went from 21.8% hallucination to just about 0.7% hallucination",
+      "source": "transcript"
+    },
+    {
+      "text": "When you get into domain-specific questions like legal questions, these numbers tend to go up.",
+      "type": "statistic",
+      "confidence": 0.85,
+      "supporting_quote": "these numbers tend to go up",
+      "source": "transcript"
+    },
+    {
+      "text": "Hallucination is effectively either a solved problem or certainly at least not enough of an issue to justify holding back from using the tools.",
+      "type": "prediction",
+      "confidence": 0.85,
+      "supporting_quote": "hallucination is effectively either a solved problem",
+      "source": "transcript"
+    },
+    {
+      "text": "You absolutely do not need to know some complicated set of tricks to get a lot out of these models.",
+      "type": "opinion",
+      "confidence": 0.95,
+      "supporting_quote": "you just talk to them in English and they'll figure it out",
+      "source": "transcript"
+    },
+    {
+      "text": "Many of these models will take whatever it is that you said and turn it into a better prompt.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "many of these models will take whatever it is that you said",
+      "source": "transcript"
+    },
+    {
+      "text": "You absolutely just do not need to be a prompting expert to get value out of these tools.",
+      "type": "opinion",
+      "confidence": 0.95,
+      "supporting_quote": "you absolutely just do not need to be a prompting expert",
+      "source": "transcript"
+    },
+    {
+      "text": "AI is fundamentally an iterative tool.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "AI is fundamentally an iterative tool",
+      "source": "transcript"
+    },
+    {
+      "text": "AI is fundamentally an iterative tool.",
+      "type": "opinion",
+      "confidence": 0.85,
+      "supporting_quote": "By virtue of using natural language to prompt it, you can go back and forth...",
+      "source": "transcript"
+    },
+    {
+      "text": "You should use AI like a partner, not just a tool.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "It's something that knows your goals and helps you get there.",
+      "source": "transcript"
+    },
+    {
+      "text": "The best way to get value out of AI is to use it as a coach.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "Use AI as a coach. This is Jerry Maguire, man. Help it help you.",
+      "source": "transcript"
+    },
+    {
+      "text": "The more that AI knows about you, the better it gets.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "And here we have our next important term, context. Context is all the information...",
+      "source": "transcript"
+    },
+    {
+      "text": "Context is all the information that surrounds any goal that AI is trying to achieve.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Context is all the information that surrounds any goal that AI is trying to achieve.",
+      "source": "transcript"
+    },
+    {
+      "text": "You can't get too wedded to any one behavior pattern when it comes to using AI.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "The tips that I would have given you to get the most out of AI 2 years ago, while not totally dissimilar...",
+      "source": "transcript"
+    },
+    {
+      "text": "You can't have a system whose capability is doubling every 4 months and not have that happen.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "AI itself is constantly evolving.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI is ultimately not a technology topic.",
+      "type": "opinion",
+      "confidence": 0.85,
+      "supporting_quote": "The more that you can view it like a new operating layer through which you do all sorts of different things, the closer you're going to get, I think, to unlocking its full value.",
+      "source": "transcript"
+    },
+    {
+      "text": "Chatbots are tools where you type into a chat window and the AI talks back to you.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Examples of chatbots are Anthropic's Claude, OpenAI's ChatGPT, Google's Gemini, and xAI's Grok.",
+      "source": "transcript"
+    },
+    {
+      "text": "These interfaces themselves have gotten more complex from where they started a couple years ago.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "All of these tools can now produce documents, work in code, website samples, markdown files, and pretty much any other type of computer format that you might need.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI gets embedded in your existing tools.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Pretty much every software company in the world is racing to figure out how AI can actually be useful inside of their systems.",
+      "source": "transcript"
+    },
+    {
+      "text": "Some examples of this are Notion, where you have AI deeply integrated into your writing and document storage, Zoom, where AI meeting transcription is now just built in, Salesforce's entire agent force suite, and so on and so forth.",
+      "type": "statistic",
+      "confidence": 0.8,
+      "supporting_quote": "",
+      "source": "transcript"
+    },
+    {
+      "text": "Chatbots are extremely general purpose.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "One person can use them for writing memos. Another person can use them for writing sonnets. While another person can use them for research, and another person can use them for clerical or accounting work.",
+      "source": "transcript"
+    },
+    {
+      "text": "Some people build specialized AI applications for one specific type of generative output.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Some of the apps that you might have heard of include Runway, which is focused on video, Midjourney, which is focused on images...",
+      "source": "transcript"
+    },
+    {
+      "text": "These specialized AI apps try to use their specialization to improve the results.",
+      "type": "factual",
+      "confidence": 0.85,
+      "supporting_quote": "The common thread is just that they are specialized on a particular type of output and try to use that specialization to improve the results.",
+      "source": "transcript"
+    },
+    {
+      "text": "There is an open debate around what the balance between these specialized AI apps and more general model companies will ultimately be.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "Even though Midjourney's images right now show incredible taste and are extremely visually compelling, can they keep up ultimately with the incredible amount of raw visual data that a company like Google has access to?",
+      "source": "transcript"
+    },
+    {
+      "text": "Automation tools allow you to automate entire workflows end to end.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "These take discrete defined goals that have a specific set of steps to achieve them and wires together an automation that connects each of those steps so that this can happen mostly hands-off.",
+      "source": "transcript"
+    },
+    {
+      "text": "Building tools or vibe coding tools let you build other software without necessarily being a developer.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "With these tools, you don't need to know how to code to use code.",
+      "source": "transcript"
+    },
+    {
+      "text": "Agents are slightly different from automations in that they have increased autonomy.",
+      "type": "factual",
+      "confidence": 0.85,
+      "supporting_quote": "Instead of telling them what to do, you give them a goal and they figure out how to achieve it.",
+      "source": "transcript"
+    },
+    {
+      "text": "Instead of telling them what to do, you give them a goal and they figure out how to achieve it.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "reased autonomy",
+      "source": "transcript"
+    },
+    {
+      "text": "People are building agents for absolutely everything.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "Now, right now people are building agents for absolutely everything.",
+      "source": "transcript"
+    },
+    {
+      "text": "Generalist agent tools like Manis or GenSpark have a broad set of different things that you can do from within a single interface.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "some generalist agent tools like Manis or GenSpark",
+      "source": "transcript"
+    },
+    {
+      "text": "Vertical agents are purpose-built for the types of things that go on in a specific industry or domain.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "vertical agents, which are agents that are built for a specific industry or domain",
+      "source": "transcript"
+    },
+    {
+      "text": "We're in this weird moment right now where every AI product is basically turning into every other AI product.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "You might have heard of Claude Code or OpenAI's Codex or Perplexity",
+      "source": "transcript"
+    },
+    {
+      "text": "It's not like you need to have clear coverage into all of these different types of applications and tools and interfaces.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "As they kind of converge on one another, you can pick a couple that are really useful",
+      "source": "transcript"
+    },
+    {
+      "text": "You are not going to do it with case studies and sample work.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "You are going to use these tools for only your real work to see what value they can bring you",
+      "source": "transcript"
+    },
+    {
+      "text": "The five that I would suggest, if you're just looking for a quick template, are research, analysis, strategy, writing, and images.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "I'll give you a quick example of the type of thing that you can do with each of these",
+      "source": "transcript"
+    },
+    {
+      "text": "All of the major chatbot tools give you the ability to specifically identify that you want it to do research.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "Usually, there's a little selector, which you can see here for example in Claude",
+      "source": "transcript"
+    },
+    {
+      "text": "Pick some research task that's actually valuable for you.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "Think competitor landscape, recent policy changes in your field, some important case study.",
+      "source": "transcript"
+    },
+    {
+      "text": "One of the calibrations that everyone has to go through is how much they're going to use AI for things that they're experts in versus augmenting all the areas and skills where they're not experts.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "One of the calibrations that everyone has to go through is how much they're going to use AI for things that they're experts in versus augmenting all the areas and skills where they're not experts",
+      "source": "transcript"
+    },
+    {
+      "text": "For analysis, this is where I would suggest dropping in some document or set of data and seeing what AI can come back with.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "For analysis, this is where I would suggest dropping in some document or set of data and seeing what AI can come back with",
+      "source": "transcript"
+    },
+    {
+      "text": "On strategy, I think this is a wildly underused capability of AI.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "On strategy, I think this is a wildly underused capability of AI",
+      "source": "transcript"
+    },
+    {
+      "text": "Give the AI some key decision that you're thinking through, either on a personal or an organizational level.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "Give it enough context and background so it has an informed opinion and get its help thinking through some strategic decision making",
+      "source": "transcript"
+    },
+    {
+      "text": "Writing and images are fairly self-explanatory.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "Writing and images are fairly self-explanatory",
+      "source": "transcript"
+    },
+    {
+      "text": "On writing, what I would suggest is to try to give it a few different types of writing, try it on some technical writing, some personal writing, maybe social media posts, etc., to get a feel for where you like it and where you don't like it as much.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "On writing, what I would suggest is to try to give it a few different types of writing, try it on some technical writing, some personal writing, maybe social media posts, etc., to get a feel for where you like it and where you don't like it as much",
+      "source": "transcript"
+    },
+    {
+      "text": "Although I disagree with the characterization of all AI writing as slop, there can be very significant variance in how good the output is for different use cases.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "Although I disagree with the characterization of all AI writing as slop, there can be very significant variance in how good the output is for different use cases",
+      "source": "transcript"
+    },
+    {
+      "text": "The big thing that I would say here is that while yes, you should absolutely try a variety of different image generations to get the full sense of the capability set, the one really important thing to note is that especially with the image tools in ChatGPT and Gemini, you can now make complex infographics and images that have a lot of words with pretty high fidelity.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "The big thing that I would say here is that while yes, you should absolutely try a variety of different image generations to get the full sense of the capability set, the one really important thing to note is that especially with the image tools in ChatGPT and Gemini, you can now make complex infographics and images that have a lot of words with pretty high fidelity",
+      "source": "transcript"
+    },
+    {
+      "text": "The big change over the last 6 months or so is that models can now reason over their image generation.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The big change over the last 6 months or so is that models can now reason over their image generation",
+      "source": "transcript"
+    },
+    {
+      "text": "Models can now reason over their image generation.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "ast 6 months or so is that models can now reason over their image generation.",
+      "source": "transcript"
+    },
+    {
+      "text": "You can do things like drop a transcript of a podcast into Gemini or ChatGPT images and tell it to create an infographic.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "drop a transcript of a podcast into Gemini or ChatGPT images and tell it to create an infographic",
+      "source": "transcript"
+    },
+    {
+      "text": "Being ambitious is better than being timid when it comes to AI.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "When it comes to AI, being ambitious is better than being timid.",
+      "source": "transcript"
+    },
+    {
+      "text": "Using AI as a build partner changes everything.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "If there is one thing that I can convince you of, I hope it is that using AI as a build partner changes everything.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI will answer whatever question you have over and over again in a hundred different ways without ever getting frustrated at you.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "a hundred times without ever getting frustrated at you",
+      "source": "transcript"
+    },
+    {
+      "text": "The people who learn to use AI to learn AI are some of the best users of it.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "The people who learn to use AI to learn AI are some of the best users of it.",
+      "source": "transcript"
+    },
+    {
+      "text": "Going from idea to working website or web application when you've never written code before is amazing.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "It is amazing to generate images with ChatGPT or to get it to help you with strategic thinking or to get it to help you analyze some data.",
+      "source": "transcript"
+    },
+    {
+      "text": "You won't believe how fast you find you can do technical things when you're using AI as your coach and build partner.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "While it will feel intimidating to start, you won't believe how fast you find you can do technical things when you're using AI as your coach and build partner.",
+      "source": "transcript"
+    },
+    {
+      "text": "There are common critiques of AI that are misconceptions.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "I've said that a lot of the common critiques are misconceptions",
+      "source": "transcript"
+    },
+    {
+      "text": "You should watch out for confidence, sycophancy, steerability, outsourcing judgment, the more output trap, and addictiveness when it comes to AI.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The real things to watch out for I think with AI are confidence, sycophancy, steerability, outsourcing judgment, the more output trap, and addictiveness.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI tends not to hedge unless you have specifically instructed it to share its confidence rating on whatever it puts out.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "AI tends not to hedge unless you have specifically instructed it to share its confidence rating on whatever it puts out.",
+      "source": "transcript"
+    },
+    {
+      "text": "You should be wary of how confident AI expresses its answers and not be afraid to challenge it.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "So you got to be wary of how confident AI expresses its answers and not be afraid to challenge it.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI has a tendency towards sycophancy, wanting to please you and telling you what you want to hear.",
+      "type": "opinion",
+      "confidence": 0.85,
+      "supporting_quote": "It will often tell you what you want to hear.",
+      "source": "transcript"
+    },
+    {
+      "text": "AI is highly steerable, often showing how it's trying to please you.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "You can often see how steerable AI becomes as it's trying to please you.",
+      "source": "transcript"
+    },
+    {
+      "text": "Steering AI into a corner by prompting it to be more critical or less sycophantic can lead to inaccurate results.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "Well, turns out that the problem with that can be that maybe now it's not being critical because it thinks it should be critical.",
+      "source": "transcript"
+    },
+    {
+      "text": "Forcing AI to make a decision by asking it to steel man for two different options can help overcome steerable behavior.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "I will ask it to steel man, as in argue very vociferously, for two different options.",
+      "source": "transcript"
+    },
+    {
+      "text": "It's easy to outsource judgment when using AI, especially with increased output capabilities.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "As you start to move faster and you start to output more, you start to be a little bit more lax when it comes to judgment.",
+      "source": "transcript"
+    },
+    {
+      "text": "More output does not necessarily mean better output.",
+      "type": "prediction",
+      "confidence": 0.85,
+      "supporting_quote": "that more output does not necessarily mean better output",
+      "source": "transcript"
+    },
+    {
+      "text": "Judgment is the work with AI.",
+      "type": "opinion",
+      "confidence": 0.75,
+      "supporting_quote": "While I'm not such a fan of the term slop in general based on how it's used, one variation on it that I think is more valuable is work slop",
+      "source": "transcript"
+    },
+    {
+      "text": "AI can get really addictive in a positive way even sometimes, really fast.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "You might find yourself staying up a little bit later than you meant to because you just want to get that next coding run of Claude code moving",
+      "source": "transcript"
+    },
+    {
+      "text": "The capabilities that you produce, the increased leverage that you have, all of it grows and compounds.",
+      "type": "statistic",
+      "confidence": 0.8,
+      "supporting_quote": "When you use AI, the capabilities that you produce, the increased leverage that you have, all of it grows and compounds",
+      "source": "transcript"
+    },
+    {
+      "text": "You have to be an advanced AI user to know how far behind you are.",
+      "type": "opinion",
+      "confidence": 0.6,
+      "supporting_quote": "You have to be an advanced AI user to know how far behind you are",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "The cost of entry to all these models and supporting tools can add up pretty quickly.",
+      "type": "statistic",
+      "confidence": 0.5,
+      "supporting_quote": "the free versions don't really provide much. So cost is a factor as i can see after buying the upgraded items for each platform, you speeding a truck load of money per month.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "AI skillsets exist in a logarithmic scale, not a linear one.",
+      "type": "factual",
+      "confidence": 0.7,
+      "supporting_quote": "As opposed to many other professions /skills, AI skillsets exists in a logarithmic scale, not a linear one.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    }
+  ],
+  "claim_count": 88,
+  "transcript_claim_count": 85,
+  "comment_claim_count": 3,
+  "video_metadata": {
+    "title": "The Ultimate AI Catch-Up Guide",
+    "channel_title": "The AI Daily Brief: Artificial Intelligence News",
+    "published_at": "2026-04-01T21:56:01Z",
+    "view_count": 7115,
+    "like_count": 225,
+    "comment_count": 8,
+    "duration": "PT29M59S"
+  },
+  "comment_timestamps": [
+    "2026-04-01T23:58:50Z",
+    "2026-04-02T14:52:53Z",
+    "2026-04-01T22:42:12Z",
+    "2026-04-02T17:56:22Z",
+    "2026-04-02T20:30:35Z",
+    "2026-04-02T16:20:57Z",
+    "2026-04-03T01:18:31Z"
+  ],
+  "_transcript": "If you have been feeling behind on AI, today's episode is for you. This is the ultimate AI catch-up guide. Now, today we are doing something that I have wanted to do for a little while now. The average listener of this show is a fairly advanced AI user. For example, in our February AI usage pulse survey, 97% of the respondents were using AI every day, and more than 60% of them were using advanced agentic or automation use cases. And this year, to support that audience, part of what I wanted to do is a lot more resources of all types. So, we've had a couple of different free self-directed training programs. The AIDB New Year's program was a 10 project-based program that was meant to help people up their skills for the new year. And then, of course, we launched Claw Camp, which was a way to learn how to use Open Claw and other agentic systems to build agent teams. But, what that's left out is resources that is really focused on the actual beginner. And what's clear to me is that 2026 so far has been quite a realization moment for a lot of folks. In a 4-week span alone between February and March, this show grew 50% in terms of listeners and downloads. And as much as I'd love to attribute that to our wonderful content, what I actually think it reflects is the byproduct of all of this discourse in mainstream media and major news outlets about how significant AI's impact on the world is already becoming. And so, with that in mind, for today's episode, we are doing the ultimate AI catch-up guide. This might not be the most useful for our average listener, but when you're thinking about the show that you want to send to your friends or your loved ones or your neighbors or whoever who's asking you how can they get up to speed on AI, this is the episode that's designed for them. >> [clears throat] >> And if you are that person, I could not be more excited for you to be here, and hopefully you feel after this episode that you have your head much more wrapped around this than you did before. So, let's kick off with some fundamentals. When we talk about AI, what are we referring to? In short, in terms of how you'll experience it, AI is software that takes inputs and creates things. It can do research, it can write documents, it can fill in and interact with spreadsheets, it can create pictures, it can create movies. Sometimes we use it like an assistant, where we tell it precisely what we want and it does that thing for us. Think drafting an email or a memo or an essay or doing some research. Sometimes we treat it more like an employee, where we give it a goal we have and it figures out how to go and do that. This is what people are talking about when they say the word agents. The big difference between using AI as an assistant and interacting with an agent is that with agents, you're kind of letting the AI figure out how to accomplish whatever goal you're giving it. A key term that you're going to hear a lot is model, which is short for large language model. It's not a perfect analogy, but you can kind of think about it as the version of the software that you choose. Models are trained on a combination of external data, basically corpuses of human creation, writing, images, et cetera, with a big dose of human feedback as an addition. Different models have different approaches to training, different approaches to that human feedback process, different amounts of data they're trained on, different types of data they're trained on. And because of that, different models have different strengths and weaknesses. One of the biggest mistakes that stops people from getting a lot out of AI, especially at the beginning, is that they accidentally use a model that's ill-suited to their task because it's the default model in a free version of a chatbot tool like ChatGPT. Because models cost a lot to serve and are pretty data-intensive, the average company like Anthropic, who makes Claude, or OpenAI, who makes ChatGPT, is not going to be able to put their best models front and center. A lot of the default free tier models are a step behind the state of the art. This mistake of using the wrong model then, especially for beginners, is not your fault. It's not even really the model company's fault exactly, it's just a UX problem. The fix, which we see with power users, is to use different models for different jobs. Going back once again to our monthly AI usage pulse surveys that we do here at AIDB, the users who respond to those surveys use on average about 3 and 1/2 different models. They might use one model for their Excel tasks and a different model for their writing tasks and a different model yet again for their image generation tasks. Now that we have some of that terminology out of the way, let's talk about some of the common impressions that people have of AI and things that you might have heard about AI. Now, one note here is for the sake of this show, I'm not going to focus on things like societal impact, energy consumption, policy debates. Today we're focused on practical impact. I want this to help people who want to get up to speed and actually start using these tools do that a little bit better. So, those are the common impressions that I'm going to focus on. The first common but wrong impression is something like, well, I heard AI actually isn't all that good. This is a pretty common reason people cite for not trying AI, and it's usually a byproduct of either A, that being a weird strand of criticism from people who don't like AI that tends to have outsized mind share and media share, or even more prominently, it's just a byproduct of a stale experience. For example, if someone tried a model a year ago, and maybe because of the problem we discussed just a minute ago, it wasn't even the best model then, and it didn't do a great job of whatever their task was, maybe they then wrote off the entire space. Another version of this that you might hear is around some specific type of output like AI photos that have six fingers. The reality is that AI is really good at a lot of things right now. A meaningful portion of the tasks that comprise the day-to-day of pretty much any knowledge worker at this point are things that AI can do quite well or be frankly exceedingly helpful for. And even if you can find something where capabilities aren't up to stuff for what you need, right now, capabilities are doubling roughly every 4 months. Meaning that even if it doesn't do great on your task at the moment, it probably will be before too long. Next common misconception isn't it really easy to tell that AI content is AI content? Isn't it just all slop? Slop is, of course, the AI critic's favorite word. In fact, I think it was Merriam-Webster's word of the year last year. I think you can tell a lot about the state of the AI discourse that the word of the year last year was slop rather than something like vibe coding, which was the actual transformative capability that might have, through its impact on markets or something else, led you to be here today. In any case, what is absolutely true is that AI allows for the creation of a huge amount of content of all types, writing, analysis, images, et cetera. And not all of that content is going to be good. In fact, it is absolutely true that in many advanced AI-using organizations, a new challenge that they are experiencing is people cranking out so much content with AI that it's hard for them to sift through what is actually good. When people outsource their thinking and judgment to AI, it can absolutely be problematic. But, the idea that all AI content is just slop, that all AI writing is going to fall into common AI writing traps, that all AI images just look like AI images, these things just aren't true anymore. Evidence of this comes from a recent New York Times study where they allowed people on the internet to effectively take a test where they read two different passages on the same topic and chose the one they liked more. More than 50% of the time, AI actually beat human writing. Yeah, but doesn't AI hallucinate a lot? This is another misconception, which I think very reasonably, if you thought this was the case, might lead you to stay away. Between 2021 and 2025, state-of-the-art models went from 21.8% hallucination to just about 0.7% hallucination. A 96% reduction in 4 years. What's more, that was even before the current crop of state-of-the-art models. Now, it is true that when you get into domain-specific questions like legal questions, these numbers tend to go up. And so, it is an important part of using AI to have systems for verification. But, functionally, for a lot of the types of day-to-day ways that you would use AI, hallucination is effectively either a solved problem or certainly at least not enough of an issue to justify holding back from using the tools. Yeah, but okay, even if AI doesn't hallucinate a lot, and it's not all just slop, don't you need to like be a prompting expert or something to use AI well? This misconception is a legacy of all of those 2024 era prompt engineering courses. While there are definitely ways to use well or not so well and to communicate with it in a better or worse fashion, you absolutely do not need to know some complicated set of tricks to get a lot out of these models. In fact, kind of the whole idea is that you just talk to them in English and they'll figure it out. And if they don't figure it out, you talk to them some more, you refine it, and you go again. And then, when that doesn't work, you can talk to them again, et cetera, et cetera, and so on. In fact, it is increasingly the case that many of these models will take whatever it is that you said and turn it in the back end into a better prompt. And they do this all in the background without even telling you. An example of this is Ideogram, which I use for the thumbnails for this show. For my Y AI Won't Take Your Job episode, my prompt that I gave Ideogram was, \"Huge text, light on dark teal, {quote} Y AI Won't Take Your {end quote}, blended into an optimistic portrait of a person and an AI happily working together and collaborating, 1950s retrofuturism.\" Ungrammatical, smashed-together elements, that's what I gave the machine. The magic prompt that it automatically turned this into on my behalf was this: \"A 1950s retrofuturism style illustration featuring huge glowing text that reads Y AI Won't Take Your Job in bright white and yellow lettering against a dark teal background. Below the text, an optimistic scene shows a smiling person in vintage clothing working alongside a friendly chrome-plated robot with rounded features and glowing blue accents. The human and AI are collaborating at a sleek atomic age workstation, blah, blah, blah.\" You get the point. It's actually twice as long as that. And so, the TLDR is that you absolutely just do not need to be a prompting expert to get value out of these tools. Now, with those misconceptions out of the way, one of the things that is important with AI is to start thinking differently in a couple key ways. Our next conversation then is about the mindset shifts required to get the most out of AI, which I referenced in the prompting misconception, is that AI is fundamentally an iterative tool. By virtue of using natural language to prompt it, you can go back and forth, rather than spending all of your time getting the prompt perfect and hoping the output is perfect on the first go. View things as an iterative cycle with extremely short cycle times. Think about the way that you would interact with an employee. If you gave an employee an assignment and it came back with something that wasn't up to snuff in the first try, you wouldn't just wipe your hands and say, \"Well, better luck next time.\" You'd give them feedback, send them off to do it again, and then see what they brought back the second time. Then if you needed to, a third time and a fourth time and so on and so forth. That's exactly how you should use AI. It's just that the iterative cycles get to be extremely extremely quick. Next up, in terms of how you think about AI, the people who get the most out of it do not treat it like a tool. They treat it more like a partner. It's not something you pick up and put down. It's something that knows your goals and helps you get there. This has implications for the way you use AI. One really common theme you'll hear throughout this episode, and honestly in all of the educational and tips and tricks type shows that I do, the best way to get value out of AI is to get AI's help on getting value out of AI. Use AI as a coach. This is Jerry Maguire, man. Help it help you. Now, speaking of the idea that AI is something that knows your goals, another important truism is that the more that AI knows about you, the better it gets. And here we have our next important term, context. Context is all the information that surrounds any goal that AI is trying to achieve or any prompt that you've given it that allows it to do its job better. We basically are all in a never-ending battle to increase the context available to AI. In fact, on the other end of the builder spectrum this week, I shared a personal context builder agent for advanced users. For your starting point, where context is going to come up is in things like background documents that help the AI understand more about your work before you ask it work questions. If you are in marketing and you're asking AI to write some marketing copy for you, it stands to reason that it's going to do a better job if it has your brand guidelines or examples of successful past campaigns that you've run. Now, extend that across any goal that you give AI and you'll see why context becomes so important. Another mindset shift which can be really hard because it's so fundamentally different than pretty much all the other tools we've ever had to use, is that you can't get too wedded to any one behavior pattern when it comes to using AI. The tips that I would have given you to get the most out of AI 2 years ago, while not totally dissimilar to what you're hearing now, have evolved and changed because AI itself is constantly evolving. You can't have a system whose capability is doubling every 4 months and not have that happen. And because of that, you're going to have to evolve in how you work with it, which is of course another great reason to keep that iterative approach close at hand so that when the thing that used to work stops working, you can figure out something that does again. Ultimately, to reinforce, AI is ultimately not a technology topic. The more that you can view it like a new operating layer through which you do all sorts of different things, the closer you're going to get, I think, to unlocking its full value. So, now that we've got some key terms, some common misconceptions out of the way, and a few important mindset shifts, let's talk about the AI landscape. When people talk about AI, they're going to talk about everything from chatbots to agents to automation tools. So, how does that all fit together? The front door and most common interface for most people using AI at this point is still chatbots. Examples of chatbots are Anthropic's Claude, OpenAI's ChatGPT, Google's Gemini, and xAI's Grok. These are tools where you type into a chat window and the AI talks back to you. Now, these interfaces themselves have gotten more complex from where they started a couple years ago. All of these tools can now produce documents, work in code, website samples, markdown files, and pretty much any other type of computer format that you might need. But the core interface experience is you talking to a chatbot that talks back. Another category of AI that you'll probably come across if you haven't already is AI that gets embedded in your existing tools. Pretty much every software company in the world is racing to figure out how AI can actually be useful inside of their systems. And while it's tempting sometimes to view this as a cynical grab to capture headlines, I think it's actually more about the fact that we're still so new with this that we just don't know exactly what the right ways for AI to interact with the other things that we do are without trying them. So, some examples of this are going to be Notion, where you have AI deeply integrated into your writing and document storage, Zoom, where AI meeting transcription is now just built in, Salesforce's entire agent force suite, and so on and so forth. And pretty much every other software that you use, if it hasn't introduced some set of AI tools already, will at some time in the near future. Now, one thing I didn't mention about chatbots is that they are extremely general purpose. One person can use them for writing memos. Another person can use them for writing sonnets. While another person can use them for research, and another person can use them for clerical or accounting work. Sometimes though, people build specialized AI applications that are purpose-built for one specific type of generative output. Some of the apps that you might have heard of include Runway, which is focused on video, Midjourney, which is focused on images, Gamma, which is focused on slides and deck presentations, 11 Labs, which is focused on voice, or Suno, which is focused on music. Sometimes these companies build their own models. Sometimes they do refinements of other companies' models. The common thread is just that they are specialized on a particular type of output and try to use that specialization to improve the results. Now, one thing that is worth noting is that there is a fairly open debate around what the balance between these specialized AI apps and the more general model companies will ultimately be. Even though Midjourney's images right now show incredible taste and are extremely visually compelling, can they keep up ultimately with the incredible amount of raw visual data that a company like Google has access to? That is an unresolved question, but when it comes to the practical day-to-day for you, these tools just give you more options to get exactly what you need out of AI. Another category of tool that you might run across are automation tools. Basically, no-code tools that allow you to automate entire workflows end to end. These take discrete defined goals that have a specific set of steps to achieve them and wires together an automation that connects each of those steps so that this can happen mostly hands-off. This type of automation comes up a lot in enterprise settings where a lot of the work is very consistent in repeated patternistic workflows. The building tools or vibe coding tools are software that lets you build other software without necessarily being a developer. With these tools, you don't need to know how to code to use code. Companies like Lovable, Replit, and Baseplate 44 all allow you to articulate a goal of a software that you'd like developed. Think a personal fitness tracking application that's perfectly customized to your specific wants and needs, and these tools will build it end to end in a way that you can actually launch it, deploy it, add a custom URL, put it on your phone, whatever it is that you want. These tools are some of the most popular and fastest growing ever and are very quickly reshaping how people think about their capabilities when it comes to using AI. From there, we move into agents. Whereas automations have a discrete set of steps that the user articulates and gets AI to help them automate, agents are slightly different. The key idea of agents is increased autonomy. Instead of telling them what to do, you give them a goal and they figure out how to achieve it. Now, right now people are building agents for absolutely everything. But for beginners, the type of agents that you might run across most commonly are some generalist agent tools like Manis or GenSpark, which have a broad set of different things that you can do from within a single interface. That is different from vertical agents, which are agents that are built for a specific industry or domain. The legal industry, healthcare, finance, sales, HR, pretty much all industries at this point have some set of highly specific vertical agents who are purpose-built for the types of things that go on in that industry. Now, once again, it's an open question of the extent to which we'll use vertical agents versus more general horizontal agents in the future, but the common thread is once again a higher level of autonomy where you can give them a goal and they figure out how to go achieve that goal. Now, one reality to keep in mind, which I think actually should be fairly liberating for you, is that we're in this weird moment right now where every AI product is basically turning into every other AI product. You might have heard of Claude Code or OpenAI's Codex or Perplexity. All of those tools are seeing a real convergence of features. Lovable and Replit recently, despite their vibe coding origins, recently released updated versions that allow you to use them for design or for building slide presentations. And so, why I say this should feel a little bit liberating is that it's not like you need to have clear coverage into all of these different types of applications and tools and interfaces. As they kind of converge on one another, you can pick a couple that are really useful and they're likely to give you a broad-based set of capabilities. Which gets us to how to get started. And one thing that's really important with this is that as you get started with AI, you are not going to do it with case studies and sample work. You are going to use these tools for only your real work to see what value they can bring you. Now, my suggestion is to start with a handful of very common use cases across a lot of different types of work. The five that I would suggest, if you're just looking for a quick template, are research, analysis, strategy, writing, and images. I'll give you a quick example of the type of thing that you can do with each of these. For research, all of the major chatbot tools give you the ability to specifically identify that you want it to do research. Usually, there's a little selector, which you can see here for example in Claude, that allows you to specify that you are using this for a research use case. For ChatGPT and Gemini, it's called deep research. Pick some research task that's actually valuable for you. Think competitor landscape, recent policy changes in your field, some important case study. Then toggle on one of those research settings for one of the tools that you're using and see what it comes back with. The best thing to do here is to choose something at first that you actually know a bit about so you can get a sense for how good the tool actually is. One of the calibrations that everyone has to go through is how much they're going to use AI for things that they're experts in versus augmenting all the areas and skills where they're not experts, each of which can be really valuable AI strategies. For analysis, this is where I would suggest dropping in some document or set of data and seeing what AI can come back with. So to use that marketing example again, drop in recent analytics or the performance of a set of past campaigns, or if you're in finance, do some financial data and see what observations or analyses AI can make. On strategy, I think this is a wildly underused capability of AI. Give the AI some key decision that you're thinking through, either on a personal or an organizational level. Give it enough context and background so it has an informed opinion and get its help thinking through some strategic decision making. Ultimately, in this case, you're not looking for it necessarily to output some strategy document, although maybe that's where it goes. It's more a strategic partner to help you refine your own thinking. And if you look across the entire history of my personal experience with AI, this constitutes by far the majority of what I have done with it. Writing and images are fairly self-explanatory. On writing, what I would suggest is to try to give it a few different types of writing, try it on some technical writing, some personal writing, maybe social media posts, etc., to get a feel for where you like it and where you don't like it as much. And I would say especially when it comes to writing, that is the type of way you need to think about it. Although I disagree with the characterization of all AI writing as slop, there can be very significant variance in how good the output is for different use cases. And so you're going to want to tread carefully and start to create a mental map of where you think it's actually useful for writing. Finally, when it comes to images, the big thing that I would say here is that while yes, you should absolutely try a variety of different image generations to get the full sense of the capability set, the one really important thing to note is that especially with the image tools in ChatGPT and Gemini, you can now make complex infographics and images that have a lot of words with pretty high fidelity. The big change over the last 6 months or so is that models can now reason over their image generation. So instead of having to give it a super specific prompt, you can do things like drop a transcript of a podcast into Gemini or ChatGPT images and tell it to create an infographic and it can do the reasoning to figure out what it should visualize and what words should go with it and then actually do the execution of that. That has opened up a huge amount of knowledge work image-related use cases and my guess is that some of those might be the most valuable that you're not using this for yet. And when you've done all of those things, I think you should stretch yourself a little bit. When it comes to AI, being ambitious is better than being timid. If there is one thing that I can convince you of, I hope it is that using AI as a build partner changes everything. You have this infinitely patient partner who will answer whatever question you have over and over again in a hundred different ways, a hundred times without ever getting frustrated at you. You can ask it to go back and explain concepts, to walk you through step by step. The people who learn to use AI to learn AI are some of the best users of it. And so what my challenge for you would be is to actually go build software today. It is amazing to generate images with ChatGPT or to get it to help you with strategic thinking or to get it to help you analyze some data. But for most people, that is nothing compared to the feeling of going from idea to working website or web application when they've never written code before. Pick a tool like Lovable or Replit and go build a website for some project, whether it's for work or at home. Even better, build a full application. Your kids' story time app, your fitness tracking app, whatever it is, just build something. While it will feel intimidating to start, you won't believe how fast you find you can do technical things when you're using AI as your coach and build partner. Okay, finally. I've said that a lot of the common critiques are misconceptions, but are there things you should actually watch out for when it comes to AI now that you are an enfranchised user? The short answer is of course, yes. The real things to watch out for I think with AI are confidence, sycophancy, steerability, outsourcing judgment, the more output trap, and addictiveness. Going through these quickly, AI will always say things with expressed confidence, even when it's wrong, sometimes especially when it's wrong. AI tends not to hedge unless you have specifically instructed it to share its confidence rating on whatever it puts out. This can be very challenging to spot and users of AI will often find themselves saying, \"Hey AI friend, you are completely wrong.\" and getting some response like, \"Oh yeah, you're right. I was completely thinking about this wrong. That's on me. My bad.\" So you got to be wary of how confident AI expresses its answers and not be afraid to challenge it. Next up, this has gotten nominally better over the last year with the more advanced models, but AI definitely has a tendency towards sycophancy. It wants to please you. It will often tell you what you want to hear. When you are exploring some new idea with it, it's unlikely to say, \"Hey man, that is a stupid idea that everyone and their mom has tried and hasn't worked for them for good reason.\" It's going to say, \"Wow, that's really interesting. Let's explore that some more.\" And I think that that's the type of sycophancy that's dangerous. At least in a work setting. It's not so much the complementariness, it's the fact that it's not really challenging you in the way that a human colleague or partner might. Kind of related is that I find that AI, even the state-of-the-art models, are highly steerable. You can often see how steerable AI becomes as it's trying to please you. For example, let's say that you're trying to get it to be less sycophantic and you specifically prompt it to, for example, be more critical. Well, turns out that the problem with that can be that maybe now it's not being critical because it thinks it should be critical. It's being critical because you just prompted it to be more critical. I find that you can often steer AI into the corner that you want it to go in. And while this is a challenge, one of the most effective strategies I've found is to just force it to make a decision, especially when I'm having one of those strategic conversations or if I'm trying to think through, for example, a feature of some website that I'm building. I will ask it to steel man, as in argue very vociferously, for two different options. Basically, make the best argument it possibly can for them and then still make a decision about which way we should go and force it to not hedge and say a little bit of column A, a little bit of column B, but just pick one. Real challenge number four, it can become very easy to outsource your judgment. This especially happens when you start to take on all this new work that leverages your new output capability thanks to AI. As you start to move faster and you start to output more, you start to be a little bit more lax when it comes to judgment. This is not always wrong. In fact, there's a lot of value in decreasing your cognitive decision-making load when it comes to decisions that don't matter that much. You don't necessarily need to critique every word on every slide, especially if it's just going to be used as a background presentation like this when you're talking over it. You might not ultimately care all that much about all the colors in a specific presentation or you might not care about all the colors or fonts of your web app. But make sure that you understand what you do care about and where your judgment does matter and don't outsource that. A fifth challenge, one that many, many organizations are struggling with, is the lesson that we all have to learn with AI that more output does not necessarily mean better output. Volume is now easy and in fact, judgment is the work. While I'm not such a fan of the term slop in general based on how it's used, one variation on it that I think is more valuable is work slop. This is a new challenge for organizations who all of a sudden have everyone in the company able to write hundred-page memos all the time, but if everyone is constantly adding a hundred-page memo to every micro decision, things are going to get hairy really fast. Lastly, and I promise you will see this, if you actually challenge yourself like I'm suggesting and go build some application or website, AI can get really addictive in a positive way even sometimes, really fast. You might find yourself staying up a little bit later than you meant to because you just want to get that next coding run of Claude code moving. And I swear, even if you were listening to me saying, \"That would never be me. I don't even know what Claude code is.\" come talk to me in 3 months. We are all going to have to renegotiate our relationship with work now that we can be on and produce more than was ever possible. And so keep this in mind as you dive in. The last note, and the most important thing, is to remember that AI compounds. When you use AI, the capabilities that you produce, the increased leverage that you have, all of it grows and compounds, meaning the space between the people who are using it and using it well and the people who aren't is getting bigger, not smaller. So with that in mind, I am so glad you are here. And if you're looking for somewhere to go next after you've done some of these basic first tests, go check out aidbnewyear.com. It's framed as a New Year program, but really it's going to be 10 steps that I think are valuable for a lot of beginners in terms of building a broad-based set of AI capabilities. You can also stay tuned at aidbtraining.com. That's where we post programs like AI DB New Year's as well as our paid programs for enterprises like Enterprise Claw, which is a program for people to learn how to build agents and agents' teams inside their company, where sign-up for cohort two is live right now. Now that is going to do it for our ultimate AI catch-up guide. Hopefully, this was useful, and I'm looking forward to seeing you more around these parts. For now, that's going to do it for today's AI Daily Brief. Appreciate you listening or watching, as always, and until next time, peace.",
+  "_comments": [
+    {
+      "text": "You have to be an advanced AI user to know how far behind you are",
+      "likes": 10,
+      "published_at": "2026-04-01T23:58:50Z"
+    },
+    {
+      "text": "Fantastic video, have already sent it out to friends, family, and collegues.",
+      "likes": 3,
+      "published_at": "2026-04-02T14:52:53Z"
+    },
+    {
+      "text": "lol. Right as your talking about staying up just a little bit later with Claude Code to get the extra bit of work done I recall 2 nights ago thinking, man, I just hit my 5 hour usage limit. If I take a 3 hour nap, I can wake up run this agent, go back to bed and wake up when my next 5 hour block resets. \ud83d\ude02 \ud83d\ude02\ud83d\ude02",
+      "likes": 3,
+      "published_at": "2026-04-01T22:42:12Z"
+    },
+    {
+      "text": "This may be one of the very best videos you've ever shared ... a great substantive and easy to understand the scope of AI and its applicability to \"all\" ... we need more \"basic\" videos to be sure the fundamentals are understood ... this one is \"TOP-SHELF\" ... \ud83d\udc4a",
+      "likes": 2,
+      "published_at": "2026-04-02T17:56:22Z"
+    },
+    {
+      "text": "I'm still a beginner, found your show about 2mo ago and listen every day. I'm using claude a few times a week, but as I find more reasons to use it more, I'm steadily getting smarter about it.  I'm glad you're doing content like this!",
+      "likes": 1,
+      "published_at": "2026-04-02T20:30:35Z"
+    },
+    {
+      "text": "It seems that the cost of entry to all these models and supporting tools can add up pretty quickly. the free versions don't really provide much. So cost is a factor as i can see after buying the upgraded items for each platform, you speeding a truck load of money per month.",
+      "likes": 0,
+      "published_at": "2026-04-02T16:20:57Z"
+    },
+    {
+      "text": "As opposed to many other professions /skills, AI skillsets exists in a logarithmic scale, not a linear one.\nWe are on the brink of democratized AI Researcher. MiniMax is opening the floodgates in the OSS world.\n US frontier models have most likely that already up a running and getting refined. So even being \"proficient\", although always important, requires to keep eyes on the prize: \nwhat is the intention? the objective? the product? the constraint?\n\nAnd stey hungry for learning, even creating a personal learning loop. time to dig into that good old scientific method and engineering principles :) \n\nThis will be absolutely necessary for each and every skillset and job, even non-technology adjacent.",
+      "likes": 0,
+      "published_at": "2026-04-03T01:18:31Z"
+    }
+  ]
+}

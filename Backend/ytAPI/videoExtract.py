@@ -4,7 +4,6 @@ from config import youtube
 from ytAPI.channelExtract import search_channels, filter_channels
 from ytAPI.rss_feed import fetch_videos_from_channels
 from ytAPI.channel_cache import get_cached_channels, cache_channels
-from utility.debugLog import log_videos_raw, log_videos_filtered
 
 log = logging.getLogger(__name__)
 
@@ -133,8 +132,7 @@ def filter_videos(
                 "reasons": reasons
             })
 
-    # Log just the IDs for compatibility with existing debug logs
-    log_videos_filtered(channel_title, [v["video_id"] for v in selected], rejected)
+    log.info(f"  → {channel_title}: {len(selected)} videos passed filter, {len(rejected)} rejected")
     return selected
 
 
@@ -210,7 +208,7 @@ def discover_videos_via_api(
     for channel in channels:
         log.info(f"  → API search for: {channel['title']}")
         vids = get_recent_channel_videos(channel["channel_id"], days=days, max_results=5)
-        log_videos_raw(channel["title"], channel["channel_id"], vids)
+        log.info(f"    Found {len(vids)} recent videos")
         filtered = filter_videos(
             vids,
             channel_title=channel["title"],
