@@ -7,6 +7,7 @@ import requests
 from config import LLM_URL, LLM_MODEL, LLM_NUM_PREDICT
 from utility.parser import parse_json_response
 from utility.chunker import chunk_text
+from utility.embeddings import get_embedding, check_embedding_service
 from extraction.llmPrompts import (
     build_extraction_prompt,
     build_comment_prompt,
@@ -14,6 +15,21 @@ from extraction.llmPrompts import (
 )
 
 log = logging.getLogger(__name__)
+
+# Check embedding service once at module load
+_embedding_available = None
+
+
+def is_embedding_available() -> bool:
+    """Check if embedding service is available (cached)."""
+    global _embedding_available
+    if _embedding_available is None:
+        _embedding_available = check_embedding_service()
+        if _embedding_available:
+            log.info("Embedding service available")
+        else:
+            log.warning("Embedding service unavailable - claims will not have embeddings")
+    return _embedding_available
 
 
 def call_llm(prompt: str, num_predict: int | None = None) -> str | None:
@@ -45,7 +61,8 @@ def call_llm(prompt: str, num_predict: int | None = None) -> str | None:
 def analyze_video(
     video_id: str,
     transcript: str,
-    comments: list[dict]
+    comments: list[dict],
+    generate_embeddings: bool = True
 ) -> dict | None:
     """
     Extract claims from a single video's transcript and comments.
@@ -53,12 +70,16 @@ def analyze_video(
     - Transcript is chunked and processed in passes
     - Comments are processed after transcript so they can reference existing claims
     - Every claim is tagged with its source ("transcript" or "comment")
+    - Optionally generates embeddings for each claim
     """
     chunks = chunk_text(transcript)
     log.info(f"  → {len(chunks)} chunk(s) for video {video_id}")
 
     all_topics = []
     all_claims = []
+    
+    # Check if embeddings should be generated
+    do_embeddings = generate_embeddings and is_embedding_available()
 
     # -- Transcript extraction --
     for i, chunk in enumerate(chunks):
@@ -106,6 +127,19 @@ def analyze_video(
             log.warning("  → No LLM response for comments")
     else:
         log.info("  → No comments available for this video")
+
+    # -- Generate embeddings for claims --
+    if do_embeddings:
+        log.info(f"  → Generating embeddings for {len(all_claims)} claims")
+        embedded_count = 0
+        for claim in all_claims:
+            claim_text = claim.get("text", "")
+            if claim_text:
+                embedding = get_embedding(claim_text)
+                claim["embedding"] = embedding
+                if embedding:
+                    embedded_count += 1
+        log.info(f"  → Generated {embedded_count}/{len(all_claims)} embeddings")
 
     transcript_count = sum(1 for c in all_claims if c.get("source") == "transcript")
     comment_count = sum(1 for c in all_claims if c.get("source") == "comment")

@@ -33,6 +33,32 @@ def get_recent_channel_videos(
     return [item["id"]["videoId"] for item in response["items"]]
 
 
+def parse_iso_duration(iso_duration: str | None) -> int:
+    """
+    Convert ISO 8601 duration (PT15M30S) to seconds.
+    
+    Examples:
+        PT1H2M3S -> 3723
+        PT15M30S -> 930
+        PT45S -> 45
+    """
+    if not iso_duration:
+        return 0
+    
+    import re
+    pattern = r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?'
+    match = re.match(pattern, iso_duration)
+    
+    if not match:
+        return 0
+    
+    hours = int(match.group(1) or 0)
+    minutes = int(match.group(2) or 0)
+    seconds = int(match.group(3) or 0)
+    
+    return hours * 3600 + minutes * 60 + seconds
+
+
 def enrich_video_metadata(video_ids: list[str]) -> list[dict]:
     """
     Fetch full metadata for videos (view count, likes, duration).
@@ -58,16 +84,20 @@ def enrich_video_metadata(video_ids: list[str]) -> list[dict]:
         for item in response.get("items", []):
             stats = item.get("statistics", {})
             snippet = item.get("snippet", {})
+            iso_duration = item.get("contentDetails", {}).get("duration")
             
             all_metadata.append({
                 "video_id": item["id"],
+                "channel_id": snippet.get("channelId"),
                 "title": snippet.get("title", ""),
+                "description": snippet.get("description", ""),
                 "channel_title": snippet.get("channelTitle", ""),
                 "published_at": snippet.get("publishedAt"),
                 "view_count": int(stats.get("viewCount", 0)),
                 "like_count": int(stats.get("likeCount", 0)),
                 "comment_count": int(stats.get("commentCount", 0)),
-                "duration": item.get("contentDetails", {}).get("duration"),
+                "duration": iso_duration,
+                "duration_seconds": parse_iso_duration(iso_duration),
             })
     
     return all_metadata
@@ -108,16 +138,20 @@ def filter_videos(
         keyword_match = any(k.lower() in title_lower for k in keywords)
 
         if views >= min_views and keyword_match:
+            iso_duration = item["contentDetails"].get("duration")
             # Return rich metadata for trend analysis
             selected.append({
                 "video_id": vid_id,
+                "channel_id": snippet.get("channelId"),
                 "title": title,
+                "description": snippet.get("description", ""),
                 "channel_title": snippet.get("channelTitle", channel_title),
                 "published_at": snippet.get("publishedAt"),  # ISO 8601 timestamp
                 "view_count": views,
                 "like_count": int(stats.get("likeCount", 0)),
                 "comment_count": int(stats.get("commentCount", 0)),
-                "duration": item["contentDetails"].get("duration"),  # ISO 8601 duration
+                "duration": iso_duration,
+                "duration_seconds": parse_iso_duration(iso_duration),
             })
         else:
             reasons = []

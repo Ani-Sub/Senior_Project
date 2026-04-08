@@ -1,0 +1,186 @@
+{
+  "granularity": "weekly",
+  "time_range": {
+    "start": "2026-03-22T23:47:52Z",
+    "end": "2026-04-02T21:16:27Z"
+  },
+  "overall": {
+    "video_count": 5,
+    "trend": {
+      "pattern": "decline",
+      "confidence": 1.0,
+      "peak_period": "2026-W11",
+      "peak_value": 250431,
+      "start_period": "2026-W11",
+      "end_period": "2026-W13",
+      "total_periods": 3,
+      "description": "Activity declined 72% from 2026-W11 to 2026-W13."
+    },
+    "timeline": [
+      {
+        "period": "2026-W11",
+        "period_start_iso": "2026-03-16",
+        "period_start_ts": 1773637200,
+        "video_count": 1,
+        "total_views": 250431,
+        "total_likes": 2742,
+        "total_comments": 148,
+        "engagement_ratio": 0.0115,
+        "claim_count": 74,
+        "avg_confidence": 0.864
+      },
+      {
+        "period": "2026-W12",
+        "period_start_iso": "2026-03-23",
+        "period_start_ts": 1774242000,
+        "video_count": 3,
+        "total_views": 168803,
+        "total_likes": 4480,
+        "total_comments": 277,
+        "engagement_ratio": 0.0282,
+        "claim_count": 151,
+        "avg_confidence": 0.872
+      },
+      {
+        "period": "2026-W13",
+        "period_start_iso": "2026-03-30",
+        "period_start_ts": 1774846800,
+        "video_count": 1,
+        "total_views": 71173,
+        "total_likes": 1247,
+        "total_comments": 90,
+        "engagement_ratio": 0.0188,
+        "claim_count": 40,
+        "avg_confidence": 0.841
+      }
+    ]
+  },
+  "narratives": [
+    {
+      "narrative_id": "narrative_1",
+      "name": "AI Advancements and Applications",
+      "summary": "This narrative highlights the advancements and applications of AI, including humanoid robots that can perform tasks like tennis and sprinting.",
+      "video_count": 2,
+      "video_ids": [
+        "QDRzgF-8-50",
+        "GiVtPpEVdCY"
+      ],
+      "trend": {
+        "pattern": "decline",
+        "confidence": 1.0,
+        "peak_period": "2026-W11",
+        "description": "Activity declined 76% from 2026-W11 to 2026-W12."
+      },
+      "timeline": [
+        {
+          "period": "2026-W11",
+          "period_start_iso": "2026-03-16",
+          "period_start_ts": 1773637200,
+          "video_count": 1,
+          "total_views": 250431,
+          "total_likes": 2742,
+          "total_comments": 148,
+          "engagement_ratio": 0.0115,
+          "claim_count": 74,
+          "avg_confidence": 0.864
+        },
+        {
+          "period": "2026-W12",
+          "period_start_iso": "2026-03-23",
+          "period_start_ts": 1774242000,
+          "video_count": 1,
+          "total_views": 60065,
+          "total_likes": 1807,
+          "total_comments": 97,
+          "engagement_ratio": 0.0317,
+          "claim_count": 45,
+          "avg_confidence": 0.873
+        }
+      ]
+    },
+    {
+      "narrative_id": "narrative_2",
+      "name": "AI in Robotics and Automation",
+      "summary": "This narrative explores the role of AI in robotics and automation, including the development of humanoid robots that can perform tasks like service work and industrial settings.",
+      "video_count": 2,
+      "video_ids": [
+        "QDRzgF-8-50",
+        "x2l7W9aTc5k"
+      ],
+      "trend": {
+        "pattern": "decline",
+        "confidence": 1.0,
+        "peak_period": "2026-W11",
+        "description": "Activity declined 72% from 2026-W11 to 2026-W13."
+      },
+      "timeline": [
+        {
+          "period": "2026-W11",
+          "period_start_iso": "2026-03-16",
+          "period_start_ts": 1773637200,
+          "video_count": 1,
+          "total_views": 250431,
+          "total_likes": 2742,
+          "total_comments": 148,
+          "engagement_ratio": 0.0115,
+          "claim_count": 74,
+          "avg_confidence": 0.864
+        },
+        {
+          "period": "2026-W13",
+          "period_start_iso": "2026-03-30",
+          "period_start_ts": 1774846800,
+          "video_count": 1,
+          "total_views": 71173,
+          "total_likes": 1247,
+          "total_comments": 90,
+          "engagement_ratio": 0.0188,
+          "claim_count": 40,
+          "avg_confidence": 0.841
+        }
+      ]
+    },
+    {
+      "narrative_id": "narrative_3",
+      "name": "AI in Healthcare and Rehabilitation",
+      "summary": "This narrative highlights the applications of AI in healthcare and rehabilitation, including the development of prosthetics and exoskeletons that can respond to human brain signals.",
+      "video_count": 2,
+      "video_ids": [
+        "QDRzgF-8-50",
+        "M6yRREy_5CM"
+      ],
+      "trend": {
+        "pattern": "decline",
+        "confidence": 1.0,
+        "peak_period": "2026-W11",
+        "description": "Activity declined 78% from 2026-W11 to 2026-W12."
+      },
+      "timeline": [
+        {
+          "period": "2026-W11",
+          "period_start_iso": "2026-03-16",
+          "period_start_ts": 1773637200,
+          "video_count": 1,
+          "total_views": 250431,
+          "total_likes": 2742,
+          "total_comments": 148,
+          "engagement_ratio": 0.0115,
+          "claim_count": 74,
+          "avg_confidence": 0.864
+        },
+        {
+          "period": "2026-W12",
+          "period_start_iso": "2026-03-23",
+          "period_start_ts": 1774242000,
+          "video_count": 1,
+          "total_views": 53857,
+          "total_likes": 1224,
+          "total_comments": 77,
+          "engagement_ratio": 0.0242,
+          "claim_count": 45,
+          "avg_confidence": 0.86
+        }
+      ]
+    }
+  ]
+}

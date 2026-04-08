@@ -1,0 +1,652 @@
+{
+  "video_id": "x2l7W9aTc5k",
+  "topics": [
+    "visual input",
+    "agent workflows",
+    "multimodal coding",
+    "Alibaba Quen 3.6 Plus",
+    "videos",
+    "Anthropic",
+    "design mockups",
+    "AI agents",
+    "images",
+    "Coding",
+    "multi-token prediction",
+    "benchmarks",
+    "bug screenshots",
+    "Cognitive Vision Encoder",
+    "developer experience",
+    "UI layouts",
+    "OpenClaw",
+    "recording of what went wrong",
+    "cloud code",
+    "Conway",
+    "agent tasks",
+    "terminal based AI tools",
+    "Claude",
+    "dense documents",
+    "M5V Turbo",
+    "AI coding tools",
+    "multi-step execution",
+    "screenshots"
+  ],
+  "claims": [
+    {
+      "text": "Conway is a separate environment built around Claude, almost like its own operating system for AI agents.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Instead of opening a normal chat, Conway shows up as its own sidebar option.",
+      "source": "transcript"
+    },
+    {
+      "text": "Conway is not just a session, it's something persistent.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "That wording alone already tells you this isn't a session, it's something persistent.",
+      "source": "transcript"
+    },
+    {
+      "text": "Inside Conway, you're dealing with a full agent workspace.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Inside that environment, you're not just chatting, you're dealing with a full agent workspace.",
+      "source": "transcript"
+    },
+    {
+      "text": "The system shows connected clients and what tools they expose, which means Conway can integrate directly with external systems.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "There's even a toggle that lets Claude running in Chrome connect straight into Conway.",
+      "source": "transcript"
+    },
+    {
+      "text": "Conway has a full web hook system built into it, which gives you public URLs that external services can call.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "There's a full web hook system built into Conway.",
+      "source": "transcript"
+    },
+    {
+      "text": "Conway can sit there in the background, get triggered by events and start working.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "That means Conway isn't waiting for you to open it. It can sit there in the background, get triggered by events and start working.",
+      "source": "transcript"
+    },
+    {
+      "text": "Claude is essentially turning into an always running operator that lives in its own environment.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "So, you can start to see the direction Claude is essentially turning into an always running operator that lives in its own environment.",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic is building Conway natively with deeper integration into their own models.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "And that puts it directly in competition with things like OpenClaw, except Anthropic is building it natively with deeper integration into their own models.",
+      "source": "transcript"
+    },
+    {
+      "text": "Claude Code introduced no flicker mode.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "And this actually fixes a problem that's been annoying people for a long time.",
+      "source": "transcript"
+    },
+    {
+      "text": "No flicker mode replaces the traditional rendering approach with a full screen buffer.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Similar to how tools like Vim or HTOP work.",
+      "source": "transcript"
+    },
+    {
+      "text": "Full mouse support was added, allowing for cursor positioning and other actions.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "You can click to position your cursor instead of using arrow keys.",
+      "source": "transcript"
+    },
+    {
+      "text": "The new mode stabilizes CPU and memory usage during long conversations or multi-agent workflows.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "That removes flicker completely and stabilizes CPU and memory usage, even during long conversations or multi-agent workflows.",
+      "source": "transcript"
+    },
+    {
+      "text": "You can enable the new mode with a single environment variable cloud code no flicker equals 1.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "You enable it with a single environment variable cloud code no flicker equals 1.",
+      "source": "transcript"
+    },
+    {
+      "text": "The new mode is still experimental, but most internal users already prefer it.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "It came in version 2.1.88 still experimental though most internal users already prefer it.",
+      "source": "transcript"
+    },
+    {
+      "text": "There are some trade-offs, such as native search shortcuts not working the same way.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Though overall this is a clear move toward making AI coding tools feel smoother and more stable during real world usage.",
+      "source": "transcript"
+    },
+    {
+      "text": "ZAI's GLM 5V Turbo model can understand visual input, including images, videos, UI layouts, design mockups, and dense documents.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "That includes images, videos, UI layouts, design mockups, and dense documents.",
+      "source": "transcript"
+    },
+    {
+      "text": "GLM 5V Turbo is built to handle both visual input understanding and code generation simultaneously.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "A model might be good at describing what it sees, though struggle to turn that into useful code or actual actions.",
+      "source": "transcript"
+    },
+    {
+      "text": "M5V Turbo is supposed to understand visual input more directly.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "That includes images, videos, UI layouts, design mockups, and dense documents.",
+      "source": "transcript"
+    },
+    {
+      "text": "It shows up as a broken screen, a messy PDF, a weird layout, a bug screenshot, or a recording of what went wrong.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "",
+      "source": "transcript"
+    },
+    {
+      "text": "ZAI uses the Cogvit Vision Encoder to preserve fine visual detail and layout structure.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Zai says it uses the Cogvit Vision Encoder...",
+      "source": "transcript"
+    },
+    {
+      "text": "It also uses MTP or multi-token prediction to improve speed and handle longer outputs better.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "And it also uses MTP or multi-token prediction...",
+      "source": "transcript"
+    },
+    {
+      "text": "The model supports a 200,000 context window, so it can handle huge amounts of information at once.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The model supports a 200,000 context window...",
+      "source": "transcript"
+    },
+    {
+      "text": "It's built to see clearly, think faster, and stay useful when the task gets bigger.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "In simple terms, it's built to see clearly, think faster, and stay useful...",
+      "source": "transcript"
+    },
+    {
+      "text": "The model is designed to perceive, reason, and act inside one connected workflow.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Alibaba says it's built around a full capability loop...",
+      "source": "transcript"
+    },
+    {
+      "text": "It can handle huge amounts of information at once, including long documents, large code bases, and extended visual or video-based workflows.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The model supports a 200,000 context window...",
+      "source": "transcript"
+    },
+    {
+      "text": "It's optimized for OpenClaw, so it can work through real visual environments, help with setup, analyze what's on screen, and move through tasks that look a lot more like what people actually do on computers.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "It's optimized for OpenClaw...",
+      "source": "transcript"
+    },
+    {
+      "text": "AI is being trained to deal with screens, layouts, apps, and messy workflows, then turn that into action.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "",
+      "source": "transcript"
+    },
+    {
+      "text": "Quen 3.6 Plus can break down a task, work through the steps, test things, refine things, and keep moving toward a usable result.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "So instead of just answering and stopping, it can break down a task...",
+      "source": "transcript"
+    },
+    {
+      "text": "Quen 3.6 Plus is built for repository level engineering, working across an entire project, not just one code snippet at a time.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Alibaba says Quen 3.6 Plus is built for repository level engineering...",
+      "source": "transcript"
+    },
+    {
+      "text": "Quen 3.6 Plus comes with a 1 million token context window by default, allowing it to keep far more information in view at once.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "That is massive. In plain language, it means the model can keep far more information in view at once.",
+      "source": "transcript"
+    },
+    {
+      "text": "Agents need memory and room to track what happened earlier, what files matter, what tools were used, and what still needs to be done.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "They need room to track what happened earlier, what files matter, what tools were used, and what still needs to be done.",
+      "source": "transcript"
+    },
+    {
+      "text": "The model uses an improved hybrid architecture that boosts efficiency, reduces energy consumption, and improves scalability.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Under the hood, Alibaba says the model uses an improved hybrid architecture...",
+      "source": "transcript"
+    },
+    {
+      "text": "Reasoning and agent behavior reliability are stronger than in the 3.5 series.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "It also says reasoning and agent behavior reliability are stronger than in the 3.5 series.",
+      "source": "transcript"
+    },
+    {
+      "text": "Quen 3.6 Plus is going into Alibaba's own ecosystem, including Wukong, OpenClaw, Claude Code, and Klein.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "It also works with OpenClaw, Claude Code, and Klein.",
+      "source": "transcript"
+    },
+    {
+      "text": "The model can handle dense document parsing, real world visual analysis, and long video reasoning.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "On the multimodal side, Alibaba says the model can handle dense document parsing...",
+      "source": "transcript"
+    },
+    {
+      "text": "The whole industry is moving away from AI as just a chatbot and more toward AI that can stay inside a task, react to what it sees, and keep working.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "Anyway, I'm curious. Are AI agents really going to replace apps or is this being overblown?",
+      "source": "transcript"
+    },
+    {
+      "text": "Conway is a crazy name... Con - Way... that's extremely sus...",
+      "type": "opinion",
+      "confidence": 0.4,
+      "supporting_quote": "...that's extremely sus...",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "I thought it was Kairos, not Conway?",
+      "type": "factual",
+      "confidence": 0.6,
+      "supporting_quote": "i thought it was Kairos, not Conway?",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "You can do this already with Claude in a virtual machine.",
+      "type": "factual",
+      "confidence": 0.5,
+      "supporting_quote": "You can do this already with Claude in a virtual machine.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "Cant you make this with N8N?",
+      "type": "opinion",
+      "confidence": 0.3,
+      "supporting_quote": "Cant you make this with N8N?",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    }
+  ],
+  "claim_count": 40,
+  "transcript_claim_count": 36,
+  "comment_claim_count": 4,
+  "video_metadata": {
+    "video_id": "x2l7W9aTc5k",
+    "channel_id": "UC5l7RouTQ60oUjLjt1Nh-UQ",
+    "title": "Anthropic's New Claude CONWAY Is Unlike Any AI Before",
+    "description": "Anthropic is testing Claude Conway, a strange new AI system that looks less like a chatbot and more like a persistent agent environment, Z.ai just launched GLM-5V-Turbo for screen-aware coding and visual agent workflows inside OpenClaw and Claude Code, and Alibaba dropped Qwen 3.6 Plus with a massive 1 million token context window built for serious agentic coding, long-chain reasoning, and real deployment. The AI race is moving fast, and now it\u2019s clearly shifting toward models that can see, reason, and act inside full workflows instead of just replying to prompts.\n\n\ud83d\udce9 Brand Deals & Partnerships: collabs@nouralabs.com\n\u2709 General Inquiries: airevolutionofficial@gmail.com\n\n\ud83e\udde0 What You\u2019ll See\n0:00 Intro\n0:27 Anthropic Claude Conway Agent Leak\nSOURCE: https://www.testingcatalog.com/exclusive-anthropic-tests-its-own-always-on-conway-agent/\n1:12 Conway extensions and webhook triggers\n2:51 Claude Code NO_FLICKER mode and mouse support\n4:42vZ.ai GLM-5V-Turbo Vision Coding Model\nSOURCE: https://www.marktechpost.com/2026/04/01/z-ai-launches-glm-5v-turbo-a-native-multimodal-vision-coding-model-optimized-for-openclaw-and-high-capacity-agentic-engineering-workflows-everywhere/\nSOURCE: https://openrouter.ai/z-ai/glm-5v-turbo\n6:54 GLM-5V-Turbo in agent workflows\n7:58 Alibaba Qwen 3.6 Plus With 1M Context\nSOURCE: https://openrouter.ai/provider/alibaba\nSOURCE: https://developer.puter.com/ai/qwen/qwen3.6-plus-preview/\n8:28 Qwen 3.6 Plus real-world deployment and agentic coding\n\n\ud83d\udea8 Why It Matters\nAnthropic appears to be pushing Claude toward a more persistent agent model, Z.ai is targeting the messy visual side of real coding workflows, and Alibaba is giving developers a huge context window for larger codebases, longer instructions, and more serious agent execution. This is starting to look like the next phase of AI tools.\n\n#ai #anthropic #claude",
+    "channel_title": "AI Revolution",
+    "published_at": "2026-04-02T21:16:27Z",
+    "view_count": 71173,
+    "like_count": 1247,
+    "comment_count": 90,
+    "duration": "PT10M50S",
+    "duration_seconds": 650
+  },
+  "comment_timestamps": [
+    "2026-04-02T21:54:56Z",
+    "2026-04-02T22:28:26Z",
+    "2026-04-02T23:43:23Z",
+    "2026-04-02T21:40:08Z",
+    "2026-04-02T23:29:11Z",
+    "2026-04-03T06:14:05Z",
+    "2026-04-02T21:36:00Z",
+    "2026-04-03T02:37:21Z",
+    "2026-04-03T01:22:57Z",
+    "2026-04-03T17:08:04Z",
+    "2026-04-02T22:04:58Z",
+    "2026-04-03T07:48:39Z",
+    "2026-04-02T23:53:37Z",
+    "2026-04-03T00:29:13Z",
+    "2026-04-03T12:11:13Z",
+    "2026-04-03T01:23:30Z",
+    "2026-04-02T23:58:14Z",
+    "2026-04-03T01:17:20Z",
+    "2026-04-03T02:20:25Z",
+    "2026-04-03T02:55:42Z",
+    "2026-04-03T08:10:40Z",
+    "2026-04-04T18:48:50Z",
+    "2026-04-04T00:28:55Z",
+    "2026-04-03T05:00:12Z",
+    "2026-04-03T01:36:30Z",
+    "2026-04-02T21:59:23Z"
+  ],
+  "_transcript": "Anthropic is testing a new always claude agent called Conway that can stay active, react to triggers, and run in its own environment. Z.ai just launched a screenaware vision coding model built for openclaw and clawed code workflows. And Alibaba dropped Quinn 3.6 plus with 1 million token context aimed at serious agentic coding and full real world deployment. All right, let's start with Anthropic. They're testing Conway, which looks like a completely separate environment built around Claude, almost like its own operating system for AI agents. Instead of opening a normal chat, Conway shows up as its own sidebar option. And when you click it, it launches what their internal code calls a Conway instance. That wording alone already tells you this isn't a session, it's something persistent. Inside that environment, you're not just chatting, you're dealing with a full agent workspace. It has its own interface with sections like search, chat, and system. Chat works like you'd expect. Search seems tied to experimental hotkeys. And system is where things get interesting because in there you can actually manage the entire Conway instance. There's an extension section where you can install custom tools, add new UI tabs, and even define context handlers. And the format they're preparing for this is something called CNW ZIP files. That basically looks like Anthropic building its own extension ecosystem similar to an app store where developers can package tools specifically for this environment. And that changes the game because now Claude isn't just a model you talk to. It becomes a platform that other tools plug into. Then you've got connectors and tools. The system shows connected clients and what tools they expose, which means Conway can integrate directly with external systems. There's even a toggle that lets Claude running in Chrome connect straight into Conway. So now your browser becomes part of the agent loop. And this is where it gets serious. There's a full web hook system built into Conway. It gives you public URLs that external services can call and when that happens, it wakes up the agent. That means Conway isn't waiting for you to open it. It can sit there in the background, get triggered by events and start working. That's basically an always on agent model. This lines up perfectly with what Anthropic has been doing with clawed code and agent workflows, especially with that epitaxi interface that was spotted earlier. There are references to epitexi inside Conway, and it looks like that might be the control layer for managing these agents. So, you can start to see the direction Claude is essentially turning into an always running operator that lives in its own environment. And that puts it directly in competition with things like OpenClaw, except Anthropic is building it natively with deeper integration into their own models. At the same time, they're improving the developer experience on the ground level, too. Claude Code just introduced no flicker mode. And this actually fixes a problem that's been annoying people for a long time. If you've ever used terminal based AI tools, you've probably seen the flickering, the jumping content, and the way performance starts degrading during long sessions. This new mode replaces the traditional rendering approach with a full screen buffer. Similar to how tools like Vim or HTOP work. Instead of constantly rerendering everything, it only updates what's visible. That removes flicker completely and stabilizes CPU and memory usage, even during long conversations or multi-agent workflows. And they added something unexpected on top of that. Full mouse support. You can click to position your cursor instead of using arrow keys. You can expand tool outputs by clicking. URLs open directly when you click them. File paths open in your editor. You can drag to select text and it automatically copies to your clipboard. The scroll wheel works smoothly for navigating long histories. Even selection behavior got upgraded. Doubleclick selects words. Triple click selects entire lines. And in terminals that support advanced protocols like Kitty or Weserm, control + C copies instead of cancelling selection. So now the terminal starts behaving more like a graphical interface which lowers the barrier for developers who don't want to deal with pure command line friction. You enable it with a single environment variable cloud code no flicker equals 1. Or you just add it to your shell config. It came in version 2.1.88 still experimental though most internal users already prefer it. There are some trade-offs. Native search shortcuts like command plus F might not work the same way and some behaviors need adjustment. Though overall this is a clear move toward making AI coding tools feel smoother and more stable during real world usage. Now while Anthropic is pushing deeper into agents and developer tools, ZAI is coming at this from a different angle. They just launched GLM 5V Turbo and basically it's an AI model built to look at what's on a screen and understand it well enough to help do real work with it. That's the key idea. A lot of AI models can look at images. A lot can write code. The hard part is getting one model to do both well at the same time. Usually, one side improves and the other gets weaker. A model might be good at describing what it sees, though struggle to turn that into useful code or actual actions. Z.AI AI says this model is built to handle both together. So instead of looking at a screenshot, turning it into a rough text description and then reasoning from that, GLM 5V Turbo is supposed to understand visual input more directly. That includes images, videos, UI layouts, design mockups, and dense documents. And that matters because real work usually does not arrive as clean text. It shows up as a broken screen, a messy PDF, a weird layout, a bug screenshot, or a recording of what went wrong. Under the hood, yes, there's real tech here. Zai says it uses the Cogvit Vision Encoder to preserve fine visual detail and layout structure. And it also uses MTP or multi-token prediction to improve speed and handle longer outputs better. In simple terms, it's built to see clearly, think faster, and stay useful when the task gets bigger. and the tasks can get big. The model supports a 200,000 context window, so it can handle huge amounts of information at once, including long documents, large code bases, and extended visual or video-based workflows. ZAI also says it trained the model across 30 plus tasks at the same time. That includes STEM reasoning, visual grounding, video analysis, and tool use. The practical point is pretty simple. They're trying to make it good at the whole chain, not just one piece of it. So instead of an AI that only recognizes what's on a screen or only writes code in isolation, they want one that can look at something, understand it, figure out what needs to happen next, and help carry that out. That's why it's being pushed for agent workflows. It's optimized for OpenClaw, so it can work through real visual environments, help with setup, analyze what's on screen, and move through tasks that look a lot more like what people actually do on computers. It also works with cloud code, which means a developer can show it a screenshot of a bug, a broken UI, or a rough feature mockup, and the model can suggest code based on what it sees. That's a much more natural workflow because that's how people actually work. Sometimes they do not write a perfect technical explanation. They just point at the screen and say, \"This part is wrong.\" Z.AI is also pointing to benchmarks like CCbench, V2, Zclaw Bench, and Claw Eval. Those are tests for multimmodal coding, agent tasks, and multi-step execution. And according to the company, GLM 5V Turbo is hitting state-of-the-art on the tasks where the AI has to both understand visuals and do something useful with them. So, this is part of a much bigger shift. AI is being trained to deal with screens, layouts, apps, and messy workflows, then turn that into action. And right as that trend is speeding up, Alibaba just dropped Quen 3.6 Plus. And this one is really about turning all this agent talk into something businesses can actually use. Alibaba says it's built around a full capability loop. Meaning the model is designed to perceive, reason, and act inside one connected workflow. So instead of just answering and stopping, it can break down a task, work through the steps, test things, refine things, and keep moving toward a usable result. That becomes especially important in coding. Alibaba says Quen 3.6 Plus is built for repository level engineering, which basically means it can work across an entire project, not just one code snippet at a time. So, it's meant for bigger, more complete tasks across a full codebase. And then there's the biggest number in this launch. Quen 3.6 Plus comes with a 1 million token context window by default. That is massive. In plain language, it means the model can keep far more information in view at once. You can feed it huge documents, giant code projects, multiple files, and long instruction chains without it losing the thread nearly as fast. That matters a lot for agents because agents need memory. They need room to track what happened earlier, what files matter, what tools were used, and what still needs to be done. Alibaba also made this more aggressive by putting a preview version on open router and at least for now giving people free access with that full 1 million context. That opens the door for a lot more developers to actually try it. Under the hood, Alibaba says the model uses an improved hybrid architecture that boosts efficiency, reduces energy consumption, and improves scalability. It also says reasoning and agent behavior reliability are stronger than in the 3.5 series. And this is clearly aimed at real deployment, not just flashy demos. Quen 3.6 plus is going into Alibaba's own ecosystem, including Wukong, which is its enterprise platform for automating business tasks with multiple AI agents. It also works with OpenClaw, Claude Code, and Klein. So, it fits into the agent workflows people are already building. On the multimodal side, Alibaba says the model can handle dense document parsing, real world visual analysis, and long video reasoning. It can also look at interface screenshots, handdrawn wireframes, and product mock-ups, then turn those into working front-end code. So again, you can see the pattern. The whole industry is moving away from AI as just a chatbot and more toward AI that can stay inside a task, react to what it sees, and keep working. Anyway, I'm curious. Are AI agents really going to replace apps or is this being overblown? Thanks for watching and I'll catch you in the next one.",
+  "_comments": [
+    {
+      "comment_id": "UgxVsWcI_ZNNuL7ICPd4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@qunewsguy",
+      "comment_text": "\"Alright let's STAT with Anthropic\"\ud83e\udd23\ud83e\udd23",
+      "published_at": "2026-04-02T21:54:56Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 27,
+      "text": "\"Alright let's STAT with Anthropic\"\ud83e\udd23\ud83e\udd23"
+    },
+    {
+      "comment_id": "UgxD-SrUzVpHvBxtAEd4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@JH-zo5gk",
+      "comment_text": "Damn.... openclaw really rattled the frontier cages.\nSeems like they all are becoming their own version of openclaw.",
+      "published_at": "2026-04-02T22:28:26Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 7,
+      "text": "Damn.... openclaw really rattled the frontier cages.\nSeems like they all are becoming their own version of openclaw."
+    },
+    {
+      "comment_id": "Ugy9o3mwWl7u6AnnNaZ4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@nilfux",
+      "comment_text": "Hmmm \"CON-way\". Freudian.",
+      "published_at": "2026-04-02T23:43:23Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 6,
+      "text": "Hmmm \"CON-way\". Freudian."
+    },
+    {
+      "comment_id": "UgwSRDNSugrmzQVFihB4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@NostraDavid2",
+      "comment_text": "So Anthropic stopped being silly by using React on the terminal? I wish I was joking.\nAnyway, as a Codex user, I can't relate to the flickering issues of Claude.",
+      "published_at": "2026-04-02T21:40:08Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 6,
+      "text": "So Anthropic stopped being silly by using React on the terminal? I wish I was joking.\nAnyway, as a Codex user, I can't relate to the flickering issues of Claude."
+    },
+    {
+      "comment_id": "UgwCr00lWDAgLZyoM_54AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@WhippedEditor",
+      "comment_text": "That's not an always on model. That's a cron job bro",
+      "published_at": "2026-04-02T23:29:11Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 3,
+      "text": "That's not an always on model. That's a cron job bro"
+    },
+    {
+      "comment_id": "UgwHFSnjrMr3Ga7jooB4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@coder8515",
+      "comment_text": "Thanks for info about the flickering setting for Claude Code CLI",
+      "published_at": "2026-04-03T06:14:05Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "Thanks for info about the flickering setting for Claude Code CLI"
+    },
+    {
+      "comment_id": "UgycDvSrf_5UIbUF6Vd4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@klammer75",
+      "comment_text": "i thought it was Kairos, not Conway?",
+      "published_at": "2026-04-02T21:36:00Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "i thought it was Kairos, not Conway?"
+    },
+    {
+      "comment_id": "UgwUMj3h0v9wUEnY82J4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@oknyc",
+      "comment_text": "Love this content. Hate the format. If you can make it less mechanical with better visuals -- this would get my vote for improvements",
+      "published_at": "2026-04-03T02:37:21Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "Love this content. Hate the format. If you can make it less mechanical with better visuals -- this would get my vote for improvements"
+    },
+    {
+      "comment_id": "Ugw8hajzY3kd-fUWAnd4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@Sherlock_MacGyver",
+      "comment_text": "I already have Claude set up in such a way that it can decide if it wants to speak/respond or not, and when.",
+      "published_at": "2026-04-03T01:22:57Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "I already have Claude set up in such a way that it can decide if it wants to speak/respond or not, and when."
+    },
+    {
+      "comment_id": "UgwhGx9KKOcaZHhcMOV4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@simonomega",
+      "comment_text": "I'm stat-ing to think there really is a human behind these scripts \ud83e\udd23",
+      "published_at": "2026-04-03T17:08:04Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "I'm stat-ing to think there really is a human behind these scripts \ud83e\udd23"
+    },
+    {
+      "comment_id": "UgwjgOu5Z241vouItBx4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@matthewhartigan3130",
+      "comment_text": "You can do this already with Claude in a virtual machine.",
+      "published_at": "2026-04-02T22:04:58Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "You can do this already with Claude in a virtual machine."
+    },
+    {
+      "comment_id": "Ugytz3wwb3J8o0Joj7t4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@DiskY_T",
+      "comment_text": "Conway is a crazy name... Con - Way... that's extremely sus... but I hope that's just a wordplay on covey...",
+      "published_at": "2026-04-03T07:48:39Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Conway is a crazy name... Con - Way... that's extremely sus... but I hope that's just a wordplay on covey..."
+    },
+    {
+      "comment_id": "UgyDpXPJORrBVB0dVvJ4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@MattOng82",
+      "comment_text": "Is this elevenlabs voice? It sounds really good",
+      "published_at": "2026-04-02T23:53:37Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Is this elevenlabs voice? It sounds really good"
+    },
+    {
+      "comment_id": "Ugw_dPfZ24td2ZlHvkd4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@stunspot",
+      "comment_text": "Ugh. Your prompting is _terrible_! \"And here's where it gets interesting!\" Thanks, A Helpful Assistant!",
+      "published_at": "2026-04-03T00:29:13Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Ugh. Your prompting is _terrible_! \"And here's where it gets interesting!\" Thanks, A Helpful Assistant!"
+    },
+    {
+      "comment_id": "UgwdvwBK0Ik6O_7oOdR4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@mrd6869",
+      "comment_text": "Cant you make this with N8N?\nI've used that to make always on workflows or ne triggered by events.",
+      "published_at": "2026-04-03T12:11:13Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Cant you make this with N8N?\nI've used that to make always on workflows or ne triggered by events."
+    },
+    {
+      "comment_id": "UgyS3wGGHpd0251tZ714AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@JasonBurchell76",
+      "comment_text": "0:28 \u201c\u2026 let\u2019s stat.\u201d? Need to have AI proof read the AI written script, before you give it to AI to do the voiceover. That seems exhausting\u2026",
+      "published_at": "2026-04-03T01:23:30Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "0:28 \u201c\u2026 let\u2019s stat.\u201d? Need to have AI proof read the AI written script, before you give it to AI to do the voiceover. That seems exhausting\u2026"
+    },
+    {
+      "comment_id": "UgwPBqEh0fffY6fkVSV4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@tokyobento",
+      "comment_text": "Yeah, but can you trust Alibaba??",
+      "published_at": "2026-04-02T23:58:14Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Yeah, but can you trust Alibaba??"
+    },
+    {
+      "comment_id": "UgxdtBYdeFzuIHFvb1F4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@kodihoward9392",
+      "comment_text": "This is a very interesting game of life!",
+      "published_at": "2026-04-03T01:17:20Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "This is a very interesting game of life!"
+    },
+    {
+      "comment_id": "UgzDg7O1kXqg6QCGsRp4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@user-tt3lb1yy6i",
+      "comment_text": "Have you went over Kimis attention residuals yet? That seems like the biggest breakthrough in a while, like bigger than MoE",
+      "published_at": "2026-04-03T02:20:25Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Have you went over Kimis attention residuals yet? That seems like the biggest breakthrough in a while, like bigger than MoE"
+    },
+    {
+      "comment_id": "UgxrNZXvtrEIdJILKhR4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@Traders_Guild_LLC",
+      "comment_text": "They used the Learing model for this video",
+      "published_at": "2026-04-03T02:55:42Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "They used the Learing model for this video"
+    },
+    {
+      "comment_id": "UgyrBYPV5pm4X03Q_aJ4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@GrahamLaight",
+      "comment_text": "Does Claude Conway run in the datacentre, on the local device, or a combination of the two?",
+      "published_at": "2026-04-03T08:10:40Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Does Claude Conway run in the datacentre, on the local device, or a combination of the two?"
+    },
+    {
+      "comment_id": "UgwVmP-Ugi8IfJ6YfZ14AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@criticalmasswisdom",
+      "comment_text": "Was hoping Quen would be at least as good as Sonnet but unfortunately it was a total disaster in OpenClaw",
+      "published_at": "2026-04-04T18:48:50Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Was hoping Quen would be at least as good as Sonnet but unfortunately it was a total disaster in OpenClaw"
+    },
+    {
+      "comment_id": "UgxkhKo9nxZyC7gXHO54AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@AndreaAltgayer",
+      "comment_text": "Which AI tools did you use to create this video?",
+      "published_at": "2026-04-04T00:28:55Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Which AI tools did you use to create this video?"
+    },
+    {
+      "comment_id": "UgzYOVs-Hggtw-aRq_54AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@pythusiast4701",
+      "comment_text": "First they should fix the bugs that they just introduced in claude code usage patterns. Stupidly just building and offering new things while old things keep breaking and looting developers.",
+      "published_at": "2026-04-03T05:00:12Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "First they should fix the bugs that they just introduced in claude code usage patterns. Stupidly just building and offering new things while old things keep breaking and looting developers."
+    },
+    {
+      "comment_id": "UgzQGFD8tiyrWWxYtTh4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@MellolaMason",
+      "comment_text": "8h-8h-8h 3 shifts... i would tell you to hand over full control to next shift.... 16h prompt gap with a summery to cover the stonemills numbers... dont need the vids of good work unless its not vault.",
+      "published_at": "2026-04-03T01:36:30Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "8h-8h-8h 3 shifts... i would tell you to hand over full control to next shift.... 16h prompt gap with a summery to cover the stonemills numbers... dont need the vids of good work unless its not vault."
+    },
+    {
+      "comment_id": "UgxWMh9l4vmLEX4jtdJ4AaABAg",
+      "video_id": "x2l7W9aTc5k",
+      "commenter_name": "@Peaceandnlove",
+      "comment_text": "lets STAT with anthropic",
+      "published_at": "2026-04-02T21:59:23Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "lets STAT with anthropic"
+    }
+  ]
+}

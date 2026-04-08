@@ -1,0 +1,199 @@
+{
+  "granularity": "weekly",
+  "time_range": {
+    "start": "2026-03-22T23:47:52Z",
+    "end": "2026-04-02T21:16:27Z"
+  },
+  "overall": {
+    "video_count": 5,
+    "trend": {
+      "pattern": "decline",
+      "confidence": 1.0,
+      "peak_period": "2026-W11",
+      "peak_value": 250431,
+      "start_period": "2026-W11",
+      "end_period": "2026-W13",
+      "total_periods": 3,
+      "description": "Activity declined 72% from 2026-W11 to 2026-W13."
+    },
+    "timeline": [
+      {
+        "period": "2026-W11",
+        "period_start_iso": "2026-03-16",
+        "period_start_ts": 1773637200,
+        "video_count": 1,
+        "total_views": 250431,
+        "total_likes": 2742,
+        "total_comments": 148,
+        "engagement_ratio": 0.0115,
+        "claim_count": 74,
+        "avg_confidence": 0.871
+      },
+      {
+        "period": "2026-W12",
+        "period_start_iso": "2026-03-23",
+        "period_start_ts": 1774242000,
+        "video_count": 3,
+        "total_views": 168812,
+        "total_likes": 4480,
+        "total_comments": 277,
+        "engagement_ratio": 0.0282,
+        "claim_count": 147,
+        "avg_confidence": 0.85
+      },
+      {
+        "period": "2026-W13",
+        "period_start_iso": "2026-03-30",
+        "period_start_ts": 1774846800,
+        "video_count": 1,
+        "total_views": 71192,
+        "total_likes": 1248,
+        "total_comments": 90,
+        "engagement_ratio": 0.0188,
+        "claim_count": 41,
+        "avg_confidence": 0.852
+      }
+    ]
+  },
+  "narratives": [
+    {
+      "narrative_id": "narrative_1",
+      "name": "AI Advancements in Robotics and Humanoid Design",
+      "summary": "The narratives highlight advancements in AI, robotics, and humanoid design, including breakthroughs in service robots, signal processing, industrial settings, and more.",
+      "video_count": 3,
+      "video_ids": [
+        "x2l7W9aTc5k",
+        "M6yRREy_5CM",
+        "QDRzgF-8-50"
+      ],
+      "trend": {
+        "pattern": "decline",
+        "confidence": 1.0,
+        "peak_period": "2026-W11",
+        "description": "Activity declined 72% from 2026-W11 to 2026-W13."
+      },
+      "timeline": [
+        {
+          "period": "2026-W11",
+          "period_start_iso": "2026-03-16",
+          "period_start_ts": 1773637200,
+          "video_count": 1,
+          "total_views": 250431,
+          "total_likes": 2742,
+          "total_comments": 148,
+          "engagement_ratio": 0.0115,
+          "claim_count": 74,
+          "avg_confidence": 0.871
+        },
+        {
+          "period": "2026-W12",
+          "period_start_iso": "2026-03-23",
+          "period_start_ts": 1774242000,
+          "video_count": 1,
+          "total_views": 53857,
+          "total_likes": 1224,
+          "total_comments": 77,
+          "engagement_ratio": 0.0242,
+          "claim_count": 45,
+          "avg_confidence": 0.856
+        },
+        {
+          "period": "2026-W13",
+          "period_start_iso": "2026-03-30",
+          "period_start_ts": 1774846800,
+          "video_count": 1,
+          "total_views": 71192,
+          "total_likes": 1248,
+          "total_comments": 90,
+          "engagement_ratio": 0.0188,
+          "claim_count": 41,
+          "avg_confidence": 0.852
+        }
+      ]
+    },
+    {
+      "narrative_id": "narrative_2",
+      "name": "AI-Powered Humanoid Robots and Their Applications",
+      "summary": "The narratives explore AI-powered humanoid robots, their capabilities, and potential applications in various fields, including sports, entertainment, and industrial settings.",
+      "video_count": 2,
+      "video_ids": [
+        "x2l7W9aTc5k",
+        "QDRzgF-8-50"
+      ],
+      "trend": {
+        "pattern": "decline",
+        "confidence": 1.0,
+        "peak_period": "2026-W11",
+        "description": "Activity declined 72% from 2026-W11 to 2026-W13."
+      },
+      "timeline": [
+        {
+          "period": "2026-W11",
+          "period_start_iso": "2026-03-16",
+          "period_start_ts": 1773637200,
+          "video_count": 1,
+          "total_views": 250431,
+          "total_likes": 2742,
+          "total_comments": 148,
+          "engagement_ratio": 0.0115,
+          "claim_count": 74,
+          "avg_confidence": 0.871
+        },
+        {
+          "period": "2026-W13",
+          "period_start_iso": "2026-03-30",
+          "period_start_ts": 1774846800,
+          "video_count": 1,
+          "total_views": 71192,
+          "total_likes": 1248,
+          "total_comments": 90,
+          "engagement_ratio": 0.0188,
+          "claim_count": 41,
+          "avg_confidence": 0.852
+        }
+      ]
+    },
+    {
+      "narrative_id": "narrative_3",
+      "name": "Advances in AI and Robotics for Real-World Applications",
+      "summary": "The narratives showcase advances in AI and robotics, highlighting their potential to transform industries and improve daily life through applications such as service robots, signal processing, and more.",
+      "video_count": 2,
+      "video_ids": [
+        "M6yRREy_5CM",
+        "QDRzgF-8-50"
+      ],
+      "trend": {
+        "pattern": "decline",
+        "confidence": 1.0,
+        "peak_period": "2026-W11",
+        "description": "Activity declined 78% from 2026-W11 to 2026-W12."
+      },
+      "timeline": [
+        {
+          "period": "2026-W11",
+          "period_start_iso": "2026-03-16",
+          "period_start_ts": 1773637200,
+          "video_count": 1,
+          "total_views": 250431,
+          "total_likes": 2742,
+          "total_comments": 148,
+          "engagement_ratio": 0.0115,
+          "claim_count": 74,
+          "avg_confidence": 0.871
+        },
+        {
+          "period": "2026-W12",
+          "period_start_iso": "2026-03-23",
+          "period_start_ts": 1774242000,
+          "video_count": 1,
+          "total_views": 53857,
+          "total_likes": 1224,
+          "total_comments": 77,
+          "engagement_ratio": 0.0242,
+          "claim_count": 45,
+          "avg_confidence": 0.856
+        }
+      ]
+    }
+  ]
+}

@@ -12,6 +12,7 @@ Pipeline steps:
 
 import logging
 from datetime import datetime
+from pathlib import Path
 
 from ytAPI.videoExtract import discover_videos
 from ytAPI.transcriptExtract import get_transcript
@@ -20,6 +21,10 @@ from extraction.analyzer import analyze_video, synthesize_trends, call_llm
 from utility.output import OutputManager
 from trends import generate_trend_summary, Granularity
 from risk import assess_video_risk, generate_risk_summary
+
+# Output directory inside Backend folder
+BACKEND_DIR = Path(__file__).parent
+DEFAULT_OUTPUT_DIR = BACKEND_DIR / "output"
 
 # Configure logging
 logging.basicConfig(
@@ -41,7 +46,8 @@ def run_pipeline(
     llm_verify_risk: bool = True,
     use_cache: bool = True,
     cache_max_age_days: int = 30,
-    output_dir: str = "output"
+    generate_embeddings: bool = True,
+    output_dir: str | Path | None = None
 ) -> str | None:
     """
     Run the full YouTube intelligence pipeline with checkpoint saves.
@@ -61,11 +67,16 @@ def run_pipeline(
         llm_verify_risk: Whether to use LLM for borderline risk cases
         use_cache: Use channel cache + RSS feeds to reduce API quota
         cache_max_age_days: Days before cached channels expire
+        generate_embeddings: Generate vector embeddings for claims (requires Ollama nomic-embed-text)
         output_dir: Base directory for output files
     
     Returns:
         Path to the run directory, or None if pipeline failed
     """
+    
+    # Use Backend/output as default if not specified
+    if output_dir is None:
+        output_dir = DEFAULT_OUTPUT_DIR
     
     # Initialize output manager
     output = OutputManager(output_dir=output_dir)
@@ -129,7 +140,7 @@ def run_pipeline(
         log.info(f"  → Fetched {len(comments)} comments")
         
         # Analyze video
-        result = analyze_video(video_id, transcript, comments)
+        result = analyze_video(video_id, transcript, comments, generate_embeddings=generate_embeddings)
         
         if not result:
             log.warning(f"  ✗ Analysis failed, skipping")
@@ -137,17 +148,21 @@ def run_pipeline(
         
         # Add metadata
         result["video_metadata"] = {
+            "video_id": video.get("video_id"),
+            "channel_id": video.get("channel_id"),
             "title": video.get("title"),
+            "description": video.get("description", ""),
             "channel_title": video.get("channel_title"),
             "published_at": video.get("published_at"),
             "view_count": video.get("view_count"),
             "like_count": video.get("like_count"),
             "comment_count": video.get("comment_count"),
             "duration": video.get("duration"),
+            "duration_seconds": video.get("duration_seconds"),
         }
         result["comment_timestamps"] = [c.get("published_at") for c in comments if c.get("published_at")]
         
-        # Store raw content for risk assessment (will be removed before final export)
+        # Store raw content for DB export
         result["_transcript"] = transcript
         result["_comments"] = comments
         
@@ -242,11 +257,6 @@ def run_pipeline(
     log.info("STEP 6: Exporting database-ready files")
     log.info("="*60)
     
-    # Clean up internal fields before export
-    for result in all_results:
-        result.pop("_transcript", None)
-        result.pop("_comments", None)
-    
     output.export_db_ready(
         video_results=all_results,
         synthesis=synthesis,
@@ -254,6 +264,11 @@ def run_pipeline(
         risk=risk_analysis,
         search_params=search_params
     )
+    
+    # Clean up internal fields after export
+    for result in all_results:
+        result.pop("_transcript", None)
+        result.pop("_comments", None)
     
     # ══════════════════════════════════════════════════════════════════════
     # DONE
@@ -273,16 +288,16 @@ def run_pipeline(
 
 if __name__ == "__main__":
     run_pipeline(
-        search_keywords="AI News",
+        search_keywords="AI",
         channel_sub_min=100_000,
-        video_view_min=5_000,
+        video_view_min=50_000,
         video_keywords=["tech", "ai", "llm", "artificial intelligence"],
-        days=180,
+        days=60,
         max_comments=30,
         trend_granularity="weekly",
         assess_risk=True,
         llm_verify_risk=True,
         use_cache=True,
         cache_max_age_days=30,
-        output_dir="output"
+        generate_embeddings=True  # Requires: ollama pull nomic-embed-text
     )

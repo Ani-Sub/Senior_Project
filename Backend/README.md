@@ -5,6 +5,7 @@ Extracts claims from YouTube video transcripts and comments, synthesizes them in
 ## Features
 
 - **Claim Extraction** — LLM-powered extraction of claims from transcripts and comments
+- **Vector Embeddings** — Semantic embeddings for claims and narrative centroids
 - **Narrative Synthesis** — Identifies 2-5 distinct narratives across videos
 - **Temporal Trends** — Tracks each narrative's growth/decline over time
 - **Risk Assessment** — Hybrid keyword + LLM detection of harmful content
@@ -24,9 +25,10 @@ pip install youtube-transcript-api requests google-api-python-client python-dote
 YOUTUBE_API_KEY=your_key_here
 ```
 
-3. **Make sure Ollama is running** with llama3:
+3. **Make sure Ollama is running** with llama3 and embedding model:
 ```bash
 ollama run llama3
+ollama pull nomic-embed-text
 ```
 
 ## Project Structure
@@ -34,7 +36,7 @@ ollama run llama3
 ```
 Backend/
 ├── main.py                    # Pipeline orchestrator with checkpoints
-├── config.py                  # API keys, LLM settings, constants
+├── config.py                  # API keys, LLM settings, embedding config
 │
 ├── ytAPI/                     # YouTube data fetching
 │   ├── channelExtract.py      # Search and filter channels
@@ -63,6 +65,7 @@ Backend/
 │
 └── utility/
     ├── output.py              # Checkpoint saves + DB-ready export
+    ├── embeddings.py          # Vector embeddings via Ollama
     ├── parser.py              # JSON parsing with truncation repair
     └── chunker.py             # Text chunking for LLM
 ```
@@ -90,8 +93,12 @@ output/run_20260407_143022/
 └── db_ready/                  # Flat files for database import
     ├── channels.json          # → CHANNELS table
     ├── videos.json            # → VIDEOS table
+    ├── transcripts.json       # → TRANSCRIPTS table
+    ├── transcript_chunks.json # → TRANSCRIPT_CHUNKS table
+    ├── comments.json          # → COMMENTS table
     ├── claims.json            # → CLAIMS table
-    ├── narratives.json        # → NARRATIVES table
+    ├── claim_embeddings.json  # → Claim vectors (768 dims)
+    ├── narratives.json        # → NARRATIVES table (with centroid)
     ├── narrative_videos.json  # → Many-to-many link table
     ├── narrative_trends.json  # → Trend data per narrative
     ├── trends_timeline.json   # → Overall activity timeline
@@ -116,7 +123,7 @@ run_pipeline(
     llm_verify_risk=True,           # LLM for borderline cases
     use_cache=True,                 # Use RSS + cache (saves quota)
     cache_max_age_days=30,          # Re-search channels after N days
-    output_dir="output"             # Output directory
+    generate_embeddings=True,       # Vector embeddings for claims
 )
 ```
 
@@ -131,6 +138,7 @@ STEP 2: Extraction (checkpoint after each video)
   └─ Fetch transcript (with auto-translation fallback)
   └─ Fetch comments
   └─ LLM extracts topics + claims
+  └─ Generate embeddings for each claim (if enabled)
   └─ Save checkpoint immediately
 
 STEP 3: Synthesis (checkpoint)
@@ -273,16 +281,85 @@ Hybrid detection with 8 risk categories:
 
 Each file maps directly to a database table:
 
+**channels.json:**
+```json
+[
+  {
+    "channel_id": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+    "channel_title": "Google Developers"
+  }
+]
+```
+
+**videos.json:**
+```json
+[
+  {
+    "video_id": "abc123",
+    "channel_id": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+    "title": "What's New in AI",
+    "description": "In this video we explore...",
+    "view_count": 150000,
+    "duration_seconds": 930,
+    "published_at": "2026-03-15T14:30:00Z",
+    "processed": true,
+    "processed_at": "2026-04-08T10:30:00Z"
+  }
+]
+```
+
+**transcripts.json:**
+```json
+[
+  {
+    "transcript_id": 1,
+    "video_id": "abc123",
+    "transcript": "Welcome to our video about AI trends...",
+    "processed_at": "2026-04-08T10:30:00Z"
+  }
+]
+```
+
+**comments.json:**
+```json
+[
+  {
+    "comment_id": "UgwXyz123",
+    "video_id": "abc123",
+    "commenter_name": "TechFan42",
+    "comment_text": "Great explanation of LLMs!",
+    "published_at": "2026-03-16T08:20:00Z",
+    "is_reply": false,
+    "top_level_comment_id": null,
+    "processed_at": "2026-04-08T10:30:00Z"
+  }
+]
+```
+
 **claims.json:**
 ```json
 [
   {
     "claim_id": 1,
     "video_id": "abc123",
+    "narrative_id": null,
     "claim_text": "AI will automate 50% of jobs by 2030",
-    "claim_type": "prediction",
-    "confidence": 0.85,
-    "source": "transcript"
+    "processed_at": "2026-04-08T10:30:00Z"
+  }
+]
+```
+
+**narratives.json:**
+```json
+[
+  {
+    "narrative_id": "narrative_1",
+    "title": "AI Job Displacement Concerns",
+    "summary": "Growing worry about automation...",
+    "topic_label": "AI Job Displacement Concerns",
+    "claim_count": 15,
+    "first_seen_at": "2026-02-10T12:00:00Z",
+    "last_seen_at": "2026-04-01T09:30:00Z"
   }
 ]
 ```
@@ -294,6 +371,63 @@ Each file maps directly to a database table:
   {"narrative_id": "narrative_1", "video_id": "def456"},
   {"narrative_id": "narrative_2", "video_id": "abc123"}
 ]
+```
+
+## Vector Embeddings
+
+The pipeline generates semantic embeddings for claims using Ollama's `nomic-embed-text` model (768 dimensions).
+
+### Setup
+
+```bash
+ollama pull nomic-embed-text
+```
+
+### How It Works
+
+1. **Claim Embeddings** — Each extracted claim gets a 768-dimensional vector
+2. **Narrative Centroids** — Average of all claim vectors in that narrative
+3. **Similarity Matching** — New claims can be matched to existing narratives by comparing vectors
+
+### Output Files
+
+**claim_embeddings.json:**
+```json
+[
+  {
+    "claim_id": 1,
+    "embedding": [0.123, -0.456, 0.789, ...]  // 768 floats
+  }
+]
+```
+
+**narratives.json** (includes centroid):
+```json
+[
+  {
+    "narrative_id": "narrative_1",
+    "title": "AI Job Displacement",
+    "centroid_embedding": [0.234, -0.567, 0.890, ...],  // 768 floats
+    ...
+  }
+]
+```
+
+### Use Cases
+
+- **Incremental Processing** — Match new claims to existing narratives without re-running synthesis
+- **Similarity Search** — Find claims similar to a query
+- **Clustering** — Automatically discover narratives using K-means on embeddings
+
+### Disabling Embeddings
+
+If you don't need embeddings (faster processing):
+
+```python
+run_pipeline(
+    ...
+    generate_embeddings=False
+)
 ```
 
 ## Testing
@@ -322,3 +456,8 @@ python test_risk.py     # Test risk assessment
 ### Transcript not found
 - Video may not have captions
 - System auto-tries translation if original language isn't English
+
+### Embeddings not generated
+- Make sure embedding model is installed: `ollama pull nomic-embed-text`
+- Check Ollama is running: `ollama list`
+- Pipeline continues without embeddings if service unavailable
