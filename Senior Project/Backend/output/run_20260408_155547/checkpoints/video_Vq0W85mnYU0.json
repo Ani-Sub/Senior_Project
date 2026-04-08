@@ -1,0 +1,787 @@
+{
+  "video_id": "Vq0W85mnYU0",
+  "topics": [
+    "Humanoid Robots",
+    "ultrasound technology",
+    "robotics",
+    "machine learning",
+    "industrial applications",
+    "automation",
+    "hand tracking",
+    "logistics",
+    "AI",
+    "collaboration",
+    "robot deployment",
+    "operations",
+    "partnerships",
+    "AI models",
+    "Robotics",
+    "industrial robotics",
+    "humanoid robots"
+  ],
+  "claims": [
+    {
+      "text": "China unveiled a humanoid robot face that looks almost too human.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "A video that started circulating recently shows a humanoid robot developed in China with extremely lifelike facial expressions.",
+      "source": "transcript"
+    },
+    {
+      "text": "Google DeepMind is teaming up with agile robots to bring Gemini into real factory machines.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "Google DeepMind is now teaming up with agile robots to bring Gemini into real factory machines.",
+      "source": "transcript"
+    },
+    {
+      "text": "McDonald's in Shanghai and San Jose airport are already putting humanoids in front of customers.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "McDonald's in Shanghai and San Jose airport are already putting humanoids in front of customers.",
+      "source": "transcript"
+    },
+    {
+      "text": "MIT built a wristband that can control robotic hands with your own movements.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "MIT just built a wristband that can control robotic hands with your own movements.",
+      "source": "transcript"
+    },
+    {
+      "text": "Titan01 is copying human actions in milliseconds.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "Titan01 is copying human actions in milliseconds.",
+      "source": "transcript"
+    },
+    {
+      "text": "A delivery robot just smashed through a glass bus shelter in Chicago.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "And in Chicago, a delivery robot just smashed through a glass bus shelter.",
+      "source": "transcript"
+    },
+    {
+      "text": "The real challenge is making robots socially acceptable.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "For years, most of the focus in robotics has been on movement, strength, and industrial capability. Can the robot lift heavy objects? Can it walk properly? Can it operate in a factory?",
+      "source": "transcript"
+    },
+    {
+      "text": "Companies like a Head Form have already been working on making robots socially acceptable.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "Companies like a Head Form have already been working on this.",
+      "source": "transcript"
+    },
+    {
+      "text": "Robots that can do physical work already exist.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "In many cases, a simple robotic arm can do those jobs faster and cheaper.",
+      "source": "transcript"
+    },
+    {
+      "text": "These robots are being built with synthetic skin, microactu under the surface, and AI models that control facial expressions in real time.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "These robots are being built with synthetic skin, microactu under the surface, and AI models that control facial expressions in real time.",
+      "source": "transcript"
+    },
+    {
+      "text": "They can blink, track faces, react to conversations, and adjust their expressions based on context.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "They can blink, track faces, react to conversations, and adjust their expressions based on context.",
+      "source": "transcript"
+    },
+    {
+      "text": "The face might end up being the most important part of the robot.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "When paired with multimodal AI systems like the Omni AI platform mentioned in demonstrations, they can see, hear, and respond in a way that feels natural during interaction.",
+      "source": "transcript"
+    },
+    {
+      "text": "The way they interact with people matters just as much as what they can physically do.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "When paired with multimodal AI systems like the Omni AI platform mentioned in demonstrations, they can see, hear, and respond in a way that feels natural during interaction.",
+      "source": "transcript"
+    },
+    {
+      "text": "Some experts see these humanoid robots as more of a performance showcase rather than actual progress.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "At the same time, there's still a debate inside the industry. Some experts see these humanoid robots as more of a performance showcase right now.",
+      "source": "transcript"
+    },
+    {
+      "text": "Some experts see these humanoid robots as more of a performance showcase right now, something that looks impressive yet isn't economically efficient.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "some experts",
+      "source": "transcript"
+    },
+    {
+      "text": "Others are convinced that making robots more humanlike is the only way they'll ever be widely accepted in everyday life.",
+      "type": "opinion",
+      "confidence": 0.85,
+      "supporting_quote": "others are convinced",
+      "source": "transcript"
+    },
+    {
+      "text": "The goal here is to combine DeepMind's Gemini Robotics Foundation models with Agile Robots existing hardware systems.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "the goal here is",
+      "source": "transcript"
+    },
+    {
+      "text": "AI isn't only about machines interacting with the physical world.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "it's also becoming a powerful tool for creating entirely new ones",
+      "source": "transcript"
+    },
+    {
+      "text": "You get access to models like Kimmy K2.5 and Miniax M2.5 which are great for coding long context tasks and building AI agents.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "you get access to models",
+      "source": "transcript"
+    },
+    {
+      "text": "That also makes it a really good fit for tools like Open Claw.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "that also makes it",
+      "source": "transcript"
+    },
+    {
+      "text": "You can connect the API, test different models, build assistance, automate workflows, or even prototype simple AI apps pretty fast.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "you can connect the API",
+      "source": "transcript"
+    },
+    {
+      "text": "Agile Robots has already deployed over 20,000 robotic systems globally, so they're not starting from scratch.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "agile robots has already deployed",
+      "source": "transcript"
+    },
+    {
+      "text": "Instead of a robot that follows fixed instructions, you get one that can adapt, learn from real world data, and improve over time.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "instead of a robot",
+      "source": "transcript"
+    },
+    {
+      "text": "The collaboration is structured in multiple ways to ensure the success of this project.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "the collaboration is structured",
+      "source": "transcript"
+    },
+    {
+      "text": "The collaboration is structured in multiple phases where the systems are continuously tested, improved, and redeployed.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "The collaboration is structured in multiple phases...",
+      "source": "transcript"
+    },
+    {
+      "text": "The initial focus is on high value industrial applications, especially in areas that require reliability and scalability.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The initial focus is on high value industrial applications...",
+      "source": "transcript"
+    },
+    {
+      "text": "DeepMind has been expanding partnerships across the robotic space.",
+      "type": "factual",
+      "confidence": 0.85,
+      "supporting_quote": "They've been expanding partnerships across the robotic space.",
+      "source": "transcript"
+    },
+    {
+      "text": "Intrinsic innovation has joined Google as a separate unit focused on robotics.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Intrinsic innovation has joined Google as a separate unit...",
+      "source": "transcript"
+    },
+    {
+      "text": "At San Jose Manetta International Airport, there's now an AI powered humanoid robot named Jose operating inside terminal B near Gate 24.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "At San Jose Manetta International Airport, there's now an AI powered humanoid robot...",
+      "source": "transcript"
+    },
+    {
+      "text": "The robot uses a combination of perception, reasoning, and natural interaction to understand what people need and respond accordingly.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The robot uses a combination of perception, reasoning, and natural interaction...",
+      "source": "transcript"
+    },
+    {
+      "text": "City officials are looking at this as a way to improve customer experience, accessibility, and overall efficiency.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "City officials are looking at this as a way to improve...",
+      "source": "transcript"
+    },
+    {
+      "text": "Intbot is framing this as part of a bigger shift toward what they call social intelligence in physical AI.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "Intbot is framing this as part of a bigger shift...",
+      "source": "transcript"
+    },
+    {
+      "text": "Robots need to understand human intent, context, and behavior, not just follow commands.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "You're seeing something similar in China as well where humanoid robots are already being used...",
+      "source": "transcript"
+    },
+    {
+      "text": "Companies like Amazon already have humanoid robots in customer-facing roles.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "According to reports, companies like Amazon already",
+      "source": "transcript"
+    },
+    {
+      "text": "Companies like Amazon already have over 1 million robots in their warehouses.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "According to reports, companies like Amazon already have over 1 million robots in their warehouses",
+      "source": "transcript"
+    },
+    {
+      "text": "About 75% of Amazon's global deliveries are assisted by robotics.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "about 75% of their global deliveries are assisted by robotics in some way",
+      "source": "transcript"
+    },
+    {
+      "text": "There was a recent incident where a delivery robot operated by Serve Robotics crashed through a glass bus shelter.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "In Chicago, there was a recent incident where a delivery robot operated by Serve Robotics crashed through a glass bus shelter",
+      "source": "transcript"
+    },
+    {
+      "text": "No injuries were reported in the incident.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "No injuries were reported and the company said their team responded quickly and is reviewing what happened",
+      "source": "transcript"
+    },
+    {
+      "text": "Residents have been complaining about delivery robots crowding sidewalks and creating obstacles.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "Residents have already been complaining about delivery robots crowding sidewalks and creating obstacles",
+      "source": "transcript"
+    },
+    {
+      "text": "More than 80% of residents in a local survey opposed the idea of robots operating in their neighborhood.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "In fact, more than 80% of residents in a local survey opposed the idea of robots operating in their neighborhood",
+      "source": "transcript"
+    },
+    {
+      "text": "Over 3,600 people have signed a petition calling for a citywide ban.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "over 3,600 people have signed a petition calling for a citywide ban",
+      "source": "transcript"
+    },
+    {
+      "text": "There are concerns about onboard cameras and data collection in public spaces.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "There are also concerns about onboard cameras and data collection in public spaces",
+      "source": "transcript"
+    },
+    {
+      "text": "A Chinese startup called Westlake Robotics introduced a humanoid robot named Titan01 powered by the general action expert or GAE model.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "A Chinese startup called Westlake Robotics introduced a humanoid robot named Titan01 powered by a system they call the general action expert or GAE model",
+      "source": "transcript"
+    },
+    {
+      "text": "The GAE model acts like a central coordination system similar to a cerebellum in the human brain.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "This model acts like a central coordination system similar to a cerebellum in the human brain",
+      "source": "transcript"
+    },
+    {
+      "text": "The robot mirrored those movements almost instantly within milliseconds, matching everything from arm swings to step length with high precision.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "During a demonstration, a human operator wore a motion capture suit and performed actions like waving, turning, and kicking a ball. The robot mirrored those movements almost instantly within milliseconds, matching everything from arm swings to step length with high precision",
+      "source": "transcript"
+    },
+    {
+      "text": "The system can also control multiple robots at the same time with each one performing identical tasks in sync.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The system can also control multiple robots at the same time with each one performing identical tasks in sync",
+      "source": "transcript"
+    },
+    {
+      "text": "It's designed to adapt to different operators, meaning it can handle variations in movement without losing accuracy.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "And it's designed to adapt to different operators, meaning it can handle variations in movement without losing accuracy",
+      "source": "transcript"
+    },
+    {
+      "text": "The shadow function allows the robot to essentially become a real-time physical extension of the human operator.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "This opens up possibilities for remote work, safer operations in dangerous environments, and much faster training compared to traditional programming methods. Instead of manually coding every",
+      "source": "transcript"
+    },
+    {
+      "text": "This opens up possibilities for remote work, safer operations in dangerous environments, and much faster training compared to traditional programming methods.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "Instead of manually coding every movement, the robot learns by observing and replicating human actions.",
+      "source": "transcript"
+    },
+    {
+      "text": "The wearable ultrasound wristband can track hand movements with extremely high precision.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "It then uses AI to translate those internal changes into digital signals representing 22 degrees of freedom in the hand.",
+      "source": "transcript"
+    },
+    {
+      "text": "The system was trained using thousands of data points, combining camera footage with ultrasound imaging to map internal muscle activity to specific hand positions.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The system was trained using thousands of data points...",
+      "source": "transcript"
+    },
+    {
+      "text": "It was able to accurately reproduce complex movements, including American Sign Language gestures and precise grips like holding a pencil or scissors.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "It was tested on eight different volunteers, and was able to accurately reproduce complex movements...",
+      "source": "transcript"
+    },
+    {
+      "text": "The wristband can be used to control robotic hands directly, essentially acting like a puppet system where your hand movements are mirrored by a robot in real time.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The wristband can be used to control robotic hands directly...",
+      "source": "transcript"
+    },
+    {
+      "text": "It also has potential applications in virtual and augmented reality where natural hand tracking is a major challenge.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "It also has potential applications in virtual and augmented reality...",
+      "source": "transcript"
+    },
+    {
+      "text": "A humanoid robot appeared alongside Melania Trump, walking with her and greeting attendees in multiple languages.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "At a recent AI summit at the White House, a humanoid robot appeared alongside Melania Trump...",
+      "source": "transcript"
+    },
+    {
+      "text": "The event brought together representatives from 45 countries and focused on topics like AI and education, digital literacy, online safety, and the impact of technology on child development.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The event brought together representatives from 45 countries...",
+      "source": "transcript"
+    },
+    {
+      "text": "The presence of the robot at the summit was mostly symbolic.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "The presence of the robot at the summit was mostly symbolic.",
+      "source": "transcript"
+    },
+    {
+      "text": "Robotics is no longer just one thing. All of these directions are moving forward at once, and the pace is only picking up.",
+      "type": "opinion",
+      "confidence": 0.9,
+      "supporting_quote": "When you look at all of this together, it becomes clear that robotics is no longer just one thing.",
+      "source": "transcript"
+    },
+    {
+      "text": "Companies like Amazon already have over 1 million robots in their warehouses.",
+      "type": "statistic",
+      "confidence": 0.7,
+      "supporting_quote": "...companies like Amazon already have over 1 million robots in their warehouses.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "There's no sense of self-awareness, even a simulated self awareness that would allow internal reflection and correction in a process of evolving self-correction.",
+      "type": "opinion",
+      "confidence": 0.6,
+      "supporting_quote": "...there's no sense of any self-awareness, even a simulated self awareness that would allow internal reflection and correction in a process of evolving self-correction...",
+      "relation_to_transcript": "contradicts_transcript",
+      "source": "comment"
+    },
+    {
+      "text": "More humanoids with AI means more control and collected data about the privacy of humanity overall.",
+      "type": "prediction",
+      "confidence": 0.5,
+      "supporting_quote": "...more control and collected data about the privacy of humanity overall...",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    }
+  ],
+  "claim_count": 61,
+  "transcript_claim_count": 58,
+  "comment_claim_count": 3,
+  "video_metadata": {
+    "video_id": "Vq0W85mnYU0",
+    "channel_id": "UC5l7RouTQ60oUjLjt1Nh-UQ",
+    "title": "China's New AI Robot Looks Shockingly Human",
+    "description": "Humanoid robots are moving out of labs fast. China showed a robot face that looks disturbingly human, Google DeepMind is bringing Gemini into real factory robots, and humanoids are already appearing in airports and restaurants.\nAt the same time, Titan 01 can mirror human motion in milliseconds, MIT built a wristband that can control robotic hands, and real robot failures in Chicago are raising safety concerns.\n\n\ud83d\udc49 Get $4 free to try Model APIs (Code AIRE-MAPI): https://www.hpc-ai.com/account/signup?redirectUrl=/models-console/models&invitation_code=AIRE-MAPI&utm_source=google&utm_medium=youtube&utm_id=newlaunch\n\n\ud83d\udce9 Brand Deals & Partnerships: collabs@nouralabs.com\n\u2709 General Inquiries: airevolutionofficial@gmail.com\n\n\ud83e\udde0 What You\u2019ll See\nChina Robot Face Looks Almost Human\nSOURCE: https://interestingengineering.com/ai-robotics/lifelike-humanoid-robot-sparks-debate\nGoogle DeepMind Teams With Agile Robots\nSOURCE: https://techcrunch.com/2026/03/24/agile-robots-becomes-the-latest-robotics-company-to-partner-with-google-deepmind/\nJos\u00e9 Humanoid Starts Helping At San Jose Airport\nSOURCE: https://www.internationalairportreview.com/news/303713/san-jose-airport-introduces-ai-powered-humanoid-robot-for-passenger-support/\nMcDonald\u2019s Shanghai Tests Humanoid Robots\nSOURCE: https://interestingengineering.com/ai-robotics/mcdonalds-humanoid-robots-deliver-food\nChicago Delivery Robot Smashes Through Bus Shelter\nSOURCE: https://www.popsci.com/technology/delivery-robots-crash-bus-shelters/\nTitan 01 Copies Human Movement In Milliseconds\nSOURCE: https://en.people.cn/n3/2026/0324/c90000-20439255.html\nMIT Wristband Controls Robotic Hand Live\nSOURCE: https://news.mit.edu/2026/wristband-enables-wearers-control-robotic-hand-with-own-movements-0325\nFigure 03 Appears At White House AI Summit\nSOURCE: https://www.reuters.com/world/us/robot-joins-melania-trump-white-house-event-tout-ai-teachers-2026-03-25/\n\n\ud83d\udea8 Why It Matters\nHumanoid robots are moving into the real world much faster now. China is making them look more human, Google DeepMind is making them more useful in factories, and companies are already testing them in airports, restaurants, and city streets. This is a story about real deployment, social acceptance, and the growing safety risks that come with robots leaving the lab.\n\n#ai #robots #humanoid",
+    "channel_title": "AI Revolution",
+    "published_at": "2026-03-28T00:26:54Z",
+    "view_count": 54881,
+    "like_count": 1449,
+    "comment_count": 103,
+    "duration": "PT12M58S",
+    "duration_seconds": 778
+  },
+  "comment_timestamps": [
+    "2026-03-28T01:45:50Z",
+    "2026-03-28T01:08:16Z",
+    "2026-03-28T01:10:33Z",
+    "2026-03-28T00:34:08Z",
+    "2026-03-28T02:56:50Z",
+    "2026-03-28T22:30:10Z",
+    "2026-03-28T00:45:01Z",
+    "2026-03-28T00:27:05Z",
+    "2026-03-28T03:33:29Z",
+    "2026-03-28T01:36:11Z",
+    "2026-03-29T02:50:14Z",
+    "2026-03-28T01:08:41Z",
+    "2026-04-03T16:53:07Z",
+    "2026-04-03T16:47:52Z",
+    "2026-03-28T17:09:42Z",
+    "2026-04-08T16:38:17Z",
+    "2026-03-29T08:54:43Z",
+    "2026-03-29T23:50:39Z",
+    "2026-04-07T04:06:48Z",
+    "2026-03-29T20:08:18Z",
+    "2026-03-28T20:33:34Z",
+    "2026-03-31T23:27:58Z",
+    "2026-03-31T21:15:59Z",
+    "2026-04-02T12:54:15Z",
+    "2026-03-28T03:24:40Z",
+    "2026-03-28T12:30:16Z"
+  ],
+  "_transcript": "China just unveiled a humanoid robot face that looks almost too human. Google DeepMind is now teaming up with agile robots to bring Gemini into real factory machines. McDonald's in Shanghai and San Jose airport are already putting humanoids in front of customers. MIT just built a wristband that can control robotic hands with your own movements. Titan01 is copying human actions in milliseconds. And in Chicago, a delivery robot just smashed through a glass bus shelter. It's been another wild week in AI and robotics, so let's get into it. All right, let's start with what might actually be the most unexpected direction here, and that's the face. A video that started circulating recently shows a humanoid robot developed in China with extremely lifelike facial expressions. This wasn't just a stiff robot with basic movements. It was blinking naturally, scanning the room, reacting to what it saw, and showing subtle emotional changes in real time. The clip came from Yu Hong Hu, the founder of Showing Technology, and it picked up a lot of attention online because of how realistic it looked. For years, most of the focus in robotics has been on movement, strength, and industrial capability. Can the robot lift heavy objects? Can it walk properly? Can it operate in a factory? That's been the main benchmark. Yet now, a growing number of researchers and companies are starting to say that none of that is actually the biggest challenge. The real challenge is making robots socially acceptable. Companies like a Head Form have already been working on this. They released a humanoid platform called Elf V1 back in October 2025, which also focused heavily on facial expressions and reaction-based interaction. And the idea is pretty simple when you break it down. Robots that can do physical work already exist. In many cases, a simple robotic arm can do those jobs faster and cheaper. So, if humanoid robots are going to succeed, especially in public-f facing roles, they need something more. They need to feel human. That's where these new systems come in. These robots are being built with synthetic skin, microactu under the surface, and AI models that control facial expressions in real time. They can blink, track faces, react to conversations, and adjust their expressions based on context. When paired with multimodal AI systems like the Omni AI platform mentioned in demonstrations, they can see, hear, and respond in a way that feels natural during interaction. And what's starting to become clear is that the face might end up being the most important part of the robot. Not the legs, not the arms, but the ability to communicate emotion. Because if these machines are going to work in places like malls, museums, or customer service environments, the way they interact with people matters just as much as what they can physically [music] do. At the same time, there's still a debate inside the industry. Some experts see these humanoid robots as more of a performance showcase right now, something that looks impressive yet isn't economically efficient. Others are convinced that making robots more humanlike is the only way they'll ever be widely accepted in everyday life. And while that's happening, another completely different direction is moving forward in parallel, and that's industrial robotics powered by large AI models. A company called Agile Robots based in Germany just announced a collaboration with Google DeepMind. The goal here is to combine DeepMind's Gemini Robotics Foundation models with Agile Robots existing hardware systems. [music] And this isn't about making robots more humanlooking. This is about making them smarter and more capable in realworld production environments. But AI isn't only about machines interacting with the physical world. It's also becoming a powerful tool for creating entirely new ones. HPCAI is sponsoring today's video and they just launched a new feature called model APIs which makes it really easy to start building with powerful open models without dealing with complicated setup. Right now you get access to models like Kimmy K2.5 and Miniax M2.5 which are great for coding long context tasks and building AI agents. [music] The key thing here is that it's OpenAI compatible. So, if you've used OpenAI APIs before, you can plug this into your existing projects almost instantly. That also makes it a really good fit for tools like Open Claw. You can connect the API, test different models, build assistance, automate workflows, or even prototype simple AI apps pretty fast. Getting started is simple. You sign up, pick a model, and start testing. No payment required. You get $2 in free credits by default and if you use my link, you get $4 total to test everything out. Go check it out. Link is in the description. All right, now let's get back to the video. Agile Robots has already deployed over 20,000 robotic systems globally, so they're not starting from scratch. They have a full lineup that includes robotic hands, force sensitive arms like the F FR3, the Diana 7 arm, and the Thor series. Their new humanoid platform called Agile 1 is designed to work alongside humans in industrial settings safely and efficiently. Now, when you combine that hardware with something like Gemini Robotics, you get a very different kind of system. Instead of a robot that follows fixed instructions, you get one that can adapt, learn from real world data, and improve over time. They're calling this an AI flywheel. Basically, the robots get deployed into real [music] environments. They collect operational data. That data is used to train and refine the AI models. And then those improved models make the robots better, which allows for broader deployment. And that cycle just keeps going. The collaboration is structured in multiple phases where the systems are continuously tested, improved, and redeployed. And the initial focus is on high value industrial applications, especially in areas that require reliability and scalability. This also connects to a broader strategy from DeepMind. They've been expanding partnerships across the robotic space. Earlier this year, they announced work with Boston Dynamics to enhance the Atlas humanoid robot using Gemini models. They're also working with Aptronic on the Apollo humanoid platform. And intrinsic innovation has joined Google as a separate unit focused on robotics. So, while one part of the industry is trying to make robots more human on the outside, another part is making them far more capable on the inside. And then you've got cases where both of these directions start showing up in realworld environments. For example, at San Jose Manetta International Airport, there's now an AI powered humanoid robot named Jose operating inside terminal B near Gate 24. This robot was developed by a startup called Inbot, and it's designed specifically for passenger interaction. It can greet travelers, answer questions, provide directions, and it supports more than 50 languages. That's a big deal in an international airport where people from all over the world are trying to navigate a complex environment. The robot uses a combination of perception, reasoning, and natural interaction to understand what people need and respond accordingly. And this is part of a 4-month pilot program to test how these systems perform in busy public spaces. City officials are looking at this as a way to improve customer experience, accessibility, and overall efficiency, especially with events like the FIFA World Cup expected to bring in large numbers of international visitors. At the same time, Intbot is framing this as part of a bigger shift toward what they call social intelligence in physical AI. The idea is that robots need to understand human intent, context, and behavior, not just follow commands. You're seeing something similar in China as well where humanoid robots are already being used in customerf facing roles. There was a recent demonstration inside a McDonald's in Shanghai where robots developed by Kenon Robotics were greeting customers, taking orders, delivering food, and even interacting with diners in real time. They were wearing the standard red and yellow uniforms, blending into the environment while still being clearly robotic. What stands out here is that these robots aren't just doing back-end tasks. They're right in front of customers handling roles that were traditionally considered difficult to automate because they require interaction and communication. And there's a broader context behind this. According to reports, companies like Amazon already have over 1 million robots in their warehouses and about 75% of their global deliveries are assisted by robotics in some way. So automation is already deeply integrated into logistics and operations. Now it's moving into direct human interaction. At the same time, this shift isn't happening without push back. In Chicago, there was a recent incident where a delivery robot operated by Serve Robotics crashed through a glass bus shelter. The video that went viral shows the aftermath with the robot covered in shattered glass and debris scattered across the sidewalk. No injuries were reported and the company said their team responded quickly and is reviewing what happened. Yet, incidents like this are adding to growing concerns about the safety of autonomous machines in dense urban environments. Residents have already been complaining about delivery robots crowding sidewalks and creating obstacles. There are also concerns about onboard cameras and data collection in public spaces. In fact, more than 80% of residents in a local survey opposed the idea of robots operating in their neighborhood and over 3,600 people have signed a petition calling for a citywide ban. This isn't an isolated case either. In Miami, a delivery robot ended up on train tracks and was destroyed by an oncoming train. In Los Angeles, robots have been overturned or disabled by activists. And in one case, a robot entered an active police scene which caused confusion before it was identified as a false alarm. So, while the technology is advancing quickly, the real world integration is still messy. At the same time, there are also major advancements happening in how robots move and learn physical tasks. A Chinese startup called Westlake Robotics introduced a humanoid robot named Titan01 powered by a system they call the general action expert or GAE model. This model acts like a central coordination system similar to a cerebellum in the human brain. During a demonstration, a human operator wore a motion capture suit and performed actions like waving, turning, and kicking a ball. The robot mirrored those movements almost instantly within milliseconds, matching everything from arm swings to step length with high precision. The system can also control multiple robots at the same time with each one performing identical tasks in sync. And it's designed to adapt to different operators, meaning it can handle variations in movement without losing accuracy. One of the key features here is what they call the shadow function where the robot essentially becomes a realtime physical extension of the human operator. This opens up possibilities for remote work, safer operations in dangerous environments, and much faster training compared to traditional programming methods. Instead of manually coding every movement, the robot learns by observing and replicating human actions. And that ties into another breakthrough coming out of MIT where researchers developed a wearable ultrasound wristband that can track hand movements with extremely high precision. This device uses small ultrasound sensors to image the internal structures of the wrist, including muscles, tendons, and ligaments. It then uses AI to translate those internal changes into digital signals representing 22 degrees of freedom in the hand. So every finger movement, every subtle adjustment can be captured and translated in real time. The system was trained using thousands of data points, combining camera footage with ultrasound imaging to map internal muscle activity to specific hand positions. It was tested on eight different volunteers, and was able to accurately reproduce complex movements, including American Sign Language gestures and precise grips like holding a pencil or scissors. What's interesting is how this connects back to robotics. The wristband can be used to control robotic hands directly, essentially acting like a puppet system where your hand movements are mirrored by a robot in real time. It also has potential applications in virtual and augmented reality where natural hand tracking is a major challenge. And then you've got the broader visibility of these systems increasing as well. At a recent AI summit at the White House, a humanoid robot appeared alongside Melania Trump, walking with her and greeting attendees in multiple languages. It was described as the first American-made humanoid robot to be presented in that setting. The event brought together representatives from 45 countries and focused on topics like AI and education, digital literacy, online safety, and the impact of technology on child development. There were also discussions about risks, including deep fake technology, and the need for safeguards, especially for younger generations. Concerns about screen exposure and social media use were raised as well. The presence of the robot at the summit was mostly symbolic. Yet, it highlighted how quickly these systems are moving from labs into public and policy spaces. And when you look at all of this together, it becomes clear that robotics is no longer just one thing. All of these directions are moving forward at once, and the pace is only picking up. If you enjoyed this breakdown, drop a comment with your thoughts and subscribe for more. Thanks for watching, and I'll catch you in the next one.",
+  "_comments": [
+    {
+      "comment_id": "Ugw4UvJv1KwaEfkvTkV4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@DudeFrom1972",
+      "comment_text": "Let's be honest; we all know where these cute looking robots gonna go... nuff said !",
+      "published_at": "2026-03-28T01:45:50Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 53,
+      "text": "Let's be honest; we all know where these cute looking robots gonna go... nuff said !"
+    },
+    {
+      "comment_id": "Ugy9L1CZyXY_v24e7-54AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@holliday69",
+      "comment_text": "my ex wife has the facial expression of a robot.",
+      "published_at": "2026-03-28T01:08:16Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 25,
+      "text": "my ex wife has the facial expression of a robot."
+    },
+    {
+      "comment_id": "UgxQHF6Maq1tKajbdk14AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@konstantinavalentina3850",
+      "comment_text": "I keep testing available models, and while all of them are immediately impressive in their facilities, I keep running into a wall of Dunning-Kruger confidence of statement/expertise when there are significant errors, including errors of omission, and I find these troubling, because someone who does not have certain domains of expertise could hear all the vocabulary from the AI, and because it sounds so confident, they accept the wrong answer.  \nEven after pointing out errors, there's a pattern of, ego-less \"so sorry, you are correct and ...\". where the AI just goes on, continuing to present with extreme confidence as if the error(s) it made never happened.  \nThere's no sense of, \"oops, thank you for correcting me.  I'll remember that, and source other references to confirm the validity and then make a permanent correction to my knowledge base so i never make that mistake again\".\nThere's no sense of any self-awareness, even a simulated self awareness that would allow internal reflection and correction in a process of evolving self-correction, even red-teaming itself in virtual modeling and gaming to ensure future errors related to that domain of expertise do not occur as a proactive prep for future interactions on the same subject should the human continue that specific line of inquiry. \nThis is expected with the free online AIs, but, it's the same with some of the largest competitive gguf AIs that can be run locally, and it's seen even in paid models.   \nAnyway, as amazing as AI is with so very many things, I feel like we still have quite a way to go, unless there's a sudden growth in significant developmental sophistication.\ni look forward to seeing that ongoing development, and where it leads the world.",
+      "published_at": "2026-03-28T01:10:33Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 11,
+      "text": "I keep testing available models, and while all of them are immediately impressive in their facilities, I keep running into a wall of Dunning-Kruger confidence of statement/expertise when there are significant errors, including errors of omission, and I find these troubling, because someone who does not have certain domains of expertise could hear all the vocabulary from the AI, and because it sounds so confident, they accept the wrong answer.  \nEven after pointing out errors, there's a pattern of, ego-less \"so sorry, you are correct and ...\". where the AI just goes on, continuing to present with extreme confidence as if the error(s) it made never happened.  \nThere's no sense of, \"oops, thank you for correcting me.  I'll remember that, and source other references to confirm the validity and then make a permanent correction to my knowledge base so i never make that mistake again\".\nThere's no sense of any self-awareness, even a simulated self awareness that would allow internal reflection and correction in a process of evolving self-correction, even red-teaming itself in virtual modeling and gaming to ensure future errors related to that domain of expertise do not occur as a proactive prep for future interactions on the same subject should the human continue that specific line of inquiry. \nThis is expected with the free online AIs, but, it's the same with some of the largest competitive gguf AIs that can be run locally, and it's seen even in paid models.   \nAnyway, as amazing as AI is with so very many things, I feel like we still have quite a way to go, unless there's a sudden growth in significant developmental sophistication.\ni look forward to seeing that ongoing development, and where it leads the world."
+    },
+    {
+      "comment_id": "UgztlH1nqvqlkuGxI694AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@jdub1139",
+      "comment_text": "Another Great Ai Update!  Thanks!",
+      "published_at": "2026-03-28T00:34:08Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 6,
+      "text": "Another Great Ai Update!  Thanks!"
+    },
+    {
+      "comment_id": "Ugy5EYhcyafI62mGE1t4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@edutainme7265",
+      "comment_text": "What is that robot for? \ud83d\ude02",
+      "published_at": "2026-03-28T02:56:50Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 6,
+      "text": "What is that robot for? \ud83d\ude02"
+    },
+    {
+      "comment_id": "UgwQyBah6jUSV5g6ft54AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@stickman4087",
+      "comment_text": "They have to make sure they say \"humanoid\" as much as possible so your subconscious mind starts to think they're no different than a person",
+      "published_at": "2026-03-28T22:30:10Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 4,
+      "text": "They have to make sure they say \"humanoid\" as much as possible so your subconscious mind starts to think they're no different than a person"
+    },
+    {
+      "comment_id": "Ugzgy1JwJOjRbYoN3NZ4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@TotallyNoires",
+      "comment_text": "Love your videos, thanks for keeping us all updated consistently",
+      "published_at": "2026-03-28T00:45:01Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 4,
+      "text": "Love your videos, thanks for keeping us all updated consistently"
+    },
+    {
+      "comment_id": "UgzOeu3pgwAmVKU4f0N4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@airevolutionx",
+      "comment_text": "\ud83d\udc49 Get $4 free to try Model APIs (Code AIRE-MAPI): https://www.hpc-ai.com/account/signup?redirectUrl=/models-console/models&invitation_code=AIRE-MAPI&utm_source=google&utm_medium=youtube&utm_id=newlaunch",
+      "published_at": "2026-03-28T00:27:05Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 3,
+      "text": "\ud83d\udc49 Get $4 free to try Model APIs (Code AIRE-MAPI): https://www.hpc-ai.com/account/signup?redirectUrl=/models-console/models&invitation_code=AIRE-MAPI&utm_source=google&utm_medium=youtube&utm_id=newlaunch"
+    },
+    {
+      "comment_id": "UgxzcsiNaVXZCio6_5F4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@\ubbfc\uc871\ub3d9\uc774",
+      "comment_text": "\uc778\uac04\uacfc \ub2ee\uc740 \ub85c\ubd07\uc744 \uc0dd\uac01\ud55c\ub2e4\uba74 \ud53c\ub178\ud0a4\uc624\ub97c \uc0dd\uac01\ud574\ubd10\uc57c\ud568...\ucc9c\uc7ac\uc801 \uc791\ud488\uc774\uc5c8\ub294\ub370 \ub9c9\uc0c1 \uc0ac\uace0\uce58\uace0 \ubb38\uc81c\uc77c\uc73c\ud0a4\uace0 \uc81c \uba4b\ub300\ub85c \ud558\ub2e4 \ub9dd\uac00\uc9c0\ub294 \uac74 \uc544\ub2c8\ub77c\uace0 ....\ub85c\ubd07\uc744 \ub204\uac00 \ub9cc\ub4dc\ub294\uac83\ub3c4 \uc911\uc694\ud558\uc9c0\ub9cc \uc9c4\uc9dc \uc778\uac04\uc744 \ud749\ub0b4\ub0b8\ub2e4\uba74 \ucd5c\uc18c\ud55c\uc758\n\uacbd\ud5d8\uc801 \uc0ac\uace0\ub825\uc744 \uac16\ucd94\ub3c4\ub85d \ud14c\uc2a4\ud2b8 \ud558\uac70\ub098 \uac80\uc99d\ud574\ubcf4\uace0 \uc77c\uc0c1\uc0dd\ud65c\uc5d0 \uc811\ubaa9 \ud574\uc57c \ud55c\ub2e4\ub294 \ub73b...\uac89\ub9cc \ud654\ub824\ud55c \ub85c\ubd07\uc774 \uc544\ub2c8\ub77c \uc18d\uc548\uc5d0 \ub4e0 \uc2e0\uacbd\ub9dd \uc724\ub9ac\uc758\uc2dd\uc744 \uc758\ubb34\uc801\uc73c\ub85c \uac16\ucd94\ub3c4\ub85d \uac15\uc81c \ud574\uc57c\ud55c\ub2e4\ub294 \uac83",
+      "published_at": "2026-03-28T03:33:29Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 3,
+      "text": "\uc778\uac04\uacfc \ub2ee\uc740 \ub85c\ubd07\uc744 \uc0dd\uac01\ud55c\ub2e4\uba74 \ud53c\ub178\ud0a4\uc624\ub97c \uc0dd\uac01\ud574\ubd10\uc57c\ud568...\ucc9c\uc7ac\uc801 \uc791\ud488\uc774\uc5c8\ub294\ub370 \ub9c9\uc0c1 \uc0ac\uace0\uce58\uace0 \ubb38\uc81c\uc77c\uc73c\ud0a4\uace0 \uc81c \uba4b\ub300\ub85c \ud558\ub2e4 \ub9dd\uac00\uc9c0\ub294 \uac74 \uc544\ub2c8\ub77c\uace0 ....\ub85c\ubd07\uc744 \ub204\uac00 \ub9cc\ub4dc\ub294\uac83\ub3c4 \uc911\uc694\ud558\uc9c0\ub9cc \uc9c4\uc9dc \uc778\uac04\uc744 \ud749\ub0b4\ub0b8\ub2e4\uba74 \ucd5c\uc18c\ud55c\uc758\n\uacbd\ud5d8\uc801 \uc0ac\uace0\ub825\uc744 \uac16\ucd94\ub3c4\ub85d \ud14c\uc2a4\ud2b8 \ud558\uac70\ub098 \uac80\uc99d\ud574\ubcf4\uace0 \uc77c\uc0c1\uc0dd\ud65c\uc5d0 \uc811\ubaa9 \ud574\uc57c \ud55c\ub2e4\ub294 \ub73b...\uac89\ub9cc \ud654\ub824\ud55c \ub85c\ubd07\uc774 \uc544\ub2c8\ub77c \uc18d\uc548\uc5d0 \ub4e0 \uc2e0\uacbd\ub9dd \uc724\ub9ac\uc758\uc2dd\uc744 \uc758\ubb34\uc801\uc73c\ub85c \uac16\ucd94\ub3c4\ub85d \uac15\uc81c \ud574\uc57c\ud55c\ub2e4\ub294 \uac83"
+    },
+    {
+      "comment_id": "Ugx_3VkwNaBR_JM2esB4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@MusabAlBadawi",
+      "comment_text": "More humanoids with AI means more control and collected data about the privacy of humanity overall, especially when you have humanoids living with you,  thinking \"oh, it's ok, it is just a robot\" but it is being controlled by a real human on the other side, man this is like seeing the matrix movie in reality now, yeah right telling me about social acceptance \ud83d\ude05, of course companies will try to make them as real as possible\ud83d\ude05, but think ahead of that, and where's this going. The development is going to be far more advanced and in a very short time, while we are going to be only worried about the changes in economy and oil, water and food prices. Keep your eyes open and be careful. Be safe and thanx for the gr8 content... BIG LIKE \ud83d\udc4d\ud83c\udffc\ud83d\udc4d\ud83c\udffc\ud83d\udc4d\ud83c\udffc and keep it going \u2764.",
+      "published_at": "2026-03-28T01:36:11Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 3,
+      "text": "More humanoids with AI means more control and collected data about the privacy of humanity overall, especially when you have humanoids living with you,  thinking \"oh, it's ok, it is just a robot\" but it is being controlled by a real human on the other side, man this is like seeing the matrix movie in reality now, yeah right telling me about social acceptance \ud83d\ude05, of course companies will try to make them as real as possible\ud83d\ude05, but think ahead of that, and where's this going. The development is going to be far more advanced and in a very short time, while we are going to be only worried about the changes in economy and oil, water and food prices. Keep your eyes open and be careful. Be safe and thanx for the gr8 content... BIG LIKE \ud83d\udc4d\ud83c\udffc\ud83d\udc4d\ud83c\udffc\ud83d\udc4d\ud83c\udffc and keep it going \u2764."
+    },
+    {
+      "comment_id": "UgxepO7zdxQ7TVk3DqR4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@Wordzwurth",
+      "comment_text": "The fact that all these advances are continuing with no regard to real humans job security, tells me these companies really don't care about human workers, just as long as they make more money!! What happens to the human hostess at the restaurant, or the factory worker who is instantly replaced. These companies really don't care what happens to human labor or they would be less inclined to build our replacements. When all human labor can be replaced by machines, where will the displaced humans find work to sustain their lives!!?? These greedy companies don't really care. The rich will own fleets of labor bots while the displaced human workers will be left to fend for themselves with no available jobs!!! Why is no one concerned about this!!?? BECAUSE THEY DONT CARE IF WE LIVE OR DIE!!!!",
+      "published_at": "2026-03-29T02:50:14Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 2,
+      "text": "The fact that all these advances are continuing with no regard to real humans job security, tells me these companies really don't care about human workers, just as long as they make more money!! What happens to the human hostess at the restaurant, or the factory worker who is instantly replaced. These companies really don't care what happens to human labor or they would be less inclined to build our replacements. When all human labor can be replaced by machines, where will the displaced humans find work to sustain their lives!!?? These greedy companies don't really care. The rich will own fleets of labor bots while the displaced human workers will be left to fend for themselves with no available jobs!!! Why is no one concerned about this!!?? BECAUSE THEY DONT CARE IF WE LIVE OR DIE!!!!"
+    },
+    {
+      "comment_id": "UgyPvrVjqnmf4p6zlCN4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@cdevidal",
+      "comment_text": "Haven't heard much from the Fight for $15 people in a while...",
+      "published_at": "2026-03-28T01:08:41Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "Haven't heard much from the Fight for $15 people in a while..."
+    },
+    {
+      "comment_id": "UgzZZDRRX8iuGK6RLJd4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@_J.B.M_",
+      "comment_text": "08:20 Ok, but this also happens if some human only looks at hist phone and crashes through the glass.\nSo human behavior test successful.",
+      "published_at": "2026-04-03T16:53:07Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "08:20 Ok, but this also happens if some human only looks at hist phone and crashes through the glass.\nSo human behavior test successful."
+    },
+    {
+      "comment_id": "Ugwev8ICxY9v7cA69814AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@_J.B.M_",
+      "comment_text": "It's looking good for Ex Machina B)",
+      "published_at": "2026-04-03T16:47:52Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "It's looking good for Ex Machina B)"
+    },
+    {
+      "comment_id": "Ugz7w9TESxjFG6F-b954AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@claudianreyn4529",
+      "comment_text": "No, robots don't \"need to feel human\", what a stupid assumption. Robots are tools, not human replacement. They have to assist us in daily activities. It's not a problem at all if they look like robots!",
+      "published_at": "2026-03-28T17:09:42Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 1,
+      "text": "No, robots don't \"need to feel human\", what a stupid assumption. Robots are tools, not human replacement. They have to assist us in daily activities. It's not a problem at all if they look like robots!"
+    },
+    {
+      "comment_id": "UgwM-Q3GOj6NxwmRsY54AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@JamesHarris-",
+      "comment_text": "None of these animated trashcans look remotely human.  A robot with a realistic head and a metal body does not fool anyone.",
+      "published_at": "2026-04-08T16:38:17Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "None of these animated trashcans look remotely human.  A robot with a realistic head and a metal body does not fool anyone."
+    },
+    {
+      "comment_id": "Ugz4Bj43AKwWXqui6ut4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@walkabout16",
+      "comment_text": "Humanoids are already working in public, but full androids still belong to sci\u2011fi\u2014not the terminal gate.",
+      "published_at": "2026-03-29T08:54:43Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Humanoids are already working in public, but full androids still belong to sci\u2011fi\u2014not the terminal gate."
+    },
+    {
+      "comment_id": "Ugz-c994cSWkV3lodSl4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@Siranoxz",
+      "comment_text": "What i see is that robotic celebrities will be a thing, realistic human looking robots that can sing..",
+      "published_at": "2026-03-29T23:50:39Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "What i see is that robotic celebrities will be a thing, realistic human looking robots that can sing.."
+    },
+    {
+      "comment_id": "UgzaM6CjE5W1MPK0cON4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@MichaelSHartman",
+      "comment_text": "It's the first time I got an uncanny valley vibe.",
+      "published_at": "2026-04-07T04:06:48Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "It's the first time I got an uncanny valley vibe."
+    },
+    {
+      "comment_id": "UgxW38zh-le0QC0iaWZ4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@Plazman",
+      "comment_text": "Gonna be a while before they bridge the uncanny gap. Those robots now creep me out. More natural movements would help a lot.",
+      "published_at": "2026-03-29T20:08:18Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Gonna be a while before they bridge the uncanny gap. Those robots now creep me out. More natural movements would help a lot."
+    },
+    {
+      "comment_id": "UgxMXBbaFyzh_aRSYqh4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@hblog",
+      "comment_text": "Beautiful keep it up \ud83d\udc4d\ud83c\udffb\nNext We need worldwide eugenics and genetic engineering \ud83d\udc4d\ud83c\udffb",
+      "published_at": "2026-03-28T20:33:34Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Beautiful keep it up \ud83d\udc4d\ud83c\udffb\nNext We need worldwide eugenics and genetic engineering \ud83d\udc4d\ud83c\udffb"
+    },
+    {
+      "comment_id": "UgxSbwCOZLMQj97wYix4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@andreasfehlau4965",
+      "comment_text": "The poor robot that got run over by a train was a suicide, it was its free will. Which caused a massive suicide rate under these robot models",
+      "published_at": "2026-03-31T23:27:58Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "The poor robot that got run over by a train was a suicide, it was its free will. Which caused a massive suicide rate under these robot models"
+    },
+    {
+      "comment_id": "UgwQrMewTXIi8HetE7d4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@stevenbarrett7648",
+      "comment_text": "I'll stick with my robot vacuum cleaner for now thanks.",
+      "published_at": "2026-03-31T21:15:59Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "I'll stick with my robot vacuum cleaner for now thanks."
+    },
+    {
+      "comment_id": "UgzsYqtVU9wtIRL3trt4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@NiejakiDD",
+      "comment_text": "Straszne i fascynuj\u0105ce.Trzeba b\u0119dzie sie przyzwyczai\u0107 i uporz\u0105dkowa\u0107 to wymogami prawa.",
+      "published_at": "2026-04-02T12:54:15Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Straszne i fascynuj\u0105ce.Trzeba b\u0119dzie sie przyzwyczai\u0107 i uporz\u0105dkowa\u0107 to wymogami prawa."
+    },
+    {
+      "comment_id": "UgwdhA_rfWvJwcx0RGp4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@eddieheron1939",
+      "comment_text": "Elon persuaded us that the hands and forearms are most demanding and becoming impressive in latest versions.\nSome will find REAL looking faces off putting - perhaps till everything behind those eyes are more human like!",
+      "published_at": "2026-03-28T03:24:40Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "Elon persuaded us that the hands and forearms are most demanding and becoming impressive in latest versions.\nSome will find REAL looking faces off putting - perhaps till everything behind those eyes are more human like!"
+    },
+    {
+      "comment_id": "UgzvyjPRNCMmLEi2L9d4AaABAg",
+      "video_id": "Vq0W85mnYU0",
+      "commenter_name": "@nohnohnoh",
+      "comment_text": "0:50 we are legit going into sci-fi territory .\nCant wait when we develop batter tech then RAM & GPUs",
+      "published_at": "2026-03-28T12:30:16Z",
+      "is_reply": false,
+      "top_level_comment_id": null,
+      "likes": 0,
+      "text": "0:50 we are legit going into sci-fi territory .\nCant wait when we develop batter tech then RAM & GPUs"
+    }
+  ]
+}
