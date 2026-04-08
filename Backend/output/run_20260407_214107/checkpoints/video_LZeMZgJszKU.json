@@ -1,0 +1,729 @@
+{
+  "video_id": "LZeMZgJszKU",
+  "topics": [
+    "AI era recalibration",
+    "marketing",
+    "finance",
+    "AI",
+    "agentic enterprise",
+    "AI politics",
+    "AI Second Moment",
+    "Software engineering",
+    "Nvidia",
+    "Pulsia",
+    "customer service",
+    "agent platforms",
+    "Generative engine optimization",
+    "capex explosion",
+    "HR",
+    "Chatbot search",
+    "SAS apocalypse",
+    "AI adoption",
+    "Open Claw",
+    "convergence",
+    "agentic companies",
+    "Artificial Intelligence",
+    "Anthropic",
+    "Claude code",
+    "Vanguard",
+    "Notion",
+    "AI policy",
+    "Perplexity",
+    "AI space",
+    "Co-work",
+    "AI usage",
+    "capability overhang",
+    "GitHub",
+    "legal area",
+    "OpenAI",
+    "sales",
+    "anti-AI movement"
+  ],
+  "claims": [
+    {
+      "text": "The AI daily brief is a daily podcast and video about the most important news and discussions in AI.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The AI daily brief is a daily podcast and video about the most important news and discussions in AI.",
+      "source": "transcript"
+    },
+    {
+      "text": "Q2 2026 was the most consequential quarter in AI since chat GPT launched.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "This is why I'm calling this AI second moment. If the first moment was viable AI assistant experiences via chatbots like chat GPT, the second moment is all about workable agentic systems.",
+      "source": "transcript"
+    },
+    {
+      "text": "The capabilities have scaled up dramatically.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "We've gone from the fastest growing app in history with 100 million users in its first 5 weeks to billions of weekly active users across platforms.",
+      "source": "transcript"
+    },
+    {
+      "text": "The economic stakes have gone from speculative venture bets to a planned $650 billion in capex this year, $400 in a SAS apocalypse wipeout, and single funding rounds worth tens or even $100 billion.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The economic stakes have gone from speculative venture bets to a planned $650 billion in capex this year, $400 in a SAS apocalypse wipeout, and single funding rounds worth tens or even $100 billion.",
+      "source": "transcript"
+    },
+    {
+      "text": "The corporate reality has gone from the very first explorations of AI to AI first mandates, 40% staff cuts, and total reorientation of the enterprise.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The corporate reality has gone from the very first explorations of AI to AI first mandates, 40% staff cuts, and total reorientation of the enterprise.",
+      "source": "transcript"
+    },
+    {
+      "text": "Something clicked over the holidays.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "Something clicked over the holidays.",
+      "source": "transcript"
+    },
+    {
+      "text": "The combination of the new set of models including Opus 4.5 and GPT 5.2 plus the harness capabilities of Claude code and codex were clearly transformative.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The combination of the new set of models including Opus 4.5 and GPT 5.2 plus the harness capabilities of Claude code and codex were clearly transformative,",
+      "source": "transcript"
+    },
+    {
+      "text": "At the core of this is obviously Claude code.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "At the core of this is obviously Claude code.",
+      "source": "transcript"
+    },
+    {
+      "text": "I've done more personal coding projects over the Christmas break than in the previous 10 years combined.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "I've done more personal coding projects over the Christmas break than in the previous 10 years combined.",
+      "source": "transcript"
+    },
+    {
+      "text": "Claude code was fundamentally misnamed at least in terms of how many people were using it.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "Throughout 2025 we came to understand that Claude code was fundamentally misnamed",
+      "source": "transcript"
+    },
+    {
+      "text": "Claude code grew spectacularly from 1 billion in revenue to 2.5 billion in annualized revenue in just a couple of months.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Throughout Q1, Claude code grew spectacularly from 1 billion in revenue to 2.5 billion in annualized revenue",
+      "source": "transcript"
+    },
+    {
+      "text": "Co-work triggered emergency meetings at Microsoft.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "The information reported that co-work triggered emergency meetings at Microsoft",
+      "source": "transcript"
+    },
+    {
+      "text": "Claude code put a really fine point on just how much had changed about software engineering.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "it put a really fine point on just how much had changed about software engineering",
+      "source": "transcript"
+    },
+    {
+      "text": "We got more frontier capabilities shipped in the last 90 days than any quarter in AI history.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "we also got more frontier capabilities shipped in the last 90 days",
+      "source": "transcript"
+    },
+    {
+      "text": "There is no single benchmark winner across all different use cases.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "If you look at many of the most common benchmarks, GPQA diamond, sweet bench verified, terminal bench, the meter long task horizon, GDP val, there is a constant jockeying between the latest Gemini, GPT, or Claude model",
+      "source": "transcript"
+    },
+    {
+      "text": "Q1 was the quarter when Claude code killed the AI bubble.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "When it came to markets, if Q4 2025 was all about the AI bubble narrative, Q1 was the quarter when Claude code killed the AI bubble",
+      "source": "transcript"
+    },
+    {
+      "text": "Q1 2026 will be remembered as the quarter of open claw.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "When the history books are written, Q1 2026 will be remembered as the quarter of open claw",
+      "source": "transcript"
+    },
+    {
+      "text": "Open claw became the most starred open source project on GitHub ever.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "open claw became the most starred open source project on GitHub ever",
+      "source": "transcript"
+    },
+    {
+      "text": "Nvidia CEO Jensen Huang called it maybe the most important software release ever.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "maybe the most important software release ever",
+      "source": "transcript"
+    },
+    {
+      "text": "The rest of the industry was racing to integrate claw type features as fast as they could.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "the rest of the industry was racing to integrate claw type features as fast as they could",
+      "source": "transcript"
+    },
+    {
+      "text": "Nvidia actually announced a version of open claw called Nemo claw that was an enterprise grade wrapper around it.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Nemo claw that was an enterprise grade wrapper around it",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic has just been going feature by feature bringing into the native Claude code and Claude co-work ecosystem all of the things that people love about open claw.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "all of the things that people love about open claw",
+      "source": "transcript"
+    },
+    {
+      "text": "In the last 30 days at the time of recording, we've gotten remote control, dispatch, computer use, schedule tasks, projects in co-work, and a whole bunch more.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "remote control, dispatch, computer use, schedule tasks, projects in co-work, and a whole bunch more",
+      "source": "transcript"
+    },
+    {
+      "text": "OpenAI had a very, very good quarter as well.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "very, very good quarter",
+      "source": "transcript"
+    },
+    {
+      "text": "Sam Altman declared an internal code red as Gemini surged on the consumer side and Anthropic surged on the enterprise side.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "internal code red as Gemini surged on the consumer side and Anthropic surged on the enterprise side",
+      "source": "transcript"
+    },
+    {
+      "text": "OpenAI successfully recruited open claw's Peter Steinberger to come join the company.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Peter Steinberger to come join the company",
+      "source": "transcript"
+    },
+    {
+      "text": "OpenAI has been doubling down on their new focus cutting out the side quests as CEO of applications Fiji Simo put it.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "cutting out the side quests",
+      "source": "transcript"
+    },
+    {
+      "text": "Indeed in some ways, you have Anthropic and OpenAI converging towards a similar core despite coming at it from completely opposite sides.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "completely opposite sides",
+      "source": "transcript"
+    },
+    {
+      "text": "OpenAI had the starting point of product sprawl with a wide variety of standalone products that they're now merging into one super app.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "product sprawl with a wide variety of standalone products",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic has moved from its single dominant product to make that core tool extensible so the ecosystem built around it working outward from the center.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "make that core tool extensible",
+      "source": "transcript"
+    },
+    {
+      "text": "The big theme was the SAS apocalypse.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "SAS apocalypse",
+      "source": "transcript"
+    },
+    {
+      "text": "Much of the pain happened in big bursts as well driven by narratives like Claude announcing some new industry focused feature for co-work.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Claude announcing some new industry focused feature for co-work",
+      "source": "transcript"
+    },
+    {
+      "text": "Investors' concern flipped from what if AI isn't good enough to what if AI is too good.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "what if AI isn't good enough to what if AI is too good",
+      "source": "transcript"
+    },
+    {
+      "text": "Citrine's 2028 research report was case in point of that.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "2028 research report",
+      "source": "transcript"
+    },
+    {
+      "text": "40% of their staff being read as portents for a very aggressive AI era recalibration.",
+      "type": "prediction",
+      "confidence": 0.85,
+      "supporting_quote": "ights like block cutting",
+      "source": "transcript"
+    },
+    {
+      "text": "The hyperscalers expect to spend $650 billion on capex this year which is three times what they were spending a couple of years ago and even more than the inflation adjusted amount that was spent on the US interstate highway buildout.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "The hyperscalers expect to spend $650 billion",
+      "source": "transcript"
+    },
+    {
+      "text": "Claude code, as we already talked about as a standalone product, went from 1 billion to 2.5 billion in about 2 months.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Claude code",
+      "source": "transcript"
+    },
+    {
+      "text": "Cursor doubled its annualized revenue from 1 to 2 billion this quarter.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Cursor doubled its annualized revenue",
+      "source": "transcript"
+    },
+    {
+      "text": "Lovable ran up to 400 million in annualized revenue including a $100 million jump in a single month.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Lovable ran up to 400 million",
+      "source": "transcript"
+    },
+    {
+      "text": "Replit says that they're on track for a billion dollars in ARR by the end of 2026.",
+      "type": "prediction",
+      "confidence": 0.85,
+      "supporting_quote": "Replit says that they're on track",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic hit a $19 billion run rate.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Anthropic hit a $19 billion",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic's share of first time enterprise AI buyers jumped to 70% with OpenAI at 25% and others at around 5%.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "Anthropic's share of first time enterprise AI buyers",
+      "source": "transcript"
+    },
+    {
+      "text": "OpenAI's annualized revenue remains higher than Anthropic at around 25 billion, but Anthropic is quickly closing the gap.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "OpenAI's annualized revenue",
+      "source": "transcript"
+    },
+    {
+      "text": "Gartner is betting that by the end of 2026, 40% of enterprises will have working agents in production.",
+      "type": "prediction",
+      "confidence": 0.85,
+      "supporting_quote": "Gartner is betting",
+      "source": "transcript"
+    },
+    {
+      "text": "Nvidia's Nemo claw is a case study in what you're going to see a lot of this year which is an enterprise grade hardening of existing agentic tools to make them viable in an enterprise setting.",
+      "type": "opinion",
+      "confidence": 0.75,
+      "supporting_quote": "Nvidia's Nemo claw",
+      "source": "transcript"
+    },
+    {
+      "text": "Things are changing.",
+      "type": "opinion",
+      "confidence": 0.75,
+      "supporting_quote": "Whatever else is going on in markets",
+      "source": "transcript"
+    },
+    {
+      "text": "Pulsia has reached 6 million in annualized revenue with a single founder and zero employees.",
+      "type": "factual",
+      "confidence": 0.95,
+      "supporting_quote": "uces fully agentic companies, has reached 6 million in annualized revenue with a single founder and zero employees.",
+      "source": "transcript"
+    },
+    {
+      "text": "The zero employee company isn't a thought experiment anymore.",
+      "type": "opinion",
+      "confidence": 0.8,
+      "supporting_quote": "the zero employee company isn't a thought experiment anymore",
+      "source": "transcript"
+    },
+    {
+      "text": "More than 71% of Vanguard practitioners have vibe coded in the past month.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "more than 71% of them having vibe coded in the past month",
+      "source": "transcript"
+    },
+    {
+      "text": "62% of Vanguard practitioners use agentic AI for automation or goal-oriented tasks.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "increased agentic usage where use cases that are automation or agentic rather than just assisted are up to 62%",
+      "source": "transcript"
+    },
+    {
+      "text": "The average Vanguard practitioner uses 3.5 AI models.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "the average respondent to our surveys uses 3.5 models",
+      "source": "transcript"
+    },
+    {
+      "text": "Between January and February, the percentage of people with automation or agentic use cases increased.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "Between January and February, the percentage of people who had an automation use case or an agentic use case both went up",
+      "source": "transcript"
+    },
+    {
+      "text": "Time savings is no longer the dominant type of value from AI usage.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "When we did our survey of use cases at the end of 2025, time savings was the dominant type of value.",
+      "source": "transcript"
+    },
+    {
+      "text": "Increased output and throughput are now the primary values from AI usage.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "Increased output and throughput were number one both months, with new capabilities being number two both months",
+      "source": "transcript"
+    },
+    {
+      "text": "The capability overhang between AI potential and actual deployment is growing.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "the capability overhang, in other words, the gap between the value that AI could be providing and the value that it actually is providing is getting more and more significant",
+      "source": "transcript"
+    },
+    {
+      "text": "There's a huge gap between what's possible and what's actually deployed and what's actually delivering value.",
+      "type": "opinion",
+      "confidence": 0.85,
+      "supporting_quote": "What's different is that the cost of this overhang is going up as the gap between leaders and laggards gets bigger with the advent of this new capability set.",
+      "source": "transcript"
+    },
+    {
+      "text": "91% of businesses are at least experimenting with AI chatbots in customer service.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "customer service is one of the more mature areas",
+      "source": "transcript"
+    },
+    {
+      "text": "64% of customers prefer no AI in their customer service interactions.",
+      "type": "statistic",
+      "confidence": 0.8,
+      "supporting_quote": "One survey found that 64% of customers preferred no AI in their customer service interactions",
+      "source": "transcript"
+    },
+    {
+      "text": "80% of the work AI was capable of, but only 15% of those tasks actually observed any adoption.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "Anthropic research found one of the largest gaps between tasks within AI's reach and observed adoption",
+      "source": "transcript"
+    },
+    {
+      "text": "Finance has been a fairly aggressive adopter, but 91% of firms report fairly low impact.",
+      "type": "statistic",
+      "confidence": 0.8,
+      "supporting_quote": "The finance industry has actually been a fairly aggressive adopter",
+      "source": "transcript"
+    },
+    {
+      "text": "Data quality is the biggest obstacle to AI adoption in finance.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "They cite as their biggest obstacle data quality",
+      "source": "transcript"
+    },
+    {
+      "text": "HR deployment of AI had grown from 19% to 61% in 12 months, or 320% growth in a year.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "One study found that HR deployment of AI had grown from 19% to 61% in 12 months",
+      "source": "transcript"
+    },
+    {
+      "text": "Seven states have some sort of AI employment regulations.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "It's also an area where you're starting to see some AI policy come home to roost with seven states having some sort of AI employment regulations",
+      "source": "transcript"
+    },
+    {
+      "text": "63% of the use cases we tracked in sales were in the primetime category.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "Within that framework, 63% of the use cases we tracked in sales were in the primetime category",
+      "source": "transcript"
+    },
+    {
+      "text": "Generative engine optimization or GEO field will help companies figure out how to appear more frequently and more positively and more usefully in AI chatbot responses.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "Now, if and as user behavior shifts away from traditional search and towards chatbot related search",
+      "source": "transcript"
+    },
+    {
+      "text": "Early evidence suggests that referrals from AI are not only growing but are converting much better than traditional search.",
+      "type": "statistic",
+      "confidence": 0.85,
+      "supporting_quote": "Early evidence suggests",
+      "source": "transcript"
+    },
+    {
+      "text": "The market for generative engine optimization was a little under a billion dollars in 2025, but is projected to grow to nearly 34 billion by 2034.",
+      "type": "statistic",
+      "confidence": 0.85,
+      "supporting_quote": "a little under a billion dollars",
+      "source": "transcript"
+    },
+    {
+      "text": "The politics surrounding AI have gotten much more pronounced and much more significant.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "much more pronounced and much more significant",
+      "source": "transcript"
+    },
+    {
+      "text": "Reports came out that Claude had been used during the raid against President Nicolas Maduro, Venezuela.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "Reports came out",
+      "source": "transcript"
+    },
+    {
+      "text": "The Pentagon wanted Anthropic to agree to terms that said they could use Claude for all lawful use.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "the Pentagon wanted",
+      "source": "transcript"
+    },
+    {
+      "text": "Anthropic did not comply, they were designated a supply chain risk, Anthropic sued, the legal battle continued.",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "Anthropic did not comply",
+      "source": "transcript"
+    },
+    {
+      "text": "There was a 775% surge in one-star reviews for ChatGPT, and Claude made it to number one in the App Store for the first time ever.",
+      "type": "statistic",
+      "confidence": 0.85,
+      "supporting_quote": "a 775% surge",
+      "source": "transcript"
+    },
+    {
+      "text": "The anti-AI movement went mainstream enough that it made it to the cover of Time magazine with their people versus AI c",
+      "type": "factual",
+      "confidence": 1.0,
+      "supporting_quote": "it made it to the cover",
+      "source": "transcript"
+    },
+    {
+      "text": "The anti-AI movement went mainstream enough to make it to the cover of Time magazine.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "went mainstream enough that it made it to the cover of Time magazine",
+      "source": "transcript"
+    },
+    {
+      "text": "The White House released its legislative framework, which should be seen as an opening salvo in a heightened stakes conversation around AI policy.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "the White House released its legislative framework",
+      "source": "transcript"
+    },
+    {
+      "text": "AI is going to do nothing but grow in significance as a political issue heading into the midterms.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "heading into the midterms, AI is going to do nothing but grow in significance",
+      "source": "transcript"
+    },
+    {
+      "text": "This is one of the most exciting but also most destabilizing transitions we've ever seen.",
+      "type": "opinion",
+      "confidence": 0.7,
+      "supporting_quote": "one of the most exciting but also most destabilizing transitions",
+      "source": "transcript"
+    },
+    {
+      "text": "The discourse everywhere is at an 11.",
+      "type": "statistic",
+      "confidence": 0.9,
+      "supporting_quote": "the discourse everywhere is at an 11",
+      "source": "transcript"
+    },
+    {
+      "text": "It's no longer just about the model, but about which agent platform people are using their models in.",
+      "type": "factual",
+      "confidence": 0.8,
+      "supporting_quote": "it's clear that it's no longer just about the model",
+      "source": "transcript"
+    },
+    {
+      "text": "Every AI product becomes every other AI product as the competition happens.",
+      "type": "prediction",
+      "confidence": 0.7,
+      "supporting_quote": "every AI product becomes every other AI product",
+      "source": "transcript"
+    },
+    {
+      "text": "Code is the foundation of all knowledge work.",
+      "type": "factual",
+      "confidence": 0.9,
+      "supporting_quote": "code is the foundation of all knowledge work",
+      "source": "transcript"
+    },
+    {
+      "text": "The gap between the leaders and laggards is going to do nothing but increase right now.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "the gap between the leaders and laggards is going to do nothing but increase",
+      "source": "transcript"
+    },
+    {
+      "text": "The companies that can be on the leading side of that are going to see extreme compounding gains.",
+      "type": "prediction",
+      "confidence": 0.8,
+      "supporting_quote": "the companies that can be on the leading side of that are going to see extreme compounding gains",
+      "source": "transcript"
+    },
+    {
+      "text": "The capability overhang is going to widen before it closes.",
+      "type": "prediction",
+      "confidence": 0.95,
+      "supporting_quote": "other words, the capability overhang is going to widen before it closes",
+      "source": "transcript"
+    },
+    {
+      "text": "Companies that can be on the leading side of the capability overhang will see extreme compounding gains.",
+      "type": "prediction",
+      "confidence": 0.95,
+      "supporting_quote": "companies that can be on the leading side of that are going to see extreme compounding gains",
+      "source": "transcript"
+    },
+    {
+      "text": "It would be hard for the next quarter to have as much raw change and recognition of change as we did in the last one.",
+      "type": "prediction",
+      "confidence": 0.85,
+      "supporting_quote": "but with AI, you never know",
+      "source": "transcript"
+    },
+    {
+      "text": "Openai is falling apart and you are building your whole podcast around something that is going to be extinct.",
+      "type": "opinion",
+      "confidence": 0.6,
+      "supporting_quote": "Openai is goimg to be extinct. Openai had to shutdown stargate and sora and they have to resort to ads.",
+      "relation_to_transcript": "contradicts_transcript",
+      "source": "comment"
+    },
+    {
+      "text": "Codex despite the hype is used 20 percent of Claude code and the gap is getting wider.",
+      "type": "statistic",
+      "confidence": 0.5,
+      "supporting_quote": "Codex despite the hype is used 20 percent of claude code and the gap is gettig wider.",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "Openai declared another code red",
+      "type": "prediction",
+      "confidence": 0.4,
+      "supporting_quote": "Openai declared another code red",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "Microsoft is now suing Openai for $50 billion.",
+      "type": "factual",
+      "confidence": 0.7,
+      "supporting_quote": "microsoft is now suing openai for $50 billion",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "Openai cancels deal with Disney and Memory Makers... they can't fulfill anything.",
+      "type": "factual",
+      "confidence": 0.7,
+      "supporting_quote": "openai cancels deal with disney and cancels deal with memory makers... they can't fullfil anything",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    },
+    {
+      "text": "The Elon Musk and Openai/Sam Altman lawsuit is about to start with the results of Elon Musk projected to win at least 30% stake in Openai which would be larger than the stack that Microsoft has.",
+      "type": "factual",
+      "confidence": 0.7,
+      "supporting_quote": "the elon musk and openai/sam altman lawsuit is about to start with the results of elon musk projected to win at least 30% stake in openai which would be larger than the stack that microsoft has",
+      "relation_to_transcript": "new_claim",
+      "source": "comment"
+    }
+  ],
+  "claim_count": 92,
+  "transcript_claim_count": 86,
+  "comment_claim_count": 6,
+  "video_metadata": {
+    "title": "The State of AI - Q2 2026",
+    "channel_title": "The AI Daily Brief: Artificial Intelligence News",
+    "published_at": "2026-03-31T17:28:31Z",
+    "view_count": 10011,
+    "like_count": 244,
+    "comment_count": 12,
+    "duration": "PT19M47S"
+  },
+  "comment_timestamps": [
+    "2026-03-31T18:14:23Z",
+    "2026-03-31T20:57:17Z",
+    "2026-04-01T16:32:06Z"
+  ],
+  "_transcript": "Today we are discussing the state of artificial intelligence in Q2 2026. The AI daily brief is a daily podcast and video about the most important news and discussions in AI. All right friends, quick announcements before we dive in. Now this week the deal is that I am traveling with my family and so the plan is to not be doing our regularly scheduled episodes. Instead, this is the AI daily briefs Q2 build week. We're going to have shows with a much more practical bent including a show all about our new maturity map benchmark, a masterclass on using skills with Nofar Gaspar, and even the ultimate AI catch-up guide to share with friends and family who are just getting started on their AI journey. Today we're going to kick it all off with something that I wanted to start doing for a while which is a big quarterly state of AI report. You can find the full 87 slides at q2.aidbintel.com as well as on play.aibreif.ai but we'll be going through all the highlights here. The big theme of course is what we've been exploring all quarter which is the idea of AI second moment and the implications as the capability gap grows. The sources for this of course include all of the episodes from the previous quarter, all of our pulse survey results, plus more than 400 sources that are constantly being explored and debated by our team of open claw researchers. This was in short the most consequential quarter in AI since chat GPT launched. In fact, this is why I'm calling this AI second moment. If the first moment was viable AI assistant experiences via chatbots like chat GPT, the second moment is all about workable agentic systems. Now the stakes of the second moment are significantly higher than the stakes were back in 2022. The capabilities have scaled up dramatically. We've gone from the fastest growing app in history with 100 million users in its first 5 weeks to billions of weekly active users across platforms. The economic stakes have gone from speculative venture bets to a planned $650 billion in capex this year, $400 in a SAS apocalypse wipeout, and single funding rounds worth tens or even $100 billion. The corporate reality has gone from the very first explorations of AI to AI first mandates, 40% staff cuts, and total reorientation of the enterprise. And of course, we are finally emerging into a period of greater political volatility around AI as well. Let's talk first about the inflection point. Something clicked over the holidays. The combination of the new set of models including Opus 4.5 and GPT 5.2 plus the harness capabilities of Claude code and codex were clearly transformative, but it actually took people going away and having some time away from their normal pace of work to see just how much it changed. I remember when I saw Midjourney CEO David Holz say, \"I've done more personal coding projects over the Christmas break than in the previous 10 years combined.\" that we were in for something big this year. Now at the core of this is obviously Claude code. While Claude code was first introduced last March, throughout 2025 we came to understand that Claude code was fundamentally misnamed at least in terms of how many people were using it. Even before this burst of activity, non-technical people were using Claude code for all sorts of non-coding use cases previewing a lot of the key trends from Q1 of 2026. Throughout Q1, Claude code grew spectacularly from 1 billion in revenue to 2.5 billion in annualized revenue in just a couple of months. But last quarter was also the quarter when Claude code style capabilities came for the rest of knowledge work in the form of Claude co-work. It was launched in January and within a couple weeks we had not only a lot of technology users, but even significant market reactions. The information reported that co-work triggered emergency meetings at Microsoft and when we learned that co-work had been entirely built with Claude code, it put a really fine point on just how much had changed about software engineering. And even though much of the story of the last quarter was focused on the products through which we use the models like Claude code and Claude co-work, we also got more frontier capabilities shipped in the last 90 days than any quarter in AI history. We got in sequential order GPT 5.2 codex, Genie 3, the first playable version of their world model, Opus 4.6, GPT 5.3 codex, Sonnet 4.6, Gemini 3.1 pro, nano banana 2, and GPT 5.4. And what was interesting is that at this point it's very clear that there is no single benchmark winner across all different use cases. If you look at many of the most common benchmarks, GPQA diamond, sweet bench verified, terminal bench, the meter long task horizon, GDP val, there is a constant jockeying between the latest Gemini, GPT, or Claude model and they all tend to be within a very small reach of one another. When it came to markets, if Q4 2025 was all about the AI bubble narrative, Q1 was the quarter when Claude code killed the AI bubble. We had public recantings of previous AI skepticism from people like legendary investor Howard Marks and in general, the story about AI moved from what if it doesn't get any better and what that means for the infrastructure buildout to is this going to take all the jobs in very short order. Now with all of that prelude, the output of the inflection point was an explosion in the world of agents. When the history books are written, Q1 2026 will be remembered as the quarter of open claw. From humble origins as Claude bot back in January to a very brief stint as mult bot to finally reaching its final form as open claw and eventually being recruited into open AI just a couple weeks later, open claw became the most starred open source project on GitHub ever. Nvidia CEO Jensen Huang called it maybe the most important software release ever and effectively the rest of the industry was racing to integrate claw type features as fast as they could. We saw open claw type capabilities from Notion in their custom agents, from Perplexity with Perplexity computer. Nvidia actually announced a version of open claw called Nemo claw that was an enterprise grade wrapper around it and Anthropic has just been going feature by feature bringing into the native Claude code and Claude co-work ecosystem all of the things that people love about open claw. In the last 30 days at the time of recording, we've gotten remote control, dispatch, computer use, schedule tasks, projects in co-work, and a whole bunch more. And while open claw and Claude might have dominated a lot of the conversation inside the AI industry, by just about any measure, OpenAI had a very, very good quarter as well. Back in December, you'll remember that Sam Altman declared an internal code red as Gemini surged on the consumer side and Anthropic surged on the enterprise side. That led yes to a very fast sequence of new models, but also a real emphasis on codex which has been a powerful contender and competitor against Claude code throughout the quarter. OpenAI successfully recruited open claw's Peter Steinberger to come join the company and has been doubling down on their new focus cutting out the side quests as CEO of applications Fiji Simo put it. Indeed in some ways, you have Anthropic and OpenAI converging towards a similar core despite coming at it from completely opposite sides. OpenAI had the starting point of product sprawl with a wide variety of standalone products that they're now merging into one super app and trying to consolidate everything under one roof basically working inward from the edges whereas Anthropic has moved from its single dominant product to make that core tool extensible so the ecosystem built around it working outward from the center. Now a big part of the story of this quarter, as I alluded to at the beginning with Claude code popping the bubble, was a very different story about AI in the markets. The big theme was the SAS apocalypse. Basically everywhere you looked across public software companies, there was carnage. Much of the pain happened in big bursts as well driven by narratives like Claude announcing some new industry focused feature for co-work. Basically investors' concern flipped from what if AI isn't good enough to what if AI is too good. Citrine's 2028 research report was case in point of that. Stories of layoffs and job destruction dominated headlines with highlights like block cutting 40% of their staff being read as portents for a very aggressive AI era recalibration. Although of course, as we've discussed in previous shows about jobs, there also might have been quite a bit of AI washing going on. And yet of course, in the background, the capex explosion continued unabated. The hyperscalers expect to spend $650 billion on capex this year which is three times what they were spending a couple of years ago and even more than the inflation adjusted amount that was spent on the US interstate highway buildout. Supporting the shift in focus away from the AI bubble narrative towards the what if AI is too good narrative was just the absolute monster revenue growth in so many companies in the AI space. Claude code, as we already talked about as a standalone product, went from 1 billion to 2.5 billion in about 2 months. Cursor doubled its annualized revenue from 1 to 2 billion this quarter. Lovable ran up to 400 million in annualized revenue including a $100 million jump in a single month. Replit says that they're on track for a billion dollars in ARR by the end of 2026. And overall, in what will be a big part of the story, Anthropic hit a $19 billion run rate. Which brings us of course to the agentic enterprise because one of the big stories and one of the big cross-cutting themes throughout the quarter was the idea of Anthropic as the new enterprise default. Based on ramp statistics, Anthropic's share of first time enterprise AI buyers jumped to 70% with OpenAI at 25% and others at around 5%. While OpenAI's annualized revenue remains higher than Anthropic at around 25 billion, Anthropic is quickly closing the gap. Across the enterprise, we saw a shift away from pilots into production with deeper deployment depth and more focus on actual agents. Indeed, applied agentic capabilities, what companies are actually using agents for, continue to expand. Gartner is betting that by the end of 2026, 40% of enterprises will have working agents in production. And thanks to new products like agent credit cards from Ramp and Stripe, they'll be able to do more like actually spend money. If 2025 was supposed to be the year of enterprise AI agents, 2026 appears to be when that's actually coming true. I think Nvidia's Nemo claw is a case study in what you're going to see a lot of this year which is an enterprise grade hardening of existing agentic tools to make them viable in an enterprise setting. Whatever else is going on in markets, it's clear that things are changing. On one end of the spectrum, you've got a very significant increase in the number of companies listing agents as a material risk. And on the other end of the spectrum, we're seeing just how much agents can change company design. Pulsia, which is a company that produces fully agentic companies, has reached 6 million in annualized revenue with a single founder and zero employees. Now whether those companies actually turn into anything real and whether Pulsia can be durable and not just curiosity revenue remains to be seen, but as founder Ben Sera put it, the zero employee company isn't a thought experiment anymore. It's a live dashboard with weekly metrics. Next up, let's get into some numbers around where practitioners on the Vanguard actually are in terms of their AI usage. This is of course sourced from our monthly AI usage pulse surveys. The story is lots of usage, vibe coding becoming table stakes with more than 71% of them having vibe coded in the past month, increased agentic usage where use cases that are automation or agentic rather than just assisted are up to 62% and both usage and value increasing but value increasing even faster than usage. And while users at the forefront see growing consolidation around Claude as their primary model, they are ultimately model omnivorous. The average respondent to our surveys uses 3.5 models, meaning they are taking a portfolio approach choosing the best model for the task at hand. Between January and February, the percentage of people who had an automation use case or an agentic use case both went up. The way that we define this is an automation is AI doing a specific workflow end-to-end, whereas agentic AI is giving AI a goal and letting it figure out how to accomplish it. Maybe the biggest shift visible in our surveys has to do with the type of value people are getting out of AI. When we did our survey of use cases at the end of 2025, time savings was the dominant type of value. However, in both January and February, time savings share of overall ROI went down significantly. In January, time saving use cases represented 19.9% of the use cases surveyed, and by February it was down to just 13.6%. Increased output and throughput were number one both months, with new capabilities being number two both months, jumping 4.6 percentage points from 22% of use cases to over 26% of use cases in February. This is basically the shift from efficiency AI to opportunity AI exemplified in some real numbers. And when it comes to the barriers that people are seeing in their AI usage, a lot of it is in time, policy, and skill gaps. Now, one of the big fallouts of the inflection point that we're living through and the new agentic era that we're moving into is that the capability overhang, in other words, the gap between the value that AI could be providing and the value that it actually is providing is getting more and more significant. I'm going to skip through a lot of the specific numbers here for the sake of making it through, but basically in every survey that you find out there, there is just a huge gap between what's possible and what's actually deployed and what's actually delivering value. What's different is that the cost of this overhang is going up as the gap between leaders and laggards gets bigger with the advent of this new capability set. Looking at a couple highlights from AI inside various enterprise functions, customer service is one of the more mature areas with 91% of businesses at least experimenting with AI chatbots, although there's still a lot unresolved around where customer preferences are going to fall. One survey found that 64% of customers preferred no AI in their customer service interactions, which unfortunately for them at this point is probably just never going to happen again. In the legal area, Anthropic research found one of the largest gaps between tasks within AI's reach and observed adoption, arguing that around 80% of the work AI was capable of even though only 15% of those tasks actually observed any adoption. At the same time, dedicated tools like Harvey saw their valuations and usership go up and up and up. Finance showed one of the biggest challenges that enterprises will face this year with AI, which is access to quality data. The finance industry has actually been a fairly aggressive adopter, but 91% of firms report fairly low impact. They cite as their biggest obstacle data quality, which makes sense given what finance does. This is hardly a finance only concern, however, which is why so much of the conversation in 2026 is about context and data. HR is one of the areas seeing the fastest growth from being previously fairly behind. One study found that HR deployment of AI had grown from 19% to 61% in 12 months, or 320% growth in a year. It's also an area where you're starting to see some AI policy come home to roost with seven states having some sort of AI employment regulations. Sales might be the most mature enterprise AI function in our use case research, where we organize use cases into three categories. Primetime, meaning they're ready for most organizations. Emerging, which means that you need some amount of infrastructure, but many organizations will find value. And frontier, which means they're valuable, but you really got to have the right organizational setup. Within that framework, 63% of the use cases we tracked in sales were in the primetime category. Finally, what makes marketing interesting as a category is that not only does it show how an existing set of functions can change, but it shows how AI will create entirely new categories. Specifically, we're talking about the generative engine optimization or GEO field that helps companies figure out how to appear more frequently and more positively and more usefully in AI chatbot responses. Now, if and as user behavior shifts away from traditional search and towards chatbot related search, this is going to be nothing but more important. Early evidence suggests that referrals from AI are not only growing but are converting much better than traditional search, putting a lot of emphasis in this category. The market for generative engine optimization was a little under a billion dollars in 2025, but is projected to grow to nearly 34 billion by 2034. Now, as we start to round the corner here, one of the most important things that happened last quarter that was different than where AI was in the past, but I think represents AI's future, is that the politics surrounding AI have gotten much more pronounced and much more significant. At the heart of this was of course the Pentagon's battle with Anthropic. The situation ratcheted up very quickly. Reports came out that Claude had been used during the raid against President Nicolas Maduro, Venezuela, seemingly getting a bunch of people at Anthropic angry for the US government violating their terms. That led to some tense conversations where Anthropic wanted the Pentagon to commit to not using Claude for autonomous weaponry or for citizen surveillance, whereas the Pentagon wanted Anthropic to agree to terms that said they could use Claude for all lawful use. Over the course of just a couple of days, this got aggressively louder with Defense Secretary Pete Hegseth issuing ultimatums and deadlines and threatening not only to not work with Anthropic, but to designate them as a supply chain risk, which hadn't been done to a US company before. Anthropic did not comply, they were designated a supply chain risk, Anthropic sued, the legal battle continued, Claude continued to be used in the war in Iran, and everything is just a mess with that situation. When ChatGPT stepped in and announced that they had signed an agreement with the Department of War on the same night that the ultimatum came to pass, it did not go well for OpenAI. There was a 775% surge in one-star reviews for ChatGPT, and Claude made it to number one in the App Store for the first time ever. Now, that situation is obviously far from resolved, but you can see that there is some pretty clear political resonance around these AI issues. Now, another area where AI politics grew in stature this quarter was around the politics of data centers. We had started to get some glimpses of this towards the end of last year as a number of smaller campaigns at the state and congressional level began to focus in on data center related issues. Ultimately, this led to President Trump getting all the hyperscalers to agree to promises to make sure that Americans wouldn't foot the bill for the infrastructure buildout either directly or in the form of higher electricity costs. In the US, the anti-AI movement, which isn't really a movement but a collection of people with different grievances, went mainstream enough that it made it to the cover of Time magazine with their people versus AI cover. Now, towards the end of the quarter, the White House released its legislative framework, which should be seen as an opening salvo in a heightened stakes conversation around AI policy. Now, whether there will be any room to actually debate AI rules when we are, at the time of recording this episode, still living inside foreign wars, government shutdowns, airline accidents, and 3-hour TSA lines, I'm not really sure, but I do know that heading into the midterms, AI is going to do nothing but grow in significance as a political issue. Summing it all up, the story heading into Q2 is that this is one of the most exciting but also most destabilizing transitions we've ever seen. To take an example of just one weekend in March, Andrej Karpathy's posting of a job visualization of LLMs rating of AI exposure to different jobs caused a wave of panic that coincided with rumors of 20% layoffs at Meta and Bernie Sanders posting videos of him talking about acting about X risk on Twitter, while at the meantime, we had an Australian man using AI to help design a cancer vaccine to cure his dog, hundreds of articles all over X about people's 12-agent orchestration teams, and a never-ending drumbeat of new features and new models increasing our capabilities. In short, the discourse everywhere is at an 11. Now, as we move into the next quarter, some things to watch. First of all, from a competitive standpoint, it's clear that it's no longer just about the model, but about which agent platform people are using their models in. The most interesting battle this quarter was not actually GPT-5.4 versus Opus-4.6. It was Claude Code versus Codex versus Open Claw. Fascinatingly, as that competition happens, we're also seeing a convergence where every AI product becomes every other AI product. Lovable and Replit, which had previously been vibe coding platforms, both announced a wildly expanded set of features this month. Claude Code, Codex, and Open Claw all got closer and closer together. Products like Perplexity Computer and Notion Custom Agents all started to nudge into the same space. As Peter Yang put it, code is the foundation of all knowledge work. If an agent can write code, it can also generate apps, presentations, animations, and more. When it comes to how enterprises have to deal with all this, one thing that's clear is that time savings ain't it, and the thinking about new capabilities is going to be much more profitable. Unfortunately for companies that are behind, I think that the gap between the leaders and laggards is going to do nothing but increase right now. In other words, the capability overhang is going to widen before it closes. Now, on the flip side, the companies that can be on the leading side of that are going to see extreme compounding gains, creating a very incentive to get there. It would be hard for the next quarter to have as much raw change and as much raw recognition of change as we did in the last one, but with AI, you never know. For now, that is going to do it for today's episode of the AI Daily Brief. Looking forward to being back with you with more build week episodes this week. Appreciate you listening or watching as always, and until next time, peace.",
+  "_comments": [
+    {
+      "text": "Openai is falling apart and you are building your whole poscast around something that is goimg to be extinct. Openai had to shutdown stargate and sora and they have to resort to ads. Codex despite the hype is used 20 percent of claude code and the gap is gettig wider. And openai declared another code red\n\nalso microsoft is now suing openai for $50 billion.  openai cancels deal with disney and cancels deal with memory makers... they can't fullfill anything.  also the elon musk and openai/sam altman lawsuit is about to start with the results of elon musk projected to win at least 30% stake in openai which would be larger than the stack that microsoft has.",
+      "likes": 2,
+      "published_at": "2026-03-31T18:14:23Z"
+    },
+    {
+      "text": "what presentation tool is that? so clean!",
+      "likes": 1,
+      "published_at": "2026-03-31T20:57:17Z"
+    },
+    {
+      "text": "Claude Code is basically using coding as tools to do knowledge work. Not just coding only lol.\nI actually built myself a personal assistant, fix my post acl surgery problem, saved lots of subscription money.",
+      "likes": 0,
+      "published_at": "2026-04-01T16:32:06Z"
+    }
+  ]
+}

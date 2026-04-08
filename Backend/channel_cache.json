@@ -38,5 +38,15 @@
       }
     ],
     "cached_at": "2026-04-02T20:04:29.739351+00:00"
+  },
+  "ai news": {
+    "channels": [
+      {
+        "channel_id": "UCKelCK4ZaO6HeEI1KQjqzWA",
+        "title": "The AI Daily Brief: Artificial Intelligence News",
+        "subscriber_count": 576000
+      }
+    ],
+    "cached_at": "2026-04-08T02:40:44.587278+00:00"
   }
 }

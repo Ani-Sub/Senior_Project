@@ -1,0 +1,49 @@
+[
+  {
+    "narrative_id": "overall",
+    "name": "Overall Summary",
+    "summary": "The videos discuss various aspects of AI technology, including its growth, adoption, and limitations.",
+    "video_ids": [
+      "Jov9Mn2Q2s8",
+      "LZeMZgJszKU",
+      "DvNKYftvPW0",
+      "zHvE3b88lgM"
+    ],
+    "video_count": 4,
+    "claim_count": 315
+  },
+  {
+    "narrative_id": "narrative_1",
+    "name": "The AI Era Recalibration",
+    "summary": "The video discusses the rapid growth and adoption of AI technology, leading to a recalibration of the AI era.",
+    "video_ids": [
+      "Jov9Mn2Q2s8",
+      "LZeMZgJszKU",
+      "zHvE3b88lgM"
+    ],
+    "video_count": 3,
+    "claim_count": 261
+  },
+  {
+    "narrative_id": "narrative_2",
+    "name": "The State of AI",
+    "summary": "The video discusses the current state of AI technology, including its applications and limitations.",
+    "video_ids": [
+      "LZeMZgJszKU",
+      "zHvE3b88lgM"
+    ],
+    "video_count": 2,
+    "claim_count": 173
+  },
+  {
+    "narrative_id": "narrative_3",
+    "name": "AI Adoption and Usage",
+    "summary": "The video discusses the adoption and usage of AI technology, including its benefits and challenges.",
+    "video_ids": [
+      "Jov9Mn2Q2s8",
+      "zHvE3b88lgM"
+    ],
+    "video_count": 2,
+    "claim_count": 169
+  }
+]

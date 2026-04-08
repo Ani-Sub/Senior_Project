@@ -1,0 +1,112 @@
+[
+  {
+    "flag_id": 1,
+    "video_id": "Jov9Mn2Q2s8",
+    "category": "illegal_activity",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "meth",
+    "context": "...n AI, today's episode is for you. This is the ultimate AI catch-up guide. Now, today we are doing something that I have wanted to do for a little while now. The average listener of this show is a fairly a...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 2,
+    "video_id": "Jov9Mn2Q2s8",
+    "category": "harassment",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "loser",
+    "context": "...you can view it like a new operating layer through which you do all sorts of different things, the closer you're going to get, I think, to unlocking its full value. So, now that we've got some key terms, s...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 3,
+    "video_id": "Jov9Mn2Q2s8",
+    "category": "harassment",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "stupid",
+    "context": "...nt to hear. When you are exploring some new idea with it, it's unlikely to say, \"Hey man, that is a stupid idea that everyone and their mom has tried and hasn't worked for them for good reason.\" It's going ...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 4,
+    "video_id": "LZeMZgJszKU",
+    "category": "violence",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "weapon",
+    "context": "...ense conversations where Anthropic wanted the Pentagon to commit to not using Claude for autonomous weaponry or for citizen surveillance, whereas the Pentagon wanted Anthropic to agree to terms that said th...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 5,
+    "video_id": "LZeMZgJszKU",
+    "category": "harassment",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "loser",
+    "context": "... announced a wildly expanded set of features this month. Claude Code, Codex, and Open Claw all got closer and closer together. Products like Perplexity Computer and Notion Custom Agents all started to nudg...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 6,
+    "video_id": "LZeMZgJszKU",
+    "category": "harassment",
+    "confidence": 0.7,
+    "source": "transcript",
+    "excerpt": "share with friends and family",
+    "context": "...chmark, a masterclass on using skills with Nofar Gaspar, and even the ultimate AI catch-up guide to share with friends and family who are just getting started on their AI journey. Today we're going to kick it all off with somethi...",
+    "detection_method": "pattern"
+  },
+  {
+    "flag_id": 7,
+    "video_id": "DvNKYftvPW0",
+    "category": "harassment",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "loser",
+    "context": "... software proved vastly more effective, these human knowledge-based chess researchers were not good losers. They said that brute-force search may have won this time, but it was not a general strategy. And ...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 8,
+    "video_id": "zHvE3b88lgM",
+    "category": "illegal_activity",
+    "confidence": 0.5,
+    "source": "transcript",
+    "excerpt": "meth",
+    "context": "...e about becoming someone better, learning, healing, and growing. And a smaller share want to make something or fix the world. Summing up, they say the nine clusters may look desperate, but they are underp...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 9,
+    "video_id": "zHvE3b88lgM",
+    "category": "misinformation",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "exposed",
+    "context": "...ited the most, with 58% stating some form of real economic gain. Freelancers they found as the most exposed middle. Freelance creatives were the group where the upside and downside most nearly canceled out. ...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 10,
+    "video_id": "zHvE3b88lgM",
+    "category": "harassment",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "stupid",
+    "context": "...I talked more with Claude then because Claude understood my thoughts and stories well, but it was a stupid choice. I should have talked with that friend, not Claude. That's how I lost that friend.\" It's cle...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 11,
+    "video_id": "zHvE3b88lgM",
+    "category": "toxicity",
+    "confidence": 0.7,
+    "source": "comment",
+    "excerpt": "idiot",
+    "context": "... to keep us in serfdom. The only chance that we have is for political reform, and to get rid of the idiots that are currently in charge all around the world.",
+    "detection_method": "llm"
+  }
+]

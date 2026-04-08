@@ -1,6 +1,6 @@
 """
 Aggregation utilities for trend analysis.
-Groups and analyzes trends by topic, claim, and synthesized narrative.
+Tracks synthesized narratives over time.
 """
 
 from collections import defaultdict
@@ -9,193 +9,73 @@ from trends.metrics import calculate_bucket_metrics, BucketMetrics
 from trends.detector import detect_pattern, TrendAnalysis
 
 
-def aggregate_by_topic(
-    video_results: list[dict],
-    granularity: Granularity
-) -> dict[str, dict]:
-    """
-    Aggregate trend data by topic.
-    
-    Each video may have multiple topics. A video contributes its full
-    metrics to each topic it belongs to.
-    
-    Returns:
-        Dict mapping topic name to trend analysis:
-        {
-            "AI Safety": {
-                "video_count": 5,
-                "trend": {...},
-                "timeline": [...]
-            }
-        }
-    """
-    # Group videos by topic
-    topic_videos: dict[str, list[dict]] = defaultdict(list)
-    
-    for result in video_results:
-        topics = result.get("topics", [])
-        for topic in topics:
-            topic_videos[topic].append(result)
-    
-    # Analyze each topic
-    topic_trends = {}
-    for topic, videos in topic_videos.items():
-        # Bucket these videos by time
-        bucketed = bucket_videos(videos, granularity)
-        
-        # Calculate metrics per bucket
-        metrics = []
-        for bucket_key in sorted(bucketed.keys()):
-            metrics.append(calculate_bucket_metrics(bucket_key, bucketed[bucket_key]))
-        
-        # Detect pattern
-        trend = detect_pattern(metrics)
-        
-        topic_trends[topic] = {
-            "video_count": len(videos),
-            "trend": trend.to_dict(),
-            "timeline": [m.to_dict() for m in metrics]
-        }
-    
-    return topic_trends
-
-
-def aggregate_by_claim_type(
-    video_results: list[dict],
-    granularity: Granularity
-) -> dict[str, dict]:
-    """
-    Aggregate trend data by claim type (factual, prediction, opinion, statistic).
-    
-    Returns dict mapping claim type to its trend analysis.
-    """
-    # First, restructure data to be claim-centric with timestamps
-    claim_type_data: dict[str, list[dict]] = defaultdict(list)
-    
-    for result in video_results:
-        metadata = result.get("video_metadata", {})
-        published_at = metadata.get("published_at")
-        
-        for claim in result.get("claims", []):
-            claim_type = claim.get("type", "unknown")
-            claim_type_data[claim_type].append({
-                "claim": claim,
-                "video_id": result.get("video_id"),
-                "published_at": published_at,
-                "video_metadata": metadata
-            })
-    
-    # Analyze each claim type
-    type_trends = {}
-    for claim_type, claims in claim_type_data.items():
-        # Create pseudo-video results for bucketing
-        pseudo_results = []
-        for c in claims:
-            pseudo_results.append({
-                "video_metadata": {"published_at": c["published_at"]},
-                "claims": [c["claim"]]
-            })
-        
-        bucketed = bucket_videos(pseudo_results, granularity)
-        
-        metrics = []
-        for bucket_key in sorted(bucketed.keys()):
-            metrics.append(calculate_bucket_metrics(bucket_key, bucketed[bucket_key]))
-        
-        trend = detect_pattern(metrics, primary_metric="claim_count")
-        
-        type_trends[claim_type] = {
-            "total_claims": len(claims),
-            "trend": trend.to_dict(),
-            "timeline": [m.to_dict() for m in metrics]
-        }
-    
-    return type_trends
-
-
 def aggregate_by_narrative(
     video_results: list[dict],
     synthesis: dict,
     granularity: Granularity
 ) -> list[dict]:
     """
-    Aggregate trend data by synthesized narratives.
+    Track each synthesized narrative over time.
     
-    Uses the synthesis output to identify narratives, then tracks
-    which videos contribute to each narrative over time.
+    Uses the narratives from synthesis (each with video_ids) and
+    analyzes how each narrative's presence changes over time.
     
     Args:
         video_results: Per-video extraction results
-        synthesis: The synthesis output containing common_topics and shared_narrative
+        synthesis: The synthesis output containing narratives list
         granularity: Time bucketing granularity
     
     Returns:
         List of narrative trend analyses
     """
-    # Extract narratives from synthesis
-    # Main narrative comes from shared_narrative
-    # Additional narratives from common_topics that appear frequently
+    narratives = synthesis.get("narratives", [])
     
-    narratives = []
+    if not narratives:
+        return []
     
-    # Primary narrative
-    shared_narrative = synthesis.get("shared_narrative", "")
-    if shared_narrative:
-        narratives.append({
-            "name": "Primary narrative",
-            "description": shared_narrative,
-            "source": "shared_narrative"
-        })
+    # Build a lookup for video results by video_id
+    video_lookup = {r.get("video_id"): r for r in video_results}
     
-    # Topic-based narratives
-    common_topics = synthesis.get("common_topics", [])
-    for topic in common_topics[:5]:  # Top 5 common topics
-        narratives.append({
-            "name": topic,
-            "description": f"Discussion around: {topic}",
-            "source": "common_topic"
-        })
-    
-    # Analyze each narrative
     narrative_trends = []
     
     for narrative in narratives:
-        # Find videos that match this narrative
-        matching_videos = []
+        narrative_id = narrative.get("id", "")
+        narrative_name = narrative.get("name", "Unknown")
+        narrative_summary = narrative.get("summary", "")
+        video_ids = narrative.get("video_ids", [])
         
-        for result in video_results:
-            topics = result.get("topics", [])
-            claims = result.get("claims", [])
-            
-            # Check if video relates to this narrative
-            if narrative["source"] == "common_topic":
-                # Match by topic
-                if narrative["name"].lower() in [t.lower() for t in topics]:
-                    matching_videos.append(result)
-            else:
-                # For shared narrative, include all videos
-                matching_videos.append(result)
+        # Get the actual video results for this narrative
+        matching_videos = []
+        for vid in video_ids:
+            if vid in video_lookup:
+                matching_videos.append(video_lookup[vid])
         
         if not matching_videos:
             continue
         
-        # Bucket and analyze
+        # Bucket videos by publish date
         bucketed = bucket_videos(matching_videos, granularity)
         
+        # Calculate metrics per time bucket
         metrics = []
         for bucket_key in sorted(bucketed.keys()):
             metrics.append(calculate_bucket_metrics(bucket_key, bucketed[bucket_key]))
         
+        # Detect trend pattern
         trend = detect_pattern(metrics)
         
         narrative_trends.append({
-            "narrative": narrative["name"],
-            "description": narrative["description"],
+            "narrative_id": narrative_id,
+            "name": narrative_name,
+            "summary": narrative_summary,
             "video_count": len(matching_videos),
-            "pattern": trend.pattern,
-            "peak_period": trend.peak_period,
-            "confidence": round(trend.confidence, 2),
-            "trend_description": trend.description,
+            "video_ids": video_ids,
+            "trend": {
+                "pattern": trend.pattern,
+                "confidence": round(trend.confidence, 2),
+                "peak_period": trend.peak_period,
+                "description": trend.description
+            },
             "timeline": [m.to_dict() for m in metrics]
         })
     
@@ -208,10 +88,11 @@ def generate_trend_summary(
     granularity: Granularity
 ) -> dict:
     """
-    Generate a complete trend analysis summary.
+    Generate trend analysis for synthesized narratives.
     
-    This is the main entry point for trend analysis, combining all
-    aggregation methods into a single output structure.
+    Tracks:
+    - Overall activity timeline
+    - Each narrative's presence over time
     """
     # Get time range
     all_timestamps = []
@@ -236,6 +117,9 @@ def generate_trend_summary(
     
     overall_trend = detect_pattern(overall_metrics)
     
+    # Narrative trends
+    narrative_trends = aggregate_by_narrative(video_results, synthesis, granularity)
+    
     return {
         "granularity": granularity,
         "time_range": time_range,
@@ -244,7 +128,5 @@ def generate_trend_summary(
             "trend": overall_trend.to_dict(),
             "timeline": [m.to_dict() for m in overall_metrics]
         },
-        "by_narrative": aggregate_by_narrative(video_results, synthesis, granularity),
-        "by_topic": aggregate_by_topic(video_results, granularity),
-        "by_claim_type": aggregate_by_claim_type(video_results, granularity)
+        "narratives": narrative_trends
     }
