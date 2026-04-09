@@ -13,6 +13,9 @@ CREATE TYPE "RiskLevel" AS ENUM ('low', 'medium', 'high');
 -- CreateEnum
 CREATE TYPE "ClaimType" AS ENUM ('factual', 'opinion');
 
+-- CreateEnum
+CREATE TYPE "Direction" AS ENUM ('rising', 'peaking', 'declining', 'stable');
+
 -- CreateTable
 CREATE TABLE "User" (
     "user_id" UUID NOT NULL DEFAULT gen_random_uuid(),
@@ -143,6 +146,29 @@ CREATE TABLE "Narrative" (
 );
 
 -- CreateTable
+CREATE TABLE "Trend" (
+    "trend_id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "board_id" UUID NOT NULL,
+    "labels" TEXT[],
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Trend_pkey" PRIMARY KEY ("trend_id")
+);
+
+-- CreateTable
+CREATE TABLE "TrendData" (
+    "dataset_id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "trend_id" UUID NOT NULL,
+    "narrative_id" UUID NOT NULL,
+    "label" VARCHAR(50) NOT NULL,
+    "color" VARCHAR(50) NOT NULL,
+    "data" INTEGER[],
+    "direction" "Direction" NOT NULL,
+
+    CONSTRAINT "TrendData_pkey" PRIMARY KEY ("dataset_id")
+);
+
+-- CreateTable
 CREATE TABLE "BoardChannel" (
     "board_id" UUID NOT NULL,
     "channel_id" VARCHAR(50) NOT NULL,
@@ -157,38 +183,50 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "Transcript_video_id_key" ON "Transcript"("video_id");
 
--- AddForeignKey
-ALTER TABLE "Board" ADD CONSTRAINT "Board_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "TrendData_trend_id_narrative_id_key" ON "TrendData"("trend_id", "narrative_id");
 
 -- AddForeignKey
-ALTER TABLE "Video" ADD CONSTRAINT "Video_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Board" ADD CONSTRAINT "Board_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Video" ADD CONSTRAINT "Video_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Video" ADD CONSTRAINT "Video_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Transcript" ADD CONSTRAINT "Transcript_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Video" ADD CONSTRAINT "Video_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Transcript" ADD CONSTRAINT "Transcript_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Transcript" ADD CONSTRAINT "Transcript_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TranscriptChunk" ADD CONSTRAINT "TranscriptChunk_transcript_id_fkey" FOREIGN KEY ("transcript_id") REFERENCES "Transcript"("transcript_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "TranscriptChunk" ADD CONSTRAINT "TranscriptChunk_transcript_id_fkey" FOREIGN KEY ("transcript_id") REFERENCES "Transcript"("transcript_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comment" ADD CONSTRAINT "Comment_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Claim" ADD CONSTRAINT "Claim_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Claim" ADD CONSTRAINT "Claim_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Claim" ADD CONSTRAINT "Claim_narrative_id_fkey" FOREIGN KEY ("narrative_id") REFERENCES "Narrative"("narrative_id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Claim" ADD CONSTRAINT "Claim_narrative_id_fkey" FOREIGN KEY ("narrative_id") REFERENCES "Narrative"("narrative_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Narrative" ADD CONSTRAINT "Narrative_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Narrative" ADD CONSTRAINT "Narrative_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BoardChannel" ADD CONSTRAINT "BoardChannel_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Trend" ADD CONSTRAINT "Trend_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TrendData" ADD CONSTRAINT "TrendData_trend_id_fkey" FOREIGN KEY ("trend_id") REFERENCES "Trend"("trend_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TrendData" ADD CONSTRAINT "TrendData_narrative_id_fkey" FOREIGN KEY ("narrative_id") REFERENCES "Narrative"("narrative_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BoardChannel" ADD CONSTRAINT "BoardChannel_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "BoardChannel" ADD CONSTRAINT "BoardChannel_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE RESTRICT ON UPDATE CASCADE;
