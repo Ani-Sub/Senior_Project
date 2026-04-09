@@ -112,6 +112,7 @@ async function request(method, path, body = null, opts = {}) {
 const api = {
   get:    (path, opts)       => request('GET',    path, null, opts),
   post:   (path, body, opts) => request('POST',   path, body, opts),
+  patch:  (path, body, opts) => request('PATCH',  path, body, opts),
   delete: (path, opts)       => request('DELETE', path, null, opts),
 };
  
@@ -129,7 +130,7 @@ const authActions = {
    *   { token: "eyJ...", user: { id, name, email, plan } }
    */
   async login(email, password) {
-    const { data, error, status } = await api.post(
+    const { data, error } = await api.post(
       '/auth/login',
       { email, password },
       { noAuth: true }

@@ -1,8 +1,26 @@
+-- CreateEnum
+CREATE TYPE "Plan" AS ENUM ('free', 'analyst', 'enterprise');
+
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('user', 'admin');
+
+-- CreateEnum
+CREATE TYPE "Layout" AS ENUM ('overview', 'trends', 'claims');
+
+-- CreateEnum
+CREATE TYPE "RiskLevel" AS ENUM ('low', 'medium', 'high');
+
+-- CreateEnum
+CREATE TYPE "ClaimType" AS ENUM ('factual', 'opinion');
+
 -- CreateTable
 CREATE TABLE "User" (
-    "user_id" SERIAL NOT NULL,
+    "user_id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "initials" TEXT NOT NULL,
+    "plan" "Plan" NOT NULL DEFAULT 'free',
+    "role" "Role" NOT NULL DEFAULT 'user',
     "password" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -11,12 +29,14 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Board" (
-    "board_id" SERIAL NOT NULL,
-    "user_id" INTEGER NOT NULL,
-    "board_name" VARCHAR(50) NOT NULL,
+    "board_id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "user_id" UUID NOT NULL,
+    "board_name" VARCHAR(500) NOT NULL,
     "description" VARCHAR(500),
+    "search_terms" TEXT[],
+    "layout" "Layout" NOT NULL DEFAULT 'overview',
     "last_updated_at" TIMESTAMP(3) NOT NULL,
-    "processed_at" TIMESTAMP(3),
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Board_pkey" PRIMARY KEY ("board_id")
 );
@@ -24,7 +44,13 @@ CREATE TABLE "Board" (
 -- CreateTable
 CREATE TABLE "Channel" (
     "channel_id" VARCHAR(50) NOT NULL,
-    "channel_title" VARCHAR(500) NOT NULL,
+    "channel_name" VARCHAR(500) NOT NULL,
+    "total_claims" INTEGER NOT NULL,
+    "flagged_claims" INTEGER NOT NULL,
+    "accuracy_rate" DOUBLE PRECISION NOT NULL,
+    "risk_level" "RiskLevel" NOT NULL,
+    "risk_score" DOUBLE PRECISION NOT NULL,
+    "last_assessed_at" TIMESTAMP(3) NOT NULL,
     "processed_at" TIMESTAMP(3),
 
     CONSTRAINT "Channel_pkey" PRIMARY KEY ("channel_id")
@@ -33,7 +59,7 @@ CREATE TABLE "Channel" (
 -- CreateTable
 CREATE TABLE "Video" (
     "video_id" VARCHAR(20) NOT NULL,
-    "board_id" INTEGER NOT NULL,
+    "board_id" UUID NOT NULL,
     "channel_id" VARCHAR(50) NOT NULL,
     "title" VARCHAR(500) NOT NULL,
     "description" TEXT,
@@ -86,48 +112,47 @@ CREATE TABLE "Comment" (
 
 -- CreateTable
 CREATE TABLE "Claim" (
-    "claim_id" VARCHAR(20) NOT NULL,
-    "video_id" VARCHAR(20) NOT NULL,
+    "claim_id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "video_id" TEXT NOT NULL,
     "narrative_id" UUID,
     "video_title" VARCHAR(500) NOT NULL,
     "claim_text" TEXT NOT NULL,
-    "processed_at" TIMESTAMP(3),
+    "claim_type" "ClaimType" NOT NULL,
+    "confidence_score" DOUBLE PRECISION NOT NULL,
+    "risk_level" "RiskLevel" NOT NULL,
+    "processed_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "is_verified" BOOLEAN NOT NULL,
+    "accuracy_rating" DOUBLE PRECISION,
 
     CONSTRAINT "Claim_pkey" PRIMARY KEY ("claim_id")
 );
 
 -- CreateTable
 CREATE TABLE "Narrative" (
-    "narrative_id" UUID NOT NULL,
-    "board_id" INTEGER NOT NULL,
+    "narrative_id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "board_id" UUID NOT NULL,
     "title" VARCHAR(500) NOT NULL,
     "summary" TEXT,
     "topic_label" VARCHAR(200),
     "claim_count" INTEGER NOT NULL DEFAULT 0,
-    "first_seen_at" TIMESTAMP(3),
-    "last_seen_at" TIMESTAMP(3),
+    "color" TEXT NOT NULL,
+    "first_seen_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "last_seen_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Narrative_pkey" PRIMARY KEY ("narrative_id")
 );
 
 -- CreateTable
 CREATE TABLE "BoardChannel" (
-    "board_id" INTEGER NOT NULL,
+    "board_id" UUID NOT NULL,
     "channel_id" VARCHAR(50) NOT NULL,
     "processed_at" TIMESTAMP(3),
 
     CONSTRAINT "BoardChannel_pkey" PRIMARY KEY ("board_id","channel_id")
 );
 
--- CreateTable
-CREATE TABLE "Keyword" (
-    "keyword_id" SERIAL NOT NULL,
-    "board_id" INTEGER NOT NULL,
-    "keyword" VARCHAR(50) NOT NULL,
-    "processed_at" TIMESTAMP(3),
-
-    CONSTRAINT "Keyword_pkey" PRIMARY KEY ("keyword_id")
-);
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Transcript_video_id_key" ON "Transcript"("video_id");
@@ -167,6 +192,3 @@ ALTER TABLE "BoardChannel" ADD CONSTRAINT "BoardChannel_board_id_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "BoardChannel" ADD CONSTRAINT "BoardChannel_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Keyword" ADD CONSTRAINT "Keyword_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "Board"("board_id") ON DELETE RESTRICT ON UPDATE CASCADE;
