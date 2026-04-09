@@ -55,28 +55,42 @@
     <section class="section settings-grid">
 
       <!-- Subscription -->
-      <div class="setting-card">
-        <h3>Subscription</h3>
-        <h4 id="currentPlan"></h4>
-        <div class="stat-label">Select new plan</div>
-        <select id="planSelect">
-          <option value="free">Free</option>
-          <option value="pro">Analyst - $49/month</option>
-          <option value="pro">Enterprise - $199/month</option>
-        </select>
-        <button class="btn btn-primary" id="updatePlanBtn">Update Plan</button>
-        <p class="status-text" id="planStatus"></p>
-      </div>
+    <div class="setting-card">
+      <h3>Subscription</h3>
+
+      <h4 id="currentPlan">Loading...</h4>
+
+      <div class="stat-label">Select new plan</div>
+
+      <select id="planSelect">
+        <option value="free">Free</option>
+        <option value="analyst">Analyst - $49/month</option>
+        <option value="enterprise">Enterprise - $199/month</option>
+      </select>
+
+      <button class="btn btn-primary" id="updatePlanBtn">
+        Update Plan
+      </button>
+
+      <p class="status-text" id="planStatus"></p>
+    </div>
+
+
 
       <!-- Password -->
-      <div class="setting-card">
-        <h3>Change Password</h3>
-        <input type="password" placeholder="Old password" id="newPassword">
-        <input type="password" placeholder="New password" id="newPassword">
-        <input type="password" placeholder="Confirm new password" id="newPassword">
-        <button class="btn btn-primary" id="savePasswordBtn">Save Password</button>
-        <p class="status-text" id="passwordStatus"></p>
-      </div>
+    <div class="setting-card">
+      <h3>Change Password</h3>
+
+      <input type="password" placeholder="Current password" id="currentPassword">
+      <input type="password" placeholder="New password" id="newPassword">
+      <input type="password" placeholder="Confirm new password" id="confirmPassword">
+
+      <button class="btn btn-primary" id="savePasswordBtn">
+        Save Password
+      </button>
+
+      <p class="status-text" id="passwordStatus"></p>
+    </div>
 
       <!-- Account Actions -->
       <div class="setting-card">
@@ -87,8 +101,7 @@
     </section>
   </main>
 
-<script src="../javascript/dashboard.js"></script>
-<script src="../javascript/profileLoggedIn.js"></script>
+
 <script src="../javascript/api.js"></script>
 <script src="../javascript/settings.js"></script>
 </body>

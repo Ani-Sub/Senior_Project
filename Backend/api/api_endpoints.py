@@ -101,7 +101,7 @@ async def logout():
 async def me(db: db_dependency):
     
     t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
-    result = db.execute(t, {"user_id": 1}).fetchone()
+    result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
     
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "User not found"})
@@ -114,7 +114,7 @@ async def me(db: db_dependency):
 def get_dashboards(db: db_dependency):
     
     t = text("SELECT * FROM \"Board\" WHERE user_id = :user_id")
-    dashboards = db.execute(t, {"user_id": 1}).fetchall()
+    dashboards = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchall()
     
     result = []
     for board in dashboards:
@@ -130,7 +130,7 @@ def get_dashboards(db: db_dependency):
 def create_dashboard(body: CreateDashboardBody, db: db_dependency):
     
     t = text("INSERT INTO \"Board\" (user_id, board_name, description, search_terms, layout) VALUES (:user_id, :board_name, :description, :search_terms, :layout) RETURNING *")
-    result = db.execute(t, {"user_id": 1, "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
+    result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
     db.commit()
 
     return dict(result._mapping)
@@ -281,7 +281,7 @@ def get_creator_risk(channel_id: str, db: db_dependency):
 def get_user(db: db_dependency):
     
     t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
-    result = db.execute(t, {"user_id": 1}).fetchone()
+    result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
     
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "User not found"})
@@ -295,7 +295,7 @@ def get_user(db: db_dependency):
 def update_user(body: UpdateUserBody, db: db_dependency):
     
     t = text("SELECT password FROM \"User\" WHERE user_id = :user_id")
-    password = db.execute(t, {"user_id": 1}).fetchone()
+    password = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
 
     if body.name is None:
         newInitials = None
@@ -306,12 +306,12 @@ def update_user(body: UpdateUserBody, db: db_dependency):
     if body.current_password == dict(password._mapping)["password"] and body.new_password:
 
         t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), password = :password WHERE user_id = :user_id RETURNING *")
-        result = db.execute(t, {"user_id": 1, "name": body.name, "email": body.email, "initials": newInitials, "password": body.new_password}).fetchone()
+        result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "name": body.name, "email": body.email, "initials": newInitials, "password": body.new_password}).fetchone()
 
     else:
 
         t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials) WHERE user_id = :user_id RETURNING *")
-        result = db.execute(t, {"user_id": 1, "name": body.name, "email": body.email, "initials": newInitials}).fetchone()
+        result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "name": body.name, "email": body.email, "initials": newInitials}).fetchone()
 
     db.commit()
 
@@ -324,11 +324,11 @@ def update_user(body: UpdateUserBody, db: db_dependency):
 def get_plan(db: db_dependency):
     
     t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
-    userProfile = db.execute(t, {"user_id": 1}).fetchone()
+    userProfile = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
     userProfile = dict(userProfile._mapping)
 
     t = text("SELECT COUNT(*) AS num FROM \"Board\" WHERE user_id = :user_id")
-    numDashboards = db.execute(t, {"user_id": 1}).fetchone()
+    numDashboards = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
     numDashboards = dict(numDashboards._mapping)["num"]
     
         
