@@ -54,10 +54,11 @@ model Board {
   last_updated_at DateTime  @updatedAt
   created_at      DateTime  @default(now())
 
-  user          User           @relation(fields: [user_id], references: [user_id])
+  user          User           @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
   videos        Video[]
   narratives    Narrative[]
   boardChannels BoardChannel[]
+  trends        Trend[]
 }
 
 
@@ -96,8 +97,8 @@ model Video {
   processed        Boolean   @default(false)
   processed_at     DateTime?
 
-  board      Board        @relation(fields: [board_id], references: [board_id])
-  channel    Channel      @relation(fields: [channel_id], references: [channel_id])
+  board      Board        @relation(fields: [board_id], references: [board_id], onDelete: Cascade)
+  channel    Channel      @relation(fields: [channel_id], references: [channel_id], onDelete: Cascade)
   transcript Transcript?
   comments   Comment[]
   claims     Claim[]
@@ -111,7 +112,7 @@ model Transcript {
   transcript    String    @db.Text
   processed_at  DateTime?
 
-  video   Video               @relation(fields: [video_id], references: [video_id])
+  video   Video               @relation(fields: [video_id], references: [video_id], onDelete: Cascade)
   channel Channel?            @relation(fields: [channel_id], references: [channel_id])
   chunks  TranscriptChunk[]
 }
@@ -124,7 +125,7 @@ model TranscriptChunk {
   chunk_number  Int
   processed_at  DateTime?
 
-  transcript Transcript @relation(fields: [transcript_id], references: [transcript_id])
+  transcript Transcript @relation(fields: [transcript_id], references: [transcript_id], onDelete: Cascade)
 }
 
 model Comment {
@@ -137,7 +138,7 @@ model Comment {
   top_level_comment_id String?   @db.VarChar(50)
   processed_at         DateTime?
 
-  video Video @relation(fields: [video_id], references: [video_id])
+  video Video @relation(fields: [video_id], references: [video_id], onDelete: Cascade)
 }
 
 enum ClaimType {
@@ -159,8 +160,8 @@ model Claim {
   is_verified       Boolean
   accuracy_rating   Float?
 
-  video     Video      @relation(fields: [video_id], references: [video_id])
-  narrative Narrative? @relation(fields: [narrative_id], references: [narrative_id])
+  video     Video      @relation(fields: [video_id], references: [video_id], onDelete: Cascade)
+  narrative Narrative? @relation(fields: [narrative_id], references: [narrative_id], onDelete: Cascade)
 }
 
 model Narrative {
@@ -174,16 +175,63 @@ model Narrative {
   first_seen_at      DateTime                  @default(now())
   last_seen_at       DateTime                  @updatedAt
 
-  board  Board   @relation(fields: [board_id], references: [board_id])
+  board  Board   @relation(fields: [board_id], references: [board_id], onDelete: Cascade)
   claims Claim[]
+  trendDatasets TrendData[]
 }
+
+
+
+
+enum Direction {
+  rising
+  peaking
+  declining
+  stable
+}
+
+
+model Trend {
+  trend_id     String         @id @default(uuid()) @db.Uuid
+  board_id     String         @db.Uuid
+  labels       String[]
+  created_at   DateTime       @default(now())
+
+  board    Board          @relation(fields: [board_id], references: [board_id], onDelete: Cascade)
+  datasets TrendData[]
+}
+
+model TrendData {
+  dataset_id   String         @id @default(uuid()) @db.Uuid
+  trend_id     String         @db.Uuid
+  narrative_id String         @db.Uuid
+  label        String         @db.VarChar(50)
+  color        String         @db.VarChar(50)
+  data         Int[]
+  direction    Direction
+  
+
+  trend     Trend     @relation(fields: [trend_id], references: [trend_id], onDelete: Cascade)
+  narrative Narrative @relation(fields: [narrative_id], references: [narrative_id], onDelete: Cascade)
+  @@unique([trend_id, narrative_id])
+}
+
+
+
+
+
+
+
+
+
+
 
 model BoardChannel {
   board_id     String    @db.Uuid
   channel_id   String    @db.VarChar(50)
   processed_at DateTime?
 
-  board   Board   @relation(fields: [board_id], references: [board_id])
+  board   Board   @relation(fields: [board_id], references: [board_id], onDelete: Cascade)
   channel Channel @relation(fields: [channel_id], references: [channel_id])
 
   @@id([board_id, channel_id])
