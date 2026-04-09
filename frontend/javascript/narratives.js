@@ -1,90 +1,61 @@
 // ── MOCK DATA ─────────────────────────────────────────────────
 // TODO: Replace with GET /api/v1/narratives?dashboard_id=&status=&topic=&sort=
 
-const MOCK_NARRATIVES = [
-  {
-    id: 'n1',
-    name: 'AGI Timeline Debate',
-    topic: 'AI',
-    summary: 'Ongoing discourse about when artificial general intelligence will be achieved, featuring competing predictions from researchers, founders, and skeptics.',
-    claims: 312,
-    direction: 'rising',
-    color: '#00d4ff',
-    dateRange: 'Jan 3 – Mar 1, 2025',
-    channels: 11,
-  },
-  {
-    id: 'n2',
-    name: 'LLM Benchmark Disputes',
-    topic: 'AI',
-    summary: 'Controversy surrounding the validity and gaming of standard LLM benchmarks, with creators and critics debating methodology and cherry-picked results.',
-    claims: 248,
-    direction: 'peaking',
-    color: '#ff6b35',
-    dateRange: 'Jan 10 – Mar 1, 2025',
-    channels: 8,
-  },
-  {
-    id: 'n3',
-    name: 'Open Source vs Closed',
-    topic: 'AI',
-    summary: 'Debate between advocates of open-weight model releases and proponents of closed-source development, centered on safety, moats, and community benefit.',
-    claims: 195,
-    direction: 'stable',
-    color: '#22c55e',
-    dateRange: 'Dec 14 – Mar 1, 2025',
-    channels: 9,
-  },
-  {
-    id: 'n4',
-    name: 'AI Safety Concerns',
-    topic: 'AI',
-    summary: 'Claims and counter-claims about the existential and near-term risks posed by advanced AI systems, from alignment failures to misuse scenarios.',
-    claims: 167,
-    direction: 'rising',
-    color: '#f59e0b',
-    dateRange: 'Jan 20 – Mar 1, 2025',
-    channels: 7,
-  },
-  {
-    id: 'n5',
-    name: 'Model Cost & Efficiency',
-    topic: 'AI',
-    summary: 'Tracking the rapid decline in LLM inference and training costs, alongside claims about compute efficiency improvements and economic implications.',
-    claims: 143,
-    direction: 'declining',
-    color: '#a78bfa',
-    dateRange: 'Feb 1 – Mar 1, 2025',
-    channels: 6,
-  },
-  {
-    id: 'n6',
-    name: 'Regulation & Policy',
-    topic: 'Policy',
-    summary: 'Coverage of global AI governance efforts including the EU AI Act, US executive orders, and industry self-regulatory proposals and their projected effects.',
-    claims: 98,
-    direction: 'peaking',
-    color: '#f472b6',
-    dateRange: 'Jan 15 – Mar 1, 2025',
-    channels: 5,
-  },
-];
+let ALL_NARRATIVES = [];
 
 // ── STATE ─────────────────────────────────────────────────────
 let activeTopicFilter  = 'all';
 let activeStatusFilter = 'all';
 
 // ── INIT ──────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadNarratives();
   applyFilters();
 });
+
+//Get the narratives
+async function loadNarratives() {
+  const dashboardId = getDashboardId();
+
+  const { data, error } = await narrativeActions.getNarratives(dashboardId);
+
+  if (error || !data) {
+    console.error("Failed to load narratives:", error);
+    ALL_NARRATIVES = [];
+    return;
+  }
+
+  //  Map backend → frontend format
+  ALL_NARRATIVES = data.map(n => ({
+    id: n.narrative_id,
+    name: n.title,
+    topic: normalizeTopic(n.topic_label),
+    summary: n.summary,
+    claims: n.claim_count,
+    //direction: "stable", //  placeholder (backend can compute later)
+    color: n.color || "#00d4ff",
+    dateRange: "—",
+    //channels: 0 // optional future
+  }));
+}
+
+//Helper
+function normalizeTopic(label = "") {
+  if (label.toLowerCase().includes("artificial")) return "AI";
+  if (label.toLowerCase().includes("crypto")) return "Crypto";
+  if (label.toLowerCase().includes("climate")) return "Climate";
+  if (label.toLowerCase().includes("policy")) return "Policy";
+  return label;
+}
+
+
 
 // ── FILTER LOGIC ──────────────────────────────────────────────
 function applyFilters() {
   const search = (document.getElementById('narrativeSearch')?.value || '').toLowerCase();
   const sort   = document.getElementById('sortSelect')?.value || 'claims';
 
-  let results = MOCK_NARRATIVES.filter(n => {
+  let results = ALL_NARRATIVES.filter(n => {
     const matchTopic  = activeTopicFilter  === 'all' || n.topic === activeTopicFilter;
     const matchStatus = activeStatusFilter === 'all' || n.direction === activeStatusFilter;
     const matchSearch = !search ||
@@ -148,8 +119,12 @@ function narrativeCardHTML(n) {
           <div class="nc-color-dot" style="background:${n.color}"></div>
           <div class="nc-title">${n.name}</div>
         </div>
+        
+        <!--
         <span class="nc-dir ${n.direction}">${dirLabels[n.direction] || n.direction}</span>
-      </div>
+        -->
+
+        </div>
       <p class="nc-summary">${n.summary}</p>
       <div class="nc-footer">
         <div class="nc-stat">
@@ -157,10 +132,14 @@ function narrativeCardHTML(n) {
           <div class="nc-stat-label">Claims</div>
         </div>
         <div class="nc-stat-divider"></div>
+        
+        <!-- 
         <div class="nc-stat">
           <div class="nc-stat-val">${n.channels}</div>
           <div class="nc-stat-label">Channels</div>
         </div>
+        -->
+        
         <div class="nc-date-range">${n.dateRange}</div>
         <a class="nc-claims-link" href="claims.html?narrative=${n.id}" onclick="event.stopPropagation()">
           View claims →
@@ -188,3 +167,8 @@ function handleLogout() { window.location.href = '../index.html'; }
 
 document.addEventListener('click', () => closeUserMenu());
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });
+
+
+function getDashboardId() {
+  return "f47ac10b-58cc-4372-a567-0e02b2c3d479"; // fallback
+}

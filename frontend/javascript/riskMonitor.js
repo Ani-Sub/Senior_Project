@@ -1,41 +1,16 @@
 const ITEMS_PER_PAGE = 6;
 let currentPage = 1;
 
-// DUMMY DATA (matches your DB: Channel = creator)
-let creators = [
-  { id: "channel_1", name: "TechWorld", handle: "@techworld", subs: "1.2M subscribers", risk: 72, violations: ["misinfo"] },
-  { id: "channel_2", name: "Daily News Hub", handle: "@dailyhub", subs: "850K subscribers", risk: 45, violations: [] },
-  { id: "channel_3", name: "ScienceDaily", handle: "@sciencedaily", subs: "2.1M subscribers", risk: 8, violations: [] },
-  { id: "channel_4", name: "Crypto Vision", handle: "@cryptovision", subs: "640K subscribers", risk: 88, violations: ["scam", "misleading"] },
-  { id: "channel_5", name: "World Trends", handle: "@worldtrends", subs: "1.5M subscribers", risk: 61, violations: [] },
-  { id: "channel_6", name: "Insight Central", handle: "@insightcentral", subs: "430K subscribers", risk: 33, violations: [] },
-  { id: "channel_7", name: "Truth Watch", handle: "@truthwatch", subs: "980K subscribers", risk: 79, violations: ["misinfo"] },
-  { id: "channel_8", name: "Media Pulse", handle: "@mediapulse", subs: "720K subscribers", risk: 55, violations: [] },
-  { id: "channel_9", name: "Global Scope", handle: "@globalscope", subs: "1.8M subscribers", risk: 67, violations: [] },
-  { id: "channel_10", name: "Rapid Reports", handle: "@rapidreports", subs: "510K subscribers", risk: 41, violations: [] },
-  { id: "channel_11", name: "Fact Checkers", handle: "@factcheck", subs: "2.4M subscribers", risk: 22, violations: [] },
-  { id: "channel_12", name: "Trend Breakers", handle: "@trendbreakers", subs: "390K subscribers", risk: 74, violations: ["misleading"] },
-  { id: "channel_13", name: "Echo Media", handle: "@echo_media", subs: "1.1M subscribers", risk: 69, violations: [] },
-  { id: "channel_14", name: "Clarity News", handle: "@claritynews", subs: "870K subscribers", risk: 30, violations: [] },
-  { id: "channel_15", name: "Insight Grid", handle: "@insightgrid", subs: "610K subscribers", risk: 53, violations: [] },
-  { id: "channel_16", name: "Channel Watchdog", handle: "@watchdog", subs: "2.0M subscribers", risk: 91, violations: ["misinfo", "harmful"] },
-  { id: "channel_17", name: "Narrative Lens", handle: "@narrativelens", subs: "480K subscribers", risk: 65, violations: [] },
-  { id: "channel_18", name: "Reality Check", handle: "@realitycheck", subs: "760K subscribers", risk: 28, violations: [] },
-  { id: "channel_19", name: "Stream Watchers", handle: "@streamwatch", subs: "1.3M subscribers", risk: 84, violations: ["misleading"] },
-  { id: "channel_20", name: "Pulse Network", handle: "@pulsenet", subs: "590K subscribers", risk: 47, violations: [] }
-];
-
-let filteredCreators = [...creators];
+let creators = [];
+let filteredCreators = [];
 // ── INIT ─────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
-  // auth.requireAuth(); // optional
+  auth.requireAuth();
 
-  // const dashboardId = getDashboardId();
+  const boardId = getDashboardId(); // already exists in your code
 
-  // FUTURE BACKEND WIRING
-  /*
-  creators = await fetchCreators(dashboardId);
-  */
+  creators = await fetchCreators(boardId);
+  filteredCreators = [...creators];
 
   renderAll();
   setupSearch();
@@ -52,27 +27,26 @@ function renderAll() {
 
 // ── FETCH (COMMENTED FOR NOW) ────────────────────────────────
 async function fetchCreators(dashboardId) {
-  // 1. Get channels tied to board
-  const { data, error } = await api.get(`/dashboards/${dashboardId}/creators`);
-  if (error) return [];
+  const { data, error } = await creatorActions.getCreators(dashboardId);
 
-  // 2. Attach risk per creator
-  const enriched = await Promise.all(
-    data.map(async (c) => {
-      const riskRes = await api.get(`/creators/${c.channel_id}/risk`);
+  if (error || !data) {
+    console.error("Failed to fetch creators:", error);
+    return [];
+  }
 
-      return {
-        id: c.channel_id,
-        name: c.channel_title,
-        handle: "@unknown",
-        subs: "—",
-        risk: riskRes.data?.score || 0,
-        violations: riskRes.data?.violations || []
-      };
-    })
-  );
+  return data.map(c => ({
+    id: c.channel_id,
+    name: c.channel_name,
+    handle: `@${c.channel_name.replace(/\s+/g, '').toLowerCase()}`,
+    subs: "—",
 
-  return enriched;
+    // existing
+    risk: Math.round((c.risk_score || 0) * 10),
+    violations: getViolationsFromRisk(c.risk_level),
+    totalClaims: c.total_claims,
+    flaggedClaims: c.flagged_claims,
+    accuracy: c.accuracy_rate
+  }));
 }
 
 
@@ -116,6 +90,22 @@ function creatorCardHTML(c) {
           </div>
 
         </div>
+        <div class="creator-metrics">
+          <div class="metric">
+            <span>${c.totalClaims ?? 0}</span>
+            <label>Claims</label>
+          </div>
+          <div class="metric">
+            <span>${c.flaggedClaims ?? 0}</span>
+            <label>Flagged</label>
+          </div>
+          <div class="metric">
+            <span class="${getAccuracyClass(c.accuracy)}">
+              ${Math.round((c.accuracy ?? 0) * 100)}%
+            </span>
+            <label>Accuracy</label>
+          </div>
+        </div>
 
         <div class="verified">
           ✔ Verified creator — no violations detected
@@ -141,7 +131,22 @@ function creatorCardHTML(c) {
         </div>
 
       </div>
-
+      <div class="creator-metrics">
+          <div class="metric">
+            <span>${c.totalClaims ?? 0}</span>
+            <label>Claims</label>
+          </div>
+          <div class="metric">
+            <span>${c.flaggedClaims ?? 0}</span>
+            <label>Flagged</label>
+          </div>
+          <div class="metric">
+            <span class="${getAccuracyClass(c.accuracy)}">
+              ${Math.round((c.accuracy ?? 0) * 100)}%
+            </span>
+            <label>Accuracy</label>
+          </div>
+        </div>
       <div class="violation-section">
         <div class="violation-title">⚠ Violations Detected</div>
         <div class="flags">
@@ -221,12 +226,18 @@ function renderStats() {
   const review = creators.filter(c => c.risk >= 40 && c.risk < 70).length;
   const verified = creators.filter(c => c.risk < 20).length;
 
+  //  NEW aggregated metrics
+  const totalClaims = creators.reduce((sum, c) => sum + (c.totalClaims || 0), 0);
+  const totalFlagged = creators.reduce((sum, c) => sum + (c.flaggedClaims || 0), 0);
+
   document.getElementById("statHighRisk").textContent = high;
   document.getElementById("statReview").textContent = review;
   document.getElementById("statVerified").textContent = verified;
   document.getElementById("statTotal").textContent = creators.length;
-}
 
+  console.log("Total Claims:", totalClaims);
+  console.log("Flagged Claims:", totalFlagged);
+}
 
 // ── CHART ───────────────────────────────────────────────────
 function renderChart() {
@@ -293,10 +304,30 @@ function getInitials(name = "") {
 }
 
 function getDashboardId() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
+  //const params = new URLSearchParams(window.location.search);
+  //return params.get("id");
+  return "f47ac10b-58cc-4372-a567-0e02b2c3d479";
 }
 
+function getAccuracyClass(acc = 0) {
+  if (acc >= 0.8) return "safe";
+  if (acc >= 0.5) return "warn";
+  return "danger";
+}
+
+
+function getViolationsFromRisk(level) {
+  switch (level) {
+    case "high":
+      return ["misinfo", "harmful"];
+    case "medium":
+      return ["misleading"];
+    case "low":
+      return [];
+    default:
+      return [];
+  }
+}
 
 // ── SIDEBAR ──────────────────────────────────────────────────
 function toggleUserMenu(e) {
