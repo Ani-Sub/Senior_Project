@@ -68,6 +68,8 @@ async def signup(body: SignupBody, db: db_dependency):
     
     initials = "".join(word[0].upper() for word in body.name.split())
 
+    # check to see if email already exists in db
+
     t = text("INSERT INTO \"User\" (name, email, initials, password) VALUES (:name, :email, :initials, :password) RETURNING *")
     result = db.execute(t, {"name": body.name, "email": body.email, "initials": initials, "password": body.password}).fetchone()
     db.commit()
