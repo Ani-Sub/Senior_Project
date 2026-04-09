@@ -1,0 +1,30 @@
+name: Cron job
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+      timezone: "America/Chicago"
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r Backend/requirements.txt
+
+      - name: Run pipeline
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python Backend/main.py
