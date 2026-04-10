@@ -271,7 +271,7 @@ def get_trends(dashboard_id: str, db: db_dependency,  range: str = "3m"):
             tempDataset = dict(dataset._mapping)
             data.append(tempDataset)
 
-        result.append({"labels": trend["labels"], "datasets": data})
+        result.append({"labels": tempTrend["labels"], "datasets": data})
     
     return result
 
