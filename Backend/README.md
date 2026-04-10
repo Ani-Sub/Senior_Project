@@ -1,17 +1,6 @@
 # YouTube Intelligence System
 
-Extracts claims from YouTube video transcripts and comments, synthesizes them into distinct narratives, tracks narrative trends over time, and assesses content risk.
-
-## Features
-
-- **Claim Extraction** — LLM-powered extraction of claims from transcripts and comments
-- **Vector Embeddings** — Semantic embeddings for claims and narrative centroids
-- **Narrative Synthesis** — Identifies 2-5 distinct narratives across videos
-- **Temporal Trends** — Tracks each narrative's growth/decline over time
-- **Risk Assessment** — Hybrid keyword + LLM detection of harmful content
-- **Quota Optimization** — RSS feeds + caching to minimize YouTube API usage
-- **Checkpoint System** — Saves progress after each step (crash recovery)
-- **DB-Ready Export** — Flat JSON files ready for database import
+Extracts claims from YouTube video transcripts and comments, then synthesizes them into a cross-video narrative.
 
 ## Setup
 
@@ -25,107 +14,53 @@ pip install youtube-transcript-api requests google-api-python-client python-dote
 YOUTUBE_API_KEY=your_key_here
 ```
 
-3. **Make sure Ollama is running** with llama3 and embedding model:
+3. **Make sure Ollama is running** with llama3:
 ```bash
 ollama run llama3
-ollama pull nomic-embed-text
 ```
 
 ## Project Structure
 
 ```
 Backend/
-├── main.py                    # Pipeline orchestrator with checkpoints
-├── config.py                  # API keys, LLM settings, embedding config
-│
-├── ytAPI/                     # YouTube data fetching
-│   ├── channelExtract.py      # Search and filter channels
-│   ├── videoExtract.py        # Discover videos (RSS + API hybrid)
-│   ├── transcriptExtract.py   # Fetch transcripts (with translation)
-│   ├── commentExtract.py      # Fetch top comments
-│   ├── rss_feed.py            # FREE video discovery via RSS
-│   └── channel_cache.py       # Cache channels to reduce API calls
-│
-├── extraction/                # LLM-based extraction
-│   ├── llmPrompts.py          # Prompt templates
-│   └── analyzer.py            # Claim extraction + synthesis
-│
-├── trends/                    # Temporal trend analysis
-│   ├── __init__.py            # Module exports
-│   ├── temporal.py            # Time bucketing (daily/weekly)
-│   ├── metrics.py             # Per-period metric calculations
-│   ├── detector.py            # Pattern detection (surge/peak/decline)
-│   └── aggregator.py          # Aggregate trends by narrative
-│
-├── risk/                      # Content risk assessment
-│   ├── __init__.py            # Module exports
-│   ├── keywords.py            # Risk category keywords
-│   ├── detector.py            # Hybrid detection (keyword + LLM)
-│   └── aggregator.py          # Aggregate risk across videos
-│
-└── utility/
-    ├── output.py              # Checkpoint saves + DB-ready export
-    ├── embeddings.py          # Vector embeddings via Ollama
-    ├── parser.py              # JSON parsing with truncation repair
-    └── chunker.py             # Text chunking for LLM
+├── main.py                 # entry point — run this
+├── config.py               # API keys, LLM settings, constants
+├── ingestion/
+│   ├── channels.py         # search and filter YouTube channels
+│   ├── videos.py           # discover and filter videos
+│   ├── transcripts.py      # fetch video transcripts
+│   └── comments.py         # fetch top comments
+├── extraction/
+│   ├── prompts.py          # all LLM prompt builders
+│   └── analyzer.py         # LLM calls, claim extraction, synthesis
+└── utils/
+    └── parsing.py          # JSON parser and text chunker
 ```
 
 ## Running
 
 ```bash
-cd Backend
+cd yt_intelligence
 python main.py
 ```
 
-## Output Structure
+Results are saved to a timestamped `summary_YYYYMMDD_HHMMSS.json` file.
 
-Each run creates a timestamped directory:
-
-```
-output/run_20260407_143022/
-├── checkpoints/               # Incremental saves (crash recovery)
-│   ├── video_abc123.json      # Saved after each video processed
-│   ├── video_def456.json
-│   ├── synthesis.json         # Saved after synthesis step
-│   ├── trends.json            # Saved after trends step
-│   └── risk.json              # Saved after risk step
-│
-└── db_ready/                  # Flat files for database import
-    ├── channels.json          # → CHANNELS table
-    ├── videos.json            # → VIDEOS table
-    ├── transcripts.json       # → TRANSCRIPTS table
-    ├── transcript_chunks.json # → TRANSCRIPT_CHUNKS table
-    ├── comments.json          # → COMMENTS table
-    ├── claims.json            # → CLAIMS table
-    ├── claim_embeddings.json  # → Claim vectors (768 dims)
-    ├── narratives.json        # → NARRATIVES table (with centroid)
-    ├── narrative_videos.json  # → Many-to-many link table
-    ├── narrative_trends.json  # → Trend data per narrative
-    ├── trends_timeline.json   # → Overall activity timeline
-    ├── risk_flags.json        # → Risk flags table
-    └── run_metadata.json      # Run info and counts
-```
-
-## Configuration
+## Customizing
 
 Edit the `run_pipeline()` call in `main.py`:
 
 ```python
 run_pipeline(
-    search_keywords="AI",           # Channel search query
-    channel_sub_min=100_000,        # Minimum subscribers
-    video_view_min=50_000,          # Minimum video views
-    video_keywords=["ai", "tech"],  # Required title keywords
-    days=60,                        # How far back to look
-    max_comments=30,                # Comments per video
-    trend_granularity="weekly",     # "daily" or "weekly"
-    assess_risk=True,               # Enable risk assessment
-    llm_verify_risk=True,           # LLM for borderline cases
-    use_cache=True,                 # Use RSS + cache (saves quota)
-    cache_max_age_days=30,          # Re-search channels after N days
-    generate_embeddings=True,       # Vector embeddings for claims
+    search_keywords="AI news",      # what to search for
+    channel_sub_min=100_000,        # minimum channel subscribers
+    video_view_min=20_000,          # minimum video views
+    video_keywords=["ai", "tech"],  # keywords that must appear in video title
+    days=90,                        # how far back to look
+    max_comments=30                 # comments to pull per video
 )
 ```
+<<<<<<< HEAD
 
 ## Pipeline Steps
 
@@ -467,3 +402,5 @@ run_pipeline(
 - Make sure embedding model is installed: `ollama pull nomic-embed-text`
 - Check Ollama is running: `ollama list`
 - Pipeline continues without embeddings if service unavailable
+=======
+>>>>>>> main

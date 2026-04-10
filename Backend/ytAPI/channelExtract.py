@@ -1,5 +1,6 @@
 import logging
 from config import youtube
+from utility.debugLog import log_channels_found, log_channels_filtered
 
 log = logging.getLogger(__name__)
 
@@ -14,7 +15,7 @@ def search_channels(query: str, max_results: int = 10) -> list[str]:
     ).execute()
 
     channel_ids = [item["snippet"]["channelId"] for item in response["items"]]
-    log.info(f"  → Found {len(channel_ids)} channels for query: '{query}'")
+    log_channels_found(channel_ids, query)
     return channel_ids
 
 
@@ -38,8 +39,8 @@ def filter_channels(
             filtered.append({
                 "channel_id": item["id"],
                 "title": item["snippet"]["title"],
-                "subscriber_count": subs
+                "subscribers": subs
             })
 
-    log.info(f"  → {len(filtered)} channels passed filter (min subs: {min_subscribers:,})")
+    log_channels_filtered(filtered, min_subscribers, min_total_views)
     return filtered

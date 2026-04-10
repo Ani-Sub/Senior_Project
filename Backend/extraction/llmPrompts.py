@@ -101,44 +101,38 @@ Top comments:
 def build_synthesis_prompt(all_results: list[dict]) -> str:
     """
     Prompt for cross-video narrative synthesis.
-    Extracts distinct narratives and maps them to supporting videos.
+    Receives all structured per-video results and produces
+    a unified intelligence summary.
     """
-    # Build simplified input with just video_id, topics, and claim texts
-    simplified = []
-    for r in all_results:
-        simplified.append({
-            "video_id": r.get("video_id"),
-            "title": r.get("video_metadata", {}).get("title", ""),
-            "topics": r.get("topics", []),
-            "claims": [c.get("text") for c in r.get("claims", [])]
-        })
-    
-    structured_input = json.dumps(simplified, indent=2)
+    structured_input = json.dumps(all_results, indent=2)
 
-    return f"""Synthesize the following {len(all_results)} YouTube video analyses into distinct narratives.
+    return f"""You are a JSON-generating assistant. Synthesize the following YouTube video analyses.
 
-A narrative is a high-level theme or storyline that multiple videos discuss. 
-Identify 2-5 distinct narratives and map each to the videos that support it.
+Below is structured data extracted from {len(all_results)} videos.
 
-RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO MARKDOWN.
+RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO EXPLANATION. NO MARKDOWN.
+YOUR ENTIRE RESPONSE MUST START WITH {{ AND END WITH }}. NOTHING ELSE.
 
+The JSON must have exactly these keys:
 {{
-  "narratives": [
+  "common_topics": ["list of topics appearing across multiple videos"],
+  "repeated_claims": [
     {{
-      "id": "narrative_1",
-      "name": "Short name for the narrative (3-6 words)",
-      "summary": "2-3 sentence description of this narrative",
-      "video_ids": ["list", "of", "video_ids", "that", "discuss", "this"]
+      "text": "claim that appears in 2+ videos",
+      "videos": ["video_id_1", "video_id_2"],
+      "type": "factual|prediction|opinion|statistic"
     }}
   ],
   "high_confidence_claims": [
     {{
-      "text": "claim with high confidence",
+      "text": "claim with confidence >= 0.75",
       "video_id": "...",
-      "narrative_id": "narrative_1"
+      "confidence": 0.9,
+      "supporting_quote": "..."
     }}
   ],
-  "overall_summary": "2-3 sentence summary of the entire dataset"
+  "shared_narrative": "2-3 sentence overarching story across all videos",
+  "overall_trends": ["dominant patterns across the dataset"]
 }}
 
 Video analyses:

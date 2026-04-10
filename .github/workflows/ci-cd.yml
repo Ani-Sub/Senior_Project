@@ -1,0 +1,61 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ---------- PYTHON ----------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check Python files
+        run: |
+          if find . -type f -name "*.py" | grep -q .; then
+            echo "Python files found, checking..."
+            python -m compileall .
+          else
+            echo "No Python files found."
+          fi
+      # ---------- JAVASCRIPT ----------
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check JavaScript syntax
+        run: |
+          if find . -type f -name "*.js" | grep -q .; then
+            echo "JavaScript files found, checking syntax..."
+            find . -name "*.js" -exec node --check {} +
+          else
+            echo "No JavaScript files found."
+          fi
+
+
+
+
+      
+
+       
+
+
+
+
+
+
+
+
+       
+      

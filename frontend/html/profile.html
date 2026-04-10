@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile</title>
+
+  <!-- Fonts used in your theme -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <!-- Your global stylesheet (the one you pasted) -->
+  <link rel="stylesheet" href="../css/landing.css">
+
+  <!-- Page-specific profile styles -->
+  <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+
+<!-- Glow Orbs -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    NARRATIVEIQ
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Dashboard</a></li>
+    <li><a href="#">Profile</a></li>
+    <li><a href="#">Help</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <a class="btn btn-ghost" href="#">Logout</a>
+  </div>
+</nav>
+
+<!-- PROFILE SECTION -->
+<section class="profile-section">
+  <div class="profile-container">
+
+    <p class="section-label">Account</p>
+    <h1 class="section-title">Your Profile</h1>
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card fade-in">
+      <div class="profile-header">
+        <div class="avatar">MN</div>
+        <div>
+          <h2 id="displayName">My Name</h2>
+          <p class="muted" id="displayEmail">MyExample@email.com</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAILS CARD -->
+    <div class="profile-card fade-in">
+      <h3 class="card-title">Account Details</h3>
+
+      <div class="profile-grid">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="fullName" value="Your Name">
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" value="example@email.com">
+        </div>
+
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="text" id="phone" placeholder="(123) 456-7890">
+        </div>
+
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="location" placeholder="Dallas, TX">
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="saveBtn">Save Changes</button>
+      <p id="saveStatus" class="status-text"></p>
+    </div>
+
+    <!-- STATS CARD -->
+    <div class="profile-card fade-in">
+      <h3 class="card-title">Usage Overview</h3>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-value">24</div>
+          <div class="stat-label">Videos Summarized</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-value">320</div>
+          <div class="stat-label">Minutes Saved</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-value accent">Free</div>
+          <div class="stat-label">Current Plan</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="../javascript/profile.js"></script>
+</body>
+</html>

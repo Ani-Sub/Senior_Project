@@ -1,13 +1,15 @@
-"""
-Video analysis module for extracting claims from transcripts and comments.
-"""
-
+import json
 import logging
 import requests
-from config import LLM_URL, LLM_MODEL, LLM_NUM_PREDICT
+from config import LLM_URL, LLM_MODEL
 from utility.parser import parse_json_response
 from utility.chunker import chunk_text
-from utility.embeddings import get_embedding, check_embedding_service
+from utility.debugLog import (
+    log_llm_prompt,
+    log_llm_response,
+    log_llm_synthesis_prompt,
+    log_llm_synthesis_response
+)
 from extraction.llmPrompts import (
     build_extraction_prompt,
     build_comment_prompt,
@@ -16,27 +18,9 @@ from extraction.llmPrompts import (
 
 log = logging.getLogger(__name__)
 
-# Check embedding service once at module load
-_embedding_available = None
 
-
-def is_embedding_available() -> bool:
-    """Check if embedding service is available (cached)."""
-    global _embedding_available
-    if _embedding_available is None:
-        _embedding_available = check_embedding_service()
-        if _embedding_available:
-            log.info("Embedding service available")
-        else:
-            log.warning("Embedding service unavailable - claims will not have embeddings")
-    return _embedding_available
-
-
-def call_llm(prompt: str, num_predict: int | None = None) -> str | None:
+def call_llm(prompt: str, num_predict: int = 1200) -> str | None:
     """Send a prompt to the local Ollama instance and return the response string."""
-    if num_predict is None:
-        num_predict = LLM_NUM_PREDICT
-    
     try:
         response = requests.post(
             LLM_URL,
@@ -49,7 +33,7 @@ def call_llm(prompt: str, num_predict: int | None = None) -> str | None:
                     "num_predict": num_predict
                 }
             },
-            timeout=180
+            timeout=120
         )
         response.raise_for_status()
         return response.json()["response"]
@@ -61,37 +45,34 @@ def call_llm(prompt: str, num_predict: int | None = None) -> str | None:
 def analyze_video(
     video_id: str,
     transcript: str,
-    comments: list[dict],
-    generate_embeddings: bool = True
+    comments: list[dict]
 ) -> dict | None:
     """
     Extract claims from a single video's transcript and comments.
-    
     - Transcript is chunked and processed in passes
     - Comments are processed after transcript so they can reference existing claims
     - Every claim is tagged with its source ("transcript" or "comment")
-    - Optionally generates embeddings for each claim
     """
     chunks = chunk_text(transcript)
     log.info(f"  → {len(chunks)} chunk(s) for video {video_id}")
 
     all_topics = []
     all_claims = []
-    
-    # Check if embeddings should be generated
-    do_embeddings = generate_embeddings and is_embedding_available()
 
     # -- Transcript extraction --
     for i, chunk in enumerate(chunks):
         log.info(f"  → Extracting transcript chunk {i + 1}/{len(chunks)}")
         prompt = build_extraction_prompt(chunk, video_id)
-        raw = call_llm(prompt)
+
+        log_llm_prompt("transcript", video_id, i + 1, prompt)
+        raw = call_llm(prompt, num_predict=1500)
 
         if not raw:
-            log.warning(f"  → No LLM response for chunk {i + 1}")
+            log_llm_response("transcript", video_id, i + 1, "(no response)", None)
             continue
 
         parsed = parse_json_response(raw)
+        log_llm_response("transcript", video_id, i + 1, raw, parsed)
 
         if not parsed:
             log.warning(f"  → Skipping unparseable chunk {i + 1}")
@@ -110,10 +91,13 @@ def analyze_video(
     if comments:
         log.info(f"  → Extracting claims from {len(comments)} comments")
         comment_prompt = build_comment_prompt(comments, all_claims, video_id)
-        raw = call_llm(comment_prompt)
+
+        log_llm_prompt("comments", video_id, None, comment_prompt)
+        raw = call_llm(comment_prompt, num_predict=1500)
 
         if raw:
             parsed = parse_json_response(raw)
+            log_llm_response("comments", video_id, None, raw, parsed)
 
             if parsed:
                 comment_claims = parsed.get("comment_claims", [])
@@ -124,22 +108,9 @@ def analyze_video(
             else:
                 log.warning("  → Comment extraction produced unparseable output")
         else:
-            log.warning("  → No LLM response for comments")
+            log_llm_response("comments", video_id, None, "(no response)", None)
     else:
         log.info("  → No comments available for this video")
-
-    # -- Generate embeddings for claims --
-    if do_embeddings:
-        log.info(f"  → Generating embeddings for {len(all_claims)} claims")
-        embedded_count = 0
-        for claim in all_claims:
-            claim_text = claim.get("text", "")
-            if claim_text:
-                embedding = get_embedding(claim_text)
-                claim["embedding"] = embedding
-                if embedding:
-                    embedded_count += 1
-        log.info(f"  → Generated {embedded_count}/{len(all_claims)} embeddings")
 
     transcript_count = sum(1 for c in all_claims if c.get("source") == "transcript")
     comment_count = sum(1 for c in all_claims if c.get("source") == "comment")
@@ -154,10 +125,36 @@ def analyze_video(
     }
 
 
+def process_videos(video_ids: list[str], max_comments: int = 30) -> list[dict]:
+    """Run the full extraction pipeline across a list of video IDs."""
+    from ytAPI.transcriptExtract import get_transcript
+    from ytAPI.commentExtract import get_comments
+
+    all_results = []
+    for vid in video_ids:
+        log.info(f"\nProcessing video: {vid}")
+
+        transcript = get_transcript(vid)
+        if not transcript:
+            continue
+
+        comments = get_comments(vid, max_comments=max_comments)
+        result = analyze_video(vid, transcript, comments)
+
+        if result:
+            all_results.append(result)
+            log.info(
+                f"  ✓ {result['claim_count']} total claims "
+                f"({result['transcript_claim_count']} transcript, "
+                f"{result['comment_claim_count']} comments)"
+            )
+
+    return all_results
+
+
 def synthesize_trends(all_results: list[dict]) -> dict | None:
     """
     Synthesize claims across all videos into a unified narrative.
-    
     Produces: common topics, repeated claims, high-confidence claims,
     shared narrative, and overall trends.
     """
@@ -166,16 +163,20 @@ def synthesize_trends(all_results: list[dict]) -> dict | None:
         return None
 
     prompt = build_synthesis_prompt(all_results)
-    raw = call_llm(prompt)
+
+    log_llm_synthesis_prompt(prompt)
+    raw = call_llm(prompt, num_predict=2000)
 
     if not raw:
-        log.error("No LLM response for synthesis")
+        log_llm_synthesis_response("(no response)", None)
         return None
 
     parsed = parse_json_response(raw)
+    log_llm_synthesis_response(raw, parsed)
 
     if not parsed:
         log.error("Synthesis output could not be parsed as JSON.")
+        log.debug(f"Raw synthesis output:\n{raw}")
         return None
 
     return parsed
