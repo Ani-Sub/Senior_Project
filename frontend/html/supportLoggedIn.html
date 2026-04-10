@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/home.css">
+<link rel="stylesheet" href="../css/supportLoggedIn.css">
+<link rel="stylsheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-dot"></div>
+      NarrativeIQ
+    </div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-item">
+        <span class="nav-icon">⊞</span> Home
+      </a>
+      <a href="trends.html" class="nav-item">
+        <span class="nav-icon">📈</span> Trends
+      </a>
+      <a href="narratives.html" class="nav-item">
+        <span class="nav-icon">🧩</span> Narratives
+      </a>
+      <a href="claims.html" class="nav-item">
+        <span class="nav-icon">💬</span> Claims
+      </a>
+      <a href="riskMonitor.html" class="nav-item">
+        <span class="nav-icon">⚠️</span> Risk Monitor
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="supportLoggedIn.html" class="nav-item active">
+        <span class="nav-icon">❓</span> Help Center
+      </a>
+      <div class="user-row" id="userRow" onclick="toggleUserMenu(event)">
+        <div class="user-avatar">AS</div>
+        <div class="user-info">
+          <div class="user-name">Animesh Subedi</div>
+          <div class="user-email">animesh@example.com</div>
+        </div>
+        <span class="user-chevron" id="userChevron">›</span>
+      </div>
+      <div class="user-dropdown" id="userDropdown">
+        <a href="profileLoggedIn.html" class="dropdown-item"><span class="dropdown-icon">👤</span> Profile</a>
+        <a href="settings.html" class="dropdown-item"><span class="dropdown-icon">⚙️</span> Settings</a>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item dropdown-logout" onclick="handleLogout()"><span class="dropdown-icon">↩</span> Log Out</button>
+      </div>
+    </div>
+  </aside>
+
+  <script src="../javascript/dashboard.js"></script>
+
+<!-- MAIN -->
+<main class="main">
+
+<div class="main-header">
+<div>
+<h1 class="page-title">Support</h1>
+<p class="page-sub">Contact us or browse common questions</p>
+</div>
+</div>
+
+
+<section class="section">
+
+<div class="support-grid">
+
+<div class="support-card">
+
+<h3>Contact Information</h3>
+
+<p><strong>Email:</strong> example@email.com</p>
+<p><strong>Phone:</strong> (123) 456-7890</p>
+<p><strong>Address:</strong> 800 W Campbell Rd, Richardson</p>
+
+</div>
+
+
+<div class="support-card">
+
+<h3>Send a Message</h3>
+
+<form id="supportForm">
+
+<label>Name</label>
+<input type="text" required>
+
+<label>Email</label>
+<input type="email" required>
+
+<label>Message</label>
+<textarea rows="5" required></textarea>
+
+<button class="btn btn-primary">Submit</button>
+
+<p id="formStatus" class="muted"></p>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<h3 class="faq-title">Frequently Asked Questions</h3>
+
+<div class="faq-item">
+<div class="faq-question">How does the AI summarize videos?</div>
+<div class="faq-answer">We analyze transcripts and detect claims using LLM models.</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">Why won’t my video summarize?</div>
+<div class="faq-answer">The video may not have captions or may be private.</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">Is there a free plan?</div>
+<div class="faq-answer">Yes — the free plan allows limited summaries.</div>
+</div>
+
+</section>
+
+</main>
+
+<script src="../javascript/api.js"></script>
+<script src="../javascript/sidebar.js"></script>
+<script src="../javascript/supportLoggedIn.js"></script>
+<script src="../javascript/support.js"></script>
+</body>
+</html>

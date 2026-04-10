@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — NarrativeIQ</title>
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-dot"></div>
+      NarrativeIQ
+    </div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-item">
+        <span class="nav-icon">⊞</span> Home
+      </a>
+      <a href="trends.html" class="nav-item">
+        <span class="nav-icon">📈</span> Trends
+      </a>
+      <a href="narratives.html" class="nav-item">
+        <span class="nav-icon">🧩</span> Narratives
+      </a>
+      <a href="claims.html" class="nav-item">
+        <span class="nav-icon">💬</span> Claims
+      </a>
+      <a href="riskMonitor.html" class="nav-item">
+        <span class="nav-icon">⚠️</span> Risk Monitor
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="supportLoggedIn.html" class="nav-item">
+        <span class="nav-icon">❓</span> Help Center
+      </a>
+      <div class="user-row" id="userRow" onclick="toggleUserMenu(event)">
+        <div class="user-avatar">AS</div>
+        <div class="user-info">
+          <div class="user-name">Animesh Subedi</div>
+          <div class="user-email">animesh@example.com</div>
+        </div>
+        <span class="user-chevron" id="userChevron">›</span>
+      </div>
+      <div class="user-dropdown" id="userDropdown">
+        <a href="profileLoggedIn.html" class="dropdown-item"><span class="dropdown-icon">👤</span> Profile</a>
+        <a href="settings.html" class="dropdown-item"><span class="dropdown-icon">⚙️</span> Settings</a>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item dropdown-logout" onclick="handleLogout()"><span class="dropdown-icon">↩</span> Log Out</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <a href="home.html" class="back-btn">← Back</a>
+        <div class="topbar-info">
+          <h1 class="dash-title" id="dashTitle">Loading...</h1>
+          <div class="topbar-meta">
+            <span class="meta-item" id="dashLayout">—</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item" id="dashUpdated">—</span>
+            <span class="meta-dot">·</span>
+            <div class="search-term-chips" id="searchTermChips"></div>
+          </div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="layout-switcher">
+          <button class="layout-btn" data-layout="overview" onclick="switchLayout('overview')" title="Overview">⊟</button>
+          <button class="layout-btn" data-layout="trends" onclick="switchLayout('trends')" title="Trends">📈</button>
+          <button class="layout-btn" data-layout="claims" onclick="switchLayout('claims')" title="Claims">💬</button>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="exportData()">↓ Export</button>
+        <button class="btn btn-primary btn-sm" onclick="refreshData()">↻ Refresh</button>
+      </div>
+    </div>
+
+    <!-- ── OVERVIEW LAYOUT ── -->
+    <div class="layout" id="layout-overview">
+
+      <!-- STAT CARDS -->
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-label">Total Claims</div>
+          <div class="stat-value">1,284</div>
+          <div class="stat-delta up">↑ 12% this week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Narratives Found</div>
+          <div class="stat-value">38</div>
+          <div class="stat-delta up">↑ 4 new</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Channels Tracked</div>
+          <div class="stat-value">17</div>
+          <div class="stat-delta neutral">→ No change</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg Risk Score</div>
+          <div class="stat-value">3.2<span class="stat-unit">/10</span></div>
+          <div class="stat-delta down">↓ 0.4 from last week</div>
+        </div>
+      </div>
+
+      <!-- CHART + SIDE PANEL -->
+      <div class="overview-body">
+        <div class="chart-card">
+          <div class="card-header">
+            <div class="card-title">Narrative Activity</div>
+            <div class="chart-legend" id="overviewLegend"></div>
+          </div>
+          <canvas id="overviewChart" height="200"></canvas>
+        </div>
+
+        <div class="side-panel">
+          <div class="card-header">
+            <div class="card-title">Top Narratives</div>
+          </div>
+          <div class="narrative-list" id="narrativeList"></div>
+        </div>
+      </div>
+
+      <!-- RECENT CLAIMS -->
+      <div class="claims-section">
+        <div class="card-header" style="margin-bottom:16px">
+          <div class="card-title">Recent Claims</div>
+          <span class="view-all">View all →</span>
+        </div>
+        <div class="claims-grid" id="overviewClaims"></div>
+      </div>
+
+    </div>
+
+    <!-- ── TRENDS LAYOUT ── -->
+    <div class="layout" id="layout-trends" style="display:none">
+
+      <div class="trends-chart-card">
+        <div class="card-header">
+          <div class="card-title">Narrative Trends Over Time</div>
+          <div class="trend-filters">
+            <button class="filter-btn active" onclick="setTrendRange(this,'3m')">3M</button>
+            <button class="filter-btn" onclick="setTrendRange(this,'1m')">1M</button>
+            <button class="filter-btn" onclick="setTrendRange(this,'2w')">2W</button>
+          </div>
+        </div>
+        <canvas id="trendsChart" height="140"></canvas>
+      </div>
+
+      <div class="trends-body">
+        <div class="trends-breakdown">
+          <div class="card-header" style="margin-bottom:16px">
+            <div class="card-title">Narrative Breakdown</div>
+          </div>
+          <div class="breakdown-list" id="breakdownList"></div>
+        </div>
+        <div class="trends-rising">
+          <div class="card-header" style="margin-bottom:16px">
+            <div class="card-title">Rising This Week</div>
+          </div>
+          <div class="rising-list" id="risingList"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── CLAIMS LAYOUT ── -->
+    <div class="layout" id="layout-claims" style="display:none">
+      <div class="claims-layout">
+
+        <!-- FILTER PANEL -->
+        <div class="filter-panel">
+          <div class="filter-section">
+            <div class="filter-title">Narratives</div>
+            <div class="filter-options" id="narrativeFilters"></div>
+          </div>
+          <div class="filter-section">
+            <div class="filter-title">Claim Type</div>
+            <label class="filter-check">
+              <input type="checkbox" checked onchange="filterClaims()"> Factual
+            </label>
+            <label class="filter-check">
+              <input type="checkbox" checked onchange="filterClaims()"> Opinion
+            </label>
+          </div>
+          <div class="filter-section">
+            <div class="filter-title">Risk Level</div>
+            <label class="filter-check"><input type="checkbox" checked onchange="filterClaims()"> Low</label>
+            <label class="filter-check"><input type="checkbox" checked onchange="filterClaims()"> Medium</label>
+            <label class="filter-check"><input type="checkbox" checked onchange="filterClaims()"> High</label>
+          </div>
+          <div class="filter-section">
+            <div class="filter-title">Channel</div>
+            <div class="filter-options" id="channelFilters"></div>
+          </div>
+        </div>
+
+        <!-- CLAIMS FEED -->
+        <div class="claims-feed">
+          <div class="claims-search-bar">
+            <input type="text" id="claimsSearch" placeholder="Search claims..." oninput="filterClaims()">
+            <span class="claims-count" id="claimsCount">24 claims</span>
+          </div>
+          <div class="claims-feed-list" id="claimsFeedList"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../javascript/api.js"></script>
+  <script src="../javascript/sidebar.js"></script>
+  <script src="../javascript/dashboard.js"></script>
+</body>
+</html>
