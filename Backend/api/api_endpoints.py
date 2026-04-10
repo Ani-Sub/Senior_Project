@@ -131,7 +131,7 @@ def get_dashboards(db: db_dependency):
 @app.post("/api/v1/dashboards")
 def create_dashboard(body: CreateDashboardBody, db: db_dependency):
     
-    t = text("INSERT INTO \"Board\" (user_id, board_name, description, search_terms, layout) VALUES (:user_id, :board_name, :description, :search_terms, :layout) RETURNING *")
+    t = text("INSERT INTO \"Board\" (user_id, board_name, description, search_terms, layout, last_updated_at) VALUES (:user_id, :board_name, :description, :search_terms, :layout, NOW()) RETURNING *")
     result = db.execute(t, {"user_id": 1, "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
     db.commit()
 
