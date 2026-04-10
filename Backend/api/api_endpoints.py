@@ -159,28 +159,48 @@ def delete_dashboard(dashboard_id: str, db: db_dependency):
  
 
 @app.get("/api/v1/dashboards/{dashboard_id}/claims")
-def get_claims(dashboard_id: str):
+def get_claims(dashboard_id: str, db: db_dependency, page: int = 1, limit: int = 20, type: str = None, risk: str = None, narrative: str = None, channel: str = None, search: str = None):
+    
+    if limit > 100:
+        limit = 100
+    
+    offset = (page - 1) * limit
+    filter = "WHERE v.board_id = :board_id"
+    parameters = {"board_id": dashboard_id, "limit": limit, "offset": offset}
+
+    if type:
+        filter += " AND c.claim_type = :type"
+        parameters["type"] = type
+    if risk:
+        filter += " AND c.risk_level = :risk"
+        parameters["risk"] = risk
+    if narrative:
+        filter += " AND c.narrative_id = :narrative"
+        parameters["narrative"] = narrative
+    if channel:
+        filter += " AND ch.channel_id = :channel"
+        parameters["channel"] = channel
+    if search:
+        filter += " AND c.claim_text ILIKE :search"
+        parameters["search"] = f"%{search}%"
+    
+    
+    t = text(f"SELECT c.claim_id AS claim_id, c.video_id AS video_id, ch.channel_id AS channel_id, ch.channel_name AS channel_name, c.claim_text AS claim_text, c.claim_type AS claim_type, c.confidence_score AS confidence_score, c.risk_level AS risk_level, n.narrative_id AS narrative_id, n.title AS narrative_name, c.processed_at AS published_at, c.is_verified AS is_verified, c.accuracy_rating AS accuracy_rating FROM \"Claim\" c JOIN \"Video\" v ON c.video_id = v.video_id JOIN \"Channel\" ch ON v.channel_id = ch.channel_id LEFT JOIN \"Narrative\" n ON c.narrative_id = n.narrative_id {filter} LIMIT :limit OFFSET :offset")
+    result = db.execute(t, parameters).fetchall()
+    
+    claims = []
+    for claim in result:
+        c = dict(claim._mapping)
+        claims.append(c)
+
+    t = text(f"SELECT COUNT(*) FROM \"Claim\" c JOIN \"Video\" v ON c.video_id = v.video_id JOIN \"Channel\" ch ON v.channel_id = ch.channel_id {filter}")
+    total = db.execute(t, parameters).scalar()
+    
     return {
-        "page": 1,
-        "limit": 20,
-        "total": 1,
-        "claims": [
-            {
-                "claim_id": "claim-id 1",
-                "video_id": "video-id 1",
-                "channel_id": "channel-id 1",
-                "channel_name": "Technology channel",
-                "claim_text": "Some claim",
-                "claim_type": "factual",
-                "confidence_score": 0.87,
-                "risk_level": "medium",
-                "narrative_id": "narritive-id 1",
-                "narrative_name": "AI Technology name",
-                "published_at": "2025-03-01T00:00:00Z",
-                "is_verified": False,
-                "accuracy_rating": None
-            }
-        ]
+        "page": page,
+        "limit": limit,
+        "total": total,
+        "claims": claims
     }
  
 @app.get("/api/v1/claims/{claim_id}")
@@ -234,19 +254,27 @@ def get_narrative(narrative_id: str, db: db_dependency):
 
 
 @app.get("/api/v1/dashboards/{dashboard_id}/trends")
-def get_trends(dashboard_id: str, range: str = "3m"):
-    return {
-        "labels": ["Jan W1", "Jan W2", "Jan W3", "Jan W4", "Feb W1", "Feb W2", "Feb W3", "Feb W4", "Mar W1", "Mar W2", "Mar W3", "Mar W4"],
-        "datasets": [
-            {
-                "narrative_id": "narritive-id 1",
-                "label": "AI Replacing Developers",
-                "color": "#00d4ff",
-                "data": [2, 4, 5, 6, 8, 10],
-                "direction": "rising"
-            }
-        ]
-    }
+def get_trends(dashboard_id: str, db: db_dependency,  range: str = "3m"):
+    
+    t = text("SELECT * FROM \"Trend\" WHERE board_id = :board_id")
+    trends = db.execute(t, {"board_id": dashboard_id}).fetchall()
+    
+    result = []
+    for trend in trends:
+        tempTrend = dict(trend._mapping)
+        
+        t = text("SELECT * FROM \"TrendData\" WHERE trend_id = :trend_id")
+        datasets = db.execute(t, {"trend_id": tempTrend["trend_id"]}).fetchall()
+        
+        data = []
+        for dataset in datasets:
+            tempDataset = dict(dataset._mapping)
+            data.append(tempDataset)
+
+        result.append({"labels": trend["labels"], "datasets": data})
+    
+    return result
+
 
 
 @app.get("/api/v1/dashboards/{dashboard_id}/creators")
