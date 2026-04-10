@@ -15,3 +15,5 @@ document.getElementById("supportForm")
       "Message sent! Our team will respond shortly.";
     this.reset();
   });
+
+  

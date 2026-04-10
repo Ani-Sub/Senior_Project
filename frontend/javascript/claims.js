@@ -37,6 +37,7 @@ let filteredClaims = [...MOCK_CLAIMS];
 
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  
   buildNarrativeFilters();
   buildChannelFilters();
   checkURLParams();

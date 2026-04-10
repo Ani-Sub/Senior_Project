@@ -10,6 +10,7 @@ let activeStatusFilter = 'all';
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await loadNarratives();
+  
   applyFilters();
 });
 

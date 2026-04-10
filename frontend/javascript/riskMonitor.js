@@ -6,7 +6,7 @@ let filteredCreators = [];
 // ── INIT ─────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
   auth.requireAuth();
-
+  
   const boardId = getDashboardId(); // already exists in your code
 
   creators = await fetchCreators(boardId);
@@ -355,3 +355,54 @@ document.addEventListener('click', () => closeUserMenu());
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeUserMenu();
 });
+
+
+
+
+// Export
+function exportCreators() {
+  if (!filteredCreators || filteredCreators.length === 0) {
+    alert("No data to export");
+    return;
+  }
+
+  const rows = [
+    [
+      'Channel ID',
+      'Name',
+      'Handle',
+      'Subscribers',
+      'Risk Score',
+      'Risk Level',
+      'Total Claims',
+      'Flagged Claims',
+      'Accuracy (%)',
+      'Violations'
+    ],
+
+    ...filteredCreators.map(c => [
+      c.id,
+      `"${c.name.replace(/"/g, '""')}"`,
+      c.handle,
+      c.subs || "—",
+      c.risk,
+      getRiskLevel(c.risk),
+      c.totalClaims ?? 0,
+      c.flaggedClaims ?? 0,
+      Math.round((c.accuracy ?? 0) * 100),
+      `"${(c.violations || []).join('; ')}"`
+    ])
+  ];
+
+  const csv = rows.map(r => r.join(',')).join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'creator-risk-report.csv';
+  a.click();
+
+  URL.revokeObjectURL(url);
+}

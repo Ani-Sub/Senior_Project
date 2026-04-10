@@ -23,6 +23,43 @@
 }
 
 
+/* ── PAGE HEADER ── */
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 32px 0 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+  gap: 20px;
+}
+
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.page-subtitle {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
+  cursor: pointer; transition: all 0.18s; border: none; text-decoration: none;
+}
+.btn-ghost { background: transparent; border: 1px solid var(--border2); color: var(--text); }
+.btn-ghost:hover { border-color: var(--text); }
+.btn-sm { padding: 7px 14px; font-size: 0.78rem; }
+
+
 
 .stats-grid{
 display:grid;
