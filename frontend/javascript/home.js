@@ -343,7 +343,7 @@ async function confirmDelete() {
 
 // ── OPEN DASHBOARD ────────────────────────────────────────────
 function openDashboard(id) {
-  window.location.href = `dashboard.html?id=${id}`;
+  window.location.href = `dashboard?id=${id}`;
 }
 
 // ── LIMIT BANNER ──────────────────────────────────────────────

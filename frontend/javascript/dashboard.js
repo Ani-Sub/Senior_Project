@@ -1,39 +1,11 @@
-// ── MOCK DATA ─────────────────────────────────────────────────
-// TODO: Replace with real API calls to /api/v1/dashboards/:id
-
-const MOCK_NARRATIVES = [
-  { id: 'n1', name: 'AGI Timeline Debate',        claims: 312, color: '#00d4ff', direction: 'rising'   },
-  { id: 'n2', name: 'LLM Benchmark Disputes',     claims: 248, color: '#ff6b35', direction: 'peaking'  },
-  { id: 'n3', name: 'Open Source vs Closed',      claims: 195, color: '#22c55e', direction: 'stable'   },
-  { id: 'n4', name: 'AI Safety Concerns',         claims: 167, color: '#f59e0b', direction: 'rising'   },
-  { id: 'n5', name: 'Model Cost & Efficiency',    claims: 143, color: '#a78bfa', direction: 'declining' },
-  { id: 'n6', name: 'Regulation & Policy',        claims: 98,  color: '#f472b6', direction: 'peaking'  },
-];
-
-const MOCK_CLAIMS = [
-  { id: 'c1', text: 'GPT-5 will achieve human-level reasoning within 18 months according to insider sources.', type: 'opinion', channel: 'AI Explained', date: 'Mar 1', narrative: 'AGI Timeline Debate', confidence: 0.72, risk: 'medium' },
-  { id: 'c2', text: 'Llama 3 outperforms GPT-4 on 6 out of 10 standard benchmarks in independent testing.', type: 'factual', channel: 'Two Minute Papers', date: 'Feb 28', narrative: 'LLM Benchmark Disputes', confidence: 0.91, risk: 'low' },
-  { id: 'c3', text: 'The cost to train frontier models has dropped 10x year over year since 2022.', type: 'factual', channel: 'Andrej Karpathy', date: 'Feb 27', narrative: 'Model Cost & Efficiency', confidence: 0.88, risk: 'low' },
-  { id: 'c4', text: 'Closed-source labs are deliberately hiding capability breakthroughs from the public.', type: 'opinion', channel: 'Yannic Kilcher', date: 'Feb 26', narrative: 'Open Source vs Closed', confidence: 0.45, risk: 'high' },
-  { id: 'c5', text: 'EU AI Act will significantly slow European AI development compared to US competitors.', type: 'opinion', channel: 'AI Supremacy', date: 'Feb 25', narrative: 'Regulation & Policy', confidence: 0.61, risk: 'medium' },
-  { id: 'c6', text: 'Anthropic\'s Constitutional AI technique reduces harmful outputs by over 80% in red-team tests.', type: 'factual', channel: 'Lex Fridman', date: 'Feb 24', narrative: 'AI Safety Concerns', confidence: 0.83, risk: 'low' },
-  { id: 'c7', text: 'We are already past the point of no return on AGI development and cannot slow it down.', type: 'opinion', channel: 'AI Doomer Pod', date: 'Feb 23', narrative: 'AGI Timeline Debate', confidence: 0.38, risk: 'high' },
-  { id: 'c8', text: 'Mixture-of-Experts architectures have reduced inference costs by 40% at comparable quality.', type: 'factual', channel: 'Wes Roth', date: 'Feb 22', narrative: 'Model Cost & Efficiency', confidence: 0.79, risk: 'low' },
-];
-
-const MOCK_WEEKLY_TREND = {
-  labels: ['Jan W1','Jan W2','Jan W3','Jan W4','Feb W1','Feb W2','Feb W3','Feb W4','Mar W1'],
-  datasets: MOCK_NARRATIVES.slice(0, 4).map(n => ({
-    label: n.name,
-    color: n.color,
-    data: Array.from({length: 9}, () => Math.floor(Math.random() * 60) + 10)
-  }))
-};
-
 // ── STATE ─────────────────────────────────────────────────────
 let currentLayout = 'overview';
 let overviewChartInstance = null;
 let trendsChartInstance = null;
+let narratives = [];
+let claims = [];
+let trendData = null; // { labels: [], datasets: [] }
+let dashboardId = null;
 
 // ── INIT ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
@@ -47,9 +19,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ── LOAD DASHBOARD META FROM API ─────────────────────────────
 async function loadDashboardMeta() {
   const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  dashboardId = params.get('id') || localStorage.getItem('niq_dashboard_id');
+  if (dashboardId) localStorage.setItem('niq_dashboard_id', dashboardId);
 
-  // Fill sidebar user info from session
   const user = auth.getUser();
   if (user) {
     const avatarEl = document.querySelector('.user-avatar');
@@ -62,25 +34,26 @@ async function loadDashboardMeta() {
 
   let dash = null;
 
-  if (id) {
-    const { data, error } = await api.get(`/dashboards/${id}`);
-    if (!error) dash = data;
+  if (dashboardId) {
+    const [dashRes, narrativesRes, claimsRes, trendsRes] = await Promise.all([
+      api.get(`/dashboards/${dashboardId}`),
+      api.get(`/dashboards/${dashboardId}/narratives`),
+      api.get(`/dashboards/${dashboardId}/claims`),
+      api.get(`/dashboards/${dashboardId}/trends`),
+    ]);
+
+    if (!dashRes.error) dash = dashRes.data;
+    if (!narrativesRes.error) narratives = narrativesRes.data || [];
+    if (!claimsRes.error) claims = claimsRes.data?.claims || [];
+    if (!trendsRes.error && trendsRes.data?.length > 0) trendData = trendsRes.data[0];
   }
 
-  // Fallback if no id or API failed
   if (!dash) {
-    dash = {
-      name: 'AI Industry Trends',
-      layout: 'overview',
-      search_terms: ['GPT-5', 'OpenAI', 'AGI', 'LLM'],
-      created_at: new Date().toISOString()
-    };
+    dash = { name: 'Dashboard', layout: 'overview', search_terms: [], created_at: new Date().toISOString() };
   }
 
   document.getElementById('dashTitle').textContent = dash.name;
   document.getElementById('dashLayout').textContent = layoutLabel(dash.layout);
-  // createdAt is immutable — dashboards cannot be edited after creation.
-  // To change topic/settings the user must delete and create a new dashboard.
   document.getElementById('dashUpdated').textContent = 'Created ' + new Date(dash.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
   const chips = document.getElementById('searchTermChips');
@@ -98,7 +71,6 @@ function switchLayout(layout) {
     document.querySelector(`.layout-btn[data-layout="${l}"]`).classList.toggle('active', l === layout);
   });
 
-  // Init charts on first show
   if (layout === 'overview' && !overviewChartInstance) buildOverviewChart();
   if (layout === 'trends' && !trendsChartInstance) buildTrendsChart();
 }
@@ -109,27 +81,40 @@ function layoutLabel(l) {
 
 // ── RENDER OVERVIEW ───────────────────────────────────────────
 function renderOverview() {
-  // Narrative list
   const list = document.getElementById('narrativeList');
-  const max = Math.max(...MOCK_NARRATIVES.map(n => n.claims));
-  list.innerHTML = MOCK_NARRATIVES.map((n, i) => `
-    <div class="narrative-item">
-      <span class="narrative-rank">#${i + 1}</span>
-      <span class="narrative-name">${n.name}</span>
-      <div class="narrative-bar-wrap">
-        <div class="narrative-bar" style="width:${(n.claims/max*100).toFixed(0)}%;background:${n.color}"></div>
+  if (narratives.length === 0) {
+    list.innerHTML = '<div style="color:var(--muted);font-size:0.82rem;padding:12px 0">No narratives yet</div>';
+  } else {
+    const max = Math.max(...narratives.map(n => n.claim_count || 0), 1);
+    list.innerHTML = narratives.map((n, i) => `
+      <div class="narrative-item">
+        <span class="narrative-rank">#${i + 1}</span>
+        <span class="narrative-name">${n.title}</span>
+        <div class="narrative-bar-wrap">
+          <div class="narrative-bar" style="width:${((n.claim_count || 0) / max * 100).toFixed(0)}%;background:${n.color}"></div>
+        </div>
+        <span class="narrative-count">${n.claim_count || 0}</span>
       </div>
-      <span class="narrative-count">${n.claims}</span>
-    </div>
-  `).join('');
+    `).join('');
+  }
 
-  // Claims grid (first 4)
+  // Stat cards
+  const uniqueChannels = new Set(claims.map(c => c.channel_id).filter(Boolean));
+  const highRisk = claims.filter(c => c.risk_level === 'high').length;
+  document.getElementById('statTotalClaims').textContent    = claims.length.toLocaleString();
+  document.getElementById('statNarrativesFound').textContent = narratives.length;
+  document.getElementById('statChannelsTracked').textContent = uniqueChannels.size;
+  document.getElementById('statHighRiskClaims').textContent  = highRisk;
+
   const grid = document.getElementById('overviewClaims');
-  grid.innerHTML = MOCK_CLAIMS.slice(0, 4).map(c => claimCardHTML(c)).join('');
+  if (claims.length === 0) {
+    grid.innerHTML = '<div style="color:var(--muted);font-size:0.82rem;padding:12px 0">No claims yet</div>';
+  } else {
+    grid.innerHTML = claims.slice(0, 4).map(c => claimCardHTML(c)).join('');
+  }
 
-  // Chart legend
   const legend = document.getElementById('overviewLegend');
-  legend.innerHTML = MOCK_WEEKLY_TREND.datasets.map(d => `
+  legend.innerHTML = (trendData?.datasets || []).map(d => `
     <div class="legend-item">
       <div class="legend-dot" style="background:${d.color}"></div>
       <span>${d.label}</span>
@@ -139,76 +124,89 @@ function renderOverview() {
 
 function buildOverviewChart() {
   const ctx = document.getElementById('overviewChart').getContext('2d');
+  const labels = trendData?.labels || [];
+  const datasets = (trendData?.datasets || []).map(d => ({
+    label: d.label,
+    data: d.data,
+    borderColor: d.color,
+    backgroundColor: d.color + '15',
+    borderWidth: 2,
+    pointRadius: 3,
+    pointHoverRadius: 5,
+    tension: 0.4,
+    fill: false,
+  }));
   overviewChartInstance = new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: MOCK_WEEKLY_TREND.labels,
-      datasets: MOCK_WEEKLY_TREND.datasets.map(d => ({
-        label: d.label,
-        data: d.data,
-        borderColor: d.color,
-        backgroundColor: d.color + '15',
-        borderWidth: 2,
-        pointRadius: 3,
-        pointHoverRadius: 5,
-        tension: 0.4,
-        fill: false,
-      }))
-    },
+    data: { labels, datasets },
     options: chartOptions()
   });
 }
 
 // ── RENDER TRENDS ─────────────────────────────────────────────
 function renderTrends() {
-  // Breakdown list
-  const breakdown = document.getElementById('breakdownList');
-  breakdown.innerHTML = MOCK_NARRATIVES.map(n => `
-    <div class="breakdown-item">
-      <div class="breakdown-dot" style="background:${n.color}"></div>
-      <div class="breakdown-info">
-        <div class="breakdown-name">${n.name}</div>
-        <div class="breakdown-sub">${n.claims} claims this period</div>
-      </div>
-      <span class="breakdown-dir ${n.direction}">${dirLabel(n.direction)}</span>
-    </div>
-  `).join('');
+  const directionMap = {};
+  (trendData?.datasets || []).forEach(d => {
+    if (d.narrative_id) directionMap[d.narrative_id] = d.direction;
+  });
 
-  // Rising list
-  const rising = MOCK_NARRATIVES.filter(n => n.direction === 'rising' || n.direction === 'peaking');
-  document.getElementById('risingList').innerHTML = rising.map(n => `
-    <div class="rising-item">
-      <div class="rising-name">${n.name}</div>
-      <div class="rising-stat">↑ ${Math.floor(Math.random()*30)+10}% vs last week · ${n.claims} claims</div>
-    </div>
-  `).join('');
+  const breakdown = document.getElementById('breakdownList');
+  if (narratives.length === 0) {
+    breakdown.innerHTML = '<div style="color:var(--muted);font-size:0.82rem;padding:12px 0">No narratives yet</div>';
+  } else {
+    breakdown.innerHTML = narratives.map(n => {
+      const direction = directionMap[n.narrative_id] || 'stable';
+      return `
+        <div class="breakdown-item">
+          <div class="breakdown-dot" style="background:${n.color}"></div>
+          <div class="breakdown-info">
+            <div class="breakdown-name">${n.title}</div>
+            <div class="breakdown-sub">${n.claim_count || 0} claims this period</div>
+          </div>
+          <span class="breakdown-dir ${direction}">${dirLabel(direction)}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  const rising = narratives.filter(n => {
+    const dir = directionMap[n.narrative_id];
+    return dir === 'rising' || dir === 'peaking';
+  });
+  document.getElementById('risingList').innerHTML = rising.length > 0
+    ? rising.map(n => `
+        <div class="rising-item">
+          <div class="rising-name">${n.title}</div>
+          <div class="rising-stat">${n.claim_count || 0} claims</div>
+        </div>
+      `).join('')
+    : '<div style="color:var(--muted);font-size:0.82rem;padding:12px 0">No rising narratives</div>';
 }
 
 function buildTrendsChart() {
   const ctx = document.getElementById('trendsChart').getContext('2d');
+  const labels = trendData?.labels || [];
+  const datasets = (trendData?.datasets || []).map(d => ({
+    label: d.label,
+    data: d.data,
+    borderColor: d.color,
+    backgroundColor: d.color + '10',
+    borderWidth: 2,
+    pointRadius: 3,
+    tension: 0.4,
+    fill: true,
+  }));
   trendsChartInstance = new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: MOCK_WEEKLY_TREND.labels,
-      datasets: MOCK_WEEKLY_TREND.datasets.map(d => ({
-        label: d.label,
-        data: d.data,
-        borderColor: d.color,
-        backgroundColor: d.color + '10',
-        borderWidth: 2,
-        pointRadius: 3,
-        tension: 0.4,
-        fill: true,
-      }))
-    },
+    data: { labels, datasets },
     options: chartOptions()
   });
 }
 
-function setTrendRange(btn, range) {
+function setTrendRange(btn, _range) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  // TODO: filter chart data by range when real API is connected
+  // TODO: re-fetch trend data by range when API supports it
 }
 
 function dirLabel(d) {
@@ -217,24 +215,23 @@ function dirLabel(d) {
 
 // ── RENDER CLAIMS ─────────────────────────────────────────────
 function renderClaims() {
-  // Narrative filter options
   const nFilters = document.getElementById('narrativeFilters');
-  nFilters.innerHTML = MOCK_NARRATIVES.map(n => `
-    <div class="filter-option active" onclick="toggleFilter(this)" data-narrative="${n.id}">
+  nFilters.innerHTML = narratives.map(n => `
+    <div class="filter-option active" onclick="toggleFilter(this)" data-narrative="${n.narrative_id}">
       <div class="filter-dot" style="background:${n.color}"></div>
-      ${n.name}
+      ${n.title}
     </div>
   `).join('');
 
-  // Channel filters
-  const channels = [...new Set(MOCK_CLAIMS.map(c => c.channel))];
+  const channels = [...new Set(claims.map(c => c.channel_name).filter(Boolean))];
   document.getElementById('channelFilters').innerHTML = channels.map(ch => `
     <div class="filter-option active" onclick="toggleFilter(this)" data-channel="${ch}">
       ${ch}
     </div>
   `).join('');
 
-  renderClaimsFeed(MOCK_CLAIMS);
+  document.getElementById('claimsCount').textContent = `${claims.length} claim${claims.length !== 1 ? 's' : ''}`;
+  renderClaimsFeed(claims);
 }
 
 function toggleFilter(el) {
@@ -244,61 +241,66 @@ function toggleFilter(el) {
 
 function filterClaims() {
   const search = document.getElementById('claimsSearch').value.toLowerCase();
-
   const activeNarratives = [...document.querySelectorAll('[data-narrative].active')].map(el => el.dataset.narrative);
   const activeChannels = [...document.querySelectorAll('[data-channel].active')].map(el => el.dataset.channel);
 
   const typeChecks = [...document.querySelectorAll('.filter-check input')];
   const showFactual = typeChecks[0]?.checked;
   const showOpinion = typeChecks[1]?.checked;
+  const showLow     = typeChecks[2]?.checked;
+  const showMedium  = typeChecks[3]?.checked;
+  const showHigh    = typeChecks[4]?.checked;
 
-  const filtered = MOCK_CLAIMS.filter(c => {
-    const matchSearch = !search || c.text.toLowerCase().includes(search) || c.channel.toLowerCase().includes(search);
-    const matchNarrative = activeNarratives.some(id => MOCK_NARRATIVES.find(n => n.id === id)?.name === c.narrative);
-    const matchChannel = activeChannels.includes(c.channel);
-    const matchType = (c.type === 'factual' && showFactual) || (c.type === 'opinion' && showOpinion);
-    return matchSearch && matchNarrative && matchChannel && matchType;
+  const filtered = claims.filter(c => {
+    const matchSearch    = !search || c.claim_text.toLowerCase().includes(search) || (c.channel_name || '').toLowerCase().includes(search);
+    const matchNarrative = narratives.length === 0 || activeNarratives.includes(c.narrative_id);
+    const matchChannel   = channels.length === 0 || activeChannels.includes(c.channel_name);
+    const matchType      = (c.claim_type === 'factual' && showFactual) || (c.claim_type === 'opinion' && showOpinion);
+    const matchRisk      = (c.risk_level === 'low' && showLow) || (c.risk_level === 'medium' && showMedium) || (c.risk_level === 'high' && showHigh);
+    return matchSearch && matchNarrative && matchChannel && matchType && matchRisk;
   });
 
   renderClaimsFeed(filtered);
   document.getElementById('claimsCount').textContent = `${filtered.length} claim${filtered.length !== 1 ? 's' : ''}`;
 }
 
-function renderClaimsFeed(claims) {
-  const list = document.getElementById('claimsFeedList');
-  if (claims.length === 0) {
-    list.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--muted);font-size:0.82rem;">No claims match your filters</div>`;
+function renderClaimsFeed(list) {
+  const el = document.getElementById('claimsFeedList');
+  if (list.length === 0) {
+    el.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--muted);font-size:0.82rem;">No claims match your filters</div>`;
     return;
   }
-  list.innerHTML = claims.map(c => feedClaimHTML(c)).join('');
+  el.innerHTML = list.map(c => feedClaimHTML(c)).join('');
 }
 
 // ── HTML HELPERS ──────────────────────────────────────────────
 function claimCardHTML(c) {
+  const date = c.published_at ? new Date(c.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—';
   return `
     <div class="claim-card">
       <div class="claim-meta">
-        <span class="claim-type-badge ${c.type}">${c.type}</span>
-        <span class="claim-channel">${c.channel}</span>
-        <span class="claim-date">${c.date}</span>
+        <span class="claim-type-badge ${c.claim_type}">${c.claim_type}</span>
+        <span class="claim-channel">${c.channel_name || '—'}</span>
+        <span class="claim-date">${date}</span>
       </div>
-      <div class="claim-text">${c.text}</div>
+      <div class="claim-text">${c.claim_text}</div>
     </div>`;
 }
 
 function feedClaimHTML(c) {
-  const conf = Math.round(c.confidence * 100);
+  const conf = Math.round((c.confidence_score || 0) * 100);
+  const date = c.published_at ? new Date(c.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—';
   return `
     <div class="feed-claim-card">
       <div class="feed-claim-header">
-        <span class="claim-type-badge ${c.type}">${c.type}</span>
-        <span class="risk-badge ${c.risk}">${c.risk} risk</span>
-        <span class="claim-channel" style="flex:1;margin-left:4px">${c.channel}</span>
-        <span class="claim-date">${c.date}</span>
+        <span class="claim-type-badge ${c.claim_type}">${c.claim_type}</span>
+        <span class="risk-badge ${c.risk_level}">${c.risk_level} risk</span>
+        <span class="claim-channel" style="flex:1;margin-left:4px">${c.channel_name || '—'}</span>
+        <span class="claim-date">${date}</span>
       </div>
-      <div class="feed-claim-text">${c.text}</div>
+      <div class="feed-claim-text">${c.claim_text}</div>
       <div class="feed-claim-footer">
-        <span class="narrative-tag">${c.narrative}</span>
+        <span class="narrative-tag">${c.narrative_name || '—'}</span>
         <div class="confidence-bar"><div class="confidence-fill" style="width:${conf}%"></div></div>
         <span class="confidence-label">${conf}% confidence</span>
       </div>
@@ -336,7 +338,7 @@ function chartOptions() {
 
 // ── ACTIONS ───────────────────────────────────────────────────
 function exportData() {
-  const data = { narratives: MOCK_NARRATIVES, claims: MOCK_CLAIMS };
+  const data = { narratives, claims, trends: trendData };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -346,8 +348,16 @@ function exportData() {
   URL.revokeObjectURL(url);
 }
 
-function refreshData() {
-  // TODO: Re-fetch from API
-  alert('Refresh will trigger a new data fetch from the backend once connected.');
+async function refreshData() {
+  narratives = [];
+  claims = [];
+  trendData = null;
+  overviewChartInstance?.destroy();
+  overviewChartInstance = null;
+  trendsChartInstance?.destroy();
+  trendsChartInstance = null;
+  await loadDashboardMeta();
+  renderOverview();
+  renderTrends();
+  renderClaims();
 }
-

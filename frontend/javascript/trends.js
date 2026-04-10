@@ -5,7 +5,7 @@ let trendsLabels = [];
 let trendsDatasets = [];
 
 function getDashboardId() {
-  return "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
 }
 
 // ── INIT ──────────────────────────────────────────────────────
@@ -18,13 +18,15 @@ async function fetchTrends(range) {
   const dashboardId = getDashboardId();
   const { data, error } = await api.get(`/dashboards/${dashboardId}/trends?range=${range}`);
 
-  if (error || !data) {
+  if (error || !data || !data.length) {
     console.error('Failed to load trends:', error);
+    renderStatStrip([]);
     return;
   }
 
-  trendsLabels   = data.labels || [];
-  trendsDatasets = data.datasets || [];
+  const first    = data[0];
+  trendsLabels   = first.labels || [];
+  trendsDatasets = first.datasets || [];
 
   MOCK_NARRATIVES = trendsDatasets.map(d => ({
     id:        d.narrative_id,
@@ -39,6 +41,7 @@ async function fetchTrends(range) {
   buildChart();
   renderBreakdownTable();
   renderSummaryPanels();
+  renderStatStrip(MOCK_NARRATIVES);
 }
 
 // ── LEGEND ────────────────────────────────────────────────────
@@ -151,7 +154,7 @@ function toggleDashDropdown(e) {
   el.classList.toggle('open');
 }
 
-function selectDash(optionEl, dashId) {
+function selectDash(optionEl, _dashId) {
   document.querySelectorAll('.select-option').forEach(o => o.classList.remove('active'));
   optionEl.classList.add('active');
   document.getElementById('dashSelectorLabel').textContent = optionEl.textContent.trim();
@@ -163,6 +166,22 @@ document.addEventListener('click', () => {
   document.getElementById('dashSelector')?.classList.remove('open');
 });
 
+
+// ── STAT STRIP ────────────────────────────────────────────────
+function renderStatStrip(narrativesData) {
+  const active   = narrativesData.length;
+  const rising   = narrativesData.filter(n => n.direction === 'rising' || n.direction === 'peaking').length;
+  const total    = narrativesData.reduce((sum, n) => sum + n.claims, 0);
+  const peaking  = narrativesData.filter(n => n.direction === 'peaking').length;
+  const declining = narrativesData.filter(n => n.direction === 'declining').length;
+
+  const el = id => document.getElementById(id);
+  if (el('statActive'))    el('statActive').textContent    = active;
+  if (el('statRising'))    el('statRising').textContent    = rising;
+  if (el('statTotal'))     el('statTotal').textContent     = total.toLocaleString();
+  if (el('statPeaking'))   el('statPeaking').textContent   = peaking;
+  if (el('statDeclining')) el('statDeclining').textContent = declining;
+}
 
 // ── HELPERS ───────────────────────────────────────────────────
 function dirLabel(d) {
