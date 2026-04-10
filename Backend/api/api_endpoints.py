@@ -132,7 +132,7 @@ def get_dashboards(db: db_dependency):
 def create_dashboard(body: CreateDashboardBody, db: db_dependency):
     
     t = text("INSERT INTO \"Board\" (user_id, board_name, description, search_terms, layout, last_updated_at) VALUES (:user_id, :board_name, :description, :search_terms, :layout, NOW()) RETURNING *")
-    result = db.execute(t, {"user_id": 1, "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
+    result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
     db.commit()
 
     return dict(result._mapping)

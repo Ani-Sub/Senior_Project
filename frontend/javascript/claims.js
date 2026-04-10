@@ -213,7 +213,7 @@ function exportClaims() {
 function feedClaimHTML(c) {
   const conf = Math.round(c.confidence * 100);
   const narr = MOCK_NARRATIVES.find(n => n.id === c.narrative);
-  const dateFormatted = new Date(c.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const dateFormatted = c.date ? new Date(c.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—';
   return `
     <div class="feed-claim-card">
       <div class="feed-claim-header">
@@ -231,22 +231,3 @@ function feedClaimHTML(c) {
     </div>`;
 }
 
-// ── USER DROPDOWN ─────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) { dropdown.classList.add('open'); row.classList.add('open'); }
-}
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() { window.location.href = '../index.html'; }
-
-document.addEventListener('click', () => closeUserMenu());
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });

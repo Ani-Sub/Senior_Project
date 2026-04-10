@@ -1,9 +1,3 @@
-// ── PLAN LIMITS ──────────────────────────────────────────────
-const PLANS = {
-  free:       { name: 'Free',       limit: 1  },
-  analyst:    { name: 'Analyst',    limit: 5  },
-  enterprise: { name: 'Enterprise', limit: Infinity }
-};
 
 // ── STATE ────────────────────────────────────────────────────
 let dashboards = [];
@@ -372,28 +366,6 @@ function escHtml(str) {
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-// ── USER DROPDOWN ─────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) {
-    dropdown.classList.add('open');
-    row.classList.add('open');
-  }
-}
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() {
-  authActions.logout();
 }
 
 document.addEventListener('click', () => closeUserMenu());

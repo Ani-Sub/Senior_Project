@@ -103,25 +103,6 @@ function setupSaveButton() {
   });
 }
 
-// ── USER DROPDOWN ─────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row      = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen   = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) { dropdown.classList.add('open'); row.classList.add('open'); }
-}
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() { authActions.logout(); }
-
-document.addEventListener('click', () => closeUserMenu());
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });
 
 // ── FADE-IN ANIMATION ─────────────────────────────────────────
 function setupFadeIn() {
