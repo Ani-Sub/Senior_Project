@@ -31,6 +31,7 @@ class UpdateUserBody(BaseModel):
     email: str | None = None
     current_password: str | None = None
     new_password: str | None = None
+    plan: str | None = None
 
 
 #Create app
@@ -335,13 +336,13 @@ def update_user(body: UpdateUserBody, db: db_dependency):
 
     if body.current_password == dict(password._mapping)["password"] and body.new_password:
 
-        t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), password = :password WHERE user_id = :user_id RETURNING *")
-        result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "name": body.name, "email": body.email, "initials": newInitials, "password": body.new_password}).fetchone()
+        t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), password = :password, plan = COALESCE(:plan, plan) WHERE user_id = :user_id RETURNING *")
+        result = db.execute(t, {"user_id": ..., "name": body.name, "email": body.email, "initials": newInitials, "password": body.new_password, "plan": body.plan}).fetchone()
 
     else:
 
-        t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials) WHERE user_id = :user_id RETURNING *")
-        result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "name": body.name, "email": body.email, "initials": newInitials}).fetchone()
+        t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), plan = COALESCE(:plan, plan) WHERE user_id = :user_id RETURNING *")
+        result = db.execute(t, {"user_id": ..., "name": body.name, "email": body.email, "initials": newInitials, "plan": body.plan}).fetchone()
 
     db.commit()
 

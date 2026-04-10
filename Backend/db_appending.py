@@ -47,6 +47,24 @@ def insert_videos(board_id: str):
     db.commit()
 
 
+def insert_claims():
+
+    db = SessionLocal()
+    file_path = ""
+
+    with open(file_path) as file:
+        claims = json.load(file)
+
+    for c in claims:
+        t = text("INSERT INTO \"Video\" (video_id, board_id, channel_id, title, description, view_count, duration_seconds, published_at, processed, processed_at) VALUES (:video_id, :board_id, :channel_id, :title, :description, :view_count, :duration_seconds, :published_at, :processed, :processed_at) ON CONFLICT (video_id) DO NOTHING")
+        db.execute(t, {"video_id": v["video_id"], "board_id": board_id, "channel_id": v["channel_id"], "title": v["title"], "description": v["description"], "view_count": v["view_count"], "duration_seconds": v["duration_seconds"], "published_at": datetime.fromisoformat(v["published_at"].replace("Z", "+00:00")), "processed": v["processed"], "processed_at": datetime.fromisoformat(v["processed_at"])})
+    
+    db.commit()
+
+
+
+
+'''
 def insert_transcripts():
 
     db = SessionLocal()
@@ -62,7 +80,7 @@ def insert_transcripts():
     db.commit()
 
 
-'''
+
 def insert_transcript_chunks():
 
     db = SessionLocal()
