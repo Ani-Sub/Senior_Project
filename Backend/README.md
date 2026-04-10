@@ -445,15 +445,6 @@ run_pipeline(
 )
 ```
 
-## Testing
-
-Test without APIs using mock data:
-
-```bash
-python test_trends.py   # Test trend analysis
-python test_risk.py     # Test risk assessment
-```
-
 ## Troubleshooting
 
 ### No videos discovered
