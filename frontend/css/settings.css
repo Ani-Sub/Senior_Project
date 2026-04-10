@@ -1,0 +1,122 @@
+.settings-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(560px,1fr));
+  gap:22px;
+  margin-top:20px;
+  margin-bottom:30px;
+}
+
+/* PAGE HEADER SPACING */
+.main-header{
+  margin-bottom:32px;
+  padding-top:24px;
+}
+.page-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2rem;
+  color:var(--white);
+  margin-bottom:8px;
+}
+.page-sub{
+  font-family:'DM Sans',sans-serif;
+  font-size:0.9rem;
+  color:var(--muted);
+}
+.stat-label{
+font-size:.7rem;
+color:var(--muted);
+letter-spacing:.08em;
+text-transform:uppercase;
+margin-top:6px;
+}
+/* SETTINGS CARDS */
+.setting-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  transition:border-color .2s, transform .2s;
+}
+.setting-card:hover{
+  border-color:rgba(0,212,255,0.3);
+  transform:translateY(-2px);
+}
+.setting-card h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.5rem;
+  color:var(--white);
+  margin-bottom:10px;
+}
+
+/* HORIZONTAL CARD FOR PRIVACY + NOTIFICATIONS */
+.horizontal-card{
+  flex-direction:row;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.card-section{
+  flex:1;
+  min-width:220px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* INPUTS AND SELECTS */
+input, select{
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--surface2);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.85rem;
+  width:100%;
+}
+
+/* CLEANER SELECT DROPDOWN */
+.custom-select{
+  position:relative;
+  display:block;
+}
+.custom-select select{
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:10px 12px;
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;
+}
+
+/* BUTTONS */
+.btn{
+  width: fit-content;
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;
+}
+.btn-primary{
+  background:var(--accent);
+  color:#000;
+  font-weight:500;
+}
+.btn-danger{
+  background:#953232;
+  color:#fff;
+}
+
+/* STATUS TEXT */
+.status-text{
+  font-family:'DM Mono', monospace;
+  font-size:0.75rem;
+  color:var(--accent);
+}
