@@ -13,8 +13,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from utility.embeddings import calculate_centroid
-
 log = logging.getLogger(__name__)
 
 
@@ -23,7 +21,7 @@ class OutputManager:
     Manages pipeline output with checkpoints and DB-ready exports.
     
     Directory structure:
-        output/run_YYYYMMDD_HHMMSS/
+        output/latest/
         ├── checkpoints/
         │   ├── video_abc123.json
         │   ├── video_def456.json
@@ -37,13 +35,18 @@ class OutputManager:
             ├── claims.json
             ├── narratives.json
             └── risk_flags.json
+    
+    Note: Each run overwrites the previous. Use static path: output/latest/db_ready/
     """
     
     def __init__(self, output_dir: str | Path = "output"):
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.run_dir = Path(output_dir) / f"run_{timestamp}"
+        self.run_dir = Path(output_dir) / "latest"
         self.checkpoint_dir = self.run_dir / "checkpoints"
         self.db_ready_dir = self.run_dir / "db_ready"
+        
+        # Clear previous run data
+        self._clear_directory(self.checkpoint_dir)
+        self._clear_directory(self.db_ready_dir)
         
         # Create directories
         self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
@@ -56,6 +59,14 @@ class OutputManager:
         self.risk = None
         
         log.info(f"Output directory: {self.run_dir}")
+    
+    def _clear_directory(self, dir_path: Path) -> None:
+        """Clear all files in a directory (if it exists)."""
+        if dir_path.exists():
+            for file in dir_path.iterdir():
+                if file.is_file():
+                    file.unlink()
+            log.info(f"Cleared previous data from {dir_path}")
     
     def _save_json(self, path: Path, data: Any) -> None:
         """Save data as JSON file."""
@@ -154,7 +165,6 @@ class OutputManager:
         transcript_chunks = self._extract_transcript_chunks(video_results, processed_at)
         comments = self._extract_comments(video_results, processed_at)
         claims = self._extract_claims(video_results, risk, processed_at)
-        claim_embeddings = self._extract_claim_embeddings(video_results)
         narratives = self._extract_narratives(synthesis, video_results)
         narrative_videos = self._extract_narrative_videos(synthesis)
         risk_flags = self._extract_risk_flags(risk)
@@ -177,11 +187,6 @@ class OutputManager:
         
         self._save_json(self.db_ready_dir / "claims.json", claims)
         log.info(f"  ✓ claims.json ({len(claims)} records)")
-        
-        # Save embeddings separately (large vectors)
-        if claim_embeddings:
-            self._save_json(self.db_ready_dir / "claim_embeddings.json", claim_embeddings)
-            log.info(f"  ✓ claim_embeddings.json ({len(claim_embeddings)} records)")
         
         self._save_json(self.db_ready_dir / "narratives.json", narratives)
         log.info(f"  ✓ narratives.json ({len(narratives)} records)")
@@ -206,14 +211,13 @@ class OutputManager:
         
         # Save run metadata
         metadata = {
-            "run_id": self.run_dir.name,
+            "run_id": f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             "created_at": processed_at,
             "search_params": search_params,
             "video_count": len(videos),
             "transcript_count": len(transcripts),
             "comment_count": len(comments),
             "claim_count": len(claims),
-            "claim_embedding_count": len(claim_embeddings),
             "narrative_count": len(narratives),
             "risk_flag_count": len(risk_flags)
         }
@@ -451,23 +455,6 @@ class OutputManager:
         
         return claims
     
-    def _extract_claim_embeddings(self, video_results: list[dict]) -> list[dict]:
-        """Extract claim embeddings in a separate file (large vectors)."""
-        embeddings = []
-        claim_id = 1
-        
-        for result in video_results:
-            for claim in result.get("claims", []):
-                embedding = claim.get("embedding")
-                if embedding:
-                    embeddings.append({
-                        "claim_id": claim_id,
-                        "embedding": embedding,
-                    })
-                claim_id += 1
-        
-        return embeddings
-    
     def _extract_narratives(
         self, 
         synthesis: dict | None, 
@@ -498,10 +485,9 @@ class OutputManager:
         for idx, narrative in enumerate(synthesis.get("narratives", [])):
             video_ids = narrative.get("video_ids", [])
             
-            # Collect claims, timestamps, and embeddings for this narrative
+            # Collect claims and timestamps for this narrative
             claim_count = 0
             timestamps = []
-            embeddings = []
             
             for vid in video_ids:
                 if vid in video_lookup:
@@ -510,17 +496,8 @@ class OutputManager:
                     pub_at = result.get("video_metadata", {}).get("published_at")
                     if pub_at:
                         timestamps.append(pub_at)
-                    
-                    # Collect embeddings from claims
-                    for claim in result.get("claims", []):
-                        emb = claim.get("embedding")
-                        if emb:
-                            embeddings.append(emb)
             
             timestamps.sort()
-            
-            # Calculate centroid from all claim embeddings
-            centroid = calculate_centroid(embeddings) if embeddings else None
             
             narratives_out.append({
                 "narrative_id": narrative.get("id"),
@@ -529,7 +506,6 @@ class OutputManager:
                 "topic_label": narrative.get("name"),  # Use name as topic label
                 "claim_count": claim_count,
                 "color": colors[idx % len(colors)],  # Assign color from palette
-                "centroid_embedding": centroid,
                 "first_seen_at": timestamps[0] if timestamps else None,
                 "last_seen_at": timestamps[-1] if timestamps else None,
             })
@@ -537,21 +513,13 @@ class OutputManager:
         # Also include overall summary as a special narrative
         if synthesis.get("overall_summary"):
             all_timestamps = []
-            all_embeddings = []
             
             for result in video_results:
                 pub_at = result.get("video_metadata", {}).get("published_at")
                 if pub_at:
                     all_timestamps.append(pub_at)
-                
-                # Collect all embeddings
-                for claim in result.get("claims", []):
-                    emb = claim.get("embedding")
-                    if emb:
-                        all_embeddings.append(emb)
             
             all_timestamps.sort()
-            overall_centroid = calculate_centroid(all_embeddings) if all_embeddings else None
             
             narratives_out.insert(0, {
                 "narrative_id": "overall",
@@ -560,7 +528,6 @@ class OutputManager:
                 "topic_label": "Overall",
                 "claim_count": sum(r.get("claim_count", 0) for r in video_results),
                 "color": "#6B7280",  # Gray for overall
-                "centroid_embedding": overall_centroid,
                 "first_seen_at": all_timestamps[0] if all_timestamps else None,
                 "last_seen_at": all_timestamps[-1] if all_timestamps else None,
             })
@@ -651,3 +618,45 @@ class OutputManager:
     def get_run_path(self) -> str:
         """Return the path to the current run directory."""
         return str(self.run_dir)
+    
+    def cleanup(self) -> None:
+        """
+        Delete all output data after successful DB import.
+        
+        Removes all files from checkpoints/ and db_ready/ directories.
+        """
+        cleanup_output(self.run_dir)
+
+
+def cleanup_output(output_dir: str | Path = "output") -> bool:
+    """
+    Delete the entire output folder after successful DB import.
+    
+    Call this after importing data to your database to free up disk space.
+    
+    Args:
+        output_dir: Path to the output directory (default: output)
+    
+    Returns:
+        True if cleanup succeeded, False if directory doesn't exist
+    
+    Usage:
+        from utility.output import cleanup_output
+        
+        # After successful DB import:
+        cleanup_output()  # Deletes entire output/ folder
+    """
+    import shutil
+    
+    output_path = Path(output_dir)
+    
+    if not output_path.exists():
+        log.warning(f"Output directory does not exist: {output_path}")
+        return False
+    
+    # Remove entire output folder
+    shutil.rmtree(output_path)
+    log.info(f"Removed output directory: {output_path}")
+    
+    log.info("Output cleanup complete")
+    return True
