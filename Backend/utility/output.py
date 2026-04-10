@@ -153,7 +153,7 @@ class OutputManager:
         transcripts = self._extract_transcripts(video_results, processed_at)
         transcript_chunks = self._extract_transcript_chunks(video_results, processed_at)
         comments = self._extract_comments(video_results, processed_at)
-        claims = self._extract_claims(video_results, processed_at)
+        claims = self._extract_claims(video_results, risk, processed_at)
         claim_embeddings = self._extract_claim_embeddings(video_results)
         narratives = self._extract_narratives(synthesis, video_results)
         narrative_videos = self._extract_narrative_videos(synthesis)
@@ -231,12 +231,25 @@ class OutputManager:
             if channel_id and channel_id not in channels:
                 channels[channel_id] = {
                     "channel_id": channel_id,
-                    "channel_title": channel_title or "",
+                    "channel_name": channel_title or "",  # Schema uses channel_name
+                    "total_claims": 0,  # Will be calculated
+                    "flagged_claims": 0,
+                    "accuracy_rate": 0.0,
+                    "risk_level": "low",
+                    "risk_score": 0.0,
+                    "processed_at": None,
                 }
+        
+        # Calculate claim counts per channel
+        for result in video_results:
+            ch_id = result.get("video_metadata", {}).get("channel_id")
+            if ch_id and ch_id in channels:
+                channels[ch_id]["total_claims"] += result.get("claim_count", 0)
+        
         return list(channels.values())
     
     def _extract_videos(self, video_results: list[dict], processed_at: str) -> list[dict]:
-        """Extract video metadata in flat format."""
+        """Extract video metadata matching Prisma Video model."""
         videos = []
         for result in video_results:
             meta = result.get("video_metadata", {})
@@ -254,18 +267,21 @@ class OutputManager:
         return videos
     
     def _extract_transcripts(self, video_results: list[dict], processed_at: str) -> list[dict]:
-        """Extract transcripts for each video."""
+        """Extract transcripts matching Prisma Transcript model."""
         transcripts = []
         transcript_id = 1
         
         for result in video_results:
             video_id = result.get("video_id")
+            meta = result.get("video_metadata", {})
             transcript_text = result.get("_transcript", "")
             
             if transcript_text:
                 transcripts.append({
                     "transcript_id": transcript_id,
                     "video_id": video_id,
+                    "channel_id": meta.get("channel_id"),
+                    "video_title": meta.get("title", ""),
                     "transcript": transcript_text,
                     "processed_at": processed_at,
                 })
@@ -274,7 +290,7 @@ class OutputManager:
         return transcripts
     
     def _extract_transcript_chunks(self, video_results: list[dict], processed_at: str) -> list[dict]:
-        """Extract transcript chunks for each video."""
+        """Extract transcript chunks matching Prisma TranscriptChunk model."""
         from utility.chunker import chunk_text
         
         chunks = []
@@ -283,6 +299,7 @@ class OutputManager:
         
         for result in video_results:
             transcript_text = result.get("_transcript", "")
+            video_title = result.get("video_metadata", {}).get("title", "")
             
             if transcript_text:
                 video_chunks = chunk_text(transcript_text)
@@ -290,6 +307,7 @@ class OutputManager:
                     chunks.append({
                         "chunk_id": chunk_id,
                         "transcript_id": transcript_id,
+                        "video_title": video_title,
                         "chunk_text": chunk_text_content,
                         "chunk_number": chunk_number,
                         "processed_at": processed_at,
@@ -300,7 +318,7 @@ class OutputManager:
         return chunks
     
     def _extract_comments(self, video_results: list[dict], processed_at: str) -> list[dict]:
-        """Extract comments from all videos."""
+        """Extract comments matching Prisma Comment model."""
         comments = []
         
         for result in video_results:
@@ -310,9 +328,9 @@ class OutputManager:
                 comments.append({
                     "comment_id": comment.get("comment_id"),
                     "video_id": comment.get("video_id"),
-                    "commenter_name": comment.get("commenter_name", ""),
-                    "comment_text": comment.get("comment_text") or comment.get("text", ""),
-                    "published_at": comment.get("published_at"),
+                    "commenter_name": comment.get("commenter_name", "")[:50],  # Schema limit
+                    "comment_text": (comment.get("comment_text") or comment.get("text", ""))[:500],  # Schema limit
+                    "published_date": comment.get("published_at", ""),  # Schema uses published_date as String
                     "is_reply": comment.get("is_reply", False),
                     "top_level_comment_id": comment.get("top_level_comment_id"),
                     "processed_at": processed_at,
@@ -320,20 +338,114 @@ class OutputManager:
         
         return comments
     
-    def _extract_claims(self, video_results: list[dict], processed_at: str) -> list[dict]:
-        """Extract all claims with auto-generated IDs."""
+    def _map_claim_type(self, llm_type: str | None) -> str:
+        """Map LLM claim types to schema ClaimType (factual or opinion)."""
+        if not llm_type:
+            return "factual"
+        
+        llm_type = llm_type.lower()
+        
+        # Map prediction and statistic to factual (verifiable claims)
+        if llm_type in ("factual", "prediction", "statistic"):
+            return "factual"
+        elif llm_type == "opinion":
+            return "opinion"
+        else:
+            return "factual"  # Default
+    
+    def _confidence_to_risk_level(self, confidence: float) -> str:
+        """Map confidence score to risk level (low/medium/high)."""
+        if confidence >= 0.7:
+            return "high"
+        elif confidence >= 0.4:
+            return "medium"
+        else:
+            return "low"
+    
+    def _get_claim_risk_level(
+        self, 
+        claim_text: str, 
+        video_flags: list[dict]
+    ) -> str:
+        """
+        Determine risk level for a claim by checking if it matches any risk flags.
+        
+        Checks if the claim text appears in the excerpt or context of any flag.
+        Returns the highest risk level if multiple matches found.
+        """
+        if not claim_text or not video_flags:
+            return "low"
+        
+        claim_lower = claim_text.lower()
+        highest_confidence = 0.0
+        
+        for flag in video_flags:
+            excerpt = (flag.get("excerpt") or "").lower()
+            context = (flag.get("context") or "").lower()
+            
+            # Check if claim text overlaps with flagged content
+            # Use substring matching - if significant portion of claim is in excerpt/context
+            words_in_claim = set(claim_lower.split())
+            words_in_excerpt = set(excerpt.split())
+            words_in_context = set(context.split())
+            
+            # Check for word overlap (at least 3 matching words or 50% of claim words)
+            excerpt_overlap = len(words_in_claim & words_in_excerpt)
+            context_overlap = len(words_in_claim & words_in_context)
+            
+            min_match = min(3, len(words_in_claim) * 0.5)
+            
+            if excerpt_overlap >= min_match or context_overlap >= min_match:
+                flag_confidence = float(flag.get("confidence") or 0.5)
+                highest_confidence = max(highest_confidence, flag_confidence)
+        
+        if highest_confidence > 0:
+            return self._confidence_to_risk_level(highest_confidence)
+        
+        return "low"
+    
+    def _extract_claims(
+        self, 
+        video_results: list[dict], 
+        risk_data: dict | None,
+        processed_at: str
+    ) -> list[dict]:
+        """Extract all claims matching Prisma Claim model."""
         claims = []
         claim_id = 1
         
+        # Build risk flags lookup by video_id
+        video_flags_lookup: dict[str, list[dict]] = {}
+        if risk_data:
+            for video_risk in risk_data.get("per_video", []):
+                vid = video_risk.get("video_id")
+                if vid is not None:
+                    flags = video_risk.get("flags", [])
+                    video_flags_lookup[vid] = flags
+        
         for result in video_results:
-            video_id = result.get("video_id")
+            video_id = result.get("video_id", "")
+            video_title = result.get("video_metadata", {}).get("title", "")
+            video_flags = video_flags_lookup.get(video_id, []) if video_id else []
+            
             for claim in result.get("claims", []):
+                claim_text = claim.get("text", "")
+                
+                # Check if this specific claim matches any risk flags
+                risk_level = self._get_claim_risk_level(claim_text, video_flags)
+                
                 claims.append({
                     "claim_id": claim_id,
                     "video_id": video_id,
                     "narrative_id": None,  # To be linked later
-                    "claim_text": claim.get("text"),
+                    "video_title": video_title,
+                    "claim_text": claim_text,
+                    "claim_type": self._map_claim_type(claim.get("type")),
+                    "confidence_score": float(claim.get("confidence", 0.5)),
+                    "risk_level": risk_level,
                     "processed_at": processed_at,
+                    "is_verified": False,
+                    "accuracy_rating": None,
                 })
                 claim_id += 1
         
@@ -361,17 +473,29 @@ class OutputManager:
         synthesis: dict | None, 
         video_results: list[dict]
     ) -> list[dict]:
-        """Extract narratives from synthesis in DB-ready format with centroid embeddings."""
+        """Extract narratives matching Prisma Narrative model."""
         narratives_out = []
         
         if not synthesis:
             return narratives_out
         
+        # Color palette for narratives
+        colors = [
+            "#3B82F6",  # Blue
+            "#10B981",  # Emerald
+            "#F59E0B",  # Amber
+            "#EF4444",  # Red
+            "#8B5CF6",  # Violet
+            "#EC4899",  # Pink
+            "#06B6D4",  # Cyan
+            "#84CC16",  # Lime
+        ]
+        
         # Build video lookup for timestamps and claims
         video_lookup = {r.get("video_id"): r for r in video_results}
         
         # New structure: synthesis has "narratives" array
-        for narrative in synthesis.get("narratives", []):
+        for idx, narrative in enumerate(synthesis.get("narratives", [])):
             video_ids = narrative.get("video_ids", [])
             
             # Collect claims, timestamps, and embeddings for this narrative
@@ -404,6 +528,7 @@ class OutputManager:
                 "summary": narrative.get("summary"),
                 "topic_label": narrative.get("name"),  # Use name as topic label
                 "claim_count": claim_count,
+                "color": colors[idx % len(colors)],  # Assign color from palette
                 "centroid_embedding": centroid,
                 "first_seen_at": timestamps[0] if timestamps else None,
                 "last_seen_at": timestamps[-1] if timestamps else None,
@@ -434,6 +559,7 @@ class OutputManager:
                 "summary": synthesis.get("overall_summary"),
                 "topic_label": "Overall",
                 "claim_count": sum(r.get("claim_count", 0) for r in video_results),
+                "color": "#6B7280",  # Gray for overall
                 "centroid_embedding": overall_centroid,
                 "first_seen_at": all_timestamps[0] if all_timestamps else None,
                 "last_seen_at": all_timestamps[-1] if all_timestamps else None,

@@ -4,7 +4,7 @@ Trend analysis module for YouTube Intelligence System.
 Tracks synthesized narratives over time:
 - Time bucketing (daily/weekly)
 - Activity metrics per period
-- Pattern detection (surge/peak/decline/stable)
+- Pattern detection (rising/peaking/declining/stable)
 - Narrative trend aggregation
 """
 
@@ -24,7 +24,7 @@ from trends.metrics import (
 )
 
 from trends.detector import (
-    TrendPattern,
+    Direction,
     TrendAnalysis,
     detect_pattern,
     detect_surge_periods,
@@ -39,7 +39,7 @@ from trends.aggregator import (
 __all__ = [
     # Types
     "Granularity",
-    "TrendPattern",
+    "Direction",
     "BucketMetrics",
     "TrendAnalysis",
     # Temporal

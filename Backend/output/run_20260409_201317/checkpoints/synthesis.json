@@ -1,0 +1,17 @@
+{
+  "narratives": [
+    {
+      "id": "narrative_1",
+      "name": "AI Evolution and Advancements",
+      "summary": "The dataset discusses the evolution of AI, its advancements, and its potential impact on various industries.",
+      "video_ids": [
+        "x2l7W9aTc5k",
+        "M6yRREy_5CM",
+        "Vq0W85mnYU0",
+        "GiVtPpEVdCY"
+      ]
+    }
+  ],
+  "high_confidence_claims": [],
+  "overall_summary": "The dataset explores the latest developments in AI, including advancements in models like Claude and Mythos, as well as the potential impact of AI on industries such as logistics and entertainment."
+}

@@ -238,14 +238,13 @@ Each narrative is tracked over time:
 }
 ```
 
-### Pattern Types
+### Direction Types
 
-| Pattern | Condition |
-|---------|-----------|
-| **surge** | Last period ≥ 2× first period |
-| **decline** | Last period ≤ 50% of first |
-| **peak** | Rise then fall (spike in middle) |
-| **emerging** | Recent growth, limited data |
+| Direction | Condition |
+|-----------|-----------|
+| **rising** | Activity increasing (≥2× growth or recent uptick) |
+| **peaking** | Rise then fall (spike in middle) |
+| **declining** | Activity dropping (≤50% of start) |
 | **stable** | Consistent activity |
 
 ## Risk Assessment
@@ -286,7 +285,13 @@ Each file maps directly to a database table:
 [
   {
     "channel_id": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
-    "channel_title": "Google Developers"
+    "channel_name": "Google Developers",
+    "total_claims": 42,
+    "flagged_claims": 0,
+    "accuracy_rate": 0.0,
+    "risk_level": "low",
+    "risk_score": 0.0,
+    "processed_at": null
   }
 ]
 ```
@@ -314,6 +319,8 @@ Each file maps directly to a database table:
   {
     "transcript_id": 1,
     "video_id": "abc123",
+    "channel_id": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+    "video_title": "What's New in AI",
     "transcript": "Welcome to our video about AI trends...",
     "processed_at": "2026-04-08T10:30:00Z"
   }
@@ -328,7 +335,7 @@ Each file maps directly to a database table:
     "video_id": "abc123",
     "commenter_name": "TechFan42",
     "comment_text": "Great explanation of LLMs!",
-    "published_at": "2026-03-16T08:20:00Z",
+    "published_date": "2026-03-16T08:20:00Z",
     "is_reply": false,
     "top_level_comment_id": null,
     "processed_at": "2026-04-08T10:30:00Z"
@@ -343,8 +350,14 @@ Each file maps directly to a database table:
     "claim_id": 1,
     "video_id": "abc123",
     "narrative_id": null,
+    "video_title": "What's New in AI",
     "claim_text": "AI will automate 50% of jobs by 2030",
-    "processed_at": "2026-04-08T10:30:00Z"
+    "claim_type": "factual",
+    "confidence_score": 0.85,
+    "risk_level": "low",
+    "processed_at": "2026-04-08T10:30:00Z",
+    "is_verified": false,
+    "accuracy_rating": null
   }
 ]
 ```
@@ -358,6 +371,8 @@ Each file maps directly to a database table:
     "summary": "Growing worry about automation...",
     "topic_label": "AI Job Displacement Concerns",
     "claim_count": 15,
+    "color": "#3B82F6",
+    "centroid_embedding": [0.123, -0.456, ...],
     "first_seen_at": "2026-02-10T12:00:00Z",
     "last_seen_at": "2026-04-01T09:30:00Z"
   }

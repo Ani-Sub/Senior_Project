@@ -1,6 +1,6 @@
 """
 Trend pattern detection for narrative activity.
-Identifies surges, peaks, declines, and stable patterns in time series data.
+Identifies rising, peaking, declining, and stable patterns in time series data.
 """
 
 from dataclasses import dataclass
@@ -8,13 +8,14 @@ from typing import Literal
 from trends.metrics import BucketMetrics
 
 
-TrendPattern = Literal["surge", "peak", "decline", "stable", "emerging", "insufficient_data"]
+# Direction enum values matching Prisma schema
+Direction = Literal["rising", "peaking", "declining", "stable"]
 
 
 @dataclass
 class TrendAnalysis:
     """Result of trend pattern detection."""
-    pattern: TrendPattern
+    pattern: Direction
     confidence: float  # 0.0-1.0, how confident we are in this pattern
     peak_period: str | None  # The period with highest activity
     peak_value: float  # The metric value at peak
@@ -39,8 +40,8 @@ class TrendAnalysis:
 def detect_pattern(
     metrics: list[BucketMetrics],
     primary_metric: str = "total_views",
-    surge_threshold: float = 2.0,  # 2x increase = surge
-    decline_threshold: float = 0.5  # 50% drop = decline
+    rising_threshold: float = 2.0,  # 2x increase = rising
+    decline_threshold: float = 0.5  # 50% drop = declining
 ) -> TrendAnalysis:
     """
     Detect the overall trend pattern in a time series of metrics.
@@ -48,16 +49,16 @@ def detect_pattern(
     Args:
         metrics: List of BucketMetrics, sorted chronologically
         primary_metric: Which metric to analyze (total_views, video_count, etc.)
-        surge_threshold: Multiplier for detecting surges (2.0 = 100% increase)
+        rising_threshold: Multiplier for detecting rising trends (2.0 = 100% increase)
         decline_threshold: Multiplier for detecting declines (0.5 = 50% drop)
     
     Returns:
-        TrendAnalysis with pattern classification and details
+        TrendAnalysis with pattern classification (rising, peaking, declining, stable)
     """
     if len(metrics) < 2:
         return TrendAnalysis(
-            pattern="insufficient_data",
-            confidence=0.0,
+            pattern="stable",
+            confidence=0.5,
             peak_period=metrics[0].period if metrics else None,
             peak_value=getattr(metrics[0], primary_metric, 0) if metrics else 0,
             start_period=metrics[0].period if metrics else "",
@@ -85,43 +86,46 @@ def detect_pattern(
     second_half_avg = sum(values[len(values)//2:]) / max(len(values) - len(values)//2, 1)
     
     # Pattern detection logic
-    pattern: TrendPattern
+    pattern: Direction
     confidence: float
     description: str
     
-    # Check for surge (rapid increase)
-    if last_value >= first_value * surge_threshold:
-        pattern = "surge"
-        confidence = min(1.0, (last_value / first_value - 1) / (surge_threshold - 1))
-        description = f"Activity surged {last_value/first_value:.1f}x from {periods[0]} to {periods[-1]}."
-    
-    # Check for decline (significant drop)
-    elif last_value <= first_value * decline_threshold:
-        pattern = "decline"
-        confidence = min(1.0, (1 - last_value / first_value) / (1 - decline_threshold))
-        description = f"Activity declined {(1 - last_value/first_value)*100:.0f}% from {periods[0]} to {periods[-1]}."
-    
-    # Check for peak (rise then fall)
-    elif max_idx > 0 and max_idx < len(values) - 1:
-        # Peak is in the middle, not at edges
+    # Check for peaking (rise then fall - peak in the middle)
+    if max_idx > 0 and max_idx < len(values) - 1:
         pre_peak_growth = max_value / (values[0] if values[0] > 0 else 1)
         post_peak_decline = values[-1] / max_value if max_value > 0 else 1
         
         if pre_peak_growth >= 1.5 and post_peak_decline <= 0.7:
-            pattern = "peak"
+            pattern = "peaking"
             confidence = min(1.0, pre_peak_growth / 2)
             description = f"Activity peaked at {peak_period}, rising {pre_peak_growth:.1f}x before declining."
-        else:
-            pattern = "stable"
-            variance = _calculate_variance(values)
-            confidence = max(0.0, 1.0 - variance / avg_value) if avg_value > 0 else 0.5
-            description = f"Activity remained relatively stable across {len(periods)} periods."
+            
+            return TrendAnalysis(
+                pattern=pattern,
+                confidence=confidence,
+                peak_period=peak_period,
+                peak_value=max_value,
+                start_period=periods[0],
+                end_period=periods[-1],
+                total_periods=len(metrics),
+                description=description
+            )
     
-    # Check for emerging trend (just starting to rise)
-    elif second_half_avg > first_half_avg * 1.3 and len(metrics) <= 4:
-        pattern = "emerging"
-        confidence = min(1.0, second_half_avg / first_half_avg - 1)
-        description = f"Activity is emerging, with recent periods showing {second_half_avg/first_half_avg:.1f}x more activity."
+    # Check for rising (significant increase over time)
+    if last_value >= first_value * rising_threshold or second_half_avg > first_half_avg * 1.3:
+        pattern = "rising"
+        if last_value >= first_value * rising_threshold:
+            confidence = min(1.0, (last_value / first_value - 1) / (rising_threshold - 1))
+            description = f"Activity rising {last_value/first_value:.1f}x from {periods[0]} to {periods[-1]}."
+        else:
+            confidence = min(1.0, second_half_avg / first_half_avg - 1)
+            description = f"Activity is rising, with recent periods showing {second_half_avg/first_half_avg:.1f}x more activity."
+    
+    # Check for declining (significant drop)
+    elif last_value <= first_value * decline_threshold:
+        pattern = "declining"
+        confidence = min(1.0, (1 - last_value / first_value) / (1 - decline_threshold))
+        description = f"Activity declined {(1 - last_value/first_value)*100:.0f}% from {periods[0]} to {periods[-1]}."
     
     # Default to stable
     else:
