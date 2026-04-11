@@ -9,8 +9,8 @@ from typing import List, Annotated
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-from fastapi import Header
-
+from fastapi import Header, status
+from fastapi.security import OAuth2PasswordBearer
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
@@ -21,7 +21,7 @@ def create_access_token(user_id: str):
     payload = {"sub": str(user_id), "exp": datetime.now() + timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)}
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
-
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
