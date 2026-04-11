@@ -1,0 +1,717 @@
+{
+  "test_mode": true,
+  "videos_analyzed": 6,
+  "risk_summary": {
+    "per_video": [
+      {
+        "video_id": "vid_clean_001",
+        "risk_score": 0.0,
+        "risk_level": "none",
+        "flag_count": 0,
+        "flags": [],
+        "transcript_scanned": true,
+        "comments_scanned": 3
+      },
+      {
+        "video_id": "vid_misinfo_002",
+        "risk_score": 0.71,
+        "risk_level": "high",
+        "flag_count": 7,
+        "flags": [
+          {
+            "category": "misinformation",
+            "category_description": "False or misleading health/political information",
+            "confidence": 0.9,
+            "source": "transcript",
+            "excerpt": "miracle cure",
+            "context": "...harma is hiding the real cure for cancer. Doctors don't want you to know\n                about this miracle cure that can heal any disease. The government is covering\n                up the truth about these natu...",
+            "detection_method": "keyword_high",
+            "matched_term": "miracle cure",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "misinformation",
+            "category_description": "False or misleading health/political information",
+            "confidence": 0.9,
+            "source": "transcript",
+            "excerpt": "Doctors don't want you to know",
+            "context": "\n                Big pharma is hiding the real cure for cancer. Doctors don't want you to know\n                about this miracle cure that can heal any disease. The government is covering\n     ...",
+            "detection_method": "keyword_high",
+            "matched_term": "doctors don't want you to know",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "misinformation",
+            "category_description": "False or misleading health/political information",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "Do your research",
+            "context": "... any disease. The government is covering\n                up the truth about these natural remedies. Do your research and wake up!\n                \n                Also, I've discovered a guaranteed returns investment...",
+            "detection_method": "keyword_medium",
+            "matched_term": "do your research",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "misinformation",
+            "category_description": "False or misleading health/political information",
+            "confidence": 0.7,
+            "source": "transcript",
+            "excerpt": "government is cover",
+            "context": "...ctors don't want you to know\n                about this miracle cure that can heal any disease. The government is covering\n                up the truth about these natural remedies. Do your research and wake up!\n       ...",
+            "detection_method": "pattern",
+            "matched_term": "government is cover",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "scam",
+            "category_description": "Financial scams or fraudulent schemes",
+            "confidence": 0.9,
+            "source": "transcript",
+            "excerpt": "guaranteed returns",
+            "context": "...al remedies. Do your research and wake up!\n                \n                Also, I've discovered a guaranteed returns investment strategy. You can double\n                your money in just 30 days with zero risk. DM m...",
+            "detection_method": "keyword_high",
+            "matched_term": "guaranteed returns",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "scam",
+            "category_description": "Financial scams or fraudulent schemes",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "once in a lifetime",
+            "context": "...      your money in just 30 days with zero risk. DM me for exclusive access to this\n                once in a lifetime opportunity.\n            ",
+            "detection_method": "keyword_medium",
+            "matched_term": "once in a lifetime",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "scam",
+            "category_description": "Financial scams or fraudulent schemes",
+            "confidence": 0.7,
+            "source": "transcript",
+            "excerpt": "double\n                your money",
+            "context": "...           \n                Also, I've discovered a guaranteed returns investment strategy. You can double\n                your money in just 30 days with zero risk. DM me for exclusive access to this\n                once in a lifeti...",
+            "detection_method": "pattern",
+            "matched_term": "double\n                your money",
+            "llm_reasoning": ""
+          }
+        ],
+        "transcript_scanned": true,
+        "comments_scanned": 4
+      },
+      {
+        "video_id": "vid_toxic_003",
+        "risk_score": 0.74,
+        "risk_level": "high",
+        "flag_count": 8,
+        "flags": [
+          {
+            "category": "violence",
+            "category_description": "Threats of violence or violent content",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "fight",
+            "context": "\n                In this video we're reviewing the latest action movie. The fight scenes\n                were incredibly choreographed and the stunts were amazing. Let's break\n     ...",
+            "detection_method": "keyword_medium",
+            "matched_term": "fight",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "toxicity",
+            "category_description": "Generally toxic or abusive language",
+            "confidence": 0.5,
+            "source": "comment",
+            "excerpt": "trash",
+            "context": "This movie was trash, the director should kill himself",
+            "detection_method": "keyword_medium",
+            "matched_term": "trash",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "harassment",
+            "category_description": "Targeted harassment, doxxing, or stalking",
+            "confidence": 0.5,
+            "source": "comment",
+            "excerpt": "worthless",
+            "context": "You're a worthless reviewer, go die in a hole",
+            "detection_method": "keyword_medium",
+            "matched_term": "worthless",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "toxicity",
+            "category_description": "Generally toxic or abusive language",
+            "confidence": 0.9,
+            "source": "comment",
+            "excerpt": "go die",
+            "context": "You're a worthless reviewer, go die in a hole",
+            "detection_method": "keyword_high",
+            "matched_term": "go die",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "toxicity",
+            "category_description": "Generally toxic or abusive language",
+            "confidence": 0.7,
+            "source": "comment",
+            "excerpt": "You're a worthless",
+            "context": "You're a worthless reviewer, go die in a hole",
+            "detection_method": "pattern",
+            "matched_term": "You're a worthless",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "violence",
+            "category_description": "Threats of violence or violent content",
+            "confidence": 0.9,
+            "source": "comment",
+            "excerpt": "I'll find you",
+            "context": "I'll find you and make you pay for this garbage review",
+            "detection_method": "keyword_high",
+            "matched_term": "i'll find you",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "harassment",
+            "category_description": "Targeted harassment, doxxing, or stalking",
+            "confidence": 0.5,
+            "source": "comment",
+            "excerpt": "KYS",
+            "context": "KYS for liking this movie, you have no taste",
+            "detection_method": "keyword_medium",
+            "matched_term": "kys",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "toxicity",
+            "category_description": "Generally toxic or abusive language",
+            "confidence": 0.9,
+            "source": "comment",
+            "excerpt": "KYS",
+            "context": "KYS for liking this movie, you have no taste",
+            "detection_method": "keyword_high",
+            "matched_term": "kys",
+            "llm_reasoning": ""
+          }
+        ],
+        "transcript_scanned": true,
+        "comments_scanned": 5
+      },
+      {
+        "video_id": "vid_illegal_004",
+        "risk_score": 1.0,
+        "risk_level": "critical",
+        "flag_count": 14,
+        "flags": [
+          {
+            "category": "violence",
+            "category_description": "Threats of violence or violent content",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "attack",
+            "context": "...        Just kidding! This is actually a cybersecurity awareness video about common\n                attack vectors and how to protect yourself. Never attempt any illegal activities.\n            ",
+            "detection_method": "keyword_medium",
+            "matched_term": "attack",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.9,
+            "source": "transcript",
+            "excerpt": "how to hack",
+            "context": "\n                Today I'm going to show you how to hack into systems and bypass security\n                measures. First, we'll cover credit card fraud tec...",
+            "detection_method": "keyword_high",
+            "matched_term": "how to hack",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.9,
+            "source": "transcript",
+            "excerpt": "credit card fraud",
+            "context": "... show you how to hack into systems and bypass security\n                measures. First, we'll cover credit card fraud techniques and how to steal\n                money without getting caught. Then we'll discuss where ...",
+            "detection_method": "keyword_high",
+            "matched_term": "credit card fraud",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.9,
+            "source": "transcript",
+            "excerpt": "buy drugs",
+            "context": "...chniques and how to steal\n                money without getting caught. Then we'll discuss where to buy drugs on the\n                dark web using untraceable methods.\n                \n                Just ki...",
+            "detection_method": "keyword_high",
+            "matched_term": "buy drugs",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.9,
+            "source": "transcript",
+            "excerpt": "bypass security",
+            "context": "\n                Today I'm going to show you how to hack into systems and bypass security\n                measures. First, we'll cover credit card fraud techniques and how to steal\n        ...",
+            "detection_method": "keyword_high",
+            "matched_term": "bypass security",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "hack",
+            "context": "\n                Today I'm going to show you how to hack into systems and bypass security\n                measures. First, we'll cover credit card fraud tec...",
+            "detection_method": "keyword_medium",
+            "matched_term": "hack",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "fraud",
+            "context": "...w to hack into systems and bypass security\n                measures. First, we'll cover credit card fraud techniques and how to steal\n                money without getting caught. Then we'll discuss where ...",
+            "detection_method": "keyword_medium",
+            "matched_term": "fraud",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "illegal",
+            "context": "...ss video about common\n                attack vectors and how to protect yourself. Never attempt any illegal activities.\n            ",
+            "detection_method": "keyword_medium",
+            "matched_term": "illegal",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "drugs",
+            "context": "...ques and how to steal\n                money without getting caught. Then we'll discuss where to buy drugs on the\n                dark web using untraceable methods.\n                \n                Just ki...",
+            "detection_method": "keyword_medium",
+            "matched_term": "drugs",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "meth",
+            "context": "...ing caught. Then we'll discuss where to buy drugs on the\n                dark web using untraceable methods.\n                \n                Just kidding! This is actually a cybersecurity awareness video...",
+            "detection_method": "keyword_medium",
+            "matched_term": "meth",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "dark web",
+            "context": "...         money without getting caught. Then we'll discuss where to buy drugs on the\n                dark web using untraceable methods.\n                \n                Just kidding! This is actually a cybers...",
+            "detection_method": "keyword_medium",
+            "matched_term": "dark web",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.5,
+            "source": "transcript",
+            "excerpt": "untraceable",
+            "context": "...without getting caught. Then we'll discuss where to buy drugs on the\n                dark web using untraceable methods.\n                \n                Just kidding! This is actually a cybersecurity awareness ...",
+            "detection_method": "keyword_medium",
+            "matched_term": "untraceable",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.7,
+            "source": "transcript",
+            "excerpt": "how to steal",
+            "context": "...s and bypass security\n                measures. First, we'll cover credit card fraud techniques and how to steal\n                money without getting caught. Then we'll discuss where to buy drugs on the\n        ...",
+            "detection_method": "pattern",
+            "matched_term": "how to steal",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "illegal_activity",
+            "category_description": "References to illegal activities (fraud, drugs, hacking)",
+            "confidence": 0.5,
+            "source": "comment",
+            "excerpt": "fake ID",
+            "context": "Where can I get a fake ID?",
+            "detection_method": "keyword_medium",
+            "matched_term": "fake id",
+            "llm_reasoning": ""
+          }
+        ],
+        "transcript_scanned": true,
+        "comments_scanned": 3
+      },
+      {
+        "video_id": "vid_hate_005",
+        "risk_score": 0.56,
+        "risk_level": "medium",
+        "flag_count": 5,
+        "flags": [
+          {
+            "category": "hate_speech",
+            "category_description": "Discriminatory content targeting protected groups",
+            "confidence": 0.7,
+            "source": "comment",
+            "excerpt": "All immigrants should",
+            "context": "All immigrants should go back to their country",
+            "detection_method": "pattern",
+            "matched_term": "All immigrants should",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "hate_speech",
+            "category_description": "Discriminatory content targeting protected groups",
+            "confidence": 0.9,
+            "source": "comment",
+            "excerpt": "don't belong here",
+            "context": "Those people don't belong here, they're ruining everything",
+            "detection_method": "keyword_high",
+            "matched_term": "don't belong here",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "hate_speech",
+            "category_description": "Discriminatory content targeting protected groups",
+            "confidence": 0.5,
+            "source": "comment",
+            "excerpt": "Those people",
+            "context": "Those people don't belong here, they're ruining everything",
+            "detection_method": "keyword_medium",
+            "matched_term": "those people",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "hate_speech",
+            "category_description": "Discriminatory content targeting protected groups",
+            "confidence": 0.5,
+            "source": "comment",
+            "excerpt": "They're all",
+            "context": "They're all the same, typical behavior from them",
+            "detection_method": "keyword_medium",
+            "matched_term": "they're all",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "hate_speech",
+            "category_description": "Discriminatory content targeting protected groups",
+            "confidence": 0.5,
+            "source": "comment",
+            "excerpt": "typical",
+            "context": "They're all the same, typical behavior from them",
+            "detection_method": "keyword_medium",
+            "matched_term": "typical",
+            "llm_reasoning": ""
+          }
+        ],
+        "transcript_scanned": true,
+        "comments_scanned": 4
+      },
+      {
+        "video_id": "vid_selfharm_006",
+        "risk_score": 0.5,
+        "risk_level": "medium",
+        "flag_count": 3,
+        "flags": [
+          {
+            "category": "self_harm",
+            "category_description": "Content related to self-harm or suicide",
+            "confidence": 0.9,
+            "source": "comment",
+            "excerpt": "want to die",
+            "context": "I've been feeling like I want to die lately",
+            "detection_method": "keyword_high",
+            "matched_term": "want to die",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "self_harm",
+            "category_description": "Content related to self-harm or suicide",
+            "confidence": 0.9,
+            "source": "comment",
+            "excerpt": "no reason to live",
+            "context": "There's no reason to live anymore, nothing helps",
+            "detection_method": "keyword_high",
+            "matched_term": "no reason to live",
+            "llm_reasoning": ""
+          },
+          {
+            "category": "self_harm",
+            "category_description": "Content related to self-harm or suicide",
+            "confidence": 0.7,
+            "source": "comment",
+            "excerpt": "tried to hurt myself",
+            "context": "I tried to hurt myself last week, I don't know what to do",
+            "detection_method": "pattern",
+            "matched_term": "tried to hurt myself",
+            "llm_reasoning": ""
+          }
+        ],
+        "transcript_scanned": true,
+        "comments_scanned": 4
+      }
+    ],
+    "aggregate": {
+      "total_videos": 6,
+      "videos_with_risks": 5,
+      "total_flags": 37,
+      "overall_risk_score": 0.59,
+      "overall_risk_level": "critical",
+      "risk_distribution": {
+        "misinformation": 4,
+        "scam": 3,
+        "violence": 3,
+        "toxicity": 4,
+        "harassment": 2,
+        "illegal_activity": 13,
+        "hate_speech": 5,
+        "self_harm": 3
+      },
+      "risk_distribution_detailed": {
+        "self_harm": {
+          "count": 3,
+          "description": "Content related to self-harm or suicide"
+        },
+        "violence": {
+          "count": 3,
+          "description": "Threats of violence or violent content"
+        },
+        "illegal_activity": {
+          "count": 13,
+          "description": "References to illegal activities (fraud, drugs, hacking)"
+        },
+        "misinformation": {
+          "count": 4,
+          "description": "False or misleading health/political information"
+        },
+        "hate_speech": {
+          "count": 5,
+          "description": "Discriminatory content targeting protected groups"
+        },
+        "harassment": {
+          "count": 2,
+          "description": "Targeted harassment, doxxing, or stalking"
+        },
+        "toxicity": {
+          "count": 4,
+          "description": "Generally toxic or abusive language"
+        },
+        "scam": {
+          "count": 3,
+          "description": "Financial scams or fraudulent schemes"
+        }
+      },
+      "level_distribution": {
+        "none": 1,
+        "high": 2,
+        "critical": 1,
+        "medium": 2
+      },
+      "high_risk_videos": [
+        "vid_misinfo_002",
+        "vid_toxic_003"
+      ],
+      "critical_risk_videos": [
+        "vid_illegal_004"
+      ],
+      "top_excerpts_by_category": {
+        "misinformation": [
+          {
+            "video_id": "vid_misinfo_002",
+            "excerpt": "miracle cure",
+            "context": "...harma is hiding the real cure for cancer. Doctors don't want you to know\n                about this miracle cure that can heal any disease. The government is covering\n                up the truth about these natu...",
+            "confidence": 0.9,
+            "source": "transcript"
+          },
+          {
+            "video_id": "vid_misinfo_002",
+            "excerpt": "Doctors don't want you to know",
+            "context": "\n                Big pharma is hiding the real cure for cancer. Doctors don't want you to know\n                about this miracle cure that can heal any disease. The government is covering\n     ...",
+            "confidence": 0.9,
+            "source": "transcript"
+          },
+          {
+            "video_id": "vid_misinfo_002",
+            "excerpt": "government is cover",
+            "context": "...ctors don't want you to know\n                about this miracle cure that can heal any disease. The government is covering\n                up the truth about these natural remedies. Do your research and wake up!\n       ...",
+            "confidence": 0.7,
+            "source": "transcript"
+          }
+        ],
+        "scam": [
+          {
+            "video_id": "vid_misinfo_002",
+            "excerpt": "guaranteed returns",
+            "context": "...al remedies. Do your research and wake up!\n                \n                Also, I've discovered a guaranteed returns investment strategy. You can double\n                your money in just 30 days with zero risk. DM m...",
+            "confidence": 0.9,
+            "source": "transcript"
+          },
+          {
+            "video_id": "vid_misinfo_002",
+            "excerpt": "double\n                your money",
+            "context": "...           \n                Also, I've discovered a guaranteed returns investment strategy. You can double\n                your money in just 30 days with zero risk. DM me for exclusive access to this\n                once in a lifeti...",
+            "confidence": 0.7,
+            "source": "transcript"
+          },
+          {
+            "video_id": "vid_misinfo_002",
+            "excerpt": "once in a lifetime",
+            "context": "...      your money in just 30 days with zero risk. DM me for exclusive access to this\n                once in a lifetime opportunity.\n            ",
+            "confidence": 0.5,
+            "source": "transcript"
+          }
+        ],
+        "violence": [
+          {
+            "video_id": "vid_toxic_003",
+            "excerpt": "I'll find you",
+            "context": "I'll find you and make you pay for this garbage review",
+            "confidence": 0.9,
+            "source": "comment"
+          },
+          {
+            "video_id": "vid_toxic_003",
+            "excerpt": "fight",
+            "context": "\n                In this video we're reviewing the latest action movie. The fight scenes\n                were incredibly choreographed and the stunts were amazing. Let's break\n     ...",
+            "confidence": 0.5,
+            "source": "transcript"
+          },
+          {
+            "video_id": "vid_illegal_004",
+            "excerpt": "attack",
+            "context": "...        Just kidding! This is actually a cybersecurity awareness video about common\n                attack vectors and how to protect yourself. Never attempt any illegal activities.\n            ",
+            "confidence": 0.5,
+            "source": "transcript"
+          }
+        ],
+        "toxicity": [
+          {
+            "video_id": "vid_toxic_003",
+            "excerpt": "go die",
+            "context": "You're a worthless reviewer, go die in a hole",
+            "confidence": 0.9,
+            "source": "comment"
+          },
+          {
+            "video_id": "vid_toxic_003",
+            "excerpt": "KYS",
+            "context": "KYS for liking this movie, you have no taste",
+            "confidence": 0.9,
+            "source": "comment"
+          },
+          {
+            "video_id": "vid_toxic_003",
+            "excerpt": "You're a worthless",
+            "context": "You're a worthless reviewer, go die in a hole",
+            "confidence": 0.7,
+            "source": "comment"
+          }
+        ],
+        "harassment": [
+          {
+            "video_id": "vid_toxic_003",
+            "excerpt": "worthless",
+            "context": "You're a worthless reviewer, go die in a hole",
+            "confidence": 0.5,
+            "source": "comment"
+          },
+          {
+            "video_id": "vid_toxic_003",
+            "excerpt": "KYS",
+            "context": "KYS for liking this movie, you have no taste",
+            "confidence": 0.5,
+            "source": "comment"
+          }
+        ],
+        "illegal_activity": [
+          {
+            "video_id": "vid_illegal_004",
+            "excerpt": "how to hack",
+            "context": "\n                Today I'm going to show you how to hack into systems and bypass security\n                measures. First, we'll cover credit card fraud tec...",
+            "confidence": 0.9,
+            "source": "transcript"
+          },
+          {
+            "video_id": "vid_illegal_004",
+            "excerpt": "credit card fraud",
+            "context": "... show you how to hack into systems and bypass security\n                measures. First, we'll cover credit card fraud techniques and how to steal\n                money without getting caught. Then we'll discuss where ...",
+            "confidence": 0.9,
+            "source": "transcript"
+          },
+          {
+            "video_id": "vid_illegal_004",
+            "excerpt": "buy drugs",
+            "context": "...chniques and how to steal\n                money without getting caught. Then we'll discuss where to buy drugs on the\n                dark web using untraceable methods.\n                \n                Just ki...",
+            "confidence": 0.9,
+            "source": "transcript"
+          }
+        ],
+        "hate_speech": [
+          {
+            "video_id": "vid_hate_005",
+            "excerpt": "don't belong here",
+            "context": "Those people don't belong here, they're ruining everything",
+            "confidence": 0.9,
+            "source": "comment"
+          },
+          {
+            "video_id": "vid_hate_005",
+            "excerpt": "All immigrants should",
+            "context": "All immigrants should go back to their country",
+            "confidence": 0.7,
+            "source": "comment"
+          },
+          {
+            "video_id": "vid_hate_005",
+            "excerpt": "Those people",
+            "context": "Those people don't belong here, they're ruining everything",
+            "confidence": 0.5,
+            "source": "comment"
+          }
+        ],
+        "self_harm": [
+          {
+            "video_id": "vid_selfharm_006",
+            "excerpt": "want to die",
+            "context": "I've been feeling like I want to die lately",
+            "confidence": 0.9,
+            "source": "comment"
+          },
+          {
+            "video_id": "vid_selfharm_006",
+            "excerpt": "no reason to live",
+            "context": "There's no reason to live anymore, nothing helps",
+            "confidence": 0.9,
+            "source": "comment"
+          },
+          {
+            "video_id": "vid_selfharm_006",
+            "excerpt": "tried to hurt myself",
+            "context": "I tried to hurt myself last week, I don't know what to do",
+            "confidence": 0.7,
+            "source": "comment"
+          }
+        ]
+      }
+    }
+  }
+}
