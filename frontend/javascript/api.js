@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8000/api/v1";
+const API_BASE = "https://seniorproject-production-ab51.up.railway.app/api/v1";
 const TOKEN_KEY = 'niq_token';
 const USER_KEY = 'niq_user';
 
