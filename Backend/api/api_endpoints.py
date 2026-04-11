@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 from fastapi import Header, status
 from fastapi.security import OAuth2PasswordBearer
 
+load_dotenv()
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_DAYS = 7
@@ -37,7 +39,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     except JWTError:
         raise HTTPException(status_code=401, detail={"error": "unauthorized", "message": "Invalid token"})
 
-load_dotenv()
 
 #Request Bodies
 class SignupBody(BaseModel):
