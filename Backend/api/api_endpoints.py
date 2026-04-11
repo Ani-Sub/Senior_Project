@@ -11,7 +11,7 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi import Header, status
 from fastapi.security import OAuth2PasswordBearer
-load_dotenv()
+from db_appending import insert_channels, insert_videos, insert_claims, insert_narratives, insert_trends
 
 load_dotenv()
 
@@ -167,7 +167,15 @@ def create_dashboard(body: CreateDashboardBody, db: db_dependency, user_id: str 
     result = db.execute(t, {"user_id": user_id, "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
     db.commit()
 
-    return dict(result._mapping)
+    board = dict(result._mapping)
+
+    insert_channels()
+    insert_videos(board["board_id"])
+    insert_narratives(board["board_id"])
+    insert_claims()
+    insert_trends(board["board_id"])
+
+    return board
  
 @app.get("/api/v1/dashboards/{dashboard_id}")
 def get_dashboard(dashboard_id: str, db: db_dependency):
@@ -407,8 +415,22 @@ def get_plan(db: db_dependency, user_id: str = Depends(get_current_user)):
 
 
 
+@app.post("/api/v1/dashboards/{dashboard_id}/run")
+def run_endpoint(db: db_dependency, dashboard_id: str):
+    t = text("SELECT * FROM \"Board\" WHERE board_id = :board_id")
+    result = db.execute(t, {"board_id": dashboard_id}).fetchone()
 
+    if not result:
+        raise HTTPException(status_code=404, detail={"error": "not_found", "message": "Dashboard not found"})
 
-# change create dashboard to make sure that if a user cannot make more boards an error pops up
-# change delete dashboard to update number of dashboards left for user
-# implement get claims and trends query
+    board = dict(result._mapping)
+
+    insert_channels()
+    insert_videos(board["board_id"])
+    insert_narratives(board["board_id"])
+    insert_claims()
+    insert_trends(board["board_id"])
+
+    return {
+        "message": "Pipeline Completed"
+    }
