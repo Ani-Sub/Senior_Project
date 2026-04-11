@@ -38,7 +38,7 @@ const auth = {
    */
   requireAuth() {
     if (!auth.isLoggedIn()) {
-      window.location.href = getRoot() + 'index.html';
+      window.location.href = '/';
     }
   },
 
@@ -47,7 +47,7 @@ const auth = {
    */
   redirectIfLoggedIn() {
     if (auth.isLoggedIn()) {
-      window.location.href = getRoot() + 'html/home.html';
+      window.location.href = '/html/home.html';
     }
   },
 };
@@ -87,7 +87,7 @@ async function request(method, path, body = null, opts = {}) {
   // 401 = token expired or invalid → force logout
   if (response.status === 401) {
     auth.clearSession();
-    window.location.href = getRoot() + 'index.html';
+    window.location.href = '/';
     return { data: null, error: 'Session expired. Please log in again.', status: 401 };
   }
  
@@ -170,7 +170,7 @@ const authActions = {
     // If the server doesn't have POST /auth/logout yet, this will fail silently.
     await api.post('/auth/logout').catch(() => {});
     auth.clearSession();
-    window.location.href = getRoot() + 'index.html';
+    window.location.href = '/';
   },
 };
  
