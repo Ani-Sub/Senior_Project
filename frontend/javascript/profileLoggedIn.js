@@ -42,6 +42,25 @@ async function loadProfile() {
     const planLabels = { free: 'Free', analyst: 'Analyst', enterprise: 'Enterprise' };
     planEl.textContent = planLabels[user.plan] || user.plan || 'Free';
   }
+
+  await loadUsageStats();
+}
+
+async function loadUsageStats() {
+  const { data: dashboards, error } = await api.get('/dashboards');
+  if (error || !dashboards) return;
+
+  const dashCountEl = document.getElementById('statDashboardsCreated');
+  if (dashCountEl) dashCountEl.textContent = dashboards.length;
+
+  // Sum total claims across all dashboards
+  const claimTotals = await Promise.all(
+    dashboards.map(d => api.get(`/dashboards/${d.board_id}/claims?limit=1`))
+  );
+  const totalClaims = claimTotals.reduce((sum, res) => sum + (res.data?.total || 0), 0);
+
+  const claimsEl = document.getElementById('statTotalClaims');
+  if (claimsEl) claimsEl.textContent = totalClaims;
 }
 
 // ── SAVE BUTTON ───────────────────────────────────────────────

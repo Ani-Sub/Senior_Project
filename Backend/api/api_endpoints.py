@@ -6,9 +6,40 @@ from pydantic import BaseModel
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
 from typing import List, Annotated
-
+from jose import JWTError, jwt
+from passlib.context import CryptContext
+from datetime import datetime, timedelta
+from fastapi import Header, status
+from fastapi.security import OAuth2PasswordBearer
+load_dotenv()
 
 load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_DAYS = 7
+
+def create_access_token(user_id: str):
+    
+    payload = {"sub": str(user_id), "exp": datetime.now() + timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)}
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id = payload.get("sub")
+        if user_id is None:
+            raise HTTPException(status_code=401, detail={"error": "unauthorized", "message": "Invalid token"})
+        return user_id
+    except JWTError:
+        raise HTTPException(status_code=401, detail={"error": "unauthorized", "message": "Invalid token"})
+
 
 #Request Bodies
 class SignupBody(BaseModel):
@@ -31,6 +62,7 @@ class UpdateUserBody(BaseModel):
     email: str | None = None
     current_password: str | None = None
     new_password: str | None = None
+    plan: str | None = None
 
 
 #Create app
@@ -75,7 +107,7 @@ async def signup(body: SignupBody, db: db_dependency):
     db.commit()
     
     return {
-        "token": "fake token",
+        "token": create_access_token(dict(result._mapping)["user_id"]),
         "user": dict(result._mapping)
     }
 
@@ -89,7 +121,7 @@ async def login(body: LoginBody, db: db_dependency):
     if not result:
         raise HTTPException(status_code=401, detail={"error": "unauthorized", "message": "Invalid Login Information"})
     return {
-        "token": "fake token",
+        "token": create_access_token(dict(result._mapping)["user_id"]),
         "user": dict(result._mapping)
     }
 
@@ -100,10 +132,10 @@ async def logout():
     }
 
 @app.get("/api/v1/auth/me")
-async def me(db: db_dependency):
+async def me(db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
-    result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
+    result = db.execute(t, {"user_id": user_id}).fetchone()
     
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "User not found"})
@@ -113,10 +145,10 @@ async def me(db: db_dependency):
 
 # dashboard methods                               
 @app.get("/api/v1/dashboards")
-def get_dashboards(db: db_dependency):
+def get_dashboards(db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"Board\" WHERE user_id = :user_id")
-    dashboards = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchall()
+    dashboards = db.execute(t, {"user_id": user_id}).fetchall()
     
     result = []
     for board in dashboards:
@@ -129,10 +161,10 @@ def get_dashboards(db: db_dependency):
 
 
 @app.post("/api/v1/dashboards")
-def create_dashboard(body: CreateDashboardBody, db: db_dependency):
+def create_dashboard(body: CreateDashboardBody, db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("INSERT INTO \"Board\" (user_id, board_name, description, search_terms, layout, last_updated_at) VALUES (:user_id, :board_name, :description, :search_terms, :layout, NOW()) RETURNING *")
-    result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
+    result = db.execute(t, {"user_id": user_id, "board_name": body.name, "description": body.description, "search_terms": body.search_terms, "layout": body.layout}).fetchone()
     db.commit()
 
     return dict(result._mapping)
@@ -159,28 +191,48 @@ def delete_dashboard(dashboard_id: str, db: db_dependency):
  
 
 @app.get("/api/v1/dashboards/{dashboard_id}/claims")
-def get_claims(dashboard_id: str):
+def get_claims(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user), page: int = 1, limit: int = 20, type: str = None, risk: str = None, narrative: str = None, channel: str = None, search: str = None):
+    
+    if limit > 100:
+        limit = 100
+    
+    offset = (page - 1) * limit
+    filter = "WHERE v.board_id = :board_id"
+    parameters = {"board_id": dashboard_id, "limit": limit, "offset": offset}
+
+    if type:
+        filter += " AND c.claim_type = :type"
+        parameters["type"] = type
+    if risk:
+        filter += " AND c.risk_level = :risk"
+        parameters["risk"] = risk
+    if narrative:
+        filter += " AND c.narrative_id = :narrative"
+        parameters["narrative"] = narrative
+    if channel:
+        filter += " AND ch.channel_id = :channel"
+        parameters["channel"] = channel
+    if search:
+        filter += " AND c.claim_text ILIKE :search"
+        parameters["search"] = f"%{search}%"
+    
+    
+    t = text(f"SELECT c.claim_id AS claim_id, c.video_id AS video_id, ch.channel_id AS channel_id, ch.channel_name AS channel_name, c.claim_text AS claim_text, c.claim_type AS claim_type, c.confidence_score AS confidence_score, c.risk_level AS risk_level, n.narrative_id AS narrative_id, n.title AS narrative_name, c.processed_at AS published_at, c.is_verified AS is_verified, c.accuracy_rating AS accuracy_rating FROM \"Claim\" c JOIN \"Video\" v ON c.video_id = v.video_id JOIN \"Channel\" ch ON v.channel_id = ch.channel_id LEFT JOIN \"Narrative\" n ON c.narrative_id = n.narrative_id {filter} LIMIT :limit OFFSET :offset")
+    result = db.execute(t, parameters).fetchall()
+    
+    claims = []
+    for claim in result:
+        c = dict(claim._mapping)
+        claims.append(c)
+
+    t = text(f"SELECT COUNT(*) FROM \"Claim\" c JOIN \"Video\" v ON c.video_id = v.video_id JOIN \"Channel\" ch ON v.channel_id = ch.channel_id {filter}")
+    total = db.execute(t, parameters).scalar()
+    
     return {
-        "page": 1,
-        "limit": 20,
-        "total": 1,
-        "claims": [
-            {
-                "claim_id": "claim-id 1",
-                "video_id": "video-id 1",
-                "channel_id": "channel-id 1",
-                "channel_name": "Technology channel",
-                "claim_text": "Some claim",
-                "claim_type": "factual",
-                "confidence_score": 0.87,
-                "risk_level": "medium",
-                "narrative_id": "narritive-id 1",
-                "narrative_name": "AI Technology name",
-                "published_at": "2025-03-01T00:00:00Z",
-                "is_verified": False,
-                "accuracy_rating": None
-            }
-        ]
+        "page": page,
+        "limit": limit,
+        "total": total,
+        "claims": claims
     }
  
 @app.get("/api/v1/claims/{claim_id}")
@@ -197,7 +249,7 @@ def get_claim(claim_id: str, db: db_dependency):
 
 
 @app.get("/api/v1/dashboards/{dashboard_id}/narratives")
-def get_narratives(dashboard_id: str, db: db_dependency):
+def get_narratives(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"Narrative\" WHERE board_id = :board_id")
     narratives = db.execute(t, {"board_id": dashboard_id}).fetchall()
@@ -234,23 +286,31 @@ def get_narrative(narrative_id: str, db: db_dependency):
 
 
 @app.get("/api/v1/dashboards/{dashboard_id}/trends")
-def get_trends(dashboard_id: str, range: str = "3m"):
-    return {
-        "labels": ["Jan W1", "Jan W2", "Jan W3", "Jan W4", "Feb W1", "Feb W2", "Feb W3", "Feb W4", "Mar W1", "Mar W2", "Mar W3", "Mar W4"],
-        "datasets": [
-            {
-                "narrative_id": "narritive-id 1",
-                "label": "AI Replacing Developers",
-                "color": "#00d4ff",
-                "data": [2, 4, 5, 6, 8, 10],
-                "direction": "rising"
-            }
-        ]
-    }
+def get_trends(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user), range: str = "3m"):
+    
+    t = text("SELECT * FROM \"Trend\" WHERE board_id = :board_id")
+    trends = db.execute(t, {"board_id": dashboard_id}).fetchall()
+    
+    result = []
+    for trend in trends:
+        tempTrend = dict(trend._mapping)
+        
+        t = text("SELECT * FROM \"TrendData\" WHERE trend_id = :trend_id")
+        datasets = db.execute(t, {"trend_id": tempTrend["trend_id"]}).fetchall()
+        
+        data = []
+        for dataset in datasets:
+            tempDataset = dict(dataset._mapping)
+            data.append(tempDataset)
+
+        result.append({"labels": tempTrend["labels"], "datasets": data})
+    
+    return result
+
 
 
 @app.get("/api/v1/dashboards/{dashboard_id}/creators")
-def get_creators(dashboard_id: str, db: db_dependency):
+def get_creators(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"Channel\" c JOIN \"BoardChannel\" bc ON bc.channel_id = c.channel_id WHERE bc.board_id = :board_id")
     channels = db.execute(t, {"board_id": dashboard_id}).fetchall()
@@ -280,10 +340,10 @@ def get_creator_risk(channel_id: str, db: db_dependency):
 
 
 @app.get("/api/v1/users/me")
-def get_user(db: db_dependency):
+def get_user(db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
-    result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
+    result = db.execute(t, {"user_id": user_id}).fetchone()
     
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "User not found"})
@@ -294,10 +354,10 @@ def get_user(db: db_dependency):
 
 # mark
 @app.patch("/api/v1/users/me")
-def update_user(body: UpdateUserBody, db: db_dependency):
+def update_user(body: UpdateUserBody, db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("SELECT password FROM \"User\" WHERE user_id = :user_id")
-    password = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
+    password = db.execute(t, {"user_id": user_id}).fetchone()
 
     if body.name is None:
         newInitials = None
@@ -307,13 +367,13 @@ def update_user(body: UpdateUserBody, db: db_dependency):
 
     if body.current_password == dict(password._mapping)["password"] and body.new_password:
 
-        t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), password = :password WHERE user_id = :user_id RETURNING *")
-        result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "name": body.name, "email": body.email, "initials": newInitials, "password": body.new_password}).fetchone()
+        t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), password = :password, plan = COALESCE(:plan, plan) WHERE user_id = :user_id RETURNING *")
+        result = db.execute(t, {"user_id": user_id, "name": body.name, "email": body.email, "initials": newInitials, "password": body.new_password, "plan": body.plan}).fetchone()
 
     else:
 
-        t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials) WHERE user_id = :user_id RETURNING *")
-        result = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000", "name": body.name, "email": body.email, "initials": newInitials}).fetchone()
+        t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), plan = COALESCE(:plan, plan) WHERE user_id = :user_id RETURNING *")
+        result = db.execute(t, {"user_id": user_id, "name": body.name, "email": body.email, "initials": newInitials, "plan": body.plan}).fetchone()
 
     db.commit()
 
@@ -323,14 +383,14 @@ def update_user(body: UpdateUserBody, db: db_dependency):
 
  
 @app.get("/api/v1/users/me/plan")
-def get_plan(db: db_dependency):
+def get_plan(db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
-    userProfile = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
+    userProfile = db.execute(t, {"user_id": user_id}).fetchone()
     userProfile = dict(userProfile._mapping)
 
     t = text("SELECT COUNT(*) AS num FROM \"Board\" WHERE user_id = :user_id")
-    numDashboards = db.execute(t, {"user_id": "550e8400-e29b-41d4-a716-446655440000"}).fetchone()
+    numDashboards = db.execute(t, {"user_id": user_id}).fetchone()
     numDashboards = dict(numDashboards._mapping)["num"]
     
         

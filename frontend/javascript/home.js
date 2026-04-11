@@ -102,7 +102,7 @@ function renderDashboards() {
     .map(d => dashCardHTML(d))
     .join('');
 
-  updateSidebarLimit();
+  updateSidebarLimit(dashboards.length);
 }
 
 function dashCardHTML(d) {
@@ -154,13 +154,6 @@ function previewHTML(design) {
   return '';
 }
 
-function updateSidebarLimit() {
-  const user = auth.getUser();
-  const plan = PLANS[user?.plan] || PLANS.free;
-  const used = dashboards.length;
-  const limit = plan.limit === Infinity ? '∞' : plan.limit;
-  document.getElementById('sidebarPlanLimit').textContent = `${used} / ${limit} dashboards`;
-}
 
 // ── NEW DASHBOARD MODAL ───────────────────────────────────────
 function openNewModal() {
@@ -343,7 +336,7 @@ async function confirmDelete() {
 
 // ── OPEN DASHBOARD ────────────────────────────────────────────
 function openDashboard(id) {
-  window.location.href = `dashboard.html?id=${id}`;
+  window.location.href = `dashboard?id=${id}`;
 }
 
 // ── LIMIT BANNER ──────────────────────────────────────────────

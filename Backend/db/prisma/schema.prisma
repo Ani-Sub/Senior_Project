@@ -150,7 +150,7 @@ enum ClaimType {
 model Claim {
   claim_id          String    @id @default(uuid()) @db.Uuid
   video_id          String    
-  narrative_id      String?   @db.Uuid
+  narrative_id      String?   
   video_title       String    @db.VarChar(500)
   claim_text        String    @db.Text
   claim_type        ClaimType
@@ -165,7 +165,7 @@ model Claim {
 }
 
 model Narrative {
-  narrative_id       String                    @id @default(uuid()) @db.Uuid
+  narrative_id       String                    @id 
   board_id           String                    @db.Uuid
   title              String                    @db.VarChar(500)
   summary            String?                   @db.Text
@@ -204,7 +204,7 @@ model Trend {
 model TrendData {
   dataset_id   String         @id @default(uuid()) @db.Uuid
   trend_id     String         @db.Uuid
-  narrative_id String         @db.Uuid
+  narrative_id String         
   label        String         @db.VarChar(50)
   color        String         @db.VarChar(50)
   data         Int[]
