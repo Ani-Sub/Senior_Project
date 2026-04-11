@@ -11,6 +11,7 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi import Header, status
 from fastapi.security import OAuth2PasswordBearer
+load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
@@ -37,7 +38,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     except JWTError:
         raise HTTPException(status_code=401, detail={"error": "unauthorized", "message": "Invalid token"})
 
-load_dotenv()
 
 #Request Bodies
 class SignupBody(BaseModel):
@@ -341,7 +341,7 @@ def get_creator_risk(channel_id: str, db: db_dependency):
 def get_user(db: db_dependency, user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"User\" WHERE user_id = :user_id")
-    result = db.execute(t, {"user_id": 1}).fetchone()
+    result = db.execute(t, {"user_id": user_id}).fetchone()
     
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "User not found"})
