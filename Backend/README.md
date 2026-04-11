@@ -1,6 +1,16 @@
 # YouTube Intelligence System
 
-Extracts claims from YouTube video transcripts and comments, then synthesizes them into a cross-video narrative.
+Extracts claims from YouTube video transcripts and comments, synthesizes them into distinct narratives, tracks narrative trends over time, and assesses content risk.
+
+## Features
+
+- **Claim Extraction** — LLM-powered extraction of claims from transcripts and comments
+- **Narrative Synthesis** — Identifies 2-5 distinct narratives across videos
+- **Temporal Trends** — Tracks each narrative's growth/decline over time
+- **Risk Assessment** — Hybrid keyword + LLM detection of harmful content
+- **Quota Optimization** — RSS feeds + caching to minimize YouTube API usage
+- **Checkpoint System** — Saves progress after each step (crash recovery)
+- **DB-Ready Export** — Flat JSON files ready for database import
 
 ## Setup
 
@@ -23,44 +33,116 @@ ollama run llama3
 
 ```
 Backend/
-├── main.py                 # entry point — run this
-├── config.py               # API keys, LLM settings, constants
-├── ingestion/
-│   ├── channels.py         # search and filter YouTube channels
-│   ├── videos.py           # discover and filter videos
-│   ├── transcripts.py      # fetch video transcripts
-│   └── comments.py         # fetch top comments
-├── extraction/
-│   ├── prompts.py          # all LLM prompt builders
-│   └── analyzer.py         # LLM calls, claim extraction, synthesis
-└── utils/
-    └── parsing.py          # JSON parser and text chunker
+├── main.py                    # Pipeline orchestrator with checkpoints
+├── config.py                  # API keys, LLM settings
+│
+├── ytAPI/                     # YouTube data fetching
+│   ├── channelExtract.py      # Search and filter channels
+│   ├── videoExtract.py        # Discover videos (RSS + API hybrid)
+│   ├── transcriptExtract.py   # Fetch transcripts (with translation)
+│   ├── commentExtract.py      # Fetch top comments
+│   ├── rss_feed.py            # FREE video discovery via RSS
+│   └── channel_cache.py       # Cache channels to reduce API calls
+│
+├── extraction/                # LLM-based extraction
+│   ├── llmPrompts.py          # Prompt templates
+│   └── analyzer.py            # Claim extraction + synthesis
+│
+├── trends/                    # Temporal trend analysis
+│   ├── __init__.py            # Module exports
+│   ├── temporal.py            # Time bucketing (daily/weekly)
+│   ├── metrics.py             # Per-period metric calculations
+│   ├── detector.py            # Pattern detection (surge/peak/decline)
+│   └── aggregator.py          # Aggregate trends by narrative
+│
+├── risk/                      # Content risk assessment
+│   ├── __init__.py            # Module exports
+│   ├── keywords.py            # Risk category keywords
+│   ├── detector.py            # Hybrid detection (keyword + LLM)
+│   └── aggregator.py          # Aggregate risk across videos
+│
+└── utility/
+    ├── output.py              # Checkpoint saves + DB-ready export
+    ├── parser.py              # JSON parsing with truncation repair
+    └── chunker.py             # Text chunking for LLM
 ```
 
 ## Running
 
 ```bash
-cd yt_intelligence
+cd Backend
 python main.py
 ```
 
-Results are saved to a timestamped `summary_YYYYMMDD_HHMMSS.json` file.
+## Output Structure
 
-## Customizing
+Each run outputs to a static `latest` folder (overwrites previous run):
+
+```
+output/latest/
+├── checkpoints/               # Incremental saves (crash recovery)
+│   ├── video_abc123.json      # Saved after each video processed
+│   ├── video_def456.json
+│   ├── synthesis.json         # Saved after synthesis step
+│   ├── trends.json            # Saved after trends step
+│   └── risk.json              # Saved after risk step
+│
+└── db_ready/                  # Flat files for database import
+    ├── channels.json          # → CHANNELS table
+    ├── videos.json            # → VIDEOS table
+    ├── transcripts.json       # → TRANSCRIPTS table
+    ├── transcript_chunks.json # → TRANSCRIPT_CHUNKS table
+    ├── comments.json          # → COMMENTS table
+    ├── claims.json            # → CLAIMS table
+    ├── narratives.json        # → NARRATIVES table
+    ├── narrative_videos.json  # → Many-to-many link table
+    ├── narrative_trends.json  # → Trend data per narrative
+    ├── trends_timeline.json   # → Overall activity timeline
+    ├── risk_flags.json        # → Risk flags table
+    └── run_metadata.json      # Run info and counts
+```
+
+**Static paths for backend integration:**
+- `output/latest/db_ready/claims.json`
+- `output/latest/db_ready/videos.json`
+- etc.
+
+## Cleanup After DB Import
+
+After importing data to your database, call `cleanup_output()` to delete the output folder:
+
+```python
+from utility.output import cleanup_output
+
+# After successful DB import:
+cleanup_output()  # Deletes entire output/ folder
+```
+
+Or run from command line:
+```bash
+cd Backend
+python cleanup.py
+```
+
+## Configuration
 
 Edit the `run_pipeline()` call in `main.py`:
 
 ```python
 run_pipeline(
-    search_keywords="AI news",      # what to search for
-    channel_sub_min=100_000,        # minimum channel subscribers
-    video_view_min=20_000,          # minimum video views
-    video_keywords=["ai", "tech"],  # keywords that must appear in video title
-    days=90,                        # how far back to look
-    max_comments=30                 # comments to pull per video
+    search_keywords="AI",           # Channel search query
+    channel_sub_min=100_000,        # Minimum subscribers
+    video_view_min=50_000,          # Minimum video views
+    video_keywords=["ai", "tech"],  # Required title keywords
+    days=60,                        # How far back to look
+    max_comments=30,                # Comments per video
+    trend_granularity="weekly",     # "daily" or "weekly"
+    assess_risk=True,               # Enable risk assessment
+    llm_verify_risk=True,           # LLM for borderline cases
+    use_cache=True,                 # Use RSS + cache (saves quota)
+    cache_max_age_days=30,          # Re-search channels after N days
 )
 ```
-<<<<<<< HEAD
 
 ## Pipeline Steps
 
@@ -73,7 +155,6 @@ STEP 2: Extraction (checkpoint after each video)
   └─ Fetch transcript (with auto-translation fallback)
   └─ Fetch comments
   └─ LLM extracts topics + claims
-  └─ Generate embeddings for each claim (if enabled)
   └─ Save checkpoint immediately
 
 STEP 3: Synthesis (checkpoint)
@@ -83,7 +164,7 @@ STEP 3: Synthesis (checkpoint)
 STEP 4: Trend Analysis (checkpoint)
   └─ Bucket videos by time period
   └─ Calculate metrics per narrative per period
-  └─ Detect patterns (surge/peak/decline/stable)
+  └─ Detect patterns (rising/peaking/declining/stable)
 
 STEP 5: Risk Assessment (checkpoint)
   └─ Keyword scan for risk categories
@@ -307,7 +388,6 @@ Each file maps directly to a database table:
     "topic_label": "AI Job Displacement Concerns",
     "claim_count": 15,
     "color": "#3B82F6",
-    "centroid_embedding": [0.123, -0.456, ...],
     "first_seen_at": "2026-02-10T12:00:00Z",
     "last_seen_at": "2026-04-01T09:30:00Z"
   }
@@ -323,61 +403,13 @@ Each file maps directly to a database table:
 ]
 ```
 
-## Vector Embeddings
+## Testing
 
-The pipeline generates semantic embeddings for claims using Ollama's `nomic-embed-text` model (768 dimensions).
-
-### Setup
+Test without APIs using mock data:
 
 ```bash
-ollama pull nomic-embed-text
-```
-
-### How It Works
-
-1. **Claim Embeddings** — Each extracted claim gets a 768-dimensional vector
-2. **Narrative Centroids** — Average of all claim vectors in that narrative
-3. **Similarity Matching** — New claims can be matched to existing narratives by comparing vectors
-
-### Output Files
-
-**claim_embeddings.json:**
-```json
-[
-  {
-    "claim_id": 1,
-    "embedding": [0.123, -0.456, 0.789, ...]  // 768 floats
-  }
-]
-```
-
-**narratives.json** (includes centroid):
-```json
-[
-  {
-    "narrative_id": "narrative_1",
-    "title": "AI Job Displacement",
-    "centroid_embedding": [0.234, -0.567, 0.890, ...],  // 768 floats
-    ...
-  }
-]
-```
-
-### Use Cases
-
-- **Incremental Processing** — Match new claims to existing narratives without re-running synthesis
-- **Similarity Search** — Find claims similar to a query
-- **Clustering** — Automatically discover narratives using K-means on embeddings
-
-### Disabling Embeddings
-
-If you don't need embeddings (faster processing):
-
-```python
-run_pipeline(
-    ...
-    generate_embeddings=False
-)
+python test_trends.py   # Test trend analysis
+python test_risk.py     # Test risk assessment
 ```
 
 ## Troubleshooting
@@ -397,10 +429,3 @@ run_pipeline(
 ### Transcript not found
 - Video may not have captions
 - System auto-tries translation if original language isn't English
-
-### Embeddings not generated
-- Make sure embedding model is installed: `ollama pull nomic-embed-text`
-- Check Ollama is running: `ollama list`
-- Pipeline continues without embeddings if service unavailable
-=======
->>>>>>> main
