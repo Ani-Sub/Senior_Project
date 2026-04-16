@@ -242,12 +242,19 @@ async function createDashboard() {
   const btn = document.querySelector('#step3 .btn-primary');
   if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
 
-  const { data, error, status } = await api.post('/dashboards', {
-    name,
-    description: desc,
-    search_terms: [...tags],
-    layout: selectedDesign || 'overview',
-  });
+  const timeout = new Promise(resolve =>
+    setTimeout(() => resolve({ data: null, error: 'timeout', status: -1 }), 8000)
+  );
+
+  const { data, error, status } = await Promise.race([
+    api.post('/dashboards', {
+      name,
+      description: desc,
+      search_terms: [...tags],
+      layout: selectedDesign || 'overview',
+    }),
+    timeout,
+  ]);
 
   if (btn) { btn.disabled = false; btn.textContent = '✓ Create Dashboard'; }
 
@@ -257,13 +264,16 @@ async function createDashboard() {
     return;
   }
 
-  // Board was committed to DB even if the pipeline errored (non-zero status)
+  // Either success, pipeline error, or timeout — board is in DB, close and refresh
   closeNewModal();
   if (!error && data) {
     dashboards.push(normalizeDashboard(data));
   } else {
-    // Pipeline error after board creation — reload from API to pick it up
     await initDashboards();
+    const msg = error === 'timeout'
+      ? 'Dashboard created — pipeline is still running in the background.'
+      : `Dashboard created, but the pipeline reported an error: ${error}`;
+    showToast(msg);
   }
   renderDashboards();
 }
@@ -353,6 +363,16 @@ function showLimitBanner() {
   const plan = PLANS[user?.plan] || PLANS.free;
   document.getElementById('limitPlanName').textContent = plan.name;
   banner.style.display = 'flex';
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(message, durationMs = 6000) {
+  const el = document.getElementById('toastNotif');
+  if (!el) return;
+  el.textContent = message;
+  el.style.display = 'block';
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, durationMs);
 }
 
 // ── HELPERS ───────────────────────────────────────────────────
