@@ -242,7 +242,7 @@ async function createDashboard() {
   const btn = document.querySelector('#step3 .btn-primary');
   if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
 
-  const { data, error } = await api.post('/dashboards', {
+  const { data, error, status } = await api.post('/dashboards', {
     name,
     description: desc,
     search_terms: [...tags],
@@ -251,13 +251,20 @@ async function createDashboard() {
 
   if (btn) { btn.disabled = false; btn.textContent = '✓ Create Dashboard'; }
 
-  if (error) {
+  if (error && status === 0) {
+    // True network error — server unreachable, nothing was created
     showFormError(error);
     return;
   }
 
-  dashboards.push(normalizeDashboard(data));
+  // Board was committed to DB even if the pipeline errored (non-zero status)
   closeNewModal();
+  if (!error && data) {
+    dashboards.push(normalizeDashboard(data));
+  } else {
+    // Pipeline error after board creation — reload from API to pick it up
+    await initDashboards();
+  }
   renderDashboards();
 }
 
@@ -336,7 +343,7 @@ async function confirmDelete() {
 
 // ── OPEN DASHBOARD ────────────────────────────────────────────
 function openDashboard(id) {
-  window.location.href = `dashboard?id=${id}`;
+  window.location.href = `dashboard.html?id=${id}`;
 }
 
 // ── LIMIT BANNER ──────────────────────────────────────────────
