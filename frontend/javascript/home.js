@@ -270,6 +270,10 @@ async function createDashboard() {
     dashboards.push(normalizeDashboard(data));
   } else {
     await initDashboards();
+    const msg = error === 'timeout'
+      ? 'Dashboard created — pipeline is still running in the background.'
+      : `Dashboard created, but the pipeline reported an error: ${error}`;
+    showToast(msg);
   }
   renderDashboards();
 }
@@ -359,6 +363,16 @@ function showLimitBanner() {
   const plan = PLANS[user?.plan] || PLANS.free;
   document.getElementById('limitPlanName').textContent = plan.name;
   banner.style.display = 'flex';
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(message, durationMs = 6000) {
+  const el = document.getElementById('toastNotif');
+  if (!el) return;
+  el.textContent = message;
+  el.style.display = 'block';
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, durationMs);
 }
 
 // ── HELPERS ───────────────────────────────────────────────────
