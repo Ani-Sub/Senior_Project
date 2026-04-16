@@ -15,7 +15,7 @@ load_dotenv()
 engine = create_engine(os.getenv("DATABASE_URL"))
 SessionLocal = sessionmaker(autoflush=False, bind=engine)
 
-base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+base = os.path.dirname(os.path.abspath(__file__))
 
 def insert_channels():
 
