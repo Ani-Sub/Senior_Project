@@ -19,7 +19,7 @@ SessionLocal = sessionmaker(autoflush=False, bind=engine)
 def insert_channels():
 
     db = SessionLocal()
-    file_path = ""
+    file_path = "../output/latest/db_ready/channels.json"
     date = datetime.now()
 
     with open(file_path) as file:
@@ -35,7 +35,7 @@ def insert_channels():
 def insert_videos(board_id: str):
 
     db = SessionLocal()
-    file_path = ""
+    file_path = "../output/latest/db_ready/videos.json"
 
     with open(file_path) as file:
         videos = json.load(file)
@@ -50,8 +50,8 @@ def insert_videos(board_id: str):
 def insert_claims():
 
     db = SessionLocal()
-    file_path1 = ""
-    file_path2 = ""
+    file_path1 = "../output/latest/db_ready/claims.json"
+    file_path2 = "../output/latest/db_ready/narrative_videos.json"
 
     with open(file_path1) as file:
         claims = json.load(file)
@@ -74,7 +74,7 @@ def insert_claims():
 def insert_narratives(board_id: str):
 
     db = SessionLocal()
-    file_path = ""
+    file_path = "../output/latest/db_ready/narratives.json"
 
     with open(file_path) as file:
         narratives = json.load(file)
@@ -108,8 +108,8 @@ def trend_color(direction: str):
 def insert_trends(board_id: str):
 
     db = SessionLocal()
-    file_path1 = ""
-    file_path2 = ""
+    file_path1 = "../output/latest/db_ready/narrative_trends.json"
+    file_path2 = "../output/latest/db_ready/trends_timeline.json"
 
     with open(file_path1) as file:
         narrative_trends = json.load(file)
