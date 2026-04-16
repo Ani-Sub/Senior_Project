@@ -1,0 +1,38 @@
+[
+  {
+    "period": "2026-W13",
+    "period_start_iso": "2026-03-30",
+    "period_start_ts": 1774846800,
+    "video_count": 1,
+    "total_views": 74336,
+    "total_likes": 1273,
+    "total_comments": 92,
+    "engagement_ratio": 0.0184,
+    "claim_count": 38,
+    "avg_confidence": 0.842
+  },
+  {
+    "period": "2026-W14",
+    "period_start_iso": "2026-04-06",
+    "period_start_ts": 1775451600,
+    "video_count": 1,
+    "total_views": 75057,
+    "total_likes": 1779,
+    "total_comments": 146,
+    "engagement_ratio": 0.0256,
+    "claim_count": 63,
+    "avg_confidence": 0.84
+  },
+  {
+    "period": "2026-W15",
+    "period_start_iso": "2026-04-13",
+    "period_start_ts": 1776056400,
+    "video_count": 1,
+    "total_views": 97174,
+    "total_likes": 2254,
+    "total_comments": 159,
+    "engagement_ratio": 0.0248,
+    "claim_count": 86,
+    "avg_confidence": 0.889
+  }
+]
