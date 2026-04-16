@@ -269,11 +269,14 @@ async function createDashboard() {
   if (!error && data) {
     dashboards.push(normalizeDashboard(data));
   } else {
-    await initDashboards();
+    // Show toast immediately — don't wait for initDashboards (backend may still be busy)
     const msg = error === 'timeout'
       ? 'Dashboard created — pipeline is still running in the background.'
       : `Dashboard created, but the pipeline reported an error: ${error}`;
     showToast(msg);
+    // Try to reload the list but cap the wait at 5s so the UI doesn't hang
+    const reloadCap = new Promise(resolve => setTimeout(resolve, 5000));
+    await Promise.race([initDashboards(), reloadCap]);
   }
   renderDashboards();
 }
