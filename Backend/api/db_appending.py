@@ -15,11 +15,12 @@ load_dotenv()
 engine = create_engine(os.getenv("DATABASE_URL"))
 SessionLocal = sessionmaker(autoflush=False, bind=engine)
 
+base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def insert_channels():
 
     db = SessionLocal()
-    file_path = "../output/latest/db_ready/channels.json"
+    file_path = os.path.join(base, "output", "latest", "db_ready", "channels.json")
     date = datetime.now()
 
     with open(file_path) as file:
@@ -30,12 +31,13 @@ def insert_channels():
         db.execute(t, {"channel_id": c["channel_id"], "channel_name": c["channel_title"], "total_claims": 0, "flagged_claims": 0, "accuracy_rate": 0.0, "risk_level": "low", "risk_score": 0.0, "last_assessed_at": date})
     
     db.commit()
+    db.close()
 
 
 def insert_videos(board_id: str):
 
     db = SessionLocal()
-    file_path = "../output/latest/db_ready/videos.json"
+    file_path = os.path.join(base, "output", "latest", "db_ready", "videos.json")
 
     with open(file_path) as file:
         videos = json.load(file)
@@ -45,13 +47,14 @@ def insert_videos(board_id: str):
         db.execute(t, {"video_id": v["video_id"], "board_id": board_id, "channel_id": v["channel_id"], "title": v["title"], "description": v["description"], "view_count": v["view_count"], "duration_seconds": v["duration_seconds"], "published_at": datetime.fromisoformat(v["published_at"].replace("Z", "+00:00")), "processed": v["processed"], "processed_at": datetime.fromisoformat(v["processed_at"])})
     
     db.commit()
+    db.close()
 
 
 def insert_claims():
 
     db = SessionLocal()
-    file_path1 = "../output/latest/db_ready/claims.json"
-    file_path2 = "../output/latest/db_ready/narrative_videos.json"
+    file_path1 = os.path.join(base, "output", "latest", "db_ready", "claims.json")
+    file_path2 = os.path.join(base, "output", "latest", "db_ready", "narrative_videos.json")
 
     with open(file_path1) as file:
         claims = json.load(file)
@@ -69,12 +72,13 @@ def insert_claims():
         db.execute(t, {"video_id": c["video_id"], "narrative_id": narrative_videos_map.get(c["video_id"]), "video_title": c["video_title"], "claim_text": c["claim_text"], "claim_type": c["claim_type"], "confidence_score": c["confidence_score"], "risk_level": c["risk_level"], "processed_at": datetime.fromisoformat(c["processed_at"]), "is_verified": c["is_verified"], "accuracy_rating": c.get("accuracy_rating")})
     
     db.commit()
+    db.close()
 
 
 def insert_narratives(board_id: str):
 
     db = SessionLocal()
-    file_path = "../output/latest/db_ready/narratives.json"
+    file_path = os.path.join(base, "output", "latest", "db_ready", "narratives.json")
 
     with open(file_path) as file:
         narratives = json.load(file)
@@ -84,6 +88,7 @@ def insert_narratives(board_id: str):
         db.execute(t, {"narrative_id": n["narrative_id"], "board_id": board_id, "title": n["title"], "summary": n.get("summary"), "topic_label": n.get("topic_label"), "claim_count": n["claim_count"], "color": n["color"], "first_seen_at": datetime.fromisoformat(n["first_seen_at"].replace("Z", "+00:00")), "last_seen_at": datetime.fromisoformat(n["last_seen_at"].replace("Z", "+00:00"))})
     
     db.commit()
+    db.close()
 
 
 
@@ -108,8 +113,8 @@ def trend_color(direction: str):
 def insert_trends(board_id: str):
 
     db = SessionLocal()
-    file_path1 = "../output/latest/db_ready/narrative_trends.json"
-    file_path2 = "../output/latest/db_ready/trends_timeline.json"
+    file_path1 = os.path.join(base, "output", "latest", "db_ready", "narrative_trends.json")
+    file_path2 = os.path.join(base, "output", "latest", "db_ready", "trends_timeline.json")
 
     with open(file_path1) as file:
         narrative_trends = json.load(file)
@@ -167,5 +172,6 @@ def insert_trends(board_id: str):
             db.execute(t, {"trend_id": trend_id, "narrative_id": n["narrative_id"], "label": n["name"], "color": color, "data": data, "direction": n["pattern"]})
     
     db.commit()
+    db.close()
 
 
