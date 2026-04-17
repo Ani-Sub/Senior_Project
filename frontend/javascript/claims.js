@@ -107,7 +107,7 @@ function filterClaims() {
 
   filteredClaims = MOCK_CLAIMS.filter(c => {
     const matchSearch    = !search || c.text.toLowerCase().includes(search) || c.channel.toLowerCase().includes(search);
-    const matchNarrative = activeNarratives.includes(c.narrative);
+    const matchNarrative = activeNarratives.length === 0 || activeNarratives.includes(c.narrative);
     const matchChannel   = activeChannels.includes(c.channel);
     const matchType      = (c.type === 'factual' && showFactual) || (c.type === 'opinion' && showOpinion);
     const matchRisk      = (c.risk === 'low' && showLow) || (c.risk === 'medium' && showMedium) || (c.risk === 'high' && showHigh);
