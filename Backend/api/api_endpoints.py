@@ -169,7 +169,7 @@ def create_dashboard(body: CreateDashboardBody, db: db_dependency, user_id: str 
 
     board = dict(result._mapping)
 
-    insert_channels()
+    insert_channels(board["board_id"])
     insert_videos(board["board_id"])
     insert_narratives(board["board_id"])
     insert_claims()
