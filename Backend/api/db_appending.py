@@ -43,7 +43,7 @@ def insert_videos(board_id: str):
         videos = json.load(file)
 
     for v in videos:
-        t = text("INSERT INTO \"Video\" (video_id, board_id, channel_id, title, description, view_count, duration_seconds, published_at, processed, processed_at) VALUES (:video_id, :board_id, :channel_id, :title, :description, :view_count, :duration_seconds, :published_at, :processed, :processed_at) ON CONFLICT (video_id) DO NOTHING")
+        t = text("INSERT INTO \"Video\" (video_id, board_id, channel_id, title, description, view_count, duration_seconds, published_at, processed, processed_at) VALUES (:video_id, :board_id, :channel_id, :title, :description, :view_count, :duration_seconds, :published_at, :processed, :processed_at) ON CONFLICT (video_id) DO UPDATE SET board_id = EXCLUDED.board_id")
         db.execute(t, {"video_id": v["video_id"], "board_id": board_id, "channel_id": v["channel_id"], "title": v["title"], "description": v["description"], "view_count": v["view_count"], "duration_seconds": v["duration_seconds"], "published_at": datetime.fromisoformat(v["published_at"].replace("Z", "+00:00")), "processed": v["processed"], "processed_at": datetime.fromisoformat(v["processed_at"])})
     
     db.commit()
@@ -84,7 +84,7 @@ def insert_narratives(board_id: str):
         narratives = json.load(file)
 
     for n in narratives:
-        t = text("INSERT INTO \"Narrative\" (narrative_id, board_id, title, summary, topic_label, claim_count, color, first_seen_at, last_seen_at) VALUES (:narrative_id, :board_id, :title, :summary, :topic_label, :claim_count, :color, :first_seen_at, :last_seen_at) ON CONFLICT (narrative_id) DO NOTHING")
+        t = text("INSERT INTO \"Narrative\" (narrative_id, board_id, title, summary, topic_label, claim_count, color, first_seen_at, last_seen_at) VALUES (:narrative_id, :board_id, :title, :summary, :topic_label, :claim_count, :color, :first_seen_at, :last_seen_at) ON CONFLICT (narrative_id) DO UPDATE SET board_id = EXCLUDED.board_id")
         db.execute(t, {"narrative_id": n["narrative_id"], "board_id": board_id, "title": n["title"], "summary": n.get("summary"), "topic_label": n.get("topic_label"), "claim_count": n["claim_count"], "color": n["color"], "first_seen_at": datetime.fromisoformat(n["first_seen_at"].replace("Z", "+00:00")), "last_seen_at": datetime.fromisoformat(n["last_seen_at"].replace("Z", "+00:00"))})
     
     db.commit()
