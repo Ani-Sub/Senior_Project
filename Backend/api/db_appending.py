@@ -17,7 +17,7 @@ SessionLocal = sessionmaker(autoflush=False, bind=engine)
 
 base = os.path.dirname(os.path.abspath(__file__))
 
-def insert_channels():
+def insert_channels(board_id: str):
 
     db = SessionLocal()
     file_path = os.path.join(base, "output", "latest", "db_ready", "channels.json")
@@ -30,6 +30,9 @@ def insert_channels():
         t = text("INSERT INTO \"Channel\" (channel_id, channel_name, total_claims, flagged_claims, accuracy_rate, risk_level, risk_score, last_assessed_at) VALUES (:channel_id, :channel_name, :total_claims, :flagged_claims, :accuracy_rate, :risk_level, :risk_score, :last_assessed_at) ON CONFLICT (channel_id) DO NOTHING")
         db.execute(t, {"channel_id": c["channel_id"], "channel_name": c["channel_title"], "total_claims": 0, "flagged_claims": 0, "accuracy_rate": 0.0, "risk_level": "low", "risk_score": 0.0, "last_assessed_at": date})
     
+        t = text("INSERT INTO \"BoardChannel\" (board_id, channel_id) VALUES (:board_id, :channel_id) ON CONFLICT (board_id, channel_id) DO NOTHING")
+        db.execute(t, {"board_id": board_id, "channel_id": c["channel_id"]})
+
     db.commit()
     db.close()
 
