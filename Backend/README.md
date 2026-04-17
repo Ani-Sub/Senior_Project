@@ -21,13 +21,11 @@ pip install youtube-transcript-api requests google-api-python-client python-dote
 
 2. **Create a `.env` file** in the `Backend/` folder:
 ```
-YOUTUBE_API_KEY=your_key_here
+YOUTUBE_API_KEY=your_youtube_key_here
+GROQ_API_KEY=your_groq_key_here
 ```
 
-3. **Make sure Ollama is running** with llama3:
-```bash
-ollama run llama3
-```
+Get your Groq API key at: https://console.groq.com
 
 ## Project Structure
 
@@ -130,7 +128,7 @@ Edit the `run_pipeline()` call in `main.py`:
 
 ```python
 run_pipeline(
-    search_keywords="AI",           # Channel search query
+    search_keywords="AI",           # Search query
     channel_sub_min=100_000,        # Minimum subscribers
     video_view_min=50_000,          # Minimum video views
     video_keywords=["ai", "tech"],  # Required title keywords
@@ -141,8 +139,21 @@ run_pipeline(
     llm_verify_risk=True,           # LLM for borderline cases
     use_cache=True,                 # Use RSS + cache (saves quota)
     cache_max_age_days=30,          # Re-search channels after N days
+    search_mode="videos",           # "videos" or "channels"
 )
 ```
+
+### Search Modes
+
+| Mode | How it works | Best for |
+|------|--------------|----------|
+| `"videos"` (default) | Search videos → extract channels → filter by subs → get more videos | Catching all relevant creators |
+| `"channels"` | Search channels by name → filter by subs → get videos | When channel names match keywords |
+
+**Why "videos" mode is better:**
+- Catches channels that *make* relevant content but aren't *named* for it
+- E.g., "Fireship" makes AI videos but wouldn't show up in channel search for "AI"
+- Spam channels rarely rank well in video search, so they get filtered out naturally
 
 ## Pipeline Steps
 

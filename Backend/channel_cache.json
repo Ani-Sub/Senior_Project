@@ -48,5 +48,195 @@
       }
     ],
     "cached_at": "2026-04-08T02:40:44.587278+00:00"
+  },
+  "video_search:ai": {
+    "channels": [
+      {
+        "channel_id": "UCA-mWX9CvCTVFWRMb9bKc9w",
+        "title": "Dan Martell",
+        "subscriber_count": 2610000
+      },
+      {
+        "channel_id": "UC415bOPUcGSamy543abLmRA",
+        "title": "Cleo Abram",
+        "subscriber_count": 7700000
+      },
+      {
+        "channel_id": "UCOT2iLov0V7Re7ku_3UBtcQ",
+        "title": "Hank Green",
+        "subscriber_count": 3060000
+      },
+      {
+        "channel_id": "UCaXkIU1QidjPwiAYu6GcHjg",
+        "title": "MS NOW",
+        "subscriber_count": 9780000
+      },
+      {
+        "channel_id": "UCIaH-gZIVC432YRjNVvnyCA",
+        "title": "Chris Williamson",
+        "subscriber_count": 4200000
+      },
+      {
+        "channel_id": "UCvxm0qTrGN_1LMYgUaftWyQ",
+        "title": "Peter H. Diamandis",
+        "subscriber_count": 488000
+      },
+      {
+        "channel_id": "UCGq-a57w-aPwyi3pW7XLiHw",
+        "title": "The Diary Of A CEO",
+        "subscriber_count": 15800000
+      },
+      {
+        "channel_id": "UCSHZKyawb77ixDdsGog4iWA",
+        "title": "Lex Fridman",
+        "subscriber_count": 4970000
+      },
+      {
+        "channel_id": "UCIALMKvObZNtJ6AmdCLP7Lg",
+        "title": "Bloomberg Television",
+        "subscriber_count": 3110000
+      },
+      {
+        "channel_id": "UCUyDOdBWhC1MCxEjC46d-zw",
+        "title": "Alex Hormozi",
+        "subscriber_count": 4120000
+      },
+      {
+        "channel_id": "UC7oPkqeHTwuOZ5CZ-R9f-6w",
+        "title": "Triggernometry",
+        "subscriber_count": 1780000
+      },
+      {
+        "channel_id": "UCOFr2M0innfMCzpMeMQ7zNw",
+        "title": "Andr\u00e9 Duqum",
+        "subscriber_count": 711000
+      },
+      {
+        "channel_id": "UCupvZG-5ko_eiXAupbDfxWw",
+        "title": "CNN",
+        "subscriber_count": 19500000
+      },
+      {
+        "channel_id": "UCdNj_PP__5kKtjZabuEjbqA",
+        "title": "Dan Kieft",
+        "subscriber_count": 231000
+      },
+      {
+        "channel_id": "UCwicfou4Ewu-koikmga-bEg",
+        "title": "AI In Context",
+        "subscriber_count": 359000
+      },
+      {
+        "channel_id": "UCmXH_moPhfkqCk6S3b9RWuw",
+        "title": "Dr Brian Keating",
+        "subscriber_count": 338000
+      },
+      {
+        "channel_id": "UCiq1FIgtEK7LRAOB1JXTPig",
+        "title": "Silicon Valley Girl",
+        "subscriber_count": 1500000
+      },
+      {
+        "channel_id": "UCVHFbqXqoYvEWM1Ddxl0QDg",
+        "title": "Android Developers",
+        "subscriber_count": 1410000
+      },
+      {
+        "channel_id": "UCzrWKkFIRS0kjZf7x24GdGg",
+        "title": "Peter McCormack",
+        "subscriber_count": 283000
+      },
+      {
+        "channel_id": "UCtMVHI3AJD4Qk4hcbZnI9ZQ",
+        "title": "SomeOrdinaryGamers",
+        "subscriber_count": 3820000
+      },
+      {
+        "channel_id": "UCR1PVwrPjpz0U_Fbju-BAzQ",
+        "title": "Jarvis Johnson! GOLD",
+        "subscriber_count": 1300000
+      },
+      {
+        "channel_id": "UCC8wczy7734jKPhiR2UkS9A",
+        "title": "Wholesale Ted",
+        "subscriber_count": 1460000
+      },
+      {
+        "channel_id": "UCn4dfcINwD3_z41IDFPsFcA",
+        "title": "Chris Koerner on The Koerner Office Podcast",
+        "subscriber_count": 536000
+      },
+      {
+        "channel_id": "UC5l7RouTQ60oUjLjt1Nh-UQ",
+        "title": "AI Revolution",
+        "subscriber_count": 538000
+      },
+      {
+        "channel_id": "UC0C-17n9iuUQPylguM1d-lQ",
+        "title": "AI News & Strategy Daily | Nate B Jones",
+        "subscriber_count": 265000
+      },
+      {
+        "channel_id": "UC4VDYTEXxNo_phfONKa3AOA",
+        "title": "DubAI Baby Official",
+        "subscriber_count": 1390000
+      },
+      {
+        "channel_id": "UCkVfrGwV-iG9bSsgCbrNPxQ",
+        "title": "Better Stack",
+        "subscriber_count": 130000
+      },
+      {
+        "channel_id": "UCpJ7ZS8hK-IOeciv952Xhug",
+        "title": "Really American",
+        "subscriber_count": 1120000
+      },
+      {
+        "channel_id": "UC-SJ6nODDmufqBzPBwCvYvQ",
+        "title": "CBS Mornings",
+        "subscriber_count": 3280000
+      },
+      {
+        "channel_id": "UCKWaEZ-_VweaEx1j62do_vQ",
+        "title": "IBM Technology",
+        "subscriber_count": 1650000
+      },
+      {
+        "channel_id": "UCKCK2lumiYpKfD1aEj4W5vg",
+        "title": "Alieff Irfan",
+        "subscriber_count": 6470000
+      },
+      {
+        "channel_id": "UC0_M9eztZvetcyLAb5f-o5w",
+        "title": "InsideAI",
+        "subscriber_count": 282000
+      },
+      {
+        "channel_id": "UC8p1vwvWtl6T73JiExfWs1g",
+        "title": "CBS News",
+        "subscriber_count": 7000000
+      },
+      {
+        "channel_id": "UCMkybZyI_B-xgkLQo_eCQ_w",
+        "title": "American Museum of Natural History",
+        "subscriber_count": 436000
+      },
+      {
+        "channel_id": "UCqoAEDirJPjEUFcF2FklnBA",
+        "title": "StarTalk",
+        "subscriber_count": 5610000
+      },
+      {
+        "channel_id": "UCcyq283he07B7_KUX07mmtA",
+        "title": "Business Insider",
+        "subscriber_count": 10500000
+      },
+      {
+        "channel_id": "UChpleBmo18P08aKCIgti38g",
+        "title": "Matt Wolfe",
+        "subscriber_count": 929000
+      }
+    ],
+    "cached_at": "2026-04-17T21:17:46.592139+00:00"
   }
 }
