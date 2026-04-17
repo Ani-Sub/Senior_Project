@@ -146,6 +146,88 @@ Video analyses:
 """
 
 
+def build_theme_grouping_prompt(all_results: list[dict]) -> str:
+    """
+    Pass 1: Group all claims into themes (compressed format).
+    Returns theme names and which claims belong to each.
+    """
+    # Compress claims to minimal format: "video_id: claim text"
+    claim_lines = []
+    claim_index = 0
+    
+    for r in all_results:
+        video_id = r.get("video_id", "unknown")
+        for claim in r.get("claims", []):
+            text = claim.get("text", "")
+            confidence = claim.get("confidence", 0.5)
+            claim_lines.append(f"[{claim_index}] ({video_id}, conf:{confidence:.1f}) {text}")
+            claim_index += 1
+    
+    claims_text = "\n".join(claim_lines)
+    
+    return f"""Analyze these {claim_index} claims from {len(all_results)} videos and group them into 3-7 distinct themes.
+
+CLAIMS:
+{claims_text}
+
+For each theme, list the claim indices [N] that belong to it.
+
+RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO MARKDOWN.
+
+{{
+  "themes": [
+    {{
+      "id": "theme_1",
+      "name": "Short theme name (3-6 words)",
+      "claim_indices": [0, 5, 12, 23],
+      "summary": "One sentence describing this theme"
+    }}
+  ]
+}}
+"""
+
+
+def build_narrative_expansion_prompt(
+    theme: dict,
+    claims: list[dict],
+    video_lookup: dict[str, dict]
+) -> str:
+    """
+    Pass 2: Expand a single theme into a detailed narrative.
+    """
+    # Build claim details for this theme
+    claim_details = []
+    video_ids = set()
+    
+    for claim in claims:
+        video_id = claim.get("video_id", "unknown")
+        video_ids.add(video_id)
+        title = video_lookup.get(video_id, {}).get("title", "")
+        claim_details.append(f"- {claim.get('text', '')} (from: {title})")
+    
+    claims_text = "\n".join(claim_details)
+    
+    return f"""Expand this theme into a detailed narrative.
+
+THEME: {theme.get('name', '')}
+INITIAL SUMMARY: {theme.get('summary', '')}
+
+SUPPORTING CLAIMS:
+{claims_text}
+
+RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO MARKDOWN.
+
+{{
+  "id": "{theme.get('id', '')}",
+  "name": "{theme.get('name', '')}",
+  "summary": "2-4 sentence detailed description synthesizing all claims",
+  "video_ids": {json.dumps(list(video_ids))},
+  "key_claims": ["most important claim 1", "most important claim 2", "most important claim 3"],
+  "confidence": 0.0-1.0
+}}
+"""
+
+
 
 
 

@@ -13,11 +13,13 @@ Pipeline steps:
 import logging
 from datetime import datetime
 from pathlib import Path
+from typing import Literal
 
-from ytAPI.videoExtract import discover_videos
+from ytAPI.videoExtract import discover_videos, SearchMode
 from ytAPI.transcriptExtract import get_transcript
 from ytAPI.commentExtract import get_comments
 from extraction.analyzer import analyze_video, synthesize_trends, call_llm
+from extraction.confidence import boost_confidence_by_agreement
 from utility.output import OutputManager
 from trends import generate_trend_summary, Granularity
 from risk import assess_video_risk, generate_risk_summary
@@ -46,6 +48,7 @@ def run_pipeline(
     llm_verify_risk: bool = True,
     use_cache: bool = True,
     cache_max_age_days: int = 30,
+    search_mode: SearchMode = "videos",
     output_dir: str | Path | None = None
 ) -> str | None:
     """
@@ -55,7 +58,7 @@ def run_pipeline(
     Final output is exported in database-ready format.
     
     Args:
-        search_keywords: Keywords to search for channels
+        search_keywords: Keywords to search for
         channel_sub_min: Minimum subscriber count for channels
         video_view_min: Minimum view count for videos
         video_keywords: Keywords that must appear in video titles
@@ -66,6 +69,9 @@ def run_pipeline(
         llm_verify_risk: Whether to use LLM for borderline risk cases
         use_cache: Use channel cache + RSS feeds to reduce API quota
         cache_max_age_days: Days before cached channels expire
+        search_mode: "videos" (default) or "channels"
+            - "videos": Search videos first, extract channels (catches more creators)
+            - "channels": Search channels by name only
         output_dir: Base directory for output files
     
     Returns:
@@ -104,7 +110,8 @@ def run_pipeline(
         video_keywords=video_keywords,
         days=days,
         use_cache=use_cache,
-        cache_max_age_days=cache_max_age_days
+        cache_max_age_days=cache_max_age_days,
+        search_mode=search_mode
     )
     
     if not discovered_videos:
@@ -175,6 +182,15 @@ def run_pipeline(
         return None
     
     log.info(f"\n✓ Processed {len(all_results)}/{len(discovered_videos)} videos")
+    
+    # ══════════════════════════════════════════════════════════════════════
+    # STEP 2.5: Confidence Adjustment
+    # ══════════════════════════════════════════════════════════════════════
+    log.info("\n" + "="*60)
+    log.info("STEP 2.5: Adjusting claim confidence (cross-video agreement)")
+    log.info("="*60)
+    
+    all_results = boost_confidence_by_agreement(all_results)
     
     # ══════════════════════════════════════════════════════════════════════
     # STEP 3: Synthesis
@@ -297,4 +313,5 @@ if __name__ == "__main__":
         llm_verify_risk=True,
         use_cache=True,
         cache_max_age_days=30,
+        search_mode="videos",  # "videos" (recommended) or "channels"
     )
