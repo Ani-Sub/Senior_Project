@@ -590,6 +590,37 @@ body {
   padding: 3px 4px;
 }
 
+/* PRESET KEYWORD CHIPS */
+.preset-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.keyword-chip {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.83rem;
+  padding: 6px 14px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.keyword-chip:hover {
+  border-color: var(--accent);
+  color: var(--white);
+}
+
+.keyword-chip.selected {
+  background: rgba(0, 212, 255, 0.12);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* DESIGN CARDS */
 .design-grid {
   display: grid;

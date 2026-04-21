@@ -136,10 +136,13 @@
         </div>
 
         <div class="form-group">
-          <label>Search Terms <span class="hint">Press Enter or comma to add</span></label>
-          <div class="tag-input-wrapper" id="tagWrapper">
-            <div class="tags" id="tagList"></div>
-            <input type="text" id="tagInput" placeholder="e.g. GPT-5, OpenAI, AGI...">
+          <label>Search Terms <span class="hint">Select topics to track</span></label>
+          <div class="preset-keywords" id="presetKeywords">
+            <button class="keyword-chip" data-keyword="ai bubble" onclick="toggleKeyword(this)" type="button">AI Bubble</button>
+            <button class="keyword-chip" data-keyword="ai in healthcare" onclick="toggleKeyword(this)" type="button">AI in Healthcare</button>
+            <button class="keyword-chip" data-keyword="ai and job markets" onclick="toggleKeyword(this)" type="button">AI and Job Markets</button>
+            <button class="keyword-chip" data-keyword="ai industry" onclick="toggleKeyword(this)" type="button">AI Industry</button>
+            <button class="keyword-chip" data-keyword="advancements in ai" onclick="toggleKeyword(this)" type="button">Advancements in AI</button>
           </div>
         </div>
 

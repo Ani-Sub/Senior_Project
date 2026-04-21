@@ -169,9 +169,7 @@ function closeNewModal() {
 function resetForm() {
   document.getElementById('dashName').value = '';
   document.getElementById('dashDesc').value = '';
-  document.getElementById('tagInput').value = '';
-  tags = [];
-  renderTags();
+  resetKeywordChips();
   selectedDesign = null;
   document.querySelectorAll('.design-card').forEach(c => c.classList.remove('selected'));
   currentStep = 1;
@@ -281,53 +279,25 @@ async function createDashboard() {
   renderDashboards();
 }
 
-// ── TAG INPUT ─────────────────────────────────────────────────
+// ── KEYWORD CHIPS ─────────────────────────────────────────────
 function setupTagInput() {
-  const input = document.getElementById('tagInput');
-  const wrapper = document.getElementById('tagWrapper');
-
-  wrapper.addEventListener('click', () => input.focus());
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
-      addTag(input.value.trim().replace(/,$/, ''));
-    }
-    if (e.key === 'Backspace' && input.value === '' && tags.length > 0) {
-      tags.pop();
-      renderTags();
-    }
-  });
-
-  input.addEventListener('blur', () => {
-    if (input.value.trim()) addTag(input.value.trim());
-  });
+  // No-op: keyword selection is handled by toggleKeyword()
 }
 
-function addTag(val) {
-  const input = document.getElementById('tagInput');
-  if (!val || tags.includes(val) || tags.length >= 10) {
-    input.value = '';
-    return;
+function toggleKeyword(el) {
+  const keyword = el.dataset.keyword;
+  if (tags.includes(keyword)) {
+    tags = tags.filter(t => t !== keyword);
+    el.classList.remove('selected');
+  } else {
+    tags.push(keyword);
+    el.classList.add('selected');
   }
-  tags.push(val);
-  input.value = '';
-  renderTags();
 }
 
-function removeTag(val) {
-  tags = tags.filter(t => t !== val);
-  renderTags();
-}
-
-function renderTags() {
-  const list = document.getElementById('tagList');
-  list.innerHTML = tags.map(t => `
-    <div class="tag">
-      ${escHtml(t)}
-      <button class="tag-remove" onclick="removeTag('${escHtml(t)}')" type="button">✕</button>
-    </div>
-  `).join('');
+function resetKeywordChips() {
+  tags = [];
+  document.querySelectorAll('.keyword-chip').forEach(c => c.classList.remove('selected'));
 }
 
 // ── DELETE ────────────────────────────────────────────────────
