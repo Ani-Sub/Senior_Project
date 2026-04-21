@@ -31,11 +31,11 @@ if not GROQ_API_KEY:
 
 LLM_MODEL = "llama-3.3-70b-versatile"
 LLM_URL = "https://api.groq.com/openai/v1/chat/completions"
-LLM_MAX_TOKENS = 5000  # Groq llama3 max output
+LLM_MAX_TOKENS = 2000   # Reduced - JSON responses don't need 8k
 
 #=====================================
 # chunking parameters
 #=====================================
-CHUNK_SIZE = 2000       # Characters per chunk (Groq has 8k context)
+CHUNK_SIZE = 3000       # Characters per chunk (~750 tokens)
 CHUNK_OVERLAP = 200     # Overlap between chunks
 
