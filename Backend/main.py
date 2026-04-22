@@ -6,7 +6,7 @@ Pipeline steps:
 2. Extract claims from each video (checkpoint after each)
 3. Synthesize cross-video narrative (checkpoint)
 4. Analyze temporal trends (checkpoint)
-5. Assess content risk (checkpoint)
+5. Assess content risk (cheoutckpoint)
 6. Export database-ready files
 """
 
@@ -14,6 +14,12 @@ import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Literal
+#Added Imports for Railway DB
+import os
+import json
+import uuid
+import psycopg2
+from psycopg2.extras import Json
 
 from ytAPI.videoExtract import discover_videos, SearchMode
 from ytAPI.transcriptExtract import get_transcript
@@ -34,6 +40,187 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 log = logging.getLogger(__name__)
+
+
+def save_results_to_railway(
+    video_results,
+    synthesis,
+    trends,
+    risk_analysis,
+    search_params
+):
+    datebase_url = os.getenv("DATABASE_URL")
+    if not datebase_url:
+        log.error("DATABASE_URL not set. Skipping Railway DB save.")
+        return
+    
+    board_id = "1fe369fe-0310-4007-a3a4-fc4b283fbcff"
+    default_color = "#00d4ff"
+
+    conn = psycopg2.connect(datebase_url)
+    cur = conn.cursor()
+
+    try:
+        # Save videos
+        for result in video_results:
+            meta = result.get("video_metadata", {})
+
+            cur.execute("""
+                INSERT INTO "Video" (
+                    video_id,
+                    board_id,
+                    channel_id,
+                    title,
+                    description,
+                    view_count,
+                    duration_seconds,
+                    published_at,
+                    processed,
+                    processed_at    
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())
+                ON CONFLICT (video_id)
+                DO UPDATE SET
+                    board_id = EXCLUDED.board_id,
+                    channel_id = EXCLUDED.channel_id,
+                    title = EXCLUDED.title,
+                    description = EXCLUDED.description,
+                    view_count = EXCLUDED.view_count,
+                    duration_seconds = EXCLUDED.duration_seconds,
+                    published_at = EXCLUDED.published_at,
+                    processed = EXCLUDED.processed,
+                    processed_at = NOW();
+            """, (
+                meta.get("video_id"),
+                board_id,
+                meta.get("channel_id"),
+                meta.get("title"),
+                meta.get("description", ""),
+                meta.get("view_count"),
+                meta.get("duration_seconds"),
+                meta.get("published_at"),
+                True
+            ))
+
+        # Match trend narratives by narrative_id
+        trend_narratives = {
+            n.get("narrative_id"): n for n in trends.get("narratives", [])
+        }
+
+        # Save narratives
+        for narrative in synthesis.get("narratives", []):
+            narrative_id = narrative.get("id")
+            if not narrative_id:
+                continue
+
+            matching_trend = trend_narratives.get(narrative_id, {})
+            timeline = matching_trend.get("timeline", [])
+
+            first_seen_at = None
+            last_seen_at = None
+            if timeline:
+                first_seen_at = timeline[0].get("period_start_iso")
+                last_seen_at = timeline[-1].get("period_start_iso")
+            else:
+                first_seen_at = trends.get("time_range", {}).get("start")
+                last_seen_at = trends.get("time_range", {}).get("end")
+
+            claim_count = sum(point.get("claim_count", 0) for point in timeline) if timeline else 0
+        
+            cur.execute("""
+                INSERT INTO "Narrative" (
+                    narrative_id,
+                    board_id,
+                    title,
+                    summary,
+                    topic_label,
+                    claim_count,
+                    color,
+                    first_seen_at,
+                    last_seen_at
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (narrative_id)
+                DO UPDATE SET
+                    board_id = EXCLUDED.board_id,
+                    title = EXCLUDED.title,
+                    summary = EXCLUDED.summary,
+                    topic_label = EXCLUDED.topic_label,
+                    claim_count = EXCLUDED.claim_count,
+                    color = EXCLUDED.color,
+                    first_seen_at = EXCLUDED.first_seen_at,
+                    last_seen_at = EXCLUDED.last_seen_at;
+            """, (
+                narrative_id,
+                board_id,
+                narrative.get("name"),
+                narrative.get("summary"),
+                narrative.get("name"),
+                claim_count,
+                default_color,
+                first_seen_at,
+                last_seen_at
+            ))
+
+        # Save trend row
+        trend_id = str(uuid.uuid4())
+        labels = [p.get("period") for p in trends.get("overall", {}).get("timeline", [])]
+
+        cur.execute("""
+            INSERT INTO "Trend" (
+                trend_id,
+                board_id,
+                labels,
+                created_at
+            )
+            VALUES (%s, %s, %s, NOW());
+        """, (
+            trend_id,
+            board_id,
+            labels
+        ))
+
+        # Save trend datasets
+        valid_directions = {"rising", "peaking", "declining", "stable"}
+
+        for narrative in trends.get("narratives", []):
+            direction = narrative.get("trend", {}).get("pattern", "stable")
+            if direction not in valid_directions:
+                direction = "stable"
+
+            data_points = [p.get("total_views", 0) for p in narrative.get("timeline", [])]
+
+            cur.execute("""
+                INSERT INTO "TrendData" (
+                    dataset_id,
+                    trend_id,
+                    narrative_id,
+                    label,
+                    color,
+                    data,
+                    direction
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s);
+            """, (
+                str(uuid.uuid4()),
+                trend_id,
+                narrative.get("narrative_id"),
+                narrative.get("name"),
+                default_color,
+                data_points,
+                direction
+            ))
+
+        conn.commit()
+        log.info("✓ Results saved to Railway")
+
+    except Exception as e:
+        conn.rollback()
+        log.error(f"Failed to save results to Railway: {e}")
+        raise
+    finally:
+        cur.close()
+        conn.close()
 
 
 def run_pipeline(
@@ -277,6 +464,14 @@ def run_pipeline(
         trends=trends,
         risk=risk_analysis,
         search_params=search_params
+    )
+
+    save_results_to_railway(
+    video_results=all_results,
+    synthesis=synthesis,
+    trends=trends,
+    risk_analysis=risk_analysis,
+    search_params=search_params
     )
     
     # Clean up internal fields after export
