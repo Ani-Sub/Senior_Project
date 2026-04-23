@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.env
+
+# Pipeline output — local runs (not needed in repo)
+Backend/output/
+Backend/api/output/db_ready/
+Backend/api/output/latest/checkpoints/
+
+# Keep Backend/api/output/latest/db_ready/ tracked (Railway API reads from it)
+!Backend/api/output/latest/db_ready/
+!Backend/api/output/latest/db_ready/*.json
+
+# Channel cache (regenerated automatically)
+Backend/channel_cache.json
