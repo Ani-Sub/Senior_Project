@@ -92,23 +92,19 @@
       <div class="stat-row">
         <div class="stat-card">
           <div class="stat-label">Total Claims</div>
-          <div class="stat-value">1,284</div>
-          <div class="stat-delta up">↑ 12% this week</div>
+          <div class="stat-value" id="statTotalClaims">—</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Narratives Found</div>
-          <div class="stat-value">38</div>
-          <div class="stat-delta up">↑ 4 new</div>
+          <div class="stat-value" id="statNarrativesFound">—</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Channels Tracked</div>
-          <div class="stat-value">17</div>
-          <div class="stat-delta neutral">→ No change</div>
+          <div class="stat-value" id="statChannelsTracked">—</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Avg Risk Score</div>
-          <div class="stat-value">3.2<span class="stat-unit">/10</span></div>
-          <div class="stat-delta down">↓ 0.4 from last week</div>
+          <div class="stat-label">High Risk Claims</div>
+          <div class="stat-value" id="statHighRiskClaims">—</div>
         </div>
       </div>
 
@@ -218,6 +214,7 @@
 
   </main>
   <script src="../javascript/api.js"></script>
+  <script src="../javascript/sidebar.js"></script>
   <script src="../javascript/dashboard.js"></script>
 </body>
 </html>

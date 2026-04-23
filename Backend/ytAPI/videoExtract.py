@@ -1,10 +1,14 @@
 import logging
 from datetime import datetime, timezone, timedelta
+from typing import Literal
 from config import youtube
 from ytAPI.channelExtract import search_channels, filter_channels
-from utility.debugLog import log_videos_raw, log_videos_filtered
+from ytAPI.rss_feed import fetch_videos_from_channels
+from ytAPI.channel_cache import get_cached_channels, cache_channels
 
 log = logging.getLogger(__name__)
+
+SearchMode = Literal["channels", "videos"]
 
 
 def get_published_after(days: int) -> str:
@@ -13,12 +17,68 @@ def get_published_after(days: int) -> str:
     return cutoff.isoformat()
 
 
+def search_videos(
+    query: str,
+    days: int = 30,
+    max_results: int = 50
+) -> list[dict]:
+    """
+    Search YouTube for videos matching a keyword query.
+    
+    Returns video metadata including channel info.
+    """
+    published_after = get_published_after(days)
+    
+    response = youtube.search().list(
+        q=query,
+        type="video",
+        part="snippet",
+        order="relevance",
+        publishedAfter=published_after,
+        maxResults=max_results
+    ).execute()
+    
+    videos = []
+    for item in response.get("items", []):
+        snippet = item.get("snippet", {})
+        videos.append({
+            "video_id": item["id"]["videoId"],
+            "channel_id": snippet.get("channelId"),
+            "channel_title": snippet.get("channelTitle", ""),
+            "title": snippet.get("title", ""),
+            "published_at": snippet.get("publishedAt"),
+        })
+    
+    log.info(f"  → Found {len(videos)} videos for query: '{query}'")
+    return videos
+
+
+def extract_unique_channels(videos: list[dict]) -> list[dict]:
+    """
+    Extract unique channels from a list of videos.
+    
+    Returns list of channel dicts with channel_id and title.
+    """
+    seen = {}
+    for video in videos:
+        channel_id = video.get("channel_id")
+        if channel_id and channel_id not in seen:
+            seen[channel_id] = {
+                "channel_id": channel_id,
+                "title": video.get("channel_title", "Unknown")
+            }
+    
+    channels = list(seen.values())
+    log.info(f"  → Extracted {len(channels)} unique channels from {len(videos)} videos")
+    return channels
+
+
 def get_recent_channel_videos(
     channel_id: str,
     days: int = 30,
     max_results: int = 5
 ) -> list[str]:
-    """Fetch video IDs from a channel published within the last N days."""
+    """Fetch video IDs from a channel published within the last N days (API method)."""
     published_after = get_published_after(days)
     response = youtube.search().list(
         part="snippet",
@@ -32,14 +92,85 @@ def get_recent_channel_videos(
     return [item["id"]["videoId"] for item in response["items"]]
 
 
+def parse_iso_duration(iso_duration: str | None) -> int:
+    """
+    Convert ISO 8601 duration (PT15M30S) to seconds.
+    
+    Examples:
+        PT1H2M3S -> 3723
+        PT15M30S -> 930
+        PT45S -> 45
+    """
+    if not iso_duration:
+        return 0
+    
+    import re
+    pattern = r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?'
+    match = re.match(pattern, iso_duration)
+    
+    if not match:
+        return 0
+    
+    hours = int(match.group(1) or 0)
+    minutes = int(match.group(2) or 0)
+    seconds = int(match.group(3) or 0)
+    
+    return hours * 3600 + minutes * 60 + seconds
+
+
+def enrich_video_metadata(video_ids: list[str]) -> list[dict]:
+    """
+    Fetch full metadata for videos (view count, likes, duration).
+    Batches up to 50 videos per API call.
+    
+    This is needed for both RSS and API-discovered videos since
+    RSS doesn't include view counts.
+    """
+    if not video_ids:
+        return []
+    
+    all_metadata = []
+    
+    # Batch into groups of 50 (API limit)
+    for i in range(0, len(video_ids), 50):
+        batch = video_ids[i:i+50]
+        
+        response = youtube.videos().list(
+            part="statistics,snippet,contentDetails",
+            id=",".join(batch)
+        ).execute()
+        
+        for item in response.get("items", []):
+            stats = item.get("statistics", {})
+            snippet = item.get("snippet", {})
+            iso_duration = item.get("contentDetails", {}).get("duration")
+            
+            all_metadata.append({
+                "video_id": item["id"],
+                "channel_id": snippet.get("channelId"),
+                "title": snippet.get("title", ""),
+                "description": snippet.get("description", ""),
+                "channel_title": snippet.get("channelTitle", ""),
+                "published_at": snippet.get("publishedAt"),
+                "view_count": int(stats.get("viewCount", 0)),
+                "like_count": int(stats.get("likeCount", 0)),
+                "comment_count": int(stats.get("commentCount", 0)),
+                "duration": iso_duration,
+                "duration_seconds": parse_iso_duration(iso_duration),
+            })
+    
+    return all_metadata
+
+
 def filter_videos(
     video_ids: list[str],
     channel_title: str = "unknown",
     min_views: int = 10_000,
     keywords: list[str] | None = None
-) -> list[str]:
+) -> list[dict]:
     """
     Filter videos by minimum view count and keyword match in title.
+    Returns rich video metadata objects for trend analysis.
     Logs both accepted and rejected videos with rejection reasons.
     """
     if not video_ids:
@@ -57,13 +188,30 @@ def filter_videos(
 
     for item in response["items"]:
         vid_id = item["id"]
-        views = int(item["statistics"].get("viewCount", 0))
-        title = item["snippet"]["title"]
+        stats = item["statistics"]
+        snippet = item["snippet"]
+        
+        views = int(stats.get("viewCount", 0))
+        title = snippet["title"]
         title_lower = title.lower()
         keyword_match = any(k.lower() in title_lower for k in keywords)
 
         if views >= min_views and keyword_match:
-            selected.append(vid_id)
+            iso_duration = item["contentDetails"].get("duration")
+            # Return rich metadata for trend analysis
+            selected.append({
+                "video_id": vid_id,
+                "channel_id": snippet.get("channelId"),
+                "title": title,
+                "description": snippet.get("description", ""),
+                "channel_title": snippet.get("channelTitle", channel_title),
+                "published_at": snippet.get("publishedAt"),  # ISO 8601 timestamp
+                "view_count": views,
+                "like_count": int(stats.get("likeCount", 0)),
+                "comment_count": int(stats.get("commentCount", 0)),
+                "duration": iso_duration,
+                "duration_seconds": parse_iso_duration(iso_duration),
+            })
         else:
             reasons = []
             if views < min_views:
@@ -77,8 +225,168 @@ def filter_videos(
                 "reasons": reasons
             })
 
-    log_videos_filtered(channel_title, selected, rejected)
+    log.info(f"  → {channel_title}: {len(selected)} videos passed filter, {len(rejected)} rejected")
     return selected
+
+
+def discover_videos_via_rss(
+    channels: list[dict],
+    video_view_min: int,
+    video_keywords: list[str],
+    days: int = 30
+) -> list[dict]:
+    """
+    Discover videos using RSS feeds (FREE) + minimal API for metadata.
+    
+    Args:
+        channels: List of channel dicts with 'channel_id' and 'title'
+        video_view_min: Minimum view count for videos
+        video_keywords: Keywords that must appear in video titles
+        days: How far back to look for videos
+    
+    Returns:
+        List of filtered video metadata dicts
+    """
+    channel_ids = [ch["channel_id"] for ch in channels]
+    
+    # Step 1: Get videos from RSS (FREE)
+    log.info(f"  → Fetching videos via RSS feeds ({len(channel_ids)} channels)...")
+    rss_videos = fetch_videos_from_channels(
+        channel_ids=channel_ids,
+        days=days,
+        keywords=video_keywords  # Pre-filter by keywords
+    )
+    
+    if not rss_videos:
+        log.info("  → No videos found in RSS feeds")
+        return []
+    
+    # Step 2: Get view counts from API (costs 1 unit per 50 videos)
+    video_ids = [v["video_id"] for v in rss_videos]
+    log.info(f"  → Enriching {len(video_ids)} videos with API metadata...")
+    enriched = enrich_video_metadata(video_ids)
+    
+    # Step 3: Filter by view count
+    selected = []
+    rejected = []
+    
+    for video in enriched:
+        if video["view_count"] >= video_view_min:
+            selected.append(video)
+        else:
+            rejected.append({
+                "video_id": video["video_id"],
+                "title": video["title"],
+                "views": video["view_count"],
+                "reasons": [f"views={video['view_count']:,} < min={video_view_min:,}"]
+            })
+    
+    log.info(f"  → {len(selected)} videos passed view filter, {len(rejected)} rejected")
+    return selected
+
+
+def discover_videos_via_api(
+    channels: list[dict],
+    video_view_min: int,
+    video_keywords: list[str],
+    days: int = 30
+) -> list[dict]:
+    """
+    Discover videos using YouTube API (original method, costs quota).
+    
+    Used as fallback when RSS isn't sufficient.
+    """
+    all_videos = []
+    
+    for channel in channels:
+        log.info(f"  → API search for: {channel['title']}")
+        vids = get_recent_channel_videos(channel["channel_id"], days=days, max_results=5)
+        log.info(f"    Found {len(vids)} recent videos")
+        filtered = filter_videos(
+            vids,
+            channel_title=channel["title"],
+            min_views=video_view_min,
+            keywords=video_keywords
+        )
+        all_videos.extend(filtered)
+    
+    return all_videos
+
+
+def discover_videos_via_video_search(
+    search_keywords: str,
+    channel_sub_min: int,
+    video_view_min: int,
+    video_keywords: list[str],
+    days: int = 30,
+    use_cache: bool = True,
+    cache_max_age_days: int = 30,
+    max_search_results: int = 50
+) -> list[dict]:
+    """
+    Video-first discovery: search videos → extract channels → filter → get more videos.
+    
+    This catches channels that make relevant content but aren't named for it.
+    E.g., "Fireship" makes AI videos but wouldn't show up in channel search for "AI".
+    
+    Flow:
+    1. Check cache for channels (from previous video search)
+    2. If cache miss: search videos by keyword → extract unique channels → filter by subs
+    3. Get more videos from those channels via RSS
+    4. Filter by view count
+    """
+    channels = None
+    used_cache = False
+    cache_key = f"video_search:{search_keywords}"  # Separate cache namespace
+    
+    # Step 1: Try cache first
+    if use_cache:
+        cached = get_cached_channels(cache_key, max_age_days=cache_max_age_days)
+        if cached:
+            channels = cached
+            used_cache = True
+            log.info(f"Using cached channels for '{cache_key}'")
+    
+    # Step 2: Video search → extract channels → filter
+    if channels is None:
+        log.info(f"Searching VIDEOS for '{search_keywords}' (video-first mode)...")
+        
+        # Search for videos matching keywords
+        video_results = search_videos(search_keywords, days=days, max_results=max_search_results)
+        
+        if not video_results:
+            log.warning("No videos found in search")
+            return []
+        
+        # Extract unique channels from video results
+        raw_channels = extract_unique_channels(video_results)
+        channel_ids = [ch["channel_id"] for ch in raw_channels]
+        
+        # Filter channels by subscriber count
+        log.info("Filtering channels by subscriber count...")
+        channels = filter_channels(channel_ids, min_subscribers=channel_sub_min)
+        
+        # Save to cache
+        if use_cache and channels:
+            cache_channels(cache_key, channels)
+    
+    if not channels:
+        log.warning("No channels passed subscriber filter")
+        return []
+    
+    log.info(f"Found {len(channels)} channels")
+    
+    # Step 3: Get more videos from these channels via RSS
+    log.info("Discovering videos via RSS (FREE)...")
+    videos = discover_videos_via_rss(
+        channels=channels,
+        video_view_min=video_view_min,
+        video_keywords=video_keywords,
+        days=days
+    )
+    
+    log.info(f"Discovered {len(videos)} videos total")
+    return videos
 
 
 def discover_videos(
@@ -86,32 +394,90 @@ def discover_videos(
     channel_sub_min: int,
     video_view_min: int,
     video_keywords: list[str],
-    days: int = 30
-) -> list[str]:
+    days: int = 30,
+    use_cache: bool = True,
+    cache_max_age_days: int = 30,
+    search_mode: SearchMode = "videos"
+) -> list[dict]:
     """
-    Full discovery pipeline:
-    search channels → filter by size → get recent videos → filter by views/keywords
+    Full discovery pipeline with quota optimization.
+    
+    Args:
+        search_keywords: Keywords to search for
+        channel_sub_min: Minimum subscriber count for channels
+        video_view_min: Minimum view count for videos
+        video_keywords: Keywords that must appear in video titles
+        days: How far back to look for videos
+        use_cache: Whether to use channel cache (set False to always use API)
+        cache_max_age_days: Maximum age of cache entries in days
+        search_mode: "videos" (recommended) or "channels"
+            - "videos": Search videos first, extract channels (catches more relevant creators)
+            - "channels": Search channels by name (original method)
+    
+    Returns:
+        List of video metadata dicts
     """
-    log.info("Searching channels...")
-    channel_ids = search_channels(search_keywords)
-
-    log.info("Filtering channels...")
-    channels = filter_channels(channel_ids, min_subscribers=channel_sub_min)
-
-    all_video_ids = []
-    for channel in channels:
-        log.info(f"Getting recent videos for: {channel['title']}")
-        vids = get_recent_channel_videos(channel["channel_id"], days=days, max_results=5)
-        log_videos_raw(channel["title"], channel["channel_id"], vids)
-        filtered = filter_videos(
-            vids,
-            channel_title=channel["title"],
-            min_views=video_view_min,
-            keywords=video_keywords
+    if search_mode == "videos":
+        return discover_videos_via_video_search(
+            search_keywords=search_keywords,
+            channel_sub_min=channel_sub_min,
+            video_view_min=video_view_min,
+            video_keywords=video_keywords,
+            days=days,
+            use_cache=use_cache,
+            cache_max_age_days=cache_max_age_days
         )
-        all_video_ids.extend(filtered)
-
-    return all_video_ids
+    
+    # Original channel-first mode
+    channels = None
+    used_cache = False
+    
+    # Step 1: Try cache first
+    if use_cache:
+        cached = get_cached_channels(search_keywords, max_age_days=cache_max_age_days)
+        if cached:
+            channels = cached
+            used_cache = True
+            log.info(f"Using cached channels for '{search_keywords}'")
+    
+    # Step 2: Fall back to API if no cache
+    if channels is None:
+        log.info(f"Searching channels via API (cache miss)...")
+        channel_ids = search_channels(search_keywords)
+        
+        log.info("Filtering channels by subscriber count...")
+        channels = filter_channels(channel_ids, min_subscribers=channel_sub_min)
+        
+        # Save to cache for next time
+        if use_cache and channels:
+            cache_channels(search_keywords, channels)
+    
+    if not channels:
+        log.warning("No channels found matching criteria")
+        return []
+    
+    log.info(f"Found {len(channels)} channels")
+    
+    # Step 3: Get videos — use RSS if we have cached channels, API otherwise
+    if used_cache:
+        log.info("Discovering videos via RSS (FREE)...")
+        videos = discover_videos_via_rss(
+            channels=channels,
+            video_view_min=video_view_min,
+            video_keywords=video_keywords,
+            days=days
+        )
+    else:
+        log.info("Discovering videos via API...")
+        videos = discover_videos_via_api(
+            channels=channels,
+            video_view_min=video_view_min,
+            video_keywords=video_keywords,
+            days=days
+        )
+    
+    log.info(f"Discovered {len(videos)} videos total")
+    return videos
 
 
 

@@ -1,0 +1,122 @@
+[
+  {
+    "flag_id": 1,
+    "video_id": "7bPZJhhDQU4",
+    "category": "violence",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "weapon",
+    "context": "...ghly $200 million to Boston Dynamics. That is about the cost of two F-35 fighter jets, spent not on weapons, but on the dream of a walking robot. That budget produced Big Dog, a four-legged robot that could...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 2,
+    "video_id": "7bPZJhhDQU4",
+    "category": "violence",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "fight",
+    "context": "...rd, the agency directed roughly $200 million to Boston Dynamics. That is about the cost of two F-35 fighter jets, spent not on weapons, but on the dream of a walking robot. That budget produced Big Dog, a ...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 3,
+    "video_id": "yBOOhzLltJA",
+    "category": "violence",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "attack",
+    "context": "...ere secure enough, partly because digging out the right bug was too expensive and too slow for most attackers. Mythos looks like the kind of model that starts breaking that protection. And the benchmark gap...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 4,
+    "video_id": "yBOOhzLltJA",
+    "category": "violence",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "weapon",
+    "context": "...ied on for years that the most dangerous vulnerabilities stay relatively scarce because finding and weaponizing them is difficult, slow, and expensive. Mythos suggests that assumption may be breaking. A 27-...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 5,
+    "video_id": "yBOOhzLltJA",
+    "category": "violence",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "fight",
+    "context": "...s a very unusual model.\" At the same time, Anthropic is also in the middle of a legal and political fight with the Pentagon. A federal appeals court denied the company's request to temporarily block the De...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 6,
+    "video_id": "yBOOhzLltJA",
+    "category": "illegal_activity",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "meth",
+    "context": "...t taking the results completely at face value without more detail on false positives and validation methods. That is a reasonable warning. Anthropic is withholding a lot of technical specifics for obvious...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 7,
+    "video_id": "yBOOhzLltJA",
+    "category": "harassment",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "loser",
+    "context": "...ogue. Oh my god, this is AI revolution. So instead of just generating isolated clips, this is much closer to actually directing a scene with moving parts, consistent subjects, and real continuity. Triceden...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 8,
+    "video_id": "yBOOhzLltJA",
+    "category": "toxicity",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "worst",
+    "context": "... For a long time, one of the reasons a lot of critical software stayed relatively safe was that the worst vulnerabilities were hard to find. Really hard. You needed rare expertise, a lot of patience, a lot...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 9,
+    "video_id": "yBOOhzLltJA",
+    "category": "toxicity",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "vile",
+    "context": "...ay be breaking. A 27-year-old OpenBSD flaw found with a successful run costing around $50. Linux privilege escalation exploits reportedly built for under $1,000. more difficult exploit cases staying under...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 10,
+    "video_id": "yBOOhzLltJA",
+    "category": "illegal_activity",
+    "confidence": 0.8,
+    "source": "comment",
+    "excerpt": "Meth",
+    "context": "Mythos scored 83.1% on Cyberjimy compared to 66.6% for the previous model\r\n.\r\nMethodological Vulnerability: As critic Heidi Claf notes, we don't know the false positive rate\r\n. If th...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 11,
+    "video_id": "x2l7W9aTc5k",
+    "category": "toxicity",
+    "confidence": 0.8,
+    "source": "transcript",
+    "excerpt": "piece of",
+    "context": "...e practical point is pretty simple. They're trying to make it good at the whole chain, not just one piece of it. So instead of an AI that only recognizes what's on a screen or only writes code in isolation, t...",
+    "detection_method": "llm"
+  },
+  {
+    "flag_id": 12,
+    "video_id": "x2l7W9aTc5k",
+    "category": "harassment",
+    "confidence": 0.8,
+    "source": "comment",
+    "excerpt": "Stupid",
+    "context": "First they should fix the bugs that they just introduced in claude code usage patterns. Stupidly just building and offering new things while old things keep breaking and looting developers.",
+    "detection_method": "llm"
+  }
+]

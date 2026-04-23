@@ -8,7 +8,7 @@ const PLANS = {
 document.addEventListener('DOMContentLoaded', async () => {
   applySidebarUserInfo();
 
-  // page-specific logic below
+  
 });
 
 
@@ -71,7 +71,7 @@ function closeUserMenu() {
 
 function handleLogout() {
   auth.clearSession();
-  window.location.href = 'index.html';
+  window.location.href = '/';
 }
 
 //GLOBAL LISTENERS

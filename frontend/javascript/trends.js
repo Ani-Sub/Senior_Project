@@ -1,41 +1,48 @@
-// ── MOCK DATA ─────────────────────────────────────────────────
-// TODO: Replace with GET /api/v1/dashboards/:id/trends?range=
-
-const MOCK_NARRATIVES = [
-  { id: 'n1', name: 'AGI Timeline Debate',     claims: 312, color: '#00d4ff', direction: 'rising',    change: +24 },
-  { id: 'n2', name: 'LLM Benchmark Disputes',  claims: 248, color: '#ff6b35', direction: 'peaking',   change: +11 },
-  { id: 'n3', name: 'Open Source vs Closed',   claims: 195, color: '#22c55e', direction: 'stable',    change: +2  },
-  { id: 'n4', name: 'AI Safety Concerns',      claims: 167, color: '#f59e0b', direction: 'rising',    change: +18 },
-  { id: 'n5', name: 'Model Cost & Efficiency', claims: 143, color: '#a78bfa', direction: 'declining', change: -9  },
-  { id: 'n6', name: 'Regulation & Policy',     claims: 98,  color: '#f472b6', direction: 'peaking',   change: +7  },
-];
-
-// Trend data keyed by range
-const TREND_DATA = {
-  '1m': {
-    labels: ['Feb W1','Feb W2','Feb W3','Feb W4','Mar W1'],
-    seed: 42
-  },
-  '2w': {
-    labels: ['Feb W4','Mar W1'],
-    seed: 7
-  },
-  '3m': {
-    labels: ['Jan W1','Jan W2','Jan W3','Jan W4','Feb W1','Feb W2','Feb W3','Feb W4','Mar W1','Mar W2','Mar W3','Mar W4'],
-    seed: 99
-  }
-};
-
+let MOCK_NARRATIVES = [];
 let currentRange = '1m';
 let chartInstance = null;
+let trendsLabels = [];
+let trendsDatasets = [];
+
+function getDashboardId() {
+  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+}
 
 // ── INIT ──────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await fetchTrends(currentRange);
+});
+
+// ── FETCH FROM API ────────────────────────────────────────────
+async function fetchTrends(range) {
+  const dashboardId = getDashboardId();
+  const { data, error } = await api.get(`/dashboards/${dashboardId}/trends?range=${range}`);
+
+  if (error || !data || !data.length) {
+    console.error('Failed to load trends:', error);
+    renderStatStrip([]);
+    return;
+  }
+
+  const first    = data[0];
+  trendsLabels   = first.labels || [];
+  trendsDatasets = first.datasets || [];
+
+  MOCK_NARRATIVES = trendsDatasets.map(d => ({
+    id:        d.narrative_id,
+    name:      d.label,
+    color:     d.color,
+    direction: d.direction,
+    claims:    d.data.reduce((a, b) => a + b, 0),
+    change:    d.data.length >= 2 ? d.data[d.data.length - 1] - d.data[d.data.length - 2] : 0,
+  }));
+
   renderLegend();
   buildChart();
   renderBreakdownTable();
   renderSummaryPanels();
-});
+  renderStatStrip(MOCK_NARRATIVES);
+}
 
 // ── LEGEND ────────────────────────────────────────────────────
 function renderLegend() {
@@ -50,18 +57,12 @@ function renderLegend() {
 // ── CHART ─────────────────────────────────────────────────────
 function buildChart() {
   if (chartInstance) chartInstance.destroy();
-  const range = TREND_DATA[currentRange];
 
-  // Seeded pseudo-random for stable data per range
-  function seeded(seed, i) {
-    return Math.floor(((Math.sin(seed * 9301 + i * 49297 + 233) * 0.5 + 0.5)) * 60) + 10;
-  }
-
-  const datasets = MOCK_NARRATIVES.map((n, ni) => ({
-    label: n.name,
-    data: range.labels.map((_, i) => seeded(range.seed + ni * 17, i)),
-    borderColor: n.color,
-    backgroundColor: n.color + '12',
+  const datasets = trendsDatasets.map(d => ({
+    label: d.label,
+    data: d.data,
+    borderColor: d.color,
+    backgroundColor: d.color + '12',
     borderWidth: 2,
     pointRadius: 3,
     pointHoverRadius: 5,
@@ -72,7 +73,7 @@ function buildChart() {
   const ctx = document.getElementById('mainTrendsChart').getContext('2d');
   chartInstance = new Chart(ctx, {
     type: 'line',
-    data: { labels: range.labels, datasets },
+    data: { labels: trendsLabels, datasets },
     options: {
       responsive: true,
       interaction: { mode: 'index', intersect: false },
@@ -143,8 +144,7 @@ function setRange(btn, range) {
   document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentRange = range;
-  buildChart();
-  // TODO: also re-fetch breakdown data for this range from API
+  fetchTrends(range);
 }
 
 // ── DASHBOARD SELECTOR ────────────────────────────────────────
@@ -154,7 +154,7 @@ function toggleDashDropdown(e) {
   el.classList.toggle('open');
 }
 
-function selectDash(optionEl, dashId) {
+function selectDash(optionEl, _dashId) {
   document.querySelectorAll('.select-option').forEach(o => o.classList.remove('active'));
   optionEl.classList.add('active');
   document.getElementById('dashSelectorLabel').textContent = optionEl.textContent.trim();
@@ -166,25 +166,22 @@ document.addEventListener('click', () => {
   document.getElementById('dashSelector')?.classList.remove('open');
 });
 
-// ── USER DROPDOWN ─────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) { dropdown.classList.add('open'); row.classList.add('open'); }
+
+// ── STAT STRIP ────────────────────────────────────────────────
+function renderStatStrip(narrativesData) {
+  const active   = narrativesData.length;
+  const rising   = narrativesData.filter(n => n.direction === 'rising' || n.direction === 'peaking').length;
+  const total    = narrativesData.reduce((sum, n) => sum + n.claims, 0);
+  const peaking  = narrativesData.filter(n => n.direction === 'peaking').length;
+  const declining = narrativesData.filter(n => n.direction === 'declining').length;
+
+  const el = id => document.getElementById(id);
+  if (el('statActive'))    el('statActive').textContent    = active;
+  if (el('statRising'))    el('statRising').textContent    = rising;
+  if (el('statTotal'))     el('statTotal').textContent     = total.toLocaleString();
+  if (el('statPeaking'))   el('statPeaking').textContent   = peaking;
+  if (el('statDeclining')) el('statDeclining').textContent = declining;
 }
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() { window.location.href = '../index.html'; }
-
-document.addEventListener('click', () => closeUserMenu());
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeUserMenu(); } });
 
 // ── HELPERS ───────────────────────────────────────────────────
 function dirLabel(d) {

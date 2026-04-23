@@ -117,7 +117,7 @@ CREATE TABLE "Comment" (
 CREATE TABLE "Claim" (
     "claim_id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "video_id" TEXT NOT NULL,
-    "narrative_id" UUID,
+    "narrative_id" TEXT,
     "video_title" VARCHAR(500) NOT NULL,
     "claim_text" TEXT NOT NULL,
     "claim_type" "ClaimType" NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE "Claim" (
 
 -- CreateTable
 CREATE TABLE "Narrative" (
-    "narrative_id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "narrative_id" TEXT NOT NULL,
     "board_id" UUID NOT NULL,
     "title" VARCHAR(500) NOT NULL,
     "summary" TEXT,
@@ -159,7 +159,7 @@ CREATE TABLE "Trend" (
 CREATE TABLE "TrendData" (
     "dataset_id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "trend_id" UUID NOT NULL,
-    "narrative_id" UUID NOT NULL,
+    "narrative_id" TEXT NOT NULL,
     "label" VARCHAR(50) NOT NULL,
     "color" VARCHAR(50) NOT NULL,
     "data" INTEGER[],

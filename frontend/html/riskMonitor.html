@@ -7,6 +7,7 @@
 <title>Creator Risk Monitor</title>
 
 <link rel="stylesheet" href="../css/riskMonitor.css">
+<link rel="stylesheet" href="../css/dashboard.css">
 <link rel="stylesheet" href="../css/home.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
@@ -16,7 +17,8 @@
 
 <body>
 
-  <!-- SIDEBAR -->
+<!-- SIDEBAR -->
+<!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-dot"></div>
@@ -69,17 +71,13 @@
 
 <header class="main-header">
 
-  
 <div>
 <h1 class="page-title">Creator Risk Monitor</h1>
 <p class="page-sub">AI moderation scoring for creator safety and compliance</p>
 </div>
 
-<div class="page-header-right">
-  <button class="btn btn-ghost btn-sm" onclick="exportCreators()">
-    Export Report
-  </button>
-</div>
+<button class="btn btn-primary">Export Report</button>
+
 </header>
 
 
@@ -88,25 +86,25 @@
 
 <div class="stat-card">
 <h3>High Risk</h3>
-<p class="stat-num danger" id="statHighRisk"></p>
-<span class="stat-sub">Creators flagged high risk</span>
+<p class="stat-num danger" id="statHighRisk">—</p>
+<span class="stat-sub">Creators with high risk level</span>
 </div>
 
 <div class="stat-card">
-<h3>Under Review</h3>
-<p class="stat-num warn" id="statReview"></p>
-<span class="stat-sub">Moderate risk creators</span>
+<h3>Medium Risk</h3>
+<p class="stat-num warn" id="statMediumRisk">—</p>
+<span class="stat-sub">Creators under review</span>
 </div>
 
 <div class="stat-card">
-<h3>Verified</h3>
-<p class="stat-num safe" id="statVerified"></p>
+<h3>Low Risk</h3>
+<p class="stat-num safe" id="statLowRisk">—</p>
 <span class="stat-sub">Low risk creators</span>
 </div>
 
 <div class="stat-card">
 <h3>Total Channels</h3>
-<p class="stat-num" id="statTotal"></p>
+<p class="stat-num" id="statTotalChannels">—</p>
 <span class="stat-sub">Active monitored channels</span>
 </div>
 
@@ -138,15 +136,18 @@ placeholder="Search creators..."
 
 
 <!-- CREATOR LIST -->
-<div id="pagination"></div>
-<section class="creator-list" id="creatorList"></section>
+<section class="creator-list" id="creatorList">
+  <!-- populated by JS -->
+</section>
 
 
 </main>
 
 
+
 <script src="../javascript/api.js"></script>
-<script src="../javascript/riskMonitor.js"></script>
 <script src="../javascript/sidebar.js"></script>
+<script src="../javascript/riskMonitor.js"></script>
+
 </body>
 </html>

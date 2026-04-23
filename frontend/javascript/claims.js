@@ -1,48 +1,57 @@
-// ── MOCK DATA ─────────────────────────────────────────────────
-// TODO: Replace with GET /api/v1/claims?dashboard_id=&narrative_id=&type=&risk=&channel=&page=&limit=
-
-const MOCK_NARRATIVES = [
-  { id: 'n1', name: 'AGI Timeline Debate',     color: '#00d4ff' },
-  { id: 'n2', name: 'LLM Benchmark Disputes',  color: '#ff6b35' },
-  { id: 'n3', name: 'Open Source vs Closed',   color: '#22c55e' },
-  { id: 'n4', name: 'AI Safety Concerns',      color: '#f59e0b' },
-  { id: 'n5', name: 'Model Cost & Efficiency', color: '#a78bfa' },
-  { id: 'n6', name: 'Regulation & Policy',     color: '#f472b6' },
-];
-
-const MOCK_CLAIMS = [
-  { id: 'c1',  text: 'GPT-5 will achieve human-level reasoning within 18 months according to insider sources.',                 type: 'opinion', channel: 'AI Explained',       date: '2025-03-01', narrative: 'n1', confidence: 0.72, risk: 'medium' },
-  { id: 'c2',  text: 'Llama 3 outperforms GPT-4 on 6 out of 10 standard benchmarks in independent testing.',                   type: 'factual', channel: 'Two Minute Papers',  date: '2025-02-28', narrative: 'n2', confidence: 0.91, risk: 'low' },
-  { id: 'c3',  text: 'The cost to train frontier models has dropped 10x year over year since 2022.',                             type: 'factual', channel: 'Andrej Karpathy',    date: '2025-02-27', narrative: 'n5', confidence: 0.88, risk: 'low' },
-  { id: 'c4',  text: 'Closed-source labs are deliberately hiding capability breakthroughs from the public.',                    type: 'opinion', channel: 'Yannic Kilcher',     date: '2025-02-26', narrative: 'n3', confidence: 0.45, risk: 'high' },
-  { id: 'c5',  text: 'EU AI Act will significantly slow European AI development compared to US competitors.',                    type: 'opinion', channel: 'AI Supremacy',       date: '2025-02-25', narrative: 'n6', confidence: 0.61, risk: 'medium' },
-  { id: 'c6',  text: "Anthropic's Constitutional AI technique reduces harmful outputs by over 80% in red-team tests.",          type: 'factual', channel: 'Lex Fridman',        date: '2025-02-24', narrative: 'n4', confidence: 0.83, risk: 'low' },
-  { id: 'c7',  text: 'We are already past the point of no return on AGI development and cannot slow it down.',                  type: 'opinion', channel: 'AI Doomer Pod',      date: '2025-02-23', narrative: 'n1', confidence: 0.38, risk: 'high' },
-  { id: 'c8',  text: 'Mixture-of-Experts architectures have reduced inference costs by 40% at comparable quality.',             type: 'factual', channel: 'Wes Roth',           date: '2025-02-22', narrative: 'n5', confidence: 0.79, risk: 'low' },
-  { id: 'c9',  text: 'Open-weight models have surpassed GPT-4 quality on coding tasks when fine-tuned on domain data.',        type: 'factual', channel: 'Yannic Kilcher',     date: '2025-02-21', narrative: 'n3', confidence: 0.74, risk: 'low' },
-  { id: 'c10', text: 'The benchmark leaderboard is dominated by models that were trained on benchmark test sets.',               type: 'opinion', channel: 'AI Explained',       date: '2025-02-20', narrative: 'n2', confidence: 0.66, risk: 'medium' },
-  { id: 'c11', text: 'Regulation without international coordination will only push AI development offshore.',                   type: 'opinion', channel: 'AI Supremacy',       date: '2025-02-19', narrative: 'n6', confidence: 0.58, risk: 'medium' },
-  { id: 'c12', text: 'RLHF fundamentally cannot solve alignment because human feedback is inconsistent at scale.',               type: 'opinion', channel: 'AI Doomer Pod',      date: '2025-02-18', narrative: 'n4', confidence: 0.51, risk: 'high' },
-  { id: 'c13', text: 'Compute scaling laws are plateauing and will no longer yield proportional capability gains after 2025.',  type: 'opinion', channel: 'Two Minute Papers',  date: '2025-02-17', narrative: 'n1', confidence: 0.63, risk: 'medium' },
-  { id: 'c14', text: 'Token efficiency has improved 5x in the last year without any architectural changes.',                    type: 'factual', channel: 'Andrej Karpathy',    date: '2025-02-16', narrative: 'n5', confidence: 0.82, risk: 'low' },
-  { id: 'c15', text: 'Meta releasing Llama has set back closed-source labs by 18 months competitively.',                        type: 'opinion', channel: 'Lex Fridman',        date: '2025-02-15', narrative: 'n3', confidence: 0.49, risk: 'medium' },
-  { id: 'c16', text: 'GPT-4 still outperforms all open models on complex multi-step reasoning tasks as of Q1 2025.',            type: 'factual', channel: 'Wes Roth',           date: '2025-02-14', narrative: 'n2', confidence: 0.78, risk: 'low' },
-];
-
 const PAGE_SIZE = 10;
+
+let MOCK_NARRATIVES = [];
+let MOCK_CLAIMS = [];
 
 // ── STATE ─────────────────────────────────────────────────────
 let currentPage = 1;
-let filteredClaims = [...MOCK_CLAIMS];
+let filteredClaims = [];
+
+function getDashboardId() {
+  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+}
 
 // ── INIT ──────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  
+document.addEventListener('DOMContentLoaded', async () => {
+  await fetchClaims();
   buildNarrativeFilters();
   buildChannelFilters();
   checkURLParams();
   filterClaims();
 });
+
+// ── FETCH FROM API ────────────────────────────────────────────
+async function fetchClaims() {
+  const dashboardId = getDashboardId();
+  const { data, error } = await api.get(`/dashboards/${dashboardId}/claims`);
+
+  if (error || !data) {
+    console.error('Failed to load claims:', error);
+    return;
+  }
+
+  MOCK_CLAIMS = (data.claims || []).map(c => ({
+    id:         c.claim_id,
+    text:       c.claim_text,
+    type:       c.claim_type,
+    channel:    c.channel_name,
+    date:       c.published_at ? c.published_at.split('T')[0] : '',
+    narrative:  c.narrative_id,
+    confidence: c.confidence_score,
+    risk:       c.risk_level,
+  }));
+
+  // Build narratives list from claims
+  const narrativeMap = {};
+  (data.claims || []).forEach(c => {
+    if (c.narrative_id && !narrativeMap[c.narrative_id]) {
+      narrativeMap[c.narrative_id] = { id: c.narrative_id, name: c.narrative_name || c.narrative_id, color: '#00d4ff' };
+    }
+  });
+  MOCK_NARRATIVES = Object.values(narrativeMap);
+
+  filteredClaims = [...MOCK_CLAIMS];
+}
 
 // ── URL PARAM PRE-SELECTION ───────────────────────────────────
 function checkURLParams() {
@@ -98,7 +107,7 @@ function filterClaims() {
 
   filteredClaims = MOCK_CLAIMS.filter(c => {
     const matchSearch    = !search || c.text.toLowerCase().includes(search) || c.channel.toLowerCase().includes(search);
-    const matchNarrative = activeNarratives.includes(c.narrative);
+    const matchNarrative = activeNarratives.length === 0 || activeNarratives.includes(c.narrative);
     const matchChannel   = activeChannels.includes(c.channel);
     const matchType      = (c.type === 'factual' && showFactual) || (c.type === 'opinion' && showOpinion);
     const matchRisk      = (c.risk === 'low' && showLow) || (c.risk === 'medium' && showMedium) || (c.risk === 'high' && showHigh);
@@ -204,7 +213,7 @@ function exportClaims() {
 function feedClaimHTML(c) {
   const conf = Math.round(c.confidence * 100);
   const narr = MOCK_NARRATIVES.find(n => n.id === c.narrative);
-  const dateFormatted = new Date(c.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const dateFormatted = c.date ? new Date(c.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—';
   return `
     <div class="feed-claim-card">
       <div class="feed-claim-header">
@@ -222,22 +231,3 @@ function feedClaimHTML(c) {
     </div>`;
 }
 
-// ── USER DROPDOWN ─────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) { dropdown.classList.add('open'); row.classList.add('open'); }
-}
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() { window.location.href = '../index.html'; }
-
-document.addEventListener('click', () => closeUserMenu());
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });

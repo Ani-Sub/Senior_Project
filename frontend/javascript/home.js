@@ -1,17 +1,3 @@
-// ── PLAN LIMITS ──────────────────────────────────────────────
-const PLANS = {
-  free:       { name: 'Free',       limit: 1  },
-  analyst:    { name: 'Analyst',    limit: 5  },
-  enterprise: { name: 'Enterprise', limit: Infinity }
-};
-
-// Simulated current user — swap this with real auth data from your backend
-const CURRENT_USER = {
-  name: 'Animesh Subedi',
-  email: 'animesh@example.com',
-  initials: 'AS',
-  plan: 'analyst'   // 'free' | 'analyst' | 'enterprise'
-};
 
 // ── STATE ────────────────────────────────────────────────────
 let dashboards = [];
@@ -116,7 +102,7 @@ function renderDashboards() {
     .map(d => dashCardHTML(d))
     .join('');
 
-  updateSidebarLimit();
+  updateSidebarLimit(dashboards.length);
 }
 
 function dashCardHTML(d) {
@@ -168,13 +154,6 @@ function previewHTML(design) {
   return '';
 }
 
-function updateSidebarLimit() {
-  const user = auth.getUser();
-  const plan = PLANS[user?.plan] || PLANS.free;
-  const used = dashboards.length;
-  const limit = plan.limit === Infinity ? '∞' : plan.limit;
-  document.getElementById('sidebarPlanLimit').textContent = `${used} / ${limit} dashboards`;
-}
 
 // ── NEW DASHBOARD MODAL ───────────────────────────────────────
 function openNewModal() {
@@ -190,9 +169,7 @@ function closeNewModal() {
 function resetForm() {
   document.getElementById('dashName').value = '';
   document.getElementById('dashDesc').value = '';
-  document.getElementById('tagInput').value = '';
-  tags = [];
-  renderTags();
+  resetKeywordChips();
   selectedDesign = null;
   document.querySelectorAll('.design-card').forEach(c => c.classList.remove('selected'));
   currentStep = 1;
@@ -263,72 +240,64 @@ async function createDashboard() {
   const btn = document.querySelector('#step3 .btn-primary');
   if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
 
-  const { data, error } = await api.post('/dashboards', {
-    name,
-    description: desc,
-    search_terms: [...tags],
-    layout: selectedDesign || 'overview',
-  });
+  const timeout = new Promise(resolve =>
+    setTimeout(() => resolve({ data: null, error: 'timeout', status: -1 }), 8000)
+  );
+
+  const { data, error, status } = await Promise.race([
+    api.post('/dashboards', {
+      name,
+      description: desc,
+      search_terms: [...tags],
+      layout: selectedDesign || 'overview',
+    }),
+    timeout,
+  ]);
 
   if (btn) { btn.disabled = false; btn.textContent = '✓ Create Dashboard'; }
 
-  if (error) {
+  if (error && status === 0) {
+    // True network error — server unreachable, nothing was created
     showFormError(error);
     return;
   }
 
-  dashboards.push(normalizeDashboard(data));
+  // Either success, pipeline error, or timeout — board is in DB, close and refresh
   closeNewModal();
+  if (!error && data) {
+    dashboards.push(normalizeDashboard(data));
+  } else {
+    // Show toast immediately — don't wait for initDashboards (backend may still be busy)
+    const msg = error === 'timeout'
+      ? 'Dashboard created — pipeline is still running in the background.'
+      : `Dashboard created, but the pipeline reported an error: ${error}`;
+    showToast(msg);
+    // Try to reload the list but cap the wait at 5s so the UI doesn't hang
+    const reloadCap = new Promise(resolve => setTimeout(resolve, 5000));
+    await Promise.race([initDashboards(), reloadCap]);
+  }
   renderDashboards();
 }
 
-// ── TAG INPUT ─────────────────────────────────────────────────
+// ── KEYWORD CHIPS ─────────────────────────────────────────────
 function setupTagInput() {
-  const input = document.getElementById('tagInput');
-  const wrapper = document.getElementById('tagWrapper');
-
-  wrapper.addEventListener('click', () => input.focus());
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
-      addTag(input.value.trim().replace(/,$/, ''));
-    }
-    if (e.key === 'Backspace' && input.value === '' && tags.length > 0) {
-      tags.pop();
-      renderTags();
-    }
-  });
-
-  input.addEventListener('blur', () => {
-    if (input.value.trim()) addTag(input.value.trim());
-  });
+  // No-op: keyword selection is handled by toggleKeyword()
 }
 
-function addTag(val) {
-  const input = document.getElementById('tagInput');
-  if (!val || tags.includes(val) || tags.length >= 10) {
-    input.value = '';
-    return;
+function toggleKeyword(el) {
+  const keyword = el.dataset.keyword;
+  if (tags.includes(keyword)) {
+    tags = tags.filter(t => t !== keyword);
+    el.classList.remove('selected');
+  } else {
+    tags.push(keyword);
+    el.classList.add('selected');
   }
-  tags.push(val);
-  input.value = '';
-  renderTags();
 }
 
-function removeTag(val) {
-  tags = tags.filter(t => t !== val);
-  renderTags();
-}
-
-function renderTags() {
-  const list = document.getElementById('tagList');
-  list.innerHTML = tags.map(t => `
-    <div class="tag">
-      ${escHtml(t)}
-      <button class="tag-remove" onclick="removeTag('${escHtml(t)}')" type="button">✕</button>
-    </div>
-  `).join('');
+function resetKeywordChips() {
+  tags = [];
+  document.querySelectorAll('.keyword-chip').forEach(c => c.classList.remove('selected'));
 }
 
 // ── DELETE ────────────────────────────────────────────────────
@@ -369,6 +338,16 @@ function showLimitBanner() {
   banner.style.display = 'flex';
 }
 
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(message, durationMs = 6000) {
+  const el = document.getElementById('toastNotif');
+  if (!el) return;
+  el.textContent = message;
+  el.style.display = 'block';
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, durationMs);
+}
+
 // ── HELPERS ───────────────────────────────────────────────────
 function escHtml(str) {
   return String(str)
@@ -380,28 +359,6 @@ function escHtml(str) {
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-// ── USER DROPDOWN ─────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) {
-    dropdown.classList.add('open');
-    row.classList.add('open');
-  }
-}
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() {
-  authActions.logout();
 }
 
 document.addEventListener('click', () => closeUserMenu());
@@ -420,23 +377,3 @@ document.addEventListener('keydown', (e) => {
     pendingDeleteId = null;
   }
 });
-
-//Bottom of Sidebar 
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) { dropdown.classList.add('open'); row.classList.add('open'); }
-}
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() { window.location.href = 'index.html'; }
-
-document.addEventListener('click', () => closeUserMenu());
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });

@@ -95,27 +95,27 @@
     <!-- STAT STRIP -->
     <div class="stat-strip">
       <div class="strip-stat">
-        <div class="strip-value">6</div>
+        <div class="strip-value" id="statActive">—</div>
         <div class="strip-label">Active Narratives</div>
       </div>
       <div class="strip-divider"></div>
       <div class="strip-stat">
-        <div class="strip-value accent">3</div>
+        <div class="strip-value accent" id="statRising">—</div>
         <div class="strip-label">Rising This Week</div>
       </div>
       <div class="strip-divider"></div>
       <div class="strip-stat">
-        <div class="strip-value">1,284</div>
+        <div class="strip-value" id="statTotal">—</div>
         <div class="strip-label">Total Claims</div>
       </div>
       <div class="strip-divider"></div>
       <div class="strip-stat">
-        <div class="strip-value warning">2</div>
+        <div class="strip-value warning" id="statPeaking">—</div>
         <div class="strip-label">Peaking Narratives</div>
       </div>
       <div class="strip-divider"></div>
       <div class="strip-stat">
-        <div class="strip-value danger">1</div>
+        <div class="strip-value danger" id="statDeclining">—</div>
         <div class="strip-label">Declining</div>
       </div>
     </div>
@@ -164,8 +164,9 @@
     </div>
 
   </main>
+
   <script src="../javascript/api.js"></script>
-  <script src="../javascript/trends.js"></script>
   <script src="../javascript/sidebar.js"></script>
+  <script src="../javascript/trends.js"></script>
 </body>
 </html>

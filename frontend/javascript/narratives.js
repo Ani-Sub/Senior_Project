@@ -1,62 +1,64 @@
-// ── MOCK DATA ─────────────────────────────────────────────────
-// TODO: Replace with GET /api/v1/narratives?dashboard_id=&status=&topic=&sort=
-
-let ALL_NARRATIVES = [];
-
 // ── STATE ─────────────────────────────────────────────────────
+let allNarratives = [];
 let activeTopicFilter  = 'all';
 let activeStatusFilter = 'all';
 
+function getDashboardId() {
+  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+}
+
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadNarratives();
-  
+  await fetchNarratives();
   applyFilters();
 });
 
-//Get the narratives
-async function loadNarratives() {
+// ── FETCH FROM API ────────────────────────────────────────────
+async function fetchNarratives() {
   const dashboardId = getDashboardId();
 
-  const { data, error } = await narrativeActions.getNarratives(dashboardId);
+  const [narrativesRes, trendsRes] = await Promise.all([
+    api.get(`/dashboards/${dashboardId}/narratives`),
+    api.get(`/dashboards/${dashboardId}/trends`),
+  ]);
 
-  if (error || !data) {
-    console.error("Failed to load narratives:", error);
-    ALL_NARRATIVES = [];
+  if (narrativesRes.error || !narrativesRes.data) {
+    console.error('Failed to load narratives:', narrativesRes.error);
     return;
   }
 
-  //  Map backend → frontend format
-  ALL_NARRATIVES = data.map(n => ({
-    id: n.narrative_id,
-    name: n.title,
-    topic: normalizeTopic(n.topic_label),
-    summary: n.summary,
-    claims: n.claim_count,
-    //direction: "stable", //  placeholder (backend can compute later)
-    color: n.color || "#00d4ff",
-    dateRange: "—",
-    //channels: 0 // optional future
+  // Build direction map from trend datasets
+  const directionMap = {};
+  if (!trendsRes.error && trendsRes.data?.length > 0) {
+    (trendsRes.data[0].datasets || []).forEach(d => {
+      if (d.narrative_id) directionMap[d.narrative_id] = d.direction;
+    });
+  }
+
+  allNarratives = (narrativesRes.data || []).map(n => ({
+    id:        n.narrative_id,
+    name:      n.title,
+    topic:     n.topic_label || 'General',
+    summary:   n.summary || '',
+    claims:    n.claim_count || 0,
+    color:     n.color,
+    direction: directionMap[n.narrative_id] || 'stable',
+    dateRange: formatDateRange(n.first_seen_at, n.last_seen_at),
   }));
 }
 
-//Helper
-function normalizeTopic(label = "") {
-  if (label.toLowerCase().includes("artificial")) return "AI";
-  if (label.toLowerCase().includes("crypto")) return "Crypto";
-  if (label.toLowerCase().includes("climate")) return "Climate";
-  if (label.toLowerCase().includes("policy")) return "Policy";
-  return label;
+function formatDateRange(start, end) {
+  if (!start) return '';
+  const fmt = d => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return end ? `${fmt(start)} – ${fmt(end)}` : fmt(start);
 }
-
-
 
 // ── FILTER LOGIC ──────────────────────────────────────────────
 function applyFilters() {
   const search = (document.getElementById('narrativeSearch')?.value || '').toLowerCase();
   const sort   = document.getElementById('sortSelect')?.value || 'claims';
 
-  let results = ALL_NARRATIVES.filter(n => {
+  let results = allNarratives.filter(n => {
     const matchTopic  = activeTopicFilter  === 'all' || n.topic === activeTopicFilter;
     const matchStatus = activeStatusFilter === 'all' || n.direction === activeStatusFilter;
     const matchSearch = !search ||
@@ -66,10 +68,9 @@ function applyFilters() {
     return matchTopic && matchStatus && matchSearch;
   });
 
-  // Sort
-  if (sort === 'claims')  results.sort((a, b) => b.claims - a.claims);
-  if (sort === 'recent')  results.sort((a, b) => b.id.localeCompare(a.id));
-  if (sort === 'alpha')   results.sort((a, b) => a.name.localeCompare(b.name));
+  if (sort === 'claims') results.sort((a, b) => b.claims - a.claims);
+  if (sort === 'recent') results.sort((a, b) => b.id.localeCompare(a.id));
+  if (sort === 'alpha')  results.sort((a, b) => a.name.localeCompare(b.name));
 
   renderGrid(results);
   document.getElementById('resultsCount').textContent =
@@ -113,63 +114,24 @@ function narrativeCardHTML(n) {
   return `
     <div class="narrative-card" onclick="window.location.href='claims.html?narrative=${n.id}'"
          style="--card-color:${n.color}">
-      <style>#nc-${n.id}::before { background: linear-gradient(90deg, ${n.color}, transparent); }</style>
       <div id="nc-${n.id}" class="narrative-card" style="all:unset;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${n.color},transparent);opacity:0.7;pointer-events:none;border-radius:12px 12px 0 0;"></div>
       <div class="nc-header">
         <div class="nc-title-row">
           <div class="nc-color-dot" style="background:${n.color}"></div>
           <div class="nc-title">${n.name}</div>
         </div>
-        
-        <!--
         <span class="nc-dir ${n.direction}">${dirLabels[n.direction] || n.direction}</span>
-        -->
-
-        </div>
-      <p class="nc-summary">${n.summary}</p>
+      </div>
+      <p class="nc-summary">${n.summary || '—'}</p>
       <div class="nc-footer">
         <div class="nc-stat">
           <div class="nc-stat-val">${n.claims}</div>
           <div class="nc-stat-label">Claims</div>
         </div>
-        <div class="nc-stat-divider"></div>
-        
-        <!-- 
-        <div class="nc-stat">
-          <div class="nc-stat-val">${n.channels}</div>
-          <div class="nc-stat-label">Channels</div>
-        </div>
-        -->
-        
         <div class="nc-date-range">${n.dateRange}</div>
         <a class="nc-claims-link" href="claims.html?narrative=${n.id}" onclick="event.stopPropagation()">
           View claims →
         </a>
       </div>
     </div>`;
-}
-
-// ── USER DROPDOWN ─────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) { dropdown.classList.add('open'); row.classList.add('open'); }
-}
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() { window.location.href = '../index.html'; }
-
-document.addEventListener('click', () => closeUserMenu());
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });
-
-
-function getDashboardId() {
-  return "f47ac10b-58cc-4372-a567-0e02b2c3d479"; // fallback
 }

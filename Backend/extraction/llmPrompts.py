@@ -101,42 +101,130 @@ Top comments:
 def build_synthesis_prompt(all_results: list[dict]) -> str:
     """
     Prompt for cross-video narrative synthesis.
-    Receives all structured per-video results and produces
-    a unified intelligence summary.
+    Extracts distinct narratives and maps them to supporting videos.
     """
-    structured_input = json.dumps(all_results, indent=2)
+    # Build simplified input with just video_id, topics, and claim texts
+    simplified = []
+    for r in all_results:
+        simplified.append({
+            "video_id": r.get("video_id"),
+            "title": r.get("video_metadata", {}).get("title", ""),
+            "topics": r.get("topics", []),
+            "claims": [c.get("text") for c in r.get("claims", [])]
+        })
+    
+    structured_input = json.dumps(simplified, indent=2)
 
-    return f"""You are a JSON-generating assistant. Synthesize the following YouTube video analyses.
+    return f"""Synthesize the following {len(all_results)} YouTube video analyses into distinct narratives.
 
-Below is structured data extracted from {len(all_results)} videos.
+A narrative is a high-level theme or storyline that multiple videos discuss. 
+Identify 2-5 distinct narratives and map each to the videos that support it.
 
-RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO EXPLANATION. NO MARKDOWN.
-YOUR ENTIRE RESPONSE MUST START WITH {{ AND END WITH }}. NOTHING ELSE.
+RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO MARKDOWN.
 
-The JSON must have exactly these keys:
 {{
-  "common_topics": ["list of topics appearing across multiple videos"],
-  "repeated_claims": [
+  "narratives": [
     {{
-      "text": "claim that appears in 2+ videos",
-      "videos": ["video_id_1", "video_id_2"],
-      "type": "factual|prediction|opinion|statistic"
+      "id": "narrative_1",
+      "name": "Short name for the narrative (3-6 words)",
+      "summary": "2-3 sentence description of this narrative",
+      "video_ids": ["list", "of", "video_ids", "that", "discuss", "this"]
     }}
   ],
   "high_confidence_claims": [
     {{
-      "text": "claim with confidence >= 0.75",
+      "text": "claim with high confidence",
       "video_id": "...",
-      "confidence": 0.9,
-      "supporting_quote": "..."
+      "narrative_id": "narrative_1"
     }}
   ],
-  "shared_narrative": "2-3 sentence overarching story across all videos",
-  "overall_trends": ["dominant patterns across the dataset"]
+  "overall_summary": "2-3 sentence summary of the entire dataset"
 }}
 
 Video analyses:
 {structured_input}
+"""
+
+
+def build_theme_grouping_prompt(all_results: list[dict]) -> str:
+    """
+    Pass 1: Group all claims into themes (compressed format).
+    Returns theme names and which claims belong to each.
+    """
+    # Compress claims to minimal format: "video_id: claim text"
+    claim_lines = []
+    claim_index = 0
+    
+    for r in all_results:
+        video_id = r.get("video_id", "unknown")
+        for claim in r.get("claims", []):
+            text = claim.get("text", "")
+            confidence = claim.get("confidence", 0.5)
+            claim_lines.append(f"[{claim_index}] ({video_id}, conf:{confidence:.1f}) {text}")
+            claim_index += 1
+    
+    claims_text = "\n".join(claim_lines)
+    
+    return f"""Analyze these {claim_index} claims from {len(all_results)} videos and group them into 3-7 distinct themes.
+
+CLAIMS:
+{claims_text}
+
+For each theme, list the claim indices [N] that belong to it.
+
+RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO MARKDOWN.
+
+{{
+  "themes": [
+    {{
+      "id": "theme_1",
+      "name": "Short theme name (3-6 words)",
+      "claim_indices": [0, 5, 12, 23],
+      "summary": "One sentence describing this theme"
+    }}
+  ]
+}}
+"""
+
+
+def build_narrative_expansion_prompt(
+    theme: dict,
+    claims: list[dict],
+    video_lookup: dict[str, dict]
+) -> str:
+    """
+    Pass 2: Expand a single theme into a detailed narrative.
+    """
+    # Build claim details for this theme
+    claim_details = []
+    video_ids = set()
+    
+    for claim in claims:
+        video_id = claim.get("video_id", "unknown")
+        video_ids.add(video_id)
+        title = video_lookup.get(video_id, {}).get("title", "")
+        claim_details.append(f"- {claim.get('text', '')} (from: {title})")
+    
+    claims_text = "\n".join(claim_details)
+    
+    return f"""Expand this theme into a detailed narrative.
+
+THEME: {theme.get('name', '')}
+INITIAL SUMMARY: {theme.get('summary', '')}
+
+SUPPORTING CLAIMS:
+{claims_text}
+
+RESPOND WITH VALID JSON ONLY. NO PREAMBLE. NO MARKDOWN.
+
+{{
+  "id": "{theme.get('id', '')}",
+  "name": "{theme.get('name', '')}",
+  "summary": "2-4 sentence detailed description synthesizing all claims",
+  "video_ids": {json.dumps(list(video_ids))},
+  "key_claims": ["most important claim 1", "most important claim 2", "most important claim 3"],
+  "confidence": 0.0-1.0
+}}
 """
 
 

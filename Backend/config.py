@@ -23,14 +23,19 @@ if not YOUTUBE_API_KEY:
 youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
 #=====================================
-# llm
+# Groq LLM
 #=====================================
-LLM_MODEL = "llama3"
-LLM_URL = "http://localhost:11434/api/generate"
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+if not GROQ_API_KEY:
+    raise EnvironmentError("GROQ_API_KEY not set. Add it to your .env file.")
+
+LLM_MODEL = "llama-3.3-70b-versatile"
+LLM_URL = "https://api.groq.com/openai/v1/chat/completions"
+LLM_MAX_TOKENS = 5000  # Groq llama3 max output
 
 #=====================================
 # chunking parameters
 #=====================================
-CHUNK_SIZE = 3000
-CHUNK_OVERLAP = 200
+CHUNK_SIZE = 2000       # Characters per chunk (Groq has 8k context)
+CHUNK_OVERLAP = 200     # Overlap between chunks
 

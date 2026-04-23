@@ -43,6 +43,25 @@ async function loadProfile() {
     const planLabels = { free: 'Free', analyst: 'Analyst', enterprise: 'Enterprise' };
     planEl.textContent = planLabels[user.plan] || user.plan || 'Free';
   }
+
+  await loadUsageStats();
+}
+
+async function loadUsageStats() {
+  const { data: dashboards, error } = await api.get('/dashboards');
+  if (error || !dashboards) return;
+
+  const dashCountEl = document.getElementById('statDashboardsCreated');
+  if (dashCountEl) dashCountEl.textContent = dashboards.length;
+
+  // Sum total claims across all dashboards
+  const claimTotals = await Promise.all(
+    dashboards.map(d => api.get(`/dashboards/${d.board_id}/claims?limit=1`))
+  );
+  const totalClaims = claimTotals.reduce((sum, res) => sum + (res.data?.total || 0), 0);
+
+  const claimsEl = document.getElementById('statTotalClaims');
+  if (claimsEl) claimsEl.textContent = totalClaims;
 }
 
 // ── SAVE BUTTON ───────────────────────────────────────────────
@@ -104,25 +123,6 @@ function setupSaveButton() {
   });
 }
 
-// ── USER DROPDOWN ─────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  const row      = document.getElementById('userRow');
-  const dropdown = document.getElementById('userDropdown');
-  const isOpen   = dropdown.classList.contains('open');
-  closeUserMenu();
-  if (!isOpen) { dropdown.classList.add('open'); row.classList.add('open'); }
-}
-
-function closeUserMenu() {
-  document.getElementById('userDropdown')?.classList.remove('open');
-  document.getElementById('userRow')?.classList.remove('open');
-}
-
-function handleLogout() { authActions.logout(); }
-
-document.addEventListener('click', () => closeUserMenu());
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUserMenu(); });
 
 // ── FADE-IN ANIMATION ─────────────────────────────────────────
 function setupFadeIn() {

@@ -1,0 +1,24 @@
+{
+  "run_id": "run_20260416_181948",
+  "created_at": "2026-04-16T18:19:48.349330",
+  "search_params": {
+    "keywords": "AI",
+    "channel_sub_min": 100000,
+    "video_view_min": 50000,
+    "video_keywords": [
+      "tech",
+      "ai",
+      "llm",
+      "artificial intelligence"
+    ],
+    "days": 60,
+    "trend_granularity": "weekly",
+    "risk_assessment_enabled": true
+  },
+  "video_count": 3,
+  "transcript_count": 3,
+  "comment_count": 80,
+  "claim_count": 187,
+  "narrative_count": 0,
+  "risk_flag_count": 12
+}
