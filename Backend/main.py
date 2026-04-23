@@ -89,9 +89,10 @@ def save_results_to_railway(
                     accuracy_rate,
                     risk_level,
                     risk_score,
+                    last_assessed_at,
                     processed_at
                 )
-                VALUES (%s,%s,%s,%s,%s,%s,%s,NOW())
+                VALUES (%s,%s,%s,%s,%s,%s,%s,NOW(),NOW())
                 ON CONFLICT (channel_id) DO NOTHING;
             """, (
                 meta.get("channel_id"),
