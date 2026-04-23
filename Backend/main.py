@@ -59,7 +59,7 @@ def save_results_to_railway(
     conn = psycopg2.connect(datebase_url)
     cur = conn.cursor()
 
-    target_board_name = os.getenv("BOARD_NAME", "AI Industry Trends")
+    target_board_name = os.getenv("BOARD_NAME", "AI Trends")
 
     cur.execute("""
         SELECT board_id
