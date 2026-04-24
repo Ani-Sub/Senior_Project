@@ -1,6 +1,7 @@
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   auth.requireAuth();
+  
   await loadProfile();
   setupSaveButton();
   setupFadeIn();

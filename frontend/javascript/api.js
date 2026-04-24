@@ -47,10 +47,35 @@ const auth = {
    */
   redirectIfLoggedIn() {
     if (auth.isLoggedIn()) {
-      window.location.href = '/html/home.html';
+      window.location.href = 'html/home.html';
     }
   },
 };
+
+
+//Creator Risk page
+const creatorActions = {
+  // Get all creators for a dashboard
+  async getCreators(dashboardId) {
+    const { data, error } = await api.get(`/dashboards/${dashboardId}/creators`);
+    return { data, error };
+  },
+
+  // Get risk info for a single creator
+  async getCreatorRisk(channelId) {
+    const { data, error } = await api.get(`/creators/${channelId}/risk`);
+    return { data, error };
+  }
+};
+
+//Narratives page
+const narrativeActions = {
+  async getNarratives(dashboardId) {
+    const { data, error } = await api.get(`/dashboards/${dashboardId}/narratives`);
+    return { data, error };
+  }
+};
+
 
 // ── CORE FETCH WRAPPER ────────────────────────────────────────
  

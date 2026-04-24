@@ -1,12 +1,12 @@
 :root {
-  --bg: #080c12;
+  --bg: #232e3f;
   --surface: #0e1520;
-  --border: #1a2535;
+  --border: #757a81;
   --accent: #00d4ff;
   --accent2: #ff6b35;
-  --text: #d4dde8;
-  --muted: #4a5a70;
-  --white: #f0f4f8;
+  --text: rgb(212, 221, 232);
+  --muted: #ffffffcb;
+  --white: #ffffff;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -52,7 +52,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 20px 48px;
-  background: rgba(8,12,18,0.85);
+  background: #1e2635;
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
