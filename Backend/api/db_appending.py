@@ -120,6 +120,13 @@ def _insert_claims(db, id_map: dict):
 
     narrative_videos_map = {nv["video_id"]: nv["narrative_id"] for nv in narrative_videos}
 
+    CLAIM_TYPE_MAP = {
+        "factual": "factual",
+        "opinion": "opinion",
+        "prediction": "opinion",
+        "statistic": "factual",
+    }
+    
     for c in claims:
         llm_narrative_id = narrative_videos_map.get(c["video_id"])
         db_narrative_id = id_map.get(llm_narrative_id)

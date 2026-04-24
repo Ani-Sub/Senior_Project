@@ -47,18 +47,10 @@ def repair_unquoted_strings(s: str) -> str:
 
 
 def repair_truncated_json(s: str) -> str:
-    """
-    Attempt to repair truncated JSON by closing open brackets/braces.
-    This handles cases where LLM response gets cut off mid-JSON.
-    """
     # First try to repair unquoted strings
     s = repair_unquoted_strings(s)
     
-    # Count open brackets
-    open_braces = s.count('{') - s.count('}')
-    open_brackets = s.count('[') - s.count(']')
-    
-    # Check if we're inside an unclosed string
+    # Check if we're inside an unclosed string and close it
     in_string = False
     escaped = False
     for ch in s:
@@ -71,14 +63,17 @@ def repair_truncated_json(s: str) -> str:
         if ch == '"':
             in_string = not in_string
     
-    # If in unclosed string, close it
     if in_string:
         s = s + '"'
-    
-    # Remove trailing comma if present (common truncation artifact)
-    s = re.sub(r',\s*$', '', s)
-    
-    # Close open brackets and braces
+
+    # Remove trailing comma AFTER closing any open string
+    # Also handles commas before } or ]
+    s = re.sub(r',(\s*[}\]])', r'\1', s)  # remove comma before closing brace/bracket
+    s = re.sub(r',\s*$', '', s)           # remove trailing comma at end
+
+    # Count and close open brackets/braces
+    open_braces = s.count('{') - s.count('}')
+    open_brackets = s.count('[') - s.count(']')
     s = s + (']' * open_brackets) + ('}' * open_braces)
     
     return s
