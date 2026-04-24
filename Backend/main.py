@@ -32,7 +32,7 @@ from risk import assess_video_risk, generate_risk_summary
 
 # Output directory inside Backend folder
 BACKEND_DIR = Path(__file__).parent
-DEFAULT_OUTPUT_DIR = BACKEND_DIR / "output"
+DEFAULT_OUTPUT_DIR = BACKEND_DIR / "api" / "output"
 
 # Configure logging
 logging.basicConfig(
@@ -103,6 +103,15 @@ def save_results_to_railway(
                 "low",
                 0.0
             ))
+                
+                cur.execute("""
+                    INSERT INTO "BoardChannel" (board_id, channel_id)
+                    VALUES (%s, %s)
+                    ON CONFLICT (board_id, channel_id) DO NOTHING;
+                """, (
+                    board_id,
+                    meta.get("channel_id")
+                ))
 
                 cur.execute("""
                     INSERT INTO "Video" (
@@ -200,6 +209,58 @@ def save_results_to_railway(
                     last_seen_at
                 ))
 
+            # Map videos to their narrative
+            video_to_narrative = {}
+
+            for narrative in synthesis.get("narratives", []):
+                for vid in narrative.get("video_ids", []):
+                    video_to_narrative[vid] = narrative.get("id")
+
+            claim_type_map = {
+                "factual": "factual",
+                "prediction": "factual",
+                "statistic": "factual",
+                "opinion": "opinion"
+            }
+
+            for result in video_results:
+                vid = result.get("video_id")
+                vid_title = result.get("video_metadata", {}).get("title", "")
+                narrative_id = video_to_narrative.get(vid)
+
+                for claim in result.get("claims", []):
+                    raw_type = (claim.get("type") or "factual").lower()
+                    ctype = claim_type_map.get(raw_type, "factual")
+                    conf = float(claim.get("confidence", 0.5))
+                    risk = "high" if conf >= 0.7 else "medium" if conf >= 0.4 else "low"
+
+                    cur.execute("""
+                        INSERT INTO "Claim" (
+                            video_id,
+                            narrative_id,
+                            video_title,
+                            claim_text,
+                            claim_type,
+                            confidence_score,
+                            risk_level,
+                            processed_at,
+                            is_verified,
+                            accuracy_rating
+                        )
+                        VALUES (%s, %s, %s, %s, %s::"ClaimType", %s, %s::"RiskLevel", NOW(), %s, %s)
+                        ON CONFLICT DO NOTHING;
+                    """, (
+                        vid,
+                        narrative_id,
+                        vid_title,
+                        claim.get("text", ""),
+                        ctype,
+                        conf,
+                        risk,
+                        False,
+                        None
+                    ))
+
             # Save trend row
             trend_id = str(uuid.uuid4())
             labels = [p.get("period") for p in trends.get("overall", {}).get("timeline", [])]
@@ -217,6 +278,7 @@ def save_results_to_railway(
                 board_id,
                 labels
             ))
+
 
             # Save trend datasets
             valid_directions = {"rising", "peaking", "declining", "stable"}
