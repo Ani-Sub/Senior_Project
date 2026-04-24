@@ -31,7 +31,7 @@ if not GROQ_API_KEY:
 
 LLM_MODEL = "llama-3.1-8b-instant"
 LLM_URL = "https://api.groq.com/openai/v1/chat/completions"
-LLM_MAX_TOKENS = 2000   # Reduced - JSON responses don't need 8k
+LLM_MAX_TOKENS = 4000   # Reduced - JSON responses don't need 8k
 
 #=====================================
 # chunking parameters
