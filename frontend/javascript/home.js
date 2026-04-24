@@ -87,6 +87,7 @@ function renderDashboards() {
   const count = document.getElementById('dashCount');
 
   count.textContent = `${dashboards.length} dashboard${dashboards.length !== 1 ? 's' : ''}`;
+  updateSidebarLimit(dashboards.length);
 
   if (dashboards.length === 0) {
     grid.innerHTML = '';
@@ -101,8 +102,6 @@ function renderDashboards() {
     .sort((a, b) => b.createdAt - a.createdAt)
     .map(d => dashCardHTML(d))
     .join('');
-
-  updateSidebarLimit(dashboards.length);
 }
 
 function dashCardHTML(d) {
