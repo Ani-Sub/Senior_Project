@@ -155,13 +155,19 @@ def save_results_to_railway(
                 n.get("narrative_id"): n for n in trends.get("narratives", [])
             }
 
+            
+
             # Save narratives
+            id_map = {}
             for narrative in synthesis.get("narratives", []):
-                narrative_id = narrative.get("id")
-                if not narrative_id:
+                llm_narrative_id = narrative.get("id")
+                if not llm_narrative_id:
                     continue
 
-                matching_trend = trend_narratives.get(narrative_id, {})
+                db_narrative_id = str(uuid.uuid4())
+                id_map[llm_narrative_id] = db_narrative_id
+
+                matching_trend = trend_narratives.get(llm_narrative_id, {})
                 timeline = matching_trend.get("timeline", [])
 
             
@@ -198,7 +204,7 @@ def save_results_to_railway(
                         first_seen_at = EXCLUDED.first_seen_at,
                         last_seen_at = EXCLUDED.last_seen_at;
                 """, (
-                    narrative_id,
+                    db_narrative_id,
                     board_id,
                     narrative.get("name"),
                     narrative.get("summary"),
@@ -214,7 +220,7 @@ def save_results_to_railway(
 
             for narrative in synthesis.get("narratives", []):
                 for vid in narrative.get("video_ids", []):
-                    video_to_narrative[vid] = narrative.get("id")
+                    video_to_narrative[vid] = id_map.get(narrative.get("id"))
 
             claim_type_map = {
                 "factual": "factual",
@@ -304,7 +310,7 @@ def save_results_to_railway(
                 """, (
                     str(uuid.uuid4()),
                     trend_id,
-                    narrative.get("narrative_id"),
+                    id_map.get(narrative.get("narrative_id")),
                     narrative.get("name"),
                     default_color,
                     data_points,
