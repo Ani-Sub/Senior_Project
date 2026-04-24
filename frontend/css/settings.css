@@ -14,12 +14,15 @@
 .page-title{
   font-family:'Bebas Neue',sans-serif;
   font-size:2rem;
+  letter-spacing:.1em;
+  transform: scaleY(0.8);
   color:var(--white);
   margin-bottom:8px;
 }
 .page-sub{
   font-family:'DM Sans',sans-serif;
   font-size:0.9rem;
+  
   color:var(--muted);
 }
 .stat-label{
@@ -47,6 +50,8 @@ margin-top:6px;
 .setting-card h3{
   font-family:'Bebas Neue',sans-serif;
   font-size:1.5rem;
+  letter-spacing:.08em;
+  transform: scaleY(0.9);
   color:var(--white);
   margin-bottom:10px;
 }

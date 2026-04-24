@@ -14,8 +14,8 @@ transform:translateY(-2px);
 
 .card-title{
 font-family:'Bebas Neue',sans-serif;
-letter-spacing:.05em;
-font-size:1.4rem;
+letter-spacing:.1em;
+font-size:2rem;
 color:var(--white);
 margin-bottom:18px;
 }
@@ -24,6 +24,7 @@ margin-bottom:18px;
 display:flex;
 align-items:center;
 gap:18px;
+letter-spacing:.1em;
 }
 
 .avatar{
@@ -69,7 +70,7 @@ text-align:center;
 
 .stat-value{
 font-family:'Bebas Neue',sans-serif;
-font-size:2rem;
+font-size:2.5rem;
 color:var(--white);
 }
 

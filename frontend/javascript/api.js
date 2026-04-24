@@ -47,7 +47,7 @@ const auth = {
    */
   redirectIfLoggedIn() {
     if (auth.isLoggedIn()) {
-      window.location.href = '/html/home.html';
+      window.location.href = 'html/home.html';
     }
   },
 };
