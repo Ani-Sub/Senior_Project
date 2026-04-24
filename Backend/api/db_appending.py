@@ -9,7 +9,7 @@ from typing import List, Annotated
 from pathlib import Path
 import json
 from datetime import datetime
-
+import uuid
 
 load_dotenv()
 engine = create_engine(os.getenv("DATABASE_URL"))
@@ -53,7 +53,7 @@ def insert_videos(board_id: str):
     db.close()
 
 
-def insert_claims():
+def insert_claims(id_map: dict):
 
     db = SessionLocal()
     file_path1 = os.path.join(base, "output", "latest", "db_ready", "claims.json")
@@ -71,8 +71,12 @@ def insert_claims():
         narrative_videos_map[nv["video_id"]] = nv["narrative_id"]
 
     for c in claims:
+        
+        llm_narrative_id = narrative_videos_map.get(c["video_id"])
+        db_narrative_id = id_map.get(llm_narrative_id)
+
         t = text("INSERT INTO \"Claim\" (video_id, narrative_id, video_title, claim_text, claim_type, confidence_score, risk_level, processed_at, is_verified, accuracy_rating) VALUES (:video_id, :narrative_id, :video_title, :claim_text, :claim_type, :confidence_score, :risk_level, :processed_at, :is_verified, :accuracy_rating) ON CONFLICT DO NOTHING")
-        db.execute(t, {"video_id": c["video_id"], "narrative_id": narrative_videos_map.get(c["video_id"]), "video_title": c["video_title"], "claim_text": c["claim_text"], "claim_type": c["claim_type"], "confidence_score": c["confidence_score"], "risk_level": c["risk_level"], "processed_at": datetime.fromisoformat(c["processed_at"]), "is_verified": c["is_verified"], "accuracy_rating": c.get("accuracy_rating")})
+        db.execute(t, {"video_id": c["video_id"], "narrative_id": db_narrative_id, "video_title": c["video_title"], "claim_text": c["claim_text"], "claim_type": c["claim_type"], "confidence_score": c["confidence_score"], "risk_level": c["risk_level"], "processed_at": datetime.fromisoformat(c["processed_at"]), "is_verified": c["is_verified"], "accuracy_rating": c.get("accuracy_rating")})
     
     db.commit()
     db.close()
@@ -86,12 +90,19 @@ def insert_narratives(board_id: str):
     with open(file_path) as file:
         narratives = json.load(file)
 
+    id_map = {}
+
     for n in narratives:
+        
+        db_id = str(uuid.uuid4())
+        id_map[n["narrative_id"]] = db_id
+
         t = text("INSERT INTO \"Narrative\" (narrative_id, board_id, title, summary, topic_label, claim_count, color, first_seen_at, last_seen_at) VALUES (:narrative_id, :board_id, :title, :summary, :topic_label, :claim_count, :color, :first_seen_at, :last_seen_at) ON CONFLICT (narrative_id) DO UPDATE SET board_id = EXCLUDED.board_id")
-        db.execute(t, {"narrative_id": n["narrative_id"], "board_id": board_id, "title": n["title"], "summary": n.get("summary"), "topic_label": n.get("topic_label"), "claim_count": n["claim_count"], "color": n["color"], "first_seen_at": datetime.fromisoformat(n["first_seen_at"].replace("Z", "+00:00")), "last_seen_at": datetime.fromisoformat(n["last_seen_at"].replace("Z", "+00:00"))})
+        db.execute(t, {"narrative_id": db_id, "board_id": board_id, "title": n["title"], "summary": n.get("summary"), "topic_label": n.get("topic_label"), "claim_count": n["claim_count"], "color": n["color"], "first_seen_at": datetime.fromisoformat(n["first_seen_at"].replace("Z", "+00:00")), "last_seen_at": datetime.fromisoformat(n["last_seen_at"].replace("Z", "+00:00"))})
     
     db.commit()
     db.close()
+    return id_map
 
 
 
@@ -113,7 +124,8 @@ def trend_color(direction: str):
     if direction == "stable":
         return "#808080"
 
-def insert_trends(board_id: str):
+
+def insert_trends(board_id: str, id_map: dict):
 
     db = SessionLocal()
     file_path1 = os.path.join(base, "output", "latest", "db_ready", "narrative_trends.json")
@@ -155,26 +167,24 @@ def insert_trends(board_id: str):
             if i not in existing_labels:
                 new_labels.append(i)
 
-        #append labels if trends exist
         if new_labels:
             t = text("UPDATE \"Trend\" SET labels = labels || :new_labels WHERE trend_id = :trend_id")
             db.execute(t, {"trend_id": trend_id, "new_labels": new_labels})
 
 
         for n in narrative_trends:
-            
+            db_narrative_id = id_map.get(n["narrative_id"])
+
             data = []
             for tt in trends_timeline:
                 if tt["narrative_id"] == n["narrative_id"]:
                     data.append(tt["claim_count"])
 
-
             t = text("SELECT * FROM \"TrendData\" WHERE trend_id = :trend_id AND narrative_id = :narrative_id")
-            result = db.execute(t, {"trend_id": trend_id, "narrative_id": n["narrative_id"]}).fetchone()
+            result = db.execute(t, {"trend_id": trend_id, "narrative_id": db_narrative_id}).fetchone()
 
             if result:
 
-                
                 if dict(result._mapping)["data"]:
                     existing_data = dict(result._mapping)["data"]
                 else:
@@ -184,13 +194,13 @@ def insert_trends(board_id: str):
 
                 if new_data:
                     t = text("UPDATE \"TrendData\" SET data = data || :new_data, direction = :direction WHERE trend_id = :trend_id AND narrative_id = :narrative_id")
-                    db.execute(t, {"trend_id": trend_id, "narrative_id": n["narrative_id"], "new_data": new_data, "direction": n["pattern"]})
+                    db.execute(t, {"trend_id": trend_id, "narrative_id": db_narrative_id, "new_data": new_data, "direction": n["pattern"]})
 
             else:
                 
                 color = trend_color(n["pattern"])
                 t = text("INSERT INTO \"TrendData\" (trend_id, narrative_id, label, color, data, direction) VALUES (:trend_id, :narrative_id, :label, :color, :data, :direction)")
-                db.execute(t, {"trend_id": trend_id, "narrative_id": n["narrative_id"], "label": n["name"], "color": color, "data": data, "direction": n["pattern"]})
+                db.execute(t, {"trend_id": trend_id, "narrative_id": db_narrative_id, "label": n["name"], "color": color, "data": data, "direction": n["pattern"]})
     else:
 
         t = text("INSERT INTO \"Trend\" (board_id, labels) VALUES (:board_id, :labels) RETURNING *")
@@ -199,7 +209,8 @@ def insert_trends(board_id: str):
         trend_id = dict(trend._mapping)["trend_id"]
         
         for n in narrative_trends:
-            
+            db_narrative_id = id_map.get(n["narrative_id"])
+
             data = []
             for tt in trends_timeline:
                 if tt["narrative_id"] == n["narrative_id"]:
@@ -207,9 +218,7 @@ def insert_trends(board_id: str):
 
             color = trend_color(n["pattern"])
             t = text("INSERT INTO \"TrendData\" (trend_id, narrative_id, label, color, data, direction) VALUES (:trend_id, :narrative_id, :label, :color, :data, :direction)")
-            db.execute(t, {"trend_id": trend_id, "narrative_id": n["narrative_id"], "label": n["name"], "color": color, "data": data, "direction": n["pattern"]})
+            db.execute(t, {"trend_id": trend_id, "narrative_id": db_narrative_id, "label": n["name"], "color": color, "data": data, "direction": n["pattern"]})
     
     db.commit()
     db.close()
-
-
