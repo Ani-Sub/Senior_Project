@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "narrative_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "AI Robotics Race",
+    "summary": "Major tech companies and startups are competing to build humanoid robots using AI, with Boston Dynamics, Tesla Optimus, and Chinese manufacturers all racing to achieve commercial deployment.",
+    "topic_label": "AI Industry",
+    "claim_count": 86,
+    "color": "#00FF00",
+    "first_seen_at": "2026-04-13T00:00:00Z",
+    "last_seen_at": "2026-04-17T00:00:00Z"
+  },
+  {
+    "narrative_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "title": "Dangerous AI Models",
+    "summary": "Concerns are growing that powerful AI models are being deployed without adequate safety measures, with critics warning of potential misuse, misinformation, and risks to job markets.",
+    "topic_label": "AI Bubble",
+    "claim_count": 63,
+    "color": "#FF4444",
+    "first_seen_at": "2026-04-13T00:00:00Z",
+    "last_seen_at": "2026-04-17T00:00:00Z"
+  },
+  {
+    "narrative_id": "c3d4e5f6-a7b8-9012-cdef-012345678902",
+    "title": "AI Models and Assistants",
+    "summary": "New AI assistants and language models are rapidly advancing in capability, with companies like Anthropic and OpenAI releasing systems that handle increasingly complex tasks across industries.",
+    "topic_label": "Advancements in AI",
+    "claim_count": 38,
+    "color": "#FFBF00",
+    "first_seen_at": "2026-04-13T00:00:00Z",
+    "last_seen_at": "2026-04-17T00:00:00Z"
+  }
+]
