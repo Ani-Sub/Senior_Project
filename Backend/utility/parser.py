@@ -92,12 +92,12 @@ def parse_json_response(raw: str) -> dict | None:
     # Strip markdown fences and bold markers (**text**)
     cleaned = re.sub(r"```(?:json)?|```|\*\*.*?\*\*", "", raw).strip()
 
-    # Try direct parse first (ideal case)
+    # Try direct parse first
     try:
         return json.loads(cleaned)
     except json.JSONDecodeError:
         pass
-    
+
     # Try repairing unquoted strings
     repaired = repair_unquoted_strings(cleaned)
     try:
@@ -105,42 +105,57 @@ def parse_json_response(raw: str) -> dict | None:
     except json.JSONDecodeError:
         pass
 
-    # Find and extract the outermost { ... } block
     brace_start = cleaned.find("{")
-    if brace_start != -1:
-        depth = 0
-        for i, ch in enumerate(cleaned[brace_start:], start=brace_start):
-            if ch == "{":
-                depth += 1
-            elif ch == "}":
-                depth -= 1
-                if depth == 0:
-                    block = cleaned[brace_start:i + 1]
-                    # Try direct parse
-                    try:
-                        return json.loads(block)
-                    except json.JSONDecodeError:
-                        pass
-                    # Try with unquoted string repair
-                    repaired_block = repair_unquoted_strings(block)
-                    try:
-                        return json.loads(repaired_block)
-                    except json.JSONDecodeError as e:
-                        log.warning(f"JSON parse failed: {e}\nRaw preview: {raw[:300]}")
-                        return None
-        
-        # If we get here, JSON was truncated (unclosed braces)
-        # Try to repair it
-        truncated = cleaned[brace_start:]
-        log.warning(f"Attempting to repair truncated JSON...")
-        repaired = repair_truncated_json(truncated)
-        try:
-            result = json.loads(repaired)
-            log.info(f"  → JSON repair successful")
-            return result
-        except json.JSONDecodeError as e:
-            log.warning(f"JSON repair failed: {e}\nRaw preview: {raw[:300]}")
-            return None
+    if brace_start == -1:
+        log.warning(f"No JSON object found in response.\nRaw preview: {raw[:300]}")
+        return None
 
-    log.warning(f"No JSON object found in response.\nRaw preview: {raw[:300]}")
+    truncated = cleaned[brace_start:]
+    depth = 0
+    last_complete_pos = -1
+
+    for i, ch in enumerate(truncated):
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                last_complete_pos = i
+                break
+
+    if last_complete_pos != -1:
+        block = truncated[:last_complete_pos + 1]
+        try:
+            return json.loads(block)
+        except json.JSONDecodeError:
+            repaired_block = repair_unquoted_strings(block)
+            try:
+                return json.loads(repaired_block)
+            except json.JSONDecodeError as e:
+                log.warning(f"JSON parse failed: {e}\nRaw preview: {raw[:300]}")
+                # Fall through to truncation repair
+
+    # JSON was truncated — try to repair it
+    log.warning("Attempting to repair truncated JSON...")
+    repaired = repair_truncated_json(truncated)
+    try:
+        result = json.loads(repaired)
+        log.info("  → JSON repair successful")
+        return result
+    except json.JSONDecodeError:
+        pass
+
+    # Last resort: salvage just the claims array
+    match = re.search(r'"claims"\s*:\s*(\[.*)', truncated, re.DOTALL)
+    if match:
+        try:
+            partial = match.group(1)
+            partial_repaired = repair_truncated_json('{"claims":' + partial + "}")
+            result = json.loads(partial_repaired)
+            log.warning("  → Salvaged partial claims array from truncated JSON")
+            return result
+        except json.JSONDecodeError:
+            pass
+
+    log.warning(f"JSON repair failed.\nRaw preview: {raw[:300]}")
     return None
