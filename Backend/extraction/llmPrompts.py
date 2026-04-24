@@ -14,7 +14,7 @@ From the transcript below, extract:
 1. topics — main subjects discussed (list of short strings)
 2. claims — every explicit or implied assertion made. For each claim include:
    - "text": the claim in one clear sentence
-   - "type": one of "factual", "prediction", "opinion", "statistic"
+   - "type": one of "factual", "opinion"
    - "confidence": float 0.0–1.0 (how clearly and directly is this stated?)
    - "supporting_quote": a verbatim phrase under 10 words from the transcript
 
@@ -30,7 +30,7 @@ Example (note the quotes around ALL string values):
   "claims": [
     {{
       "text": "AI will automate 50% of jobs by 2030",
-      "type": "prediction",
+      "type": "opinion",
       "confidence": 0.85,
       "supporting_quote": "half of all jobs will be automated"
     }}
@@ -74,7 +74,7 @@ Your job:
 
 For each comment claim include:
   - "text": the claim in one clear sentence
-  - "type": one of "factual", "prediction", "opinion", "statistic"
+  - "type": one of "factual", "opinion"
   - "confidence": float 0.0–0.7 (comments are unverified — max is 0.7)
   - "supporting_quote": the exact comment text or phrase that contains this claim
   - "relation_to_transcript": one of "new_claim", "supports_transcript", "contradicts_transcript"
