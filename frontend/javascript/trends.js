@@ -5,7 +5,9 @@ let trendsLabels = [];
 let trendsDatasets = [];
 
 function getDashboardId() {
-  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+  const id = localStorage.getItem('niq_dashboard_id');
+  if (!id) { window.location.href = getRoot() + 'index.html'; return null; }
+  return id;
 }
 
 // ── INIT ──────────────────────────────────────────────────────
@@ -34,7 +36,9 @@ async function fetchTrends(range) {
     color:     d.color,
     direction: d.direction,
     claims:    d.data.reduce((a, b) => a + b, 0),
-    change:    d.data.length >= 2 ? d.data[d.data.length - 1] - d.data[d.data.length - 2] : 0,
+    change:    d.data.length >= 2 && d.data[d.data.length - 2] > 0
+                 ? Math.round(((d.data[d.data.length - 1] - d.data[d.data.length - 2]) / d.data[d.data.length - 2]) * 100)
+                 : 0,
   }));
 
   renderLegend();
