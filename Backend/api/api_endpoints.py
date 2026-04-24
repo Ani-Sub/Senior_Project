@@ -296,7 +296,7 @@ def get_narrative(narrative_id: str, db: db_dependency):
 @app.get("/api/v1/dashboards/{dashboard_id}/trends")
 def get_trends(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user), range: str = "3m"):
     
-    t = text("SELECT * FROM \"Trend\" WHERE board_id = :board_id")
+    t = text("SELECT * FROM \"Trend\" WHERE board_id = :board_id ORDER BY created_at DESC LIMIT 1")
     trends = db.execute(t, {"board_id": dashboard_id}).fetchall()
     
     result = []
