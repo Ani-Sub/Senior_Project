@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "video_id": "7bPZJhhDQU4",
+    "channel_id": "UCkdmU5qDT4aAH6F5CJmMWRg",
+    "title": "Boston Dynamics Atlas: The Future of Humanoid Robots",
+    "description": "Boston Dynamics officially begins serial production of the Atlas humanoid robot as AI-powered robotics enters a new era.",
+    "view_count": 1250000,
+    "duration_seconds": 1423,
+    "published_at": "2026-04-13T00:00:00Z",
+    "processed": true,
+    "processed_at": "2026-04-13T12:00:00"
+  },
+  {
+    "video_id": "yBOOhzLltJA",
+    "channel_id": "UCkdmU5qDT4aAH6F5CJmMWRg",
+    "title": "Are AI Models Becoming Too Dangerous?",
+    "description": "An in-depth look at the risks posed by frontier AI models and whether regulation can keep pace with development.",
+    "view_count": 980000,
+    "duration_seconds": 1850,
+    "published_at": "2026-04-14T00:00:00Z",
+    "processed": true,
+    "processed_at": "2026-04-14T12:00:00"
+  },
+  {
+    "video_id": "x2l7W9aTc5k",
+    "channel_id": "UCkdmU5qDT4aAH6F5CJmMWRg",
+    "title": "Claude vs GPT-4: Best AI Assistants Compared",
+    "description": "Comparing the latest AI assistants from Anthropic and OpenAI across coding, writing, and reasoning benchmarks.",
+    "view_count": 760000,
+    "duration_seconds": 1102,
+    "published_at": "2026-04-15T00:00:00Z",
+    "processed": true,
+    "processed_at": "2026-04-15T12:00:00"
+  }
+]
