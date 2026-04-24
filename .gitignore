@@ -9,12 +9,7 @@ __pycache__/
 
 # Pipeline output — local runs (not needed in repo)
 Backend/output/
-Backend/api/output/db_ready/
-Backend/api/output/latest/checkpoints/
-
-# Keep Backend/api/output/latest/db_ready/ tracked (Railway API reads from it)
-!Backend/api/output/latest/db_ready/
-!Backend/api/output/latest/db_ready/*.json
+Backend/api/output/
 
 # Channel cache (regenerated automatically)
 Backend/channel_cache.json
