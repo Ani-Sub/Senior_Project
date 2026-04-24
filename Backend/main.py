@@ -43,6 +43,7 @@ def run_pipeline(
     video_keywords: list[str],
     days: int = 90,
     max_comments: int = 30,
+    max_videos: int = 20,
     trend_granularity: Granularity = "weekly",
     assess_risk: bool = True,
     llm_verify_risk: bool = True,
@@ -64,6 +65,7 @@ def run_pipeline(
         video_keywords: Keywords that must appear in video titles
         days: How far back to look for videos
         max_comments: Maximum comments to extract per video
+        max_videos: Maximum number of videos to process (default 20)
         trend_granularity: Time granularity for trend analysis ("daily" or "weekly")
         assess_risk: Whether to run risk assessment on content
         llm_verify_risk: Whether to use LLM for borderline risk cases
@@ -111,7 +113,8 @@ def run_pipeline(
         days=days,
         use_cache=use_cache,
         cache_max_age_days=cache_max_age_days,
-        search_mode=search_mode
+        search_mode=search_mode,
+        max_videos=max_videos
     )
     
     if not discovered_videos:

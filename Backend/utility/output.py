@@ -199,7 +199,7 @@ class OutputManager:
         
         # Save trends data
         if trends:
-            # Overall timeline
+            # Per-narrative timeline (one row per narrative per period)
             timeline = self._extract_trends_timeline(trends)
             self._save_json(self.db_ready_dir / "trends_timeline.json", timeline)
             log.info(f"  ✓ trends_timeline.json ({len(timeline)} records)")
@@ -560,23 +560,27 @@ class OutputManager:
         return flags
     
     def _extract_trends_timeline(self, trends: dict) -> list[dict]:
-        """Extract trends timeline for database."""
+        """Extract trends timeline for database - one row per narrative per period."""
         timeline = []
         
-        overall = trends.get("overall", {})
-        for entry in overall.get("timeline", []):
-            timeline.append({
-                "period": entry.get("period"),
-                "period_start_iso": entry.get("period_start_iso"),
-                "period_start_ts": entry.get("period_start_ts"),
-                "video_count": entry.get("video_count"),
-                "total_views": entry.get("total_views"),
-                "total_likes": entry.get("total_likes"),
-                "total_comments": entry.get("total_comments"),
-                "engagement_ratio": entry.get("engagement_ratio"),
-                "claim_count": entry.get("claim_count"),
-                "avg_confidence": entry.get("avg_confidence")
-            })
+        # Extract from per-narrative timelines (each narrative has its own metrics)
+        for narrative in trends.get("narratives", []):
+            narrative_id = narrative.get("narrative_id")
+            
+            for entry in narrative.get("timeline", []):
+                timeline.append({
+                    "narrative_id": narrative_id,
+                    "period": entry.get("period"),
+                    "period_start_iso": entry.get("period_start_iso"),
+                    "period_start_ts": entry.get("period_start_ts"),
+                    "video_count": entry.get("video_count"),
+                    "total_views": entry.get("total_views"),
+                    "total_likes": entry.get("total_likes"),
+                    "total_comments": entry.get("total_comments"),
+                    "engagement_ratio": entry.get("engagement_ratio"),
+                    "claim_count": entry.get("claim_count"),
+                    "avg_confidence": entry.get("avg_confidence")
+                })
         
         return timeline
     
