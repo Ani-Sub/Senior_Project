@@ -8,6 +8,7 @@ Handles:
 """
 
 import json
+import uuid
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -510,7 +511,7 @@ class OutputManager:
             all_timestamps.sort()
             
             narratives_out.insert(0, {
-                "narrative_id": "overall",
+                "narrative_id": str(uuid.uuid4()),
                 "title": "Overall Summary",
                 "summary": synthesis.get("overall_summary"),
                 "topic_label": "Overall",

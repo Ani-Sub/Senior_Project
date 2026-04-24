@@ -11,13 +11,15 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
 from fastapi import Header, status
 from fastapi.security import OAuth2PasswordBearer
-from db_appending import insert_channels, insert_videos, insert_claims, insert_narratives, insert_trends
+from db_appending import import_pipeline_data
 
 load_dotenv()
 
 from database import SessionLocal
 
 SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise EnvironmentError("SECRET_KEY not set. This is required for JWT signing.")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_DAYS = 7
 
@@ -182,32 +184,35 @@ def create_dashboard(body: CreateDashboardBody, db: db_dependency, user_id: str 
 
     board = dict(result._mapping)
 
-    insert_channels(board["board_id"])
-    insert_videos(board["board_id"])
-    id_map = insert_narratives(board["board_id"])
-    insert_claims(id_map)
-    insert_trends(board["board_id"], id_map)
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output", "latest", "db_ready", "channels.json")
+    if not os.path.exists(output_path):
+        return board
+
+    import_pipeline_data(board["board_id"])
 
     return board
  
 @app.get("/api/v1/dashboards/{dashboard_id}")
-def get_dashboard(dashboard_id: str, db: db_dependency):
-    
-    t = text("SELECT * FROM \"Board\" WHERE board_id = :board_id")
-    result = db.execute(t, {"board_id": dashboard_id}).fetchone()
-    
+def get_dashboard(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user)):
+
+    t = text("SELECT * FROM \"Board\" WHERE board_id = :board_id AND user_id = :user_id")
+    result = db.execute(t, {"board_id": dashboard_id, "user_id": user_id}).fetchone()
+
     if not result:
         raise HTTPException(status_code=404, detail={"error": "not_found", "message": "Dashboard not found"})
-    
+
     return dict(result._mapping)
- 
+
 @app.delete("/api/v1/dashboards/{dashboard_id}")
-def delete_dashboard(dashboard_id: str, db: db_dependency):
-    
-    t = text("DELETE FROM \"Board\" WHERE board_id = :board_id")
-    result = db.execute(t, {"board_id": dashboard_id})
+def delete_dashboard(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user)):
+
+    t = text("DELETE FROM \"Board\" WHERE board_id = :board_id AND user_id = :user_id")
+    result = db.execute(t, {"board_id": dashboard_id, "user_id": user_id})
     db.commit()
-    
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail={"error": "not_found", "message": "Dashboard not found"})
+
     return {"message": "Dashboard deleted"}
  
 
@@ -257,7 +262,7 @@ def get_claims(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_
     }
  
 @app.get("/api/v1/claims/{claim_id}")
-def get_claim(claim_id: str, db: db_dependency):
+def get_claim(claim_id: str, db: db_dependency, _user_id: str = Depends(get_current_user)):
     
     t = text("SELECT c.claim_id AS claim_id, c.video_id AS video_id, ch.channel_id AS channel_id, ch.channel_name AS channel_name, c.claim_text AS claim_text, c.claim_type AS claim_type, c.confidence_score AS confidence_score, c.risk_level AS risk_level, n.narrative_id AS narrative_id, n.title AS narrative_name, c.processed_at AS published_at, c.is_verified AS is_verified, c.accuracy_rating AS accuracy_rating FROM \"Claim\" c JOIN \"Video\" v ON c.video_id = v.video_id JOIN \"Channel\" ch ON v.channel_id = ch.channel_id LEFT JOIN \"Narrative\" n ON c.narrative_id = n.narrative_id WHERE c.claim_id = :claim_id")
     result = db.execute(t, {"claim_id": claim_id}).fetchone()
@@ -284,7 +289,7 @@ def get_narratives(dashboard_id: str, db: db_dependency, user_id: str = Depends(
     
  
 @app.get("/api/v1/narratives/{narrative_id}")
-def get_narrative(narrative_id: str, db: db_dependency):
+def get_narrative(narrative_id: str, db: db_dependency, _user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"Narrative\" WHERE narrative_id = :narrative_id")
     narrative = db.execute(t, {"narrative_id": narrative_id}).fetchone()
@@ -353,7 +358,7 @@ def get_creators(dashboard_id: str, db: db_dependency, user_id: str = Depends(ge
     
  
 @app.get("/api/v1/creators/{channel_id}/risk")
-def get_creator_risk(channel_id: str, db: db_dependency):
+def get_creator_risk(channel_id: str, db: db_dependency, _user_id: str = Depends(get_current_user)):
     
     t = text("SELECT * FROM \"Channel\" WHERE channel_id = :channel_id")
     result = db.execute(t, {"channel_id": channel_id}).fetchone()
@@ -398,13 +403,14 @@ def update_user(body: UpdateUserBody, db: db_dependency, user_id: str = Depends(
 
     stored_password = dict(password._mapping)["password"]
 
-    if body.current_password and body.current_password == stored_password and body.new_password:
-
+    if body.new_password:
+        if not body.current_password:
+            raise HTTPException(status_code=400, detail={"error": "bad_request", "message": "current_password required to set a new password"})
+        if body.current_password != stored_password:
+            raise HTTPException(status_code=401, detail={"error": "unauthorized", "message": "Current password is incorrect"})
         t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), password = :password, plan = COALESCE(:plan, plan) WHERE user_id = :user_id RETURNING *")
         result = db.execute(t, {"user_id": user_id, "name": body.name, "email": body.email, "initials": newInitials, "password": body.new_password, "plan": body.plan}).fetchone()
-
     else:
-
         t = text("UPDATE \"User\" SET name = COALESCE(:name, name), email = COALESCE(:email, email), initials = COALESCE(:initials, initials), plan = COALESCE(:plan, plan) WHERE user_id = :user_id RETURNING *")
         result = db.execute(t, {"user_id": user_id, "name": body.name, "email": body.email, "initials": newInitials, "plan": body.plan}).fetchone()
 
@@ -429,11 +435,12 @@ def get_plan(db: db_dependency, user_id: str = Depends(get_current_user)):
         
     plan_names = {"free": "Free Plan", "analyst": "Analyst Plan", "enterprise": "Enterprise Plan"}
     plan_limits = {"free": 1, "analyst": 5, "enterprise": None}
-    
+    plan_key = userProfile["plan"]
+
     return {
-        "plan": userProfile["plan"],
-        "plan_name": plan_names[userProfile["plan"]],
-        "dashboard_limit": plan_limits[userProfile["plan"]],
+        "plan": plan_key,
+        "plan_name": plan_names.get(plan_key, "Free Plan"),
+        "dashboard_limit": plan_limits.get(plan_key, 1),
         "dashboards_used": numDashboards
     }
 
@@ -454,11 +461,7 @@ def run_endpoint(db: db_dependency, dashboard_id: str, user_id: str = Depends(ge
 
     board = dict(result._mapping)
 
-    insert_channels(board["board_id"])
-    insert_videos(board["board_id"])
-    id_map = insert_narratives(board["board_id"])
-    insert_claims(id_map)
-    insert_trends(board["board_id"], id_map)
+    import_pipeline_data(board["board_id"])
 
     return {
         "message": "Pipeline Completed"

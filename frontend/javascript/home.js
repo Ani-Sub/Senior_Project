@@ -107,7 +107,7 @@ function renderDashboards() {
 
 function dashCardHTML(d) {
   const date = new Date(d.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  const tagsHTML = d.tags.slice(0, 3).map(t => `<span class="tag-chip">${t}</span>`).join('');
+  const tagsHTML = d.tags.slice(0, 3).map(t => `<span class="tag-chip">${escHtml(t)}</span>`).join('');
   const extraTags = d.tags.length > 3 ? `<span class="tag-chip">+${d.tags.length - 3}</span>` : '';
 
   return `

@@ -6,20 +6,15 @@ Pipeline steps:
 2. Extract claims from each video (checkpoint after each)
 3. Synthesize cross-video narrative (checkpoint)
 4. Analyze temporal trends (checkpoint)
-5. Assess content risk (cheoutckpoint)
+5. Assess content risk (checkpoint)
 6. Export database-ready files
 """
 
 import logging
-from datetime import datetime
+import os
+import sys
 from pathlib import Path
 from typing import Literal
-#Added Imports for Railway DB
-import os
-import json
-import uuid
-import psycopg2
-from psycopg2.extras import Json
 
 from ytAPI.videoExtract import discover_videos, SearchMode
 from ytAPI.transcriptExtract import get_transcript
@@ -42,297 +37,6 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 
-def save_results_to_railway(
-    video_results,
-    synthesis,
-    trends,
-    risk_analysis,
-    search_params
-):
-    database_url = os.getenv("DATABASE_URL")
-    if not database_url:
-        log.error("DATABASE_URL not set. Skipping Railway DB save.")
-        return
-    
-    
-
-    conn = psycopg2.connect(database_url)
-    cur = conn.cursor()
-
-    try:
-        cur.execute("""
-            SELECT board_id, board_name, search_terms
-            FROM "Board"
-        """)
-
-        boards = cur.fetchall()
-
-        if not boards:
-            raise RuntimeError("No boards found in database.")
-
-        pipeline_kw = search_params.get("keywords", "").lower()
-        default_color = "#00d4ff"
-
-        for board_id, board_name, search_terms in boards:
-            if search_terms and not any(pipeline_kw in term.lower() for term in search_terms):
-                log.info(f"Skipping board '{board_name}' — search terms don't match pipeline keywords")
-                continue
-            log.info(f"Saving results to board: {board_name} ({board_id})")
-
-            
-            # Save videos
-            for result in video_results:
-                meta = result.get("video_metadata", {})
-
-                cur.execute("""
-                INSERT INTO "Channel" (
-                    channel_id,
-                    channel_name,
-                    total_claims,
-                    flagged_claims,
-                    accuracy_rate,
-                    risk_level,
-                    risk_score,
-                    last_assessed_at,
-                    processed_at
-                )
-                VALUES (%s,%s,%s,%s,%s,%s,%s,NOW(),NOW())
-                ON CONFLICT (channel_id) DO NOTHING;
-            """, (
-                meta.get("channel_id"),
-                meta.get("channel_title", "Unknown"),
-                0,
-                0,
-                0.0,
-                "low",
-                0.0
-            ))
-                
-                cur.execute("""
-                    INSERT INTO "BoardChannel" (board_id, channel_id)
-                    VALUES (%s, %s)
-                    ON CONFLICT (board_id, channel_id) DO NOTHING;
-                """, (
-                    board_id,
-                    meta.get("channel_id")
-                ))
-
-                cur.execute("""
-                    INSERT INTO "Video" (
-                        video_id,
-                        board_id,
-                        channel_id,
-                        title,
-                        description,
-                        view_count,
-                        duration_seconds,
-                        published_at,
-                        processed,
-                        processed_at    
-                    )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())
-                    ON CONFLICT (video_id)
-                    DO UPDATE SET
-                        board_id = EXCLUDED.board_id,
-                        channel_id = EXCLUDED.channel_id,
-                        title = EXCLUDED.title,
-                        description = EXCLUDED.description,
-                        view_count = EXCLUDED.view_count,
-                        duration_seconds = EXCLUDED.duration_seconds,
-                        published_at = EXCLUDED.published_at,
-                        processed = EXCLUDED.processed,
-                        processed_at = NOW();
-                """, (
-                    meta.get("video_id"),
-                    board_id,
-                    meta.get("channel_id"),
-                    meta.get("title"),
-                    meta.get("description", ""),
-                    meta.get("view_count"),
-                    meta.get("duration_seconds"),
-                    meta.get("published_at"),
-                    True
-                ))
-
-            # Match trend narratives by narrative_id
-            trend_narratives = {
-                n.get("narrative_id"): n for n in trends.get("narratives", [])
-            }
-
-            
-
-            # Save narratives
-            id_map = {}
-            for narrative in synthesis.get("narratives", []):
-                llm_narrative_id = narrative.get("id")
-                if not llm_narrative_id:
-                    continue
-
-                db_narrative_id = str(uuid.uuid4())
-                id_map[llm_narrative_id] = db_narrative_id
-
-                matching_trend = trend_narratives.get(llm_narrative_id, {})
-                timeline = matching_trend.get("timeline", [])
-
-            
-                if timeline:
-                    first_seen_at = timeline[0].get("period_start_iso")
-                    last_seen_at = timeline[-1].get("period_start_iso")
-                else:
-                    first_seen_at = trends.get("time_range", {}).get("start")
-                    last_seen_at = trends.get("time_range", {}).get("end")
-
-                claim_count = sum(point.get("claim_count", 0) for point in timeline) if timeline else 0
-        
-                cur.execute("""
-                    INSERT INTO "Narrative" (
-                        narrative_id,
-                        board_id,
-                        title,
-                        summary,
-                        topic_label,
-                        claim_count,
-                        color,
-                        first_seen_at,
-                        last_seen_at
-                    )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    ON CONFLICT (narrative_id)
-                    DO UPDATE SET
-                        board_id = EXCLUDED.board_id,
-                        title = EXCLUDED.title,
-                        summary = EXCLUDED.summary,
-                        topic_label = EXCLUDED.topic_label,
-                        claim_count = EXCLUDED.claim_count,
-                        color = EXCLUDED.color,
-                        first_seen_at = EXCLUDED.first_seen_at,
-                        last_seen_at = EXCLUDED.last_seen_at;
-                """, (
-                    db_narrative_id,
-                    board_id,
-                    narrative.get("name"),
-                    narrative.get("summary"),
-                    narrative.get("topic_label"),
-                    claim_count,
-                    default_color,
-                    first_seen_at,
-                    last_seen_at
-                ))
-
-            # Map videos to their narrative
-            video_to_narrative = {}
-
-            for narrative in synthesis.get("narratives", []):
-                for vid in narrative.get("video_ids", []):
-                    video_to_narrative[vid] = id_map.get(narrative.get("id"))
-
-            claim_type_map = {
-                "factual": "factual",
-                "prediction": "prediction",
-                "statistic": "statistic",
-                "opinion": "opinion"
-            }
-
-            for result in video_results:
-                vid = result.get("video_id")
-                vid_title = result.get("video_metadata", {}).get("title", "")
-                narrative_id = video_to_narrative.get(vid)
-
-                for claim in result.get("claims", []):
-                    raw_type = (claim.get("type") or "factual").lower()
-                    ctype = claim_type_map.get(raw_type, "factual")
-                    conf = float(claim.get("confidence", 0.5))
-                    risk = "high" if conf >= 0.7 else "medium" if conf >= 0.4 else "low"
-
-                    cur.execute("""
-                        INSERT INTO "Claim" (
-                            video_id,
-                            narrative_id,
-                            video_title,
-                            claim_text,
-                            claim_type,
-                            confidence_score,
-                            risk_level,
-                            processed_at,
-                            is_verified,
-                            accuracy_rating
-                        )
-                        VALUES (%s, %s, %s, %s, %s::"ClaimType", %s, %s::"RiskLevel", NOW(), %s, %s)
-                        ON CONFLICT DO NOTHING;
-                    """, (
-                        vid,
-                        narrative_id,
-                        vid_title,
-                        claim.get("text", ""),
-                        ctype,
-                        conf,
-                        risk,
-                        False,
-                        None
-                    ))
-
-            # Save trend row
-            trend_id = str(uuid.uuid4())
-            labels = [p.get("period") for p in trends.get("overall", {}).get("timeline", [])]
-
-            cur.execute("""
-                INSERT INTO "Trend" (
-                    trend_id,
-                    board_id,
-                    labels,
-                    created_at
-                )
-                VALUES (%s, %s, %s, NOW());
-            """, (
-                trend_id,
-                board_id,
-                labels
-            ))
-
-
-            # Save trend datasets
-            valid_directions = {"rising", "peaking", "declining", "stable"}
-
-            for narrative in trends.get("narratives", []):
-                direction = narrative.get("trend", {}).get("pattern", "stable")
-                if direction not in valid_directions:
-                    direction = "stable"
-
-                data_points = [p.get("total_views", 0) for p in narrative.get("timeline", [])]
-
-                cur.execute("""
-                    INSERT INTO "TrendData" (
-                        dataset_id,
-                        trend_id,
-                        narrative_id,
-                        label,
-                        color,
-                        data,
-                        direction
-                    )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s);
-                """, (
-                    str(uuid.uuid4()),
-                    trend_id,
-                    id_map.get(narrative.get("narrative_id")),
-                    narrative.get("name"),
-                    default_color,
-                    data_points,
-                    direction
-                ))
-
-        conn.commit()
-        log.info("✓ Results saved to Railway")
-
-    except Exception as e:
-        conn.rollback()
-        log.error(f"Failed to save results to Railway: {e}")
-        raise
-    finally:
-        cur.close()
-        conn.close()
-
-
 def run_pipeline(
     search_keywords: str,
     channel_sub_min: int,
@@ -351,10 +55,10 @@ def run_pipeline(
 ) -> str | None:
     """
     Run the full YouTube intelligence pipeline with checkpoint saves.
-    
+
     Each major step saves progress, so crashes don't lose data.
     Final output is exported in database-ready format.
-    
+
     Args:
         search_keywords: Keywords to search for
         channel_sub_min: Minimum subscriber count for channels
@@ -372,19 +76,17 @@ def run_pipeline(
             - "videos": Search videos first, extract channels (catches more creators)
             - "channels": Search channels by name only
         output_dir: Base directory for output files
-    
+
     Returns:
         Path to the run directory, or None if pipeline failed
     """
-    
-    # Use Backend/output as default if not specified
+
     if output_dir is None:
         output_dir = DEFAULT_OUTPUT_DIR
-    
-    # Initialize output manager
+
     output = OutputManager(output_dir=output_dir)
     log.info(f"Pipeline started — output: {output.get_run_path()}")
-    
+
     search_params = {
         "keywords": search_keywords,
         "channel_sub_min": channel_sub_min,
@@ -394,14 +96,14 @@ def run_pipeline(
         "trend_granularity": trend_granularity,
         "risk_assessment_enabled": assess_risk
     }
-    
+
     # ══════════════════════════════════════════════════════════════════════
     # STEP 1: Discovery
     # ══════════════════════════════════════════════════════════════════════
     log.info("\n" + "="*60)
     log.info("STEP 1: Discovering videos")
     log.info("="*60)
-    
+
     discovered_videos = discover_videos(
         search_keywords=search_keywords,
         channel_sub_min=channel_sub_min,
@@ -413,45 +115,41 @@ def run_pipeline(
         search_mode=search_mode,
         max_videos=max_videos
     )
-    
+
     if not discovered_videos:
         log.warning("No videos found. Try broadening your search criteria.")
         return None
-    
+
     log.info(f"✓ Discovered {len(discovered_videos)} videos")
-    
+
     # ══════════════════════════════════════════════════════════════════════
     # STEP 2: Extract claims (checkpoint after each video)
     # ══════════════════════════════════════════════════════════════════════
     log.info("\n" + "="*60)
     log.info("STEP 2: Extracting claims from videos")
     log.info("="*60)
-    
+
     all_results = []
-    
+
     for i, video in enumerate(discovered_videos, 1):
         video_id = video["video_id"]
         log.info(f"\n[{i}/{len(discovered_videos)}] Processing: {video_id}")
         log.info(f"  Title: {video.get('title', 'Unknown')[:60]}...")
-        
-        # Fetch transcript
+
         transcript = get_transcript(video_id)
         if not transcript:
             log.warning(f"  ✗ No transcript available, skipping")
             continue
-        
-        # Fetch comments
+
         comments = get_comments(video_id, max_comments=max_comments)
         log.info(f"  → Fetched {len(comments)} comments")
-        
-        # Analyze video
+
         result = analyze_video(video_id, transcript, comments)
-        
+
         if not result:
             log.warning(f"  ✗ Analysis failed, skipping")
             continue
-        
-        # Add metadata
+
         result["video_metadata"] = {
             "video_id": video.get("video_id"),
             "channel_id": video.get("channel_id"),
@@ -466,41 +164,38 @@ def run_pipeline(
             "duration_seconds": video.get("duration_seconds"),
         }
         result["comment_timestamps"] = [c.get("published_at") for c in comments if c.get("published_at")]
-        
-        # Store raw content for DB export
         result["_transcript"] = transcript
         result["_comments"] = comments
-        
-        # CHECKPOINT: Save immediately
+
         output.save_video_checkpoint(result)
         all_results.append(result)
-        
+
         log.info(f"  ✓ Extracted {result['claim_count']} claims ({result['transcript_claim_count']} transcript, {result['comment_claim_count']} comments)")
-    
+
     if not all_results:
         log.error("No videos were successfully processed.")
         return None
-    
+
     log.info(f"\n✓ Processed {len(all_results)}/{len(discovered_videos)} videos")
-    
+
     # ══════════════════════════════════════════════════════════════════════
     # STEP 2.5: Confidence Adjustment
     # ══════════════════════════════════════════════════════════════════════
     log.info("\n" + "="*60)
     log.info("STEP 2.5: Adjusting claim confidence (cross-video agreement)")
     log.info("="*60)
-    
+
     all_results = boost_confidence_by_agreement(all_results)
-    
+
     # ══════════════════════════════════════════════════════════════════════
     # STEP 3: Synthesis
     # ══════════════════════════════════════════════════════════════════════
     log.info("\n" + "="*60)
     log.info("STEP 3: Synthesizing cross-video narrative")
     log.info("="*60)
-    
+
     synthesis = synthesize_trends(all_results)
-    
+
     if synthesis:
         output.save_synthesis_checkpoint(synthesis)
         log.info(f"✓ Synthesis complete")
@@ -508,43 +203,43 @@ def run_pipeline(
     else:
         log.warning("✗ Synthesis failed — continuing with other steps")
         synthesis = {}
-    
+
     # ══════════════════════════════════════════════════════════════════════
     # STEP 4: Trend Analysis
     # ══════════════════════════════════════════════════════════════════════
     log.info("\n" + "="*60)
     log.info(f"STEP 4: Analyzing trends ({trend_granularity} granularity)")
     log.info("="*60)
-    
+
     trends = generate_trend_summary(
         video_results=all_results,
         synthesis=synthesis,
         granularity=trend_granularity
     )
-    
+
     output.save_trends_checkpoint(trends)
-    
+
     pattern = trends.get("overall", {}).get("trend", {}).get("pattern", "unknown")
     log.info(f"✓ Trend analysis complete: {pattern} pattern detected")
-    
+
     # ══════════════════════════════════════════════════════════════════════
     # STEP 5: Risk Assessment
     # ══════════════════════════════════════════════════════════════════════
     risk_analysis = None
-    
+
     if assess_risk:
         log.info("\n" + "="*60)
         log.info("STEP 5: Assessing content risk")
         log.info("="*60)
-        
+
         risk_assessments = []
         llm_fn = call_llm if llm_verify_risk else None
-        
+
         for result in all_results:
             video_id = result["video_id"]
             transcript = result.get("_transcript", "")
             comments = result.get("_comments", [])
-            
+
             assessment = assess_video_risk(
                 video_id=video_id,
                 transcript=transcript,
@@ -553,24 +248,24 @@ def run_pipeline(
                 verify_borderline=llm_verify_risk
             )
             risk_assessments.append(assessment)
-            
+
             if assessment.flags:
                 log.info(f"  ⚠ {video_id}: {len(assessment.flags)} flags ({assessment.risk_level})")
-        
+
         risk_analysis = generate_risk_summary(all_results, risk_assessments)
         output.save_risk_checkpoint(risk_analysis)
-        
+
         flagged = risk_analysis["aggregate"]["videos_with_risks"]
         total_flags = risk_analysis["aggregate"]["total_flags"]
         log.info(f"✓ Risk assessment complete: {flagged} videos with {total_flags} flags")
-    
+
     # ══════════════════════════════════════════════════════════════════════
     # STEP 6: Export database-ready files
     # ══════════════════════════════════════════════════════════════════════
     log.info("\n" + "="*60)
     log.info("STEP 6: Exporting database-ready files")
     log.info("="*60)
-    
+
     output.export_db_ready(
         video_results=all_results,
         synthesis=synthesis,
@@ -579,19 +274,45 @@ def run_pipeline(
         search_params=search_params
     )
 
-    save_results_to_railway(
-    video_results=all_results,
-    synthesis=synthesis,
-    trends=trends,
-    risk_analysis=risk_analysis,
-    search_params=search_params
-    )
-    
     # Clean up internal fields after export
     for result in all_results:
         result.pop("_transcript", None)
         result.pop("_comments", None)
-    
+
+    # ══════════════════════════════════════════════════════════════════════
+    # STEP 7: Import to database (cron mode — runs when DATABASE_URL is set)
+    # ══════════════════════════════════════════════════════════════════════
+    database_url = os.environ.get("DATABASE_URL")
+    if database_url:
+        log.info("\n" + "="*60)
+        log.info("STEP 7: Importing pipeline data to database")
+        log.info("="*60)
+
+        api_dir = str(Path(__file__).parent / "api")
+        if api_dir not in sys.path:
+            sys.path.insert(0, api_dir)
+
+        from sqlalchemy import create_engine, text as sa_text
+        from sqlalchemy.orm import sessionmaker
+        from db_appending import import_pipeline_data
+
+        _engine = create_engine(database_url, connect_args={"sslmode": "require"})
+        _Session = sessionmaker(bind=_engine)
+        _db = _Session()
+        try:
+            rows = _db.execute(sa_text('SELECT board_id FROM "Board"')).fetchall()
+            board_ids = [r[0] for r in rows]
+        finally:
+            _db.close()
+
+        log.info(f"  Found {len(board_ids)} board(s)")
+        for board_id in board_ids:
+            try:
+                import_pipeline_data(board_id)
+                log.info(f"  ✓ Board {board_id}")
+            except Exception as e:
+                log.error(f"  ✗ Board {board_id}: {e}")
+
     # ══════════════════════════════════════════════════════════════════════
     # DONE
     # ══════════════════════════════════════════════════════════════════════
@@ -604,7 +325,7 @@ def run_pipeline(
     log.info(f"Trend pattern: {pattern}")
     if risk_analysis:
         log.info(f"Risk level: {risk_analysis['aggregate']['overall_risk_level']}")
-    
+
     return output.get_run_path()
 
 
@@ -621,5 +342,5 @@ if __name__ == "__main__":
         llm_verify_risk=True,
         use_cache=True,
         cache_max_age_days=30,
-        search_mode="videos",  # "videos" (recommended) or "channels"
+        search_mode="videos",
     )
