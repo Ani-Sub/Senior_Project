@@ -259,17 +259,22 @@ function filterClaims() {
   const activeNarratives = [...document.querySelectorAll('[data-narrative].active')].map(el => el.dataset.narrative);
   const activeChannels = [...document.querySelectorAll('[data-channel].active')].map(el => el.dataset.channel);
 
-  const showFactual = document.getElementById('filterFactual')?.checked ?? true;
-  const showOpinion = document.getElementById('filterOpinion')?.checked ?? true;
-  const showLow     = document.getElementById('filterLow')?.checked ?? true;
-  const showMedium  = document.getElementById('filterMedium')?.checked ?? true;
-  const showHigh    = document.getElementById('filterHigh')?.checked ?? true;
+  const showFactual    = document.getElementById('filterFactual')?.checked ?? true;
+  const showOpinion    = document.getElementById('filterOpinion')?.checked ?? true;
+  const showPrediction = document.getElementById('filterPrediction')?.checked ?? true;
+  const showStatistic  = document.getElementById('filterStatistic')?.checked ?? true;
+  const showLow        = document.getElementById('filterLow')?.checked ?? true;
+  const showMedium     = document.getElementById('filterMedium')?.checked ?? true;
+  const showHigh       = document.getElementById('filterHigh')?.checked ?? true;
 
   const filtered = claims.filter(c => {
     const matchSearch    = !search || c.claim_text.toLowerCase().includes(search) || (c.channel_name || '').toLowerCase().includes(search);
     const matchNarrative = narratives.length === 0 || activeNarratives.includes(c.narrative_id);
     const matchChannel   = channels.length === 0 || activeChannels.includes(c.channel_name);
-    const matchType      = (c.claim_type === 'factual' && showFactual) || (c.claim_type === 'opinion' && showOpinion);
+    const matchType      = (c.claim_type === 'factual'    && showFactual)    ||
+                           (c.claim_type === 'opinion'    && showOpinion)    ||
+                           (c.claim_type === 'prediction' && showPrediction) ||
+                           (c.claim_type === 'statistic'  && showStatistic);
     const matchRisk      = (c.risk_level === 'low' && showLow) || (c.risk_level === 'medium' && showMedium) || (c.risk_level === 'high' && showHigh);
     return matchSearch && matchNarrative && matchChannel && matchType && matchRisk;
   });

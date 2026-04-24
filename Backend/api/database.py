@@ -8,6 +8,7 @@ load_dotenv()
 engine = create_engine(
     os.getenv("DATABASE_URL"),
     pool_size=5,
-    max_overflow=2
+    max_overflow=2,
+    connect_args={"sslmode": "require"}
 )
-SessionLocal = sessionmaker(autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

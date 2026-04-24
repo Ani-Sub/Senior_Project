@@ -70,8 +70,7 @@ function closeUserMenu() {
 }
 
 function handleLogout() {
-  auth.clearSession();
-  window.location.href = '/';
+  authActions.logout();
 }
 
 //GLOBAL LISTENERS

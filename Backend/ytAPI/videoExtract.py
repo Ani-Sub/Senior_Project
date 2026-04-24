@@ -186,7 +186,7 @@ def filter_videos(
     selected = []
     rejected = []
 
-    for item in response["items"]:
+    for item in response("items", []):
         vid_id = item["id"]
         stats = item["statistics"]
         snippet = item["snippet"]
