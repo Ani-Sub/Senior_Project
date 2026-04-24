@@ -23,7 +23,7 @@ RETRY_CODES = {429, 500, 502, 503, 504}  # Rate limit + server errors
 # Rate limit delay (seconds between calls).
 # Groq free tier: 30 req/min. 3s between calls = 20 req/min with headroom.
 # Actual 429s are handled by the exponential backoff retry loop above.
-CALL_DELAY = 3  # seconds between API calls
+CALL_DELAY = 5  # seconds between API calls
 
 
 def call_llm(prompt: str, max_tokens: int | None = None) -> str | None:
@@ -108,6 +108,8 @@ def analyze_video(
     # -- Transcript extraction --
     for i, chunk in enumerate(chunks):
         log.info(f"  → Extracting transcript chunk {i + 1}/{len(chunks)}")
+        if i > 0:  # no delay before first chunk
+            time.sleep(CALL_DELAY)
         prompt = build_extraction_prompt(chunk, video_id)
         raw = call_llm(prompt)
 
@@ -132,23 +134,30 @@ def analyze_video(
 
     # -- Comment extraction --
     if comments:
-        log.info(f"  → Extracting claims from {len(comments)} comments")
-        comment_prompt = build_comment_prompt(comments, all_claims, video_id)
-        raw = call_llm(comment_prompt)
+        MAX_COMMENTS_PER_CALL = 15
+        comment_claims = []
 
-        if raw:
-            parsed = parse_json_response(raw)
+        for batch_start in range(0, len(comments), MAX_COMMENTS_PER_CALL):
+            batch = comments[batch_start:batch_start + MAX_COMMENTS_PER_CALL]
+            log.info(f"  → Extracting claims from comments {batch_start + 1}–{batch_start + len(batch)}/{len(comments)}")
+            time.sleep(CALL_DELAY)
+            comment_prompt = build_comment_prompt(batch, all_claims, video_id)
+            raw = call_llm(comment_prompt)
 
-            if parsed:
-                comment_claims = parsed.get("comment_claims", [])
-                for claim in comment_claims:
-                    claim["source"] = "comment"
-                all_claims.extend(comment_claims)
-                log.info(f"  → Added {len(comment_claims)} comment claims")
+            if raw:
+                parsed = parse_json_response(raw)
+                if parsed:
+                    batch_claims = parsed.get("comment_claims", [])
+                    for claim in batch_claims:
+                        claim["source"] = "comment"
+                    comment_claims.extend(batch_claims)
+                else:
+                    log.warning(f"  → Comment batch {batch_start // MAX_COMMENTS_PER_CALL + 1} unparseable")
             else:
-                log.warning("  → Comment extraction produced unparseable output")
-        else:
-            log.warning("  → No LLM response for comments")
+                log.warning(f"  → No LLM response for comment batch {batch_start // MAX_COMMENTS_PER_CALL + 1}")
+
+        all_claims.extend(comment_claims)
+        log.info(f"  → Added {len(comment_claims)} comment claims")
     else:
         log.info("  → No comments available for this video")
 
