@@ -171,9 +171,9 @@ def create_dashboard(body: CreateDashboardBody, db: db_dependency, user_id: str 
 
     insert_channels(board["board_id"])
     insert_videos(board["board_id"])
-    insert_narratives(board["board_id"])
-    insert_claims()
-    insert_trends(board["board_id"])
+    id_map = insert_narratives(board["board_id"])
+    insert_claims(id_map)
+    insert_trends(board["board_id"], id_map)
 
     return board
  
@@ -427,9 +427,9 @@ def run_endpoint(db: db_dependency, dashboard_id: str):
 
     insert_channels(board["board_id"])
     insert_videos(board["board_id"])
-    insert_narratives(board["board_id"])
-    insert_claims()
-    insert_trends(board["board_id"])
+    id_map = insert_narratives(board["board_id"])
+    insert_claims(id_map)
+    insert_trends(board["board_id"], id_map)
 
     return {
         "message": "Pipeline Completed"
