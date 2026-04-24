@@ -16,7 +16,7 @@ From the transcript below, extract:
    - "text": the claim in one clear sentence
    - "type": one of "factual", "prediction", "opinion", "statistic"
    - "confidence": float 0.0–1.0 (how clearly and directly is this stated?)
-   - "supporting_quote": a short verbatim phrase from the transcript that supports it
+   - "supporting_quote": a verbatim phrase under 10 words from the transcript
 
 Focus entirely on extracting as many distinct, specific claims as possible.
 Do NOT summarize. Do NOT infer a narrative. Just extract claims.
