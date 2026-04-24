@@ -268,3 +268,11 @@ function clearFormError(elementId = 'formError') {
   const el = document.getElementById(elementId);
   if (el) el.style.display = 'none';
 }
+
+function escHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}

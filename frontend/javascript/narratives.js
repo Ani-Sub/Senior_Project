@@ -4,7 +4,9 @@ let activeTopicFilter  = 'all';
 let activeStatusFilter = 'all';
 
 function getDashboardId() {
-  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+  const id = localStorage.getItem('niq_dashboard_id');
+  if (!id) { window.location.href = getRoot() + 'index.html'; return null; }
+  return id;
 }
 
 // ── INIT ──────────────────────────────────────────────────────
@@ -44,6 +46,7 @@ async function fetchNarratives() {
     color:     n.color,
     direction: directionMap[n.narrative_id] || 'stable',
     dateRange: formatDateRange(n.first_seen_at, n.last_seen_at),
+    lastSeen:  n.last_seen_at,
   }));
 }
 
@@ -69,7 +72,7 @@ function applyFilters() {
   });
 
   if (sort === 'claims') results.sort((a, b) => b.claims - a.claims);
-  if (sort === 'recent') results.sort((a, b) => b.id.localeCompare(a.id));
+  if (sort === 'recent') results.sort((a, b) => new Date(b.lastSeen) - new Date(a.lastSeen));
   if (sort === 'alpha')  results.sort((a, b) => a.name.localeCompare(b.name));
 
   renderGrid(results);
@@ -114,7 +117,7 @@ function narrativeCardHTML(n) {
   return `
     <div class="narrative-card" onclick="window.location.href='claims.html?narrative=${n.id}'"
          style="--card-color:${n.color}">
-      <div id="nc-${n.id}" class="narrative-card" style="all:unset;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${n.color},transparent);opacity:0.7;pointer-events:none;border-radius:12px 12px 0 0;"></div>
+      <div id="nc-${n.id}" class="nc-accent-bar" style="all:unset;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,${n.color},transparent);opacity:0.7;pointer-events:none;border-radius:12px 12px 0 0;"></div>
       <div class="nc-header">
         <div class="nc-title-row">
           <div class="nc-color-dot" style="background:${n.color}"></div>

@@ -283,7 +283,7 @@ function claimCardHTML(c) {
         <span class="claim-channel">${c.channel_name || '—'}</span>
         <span class="claim-date">${date}</span>
       </div>
-      <div class="claim-text">${c.claim_text}</div>
+      <div class="claim-text">${escHtml(c.claim_text)}</div>
     </div>`;
 }
 
@@ -298,7 +298,7 @@ function feedClaimHTML(c) {
         <span class="claim-channel" style="flex:1;margin-left:4px">${c.channel_name || '—'}</span>
         <span class="claim-date">${date}</span>
       </div>
-      <div class="feed-claim-text">${c.claim_text}</div>
+      <div class="feed-claim-text">${escHtml(c.claim_text)}</div>
       <div class="feed-claim-footer">
         <span class="narrative-tag">${c.narrative_name || '—'}</span>
         <div class="confidence-bar"><div class="confidence-fill" style="width:${conf}%"></div></div>
