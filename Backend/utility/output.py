@@ -162,7 +162,6 @@ class OutputManager:
         channels = self._extract_channels(video_results)
         videos = self._extract_videos(video_results, processed_at)
         transcripts = self._extract_transcripts(video_results, processed_at)
-        transcript_chunks = self._extract_transcript_chunks(video_results, processed_at)
         comments = self._extract_comments(video_results, processed_at)
         claims = self._extract_claims(video_results, risk, processed_at)
         narratives = self._extract_narratives(synthesis, video_results)
@@ -178,10 +177,7 @@ class OutputManager:
         
         self._save_json(self.db_ready_dir / "transcripts.json", transcripts)
         log.info(f"  ✓ transcripts.json ({len(transcripts)} records)")
-        
-        self._save_json(self.db_ready_dir / "transcript_chunks.json", transcript_chunks)
-        log.info(f"  ✓ transcript_chunks.json ({len(transcript_chunks)} records)")
-        
+
         self._save_json(self.db_ready_dir / "comments.json", comments)
         log.info(f"  ✓ comments.json ({len(comments)} records)")
         
@@ -343,19 +339,11 @@ class OutputManager:
         return comments
     
     def _map_claim_type(self, llm_type: str | None) -> str:
-        """Map LLM claim types to schema ClaimType (factual or opinion)."""
         if not llm_type:
             return "factual"
-        
         llm_type = llm_type.lower()
-        
-        # Map prediction and statistic to factual (verifiable claims)
-        if llm_type in ("factual", "prediction", "statistic"):
-            return "factual"
-        elif llm_type == "opinion":
-            return "opinion"
-        else:
-            return "factual"  # Default
+        valid = {"factual", "opinion", "prediction", "statistic"}
+        return llm_type if llm_type in valid else "factual"
     
     def _confidence_to_risk_level(self, confidence: float) -> str:
         """Map confidence score to risk level (low/medium/high)."""

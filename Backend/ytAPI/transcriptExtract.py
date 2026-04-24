@@ -13,11 +13,10 @@ proxy_config = GenericProxyConfig(
     http_url=f"http://{proxy_user}:{proxy_pass}@p.webshare.io:80",
     https_url=f"http://{proxy_user}:{proxy_pass}@p.webshare.io:80",
 )
+log.info(f"Proxy configured: username={'yes' if proxy_user else 'no'}, password={'yes' if proxy_pass else 'no'}")
 
 def get_transcript(video_id: str, language: str = "en") -> str | None:
     try:
-        log.info(f"  → Proxy username loaded: {bool(proxy_user)}")
-        log.info(f"  → Proxy password loaded: {bool(proxy_pass)}")
 
         ytt_api = YouTubeTranscriptApi(proxy_config=proxy_config)
         transcript_list = ytt_api.list(video_id)

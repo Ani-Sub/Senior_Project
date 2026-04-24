@@ -3,3 +3,4 @@ youtube-transcript-api
 requests
 python-dotenv
 psycopg2-binary
+scikit-learn

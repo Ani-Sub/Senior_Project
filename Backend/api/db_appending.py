@@ -12,8 +12,7 @@ from datetime import datetime
 import uuid
 
 load_dotenv()
-engine = create_engine(os.getenv("DATABASE_URL"))
-SessionLocal = sessionmaker(autoflush=False, bind=engine)
+from database import SessionLocal
 
 base = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,7 +27,7 @@ def insert_channels(board_id: str):
 
     for c in channels:
         t = text("INSERT INTO \"Channel\" (channel_id, channel_name, total_claims, flagged_claims, accuracy_rate, risk_level, risk_score, last_assessed_at) VALUES (:channel_id, :channel_name, :total_claims, :flagged_claims, :accuracy_rate, :risk_level, :risk_score, :last_assessed_at) ON CONFLICT (channel_id) DO NOTHING")
-        db.execute(t, {"channel_id": c["channel_id"], "channel_name": c["channel_title"], "total_claims": 0, "flagged_claims": 0, "accuracy_rate": 0.0, "risk_level": "low", "risk_score": 0.0, "last_assessed_at": date})
+        db.execute(t, {"channel_id": c["channel_id"], "channel_name": c["channel_name"], "total_claims": 0, "flagged_claims": 0, "accuracy_rate": 0.0, "risk_level": "low", "risk_score": 0.0, "last_assessed_at": date})
     
         t = text("INSERT INTO \"BoardChannel\" (board_id, channel_id) VALUES (:board_id, :channel_id) ON CONFLICT (board_id, channel_id) DO NOTHING")
         db.execute(t, {"board_id": board_id, "channel_id": c["channel_id"]})
@@ -93,13 +92,42 @@ def insert_narratives(board_id: str):
     id_map = {}
 
     for n in narratives:
-        
-        db_id = str(uuid.uuid4())
+        new_claims = n["claim_count"]
+        last_seen = datetime.fromisoformat(n["last_seen_at"].replace("Z", "+00:00"))
+
+        # Check if a narrative with this title already exists for this board.
+        # If it does, reuse its UUID so claims and trends link to the same row
+        # and accumulate — this is what makes cron runs add on rather than duplicate.
+        existing = db.execute(
+            text('SELECT narrative_id FROM "Narrative" WHERE board_id = :board_id AND title = :title'),
+            {"board_id": board_id, "title": n["title"]}
+        ).fetchone()
+
+        if existing:
+            db_id = dict(existing._mapping)["narrative_id"]
+            db.execute(
+                text('UPDATE "Narrative" SET claim_count = claim_count + :new_claims, '
+                     'last_seen_at = :last_seen_at, summary = :summary '
+                     'WHERE narrative_id = :narrative_id'),
+                {"narrative_id": db_id, "new_claims": new_claims,
+                 "last_seen_at": last_seen, "summary": n.get("summary")}
+            )
+        else:
+            db_id = str(uuid.uuid4())
+            db.execute(
+                text('INSERT INTO "Narrative" (narrative_id, board_id, title, summary, topic_label, '
+                     'claim_count, color, first_seen_at, last_seen_at) '
+                     'VALUES (:narrative_id, :board_id, :title, :summary, :topic_label, '
+                     ':claim_count, :color, :first_seen_at, :last_seen_at)'),
+                {"narrative_id": db_id, "board_id": board_id, "title": n["title"],
+                 "summary": n.get("summary"), "topic_label": n.get("topic_label"),
+                 "claim_count": new_claims, "color": n["color"],
+                 "first_seen_at": datetime.fromisoformat(n["first_seen_at"].replace("Z", "+00:00")),
+                 "last_seen_at": last_seen}
+            )
+
         id_map[n["narrative_id"]] = db_id
 
-        t = text("INSERT INTO \"Narrative\" (narrative_id, board_id, title, summary, topic_label, claim_count, color, first_seen_at, last_seen_at) VALUES (:narrative_id, :board_id, :title, :summary, :topic_label, :claim_count, :color, :first_seen_at, :last_seen_at) ON CONFLICT (narrative_id) DO UPDATE SET board_id = EXCLUDED.board_id")
-        db.execute(t, {"narrative_id": db_id, "board_id": board_id, "title": n["title"], "summary": n.get("summary"), "topic_label": n.get("topic_label"), "claim_count": n["claim_count"], "color": n["color"], "first_seen_at": datetime.fromisoformat(n["first_seen_at"].replace("Z", "+00:00")), "last_seen_at": datetime.fromisoformat(n["last_seen_at"].replace("Z", "+00:00"))})
-    
     db.commit()
     db.close()
     return id_map
@@ -110,19 +138,14 @@ def insert_narratives(board_id: str):
 
 
 
-def trend_color(direction: str):
-
-    if direction == "rising":
-        return "#00FF00"
-    
-    if direction == "peaking":
-        return "#FFBF00"
-    
-    if direction == "declining":
-        return "#FF0000"
-    
-    if direction == "stable":
-        return "#808080"
+def trend_color(direction: str) -> str:
+    colors = {
+        "rising": "#00FF00",
+        "peaking": "#FFBF00",
+        "declining": "#FF0000",
+        "stable": "#808080",
+    }
+    return colors.get(direction or "", "#808080")
 
 
 def insert_trends(board_id: str, id_map: dict):

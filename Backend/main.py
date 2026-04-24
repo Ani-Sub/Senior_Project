@@ -61,18 +61,22 @@ def save_results_to_railway(
 
     try:
         cur.execute("""
-            SELECT board_id, board_name
+            SELECT board_id, board_name, search_terms
             FROM "Board"
         """)
 
         boards = cur.fetchall()
 
         if not boards:
-            raise RuntimeError("No boards found in database.") 
-    
+            raise RuntimeError("No boards found in database.")
+
+        pipeline_kw = search_params.get("keywords", "").lower()
         default_color = "#00d4ff"
 
-        for board_id, board_name in boards:
+        for board_id, board_name, search_terms in boards:
+            if search_terms and not any(pipeline_kw in term.lower() for term in search_terms):
+                log.info(f"Skipping board '{board_name}' — search terms don't match pipeline keywords")
+                continue
             log.info(f"Saving results to board: {board_name} ({board_id})")
 
             
@@ -224,8 +228,8 @@ def save_results_to_railway(
 
             claim_type_map = {
                 "factual": "factual",
-                "prediction": "factual",
-                "statistic": "factual",
+                "prediction": "prediction",
+                "statistic": "statistic",
                 "opinion": "opinion"
             }
 
@@ -500,7 +504,7 @@ def run_pipeline(
     if synthesis:
         output.save_synthesis_checkpoint(synthesis)
         log.info(f"✓ Synthesis complete")
-        log.info(f"  Common topics: {synthesis.get('common_topics', [])}")
+        log.info(f"  Narratives found: {len(synthesis.get('narratives', []))}")
     else:
         log.warning("✗ Synthesis failed — continuing with other steps")
         synthesis = {}

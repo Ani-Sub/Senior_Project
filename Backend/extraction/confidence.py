@@ -2,9 +2,10 @@
 Confidence scoring for claims using cross-video agreement and language analysis.
 """
 
-from difflib import SequenceMatcher
 from collections import defaultdict
 import logging
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 log = logging.getLogger(__name__)
 
@@ -20,11 +21,6 @@ TYPE_WEIGHTS = {
 DEFINITIVE_WORDS = ["will", "definitely", "proven", "confirmed", "always", "never", "fact", "certainly"]
 HEDGING_WORDS = ["might", "maybe", "could", "possibly", "perhaps", "some say", "reportedly", "appears", "seems"]
 STATISTIC_MARKERS = ["percent", "%", "million", "billion", "trillion", "study", "research", "data"]
-
-
-def similarity(a: str, b: str) -> float:
-    """Calculate similarity ratio between two strings."""
-    return SequenceMatcher(None, a.lower(), b.lower()).ratio()
 
 
 def adjust_by_language(claim_text: str, base_confidence: float) -> float:
@@ -59,45 +55,45 @@ def cluster_similar_claims(
     similarity_threshold: float = 0.7
 ) -> list[list[dict]]:
     """
-    Group similar claims together using fuzzy matching.
-    
-    Args:
-        all_claims: List of claim dicts with 'text' and 'video_id'
-        similarity_threshold: Min similarity to consider claims the same (0-1)
-    
+    Group similar claims together using TF-IDF cosine similarity.
+    Caps input at 200 highest-confidence claims to keep clustering fast.
+
     Returns:
         List of clusters, each cluster is a list of similar claims
     """
     if not all_claims:
         return []
-    
+
+    # Cap to 200 highest-confidence claims to bound worst-case runtime
+    working = sorted(all_claims, key=lambda c: c.get("confidence", 0), reverse=True)[:200]
+
+    texts = [c.get("text", "") or "" for c in working]
+    vect = TfidfVectorizer(stop_words="english")
+    matrix = vect.fit_transform(texts)
+    sim = cosine_similarity(matrix)  # (n, n) numpy array — O(1) per lookup
+
     clusters = []
     used = set()
-    
-    for i, claim in enumerate(all_claims):
+
+    for i, claim in enumerate(working):
         if i in used:
             continue
-        
-        # Start new cluster with this claim
+
         cluster = [claim]
         used.add(i)
-        
-        # Find all similar claims
-        for j, other in enumerate(all_claims):
+
+        for j, other in enumerate(working):
             if j in used:
                 continue
-            
-            # Skip if same video (we want cross-video agreement)
+            # Only cluster across different videos (cross-video agreement)
             if claim.get("video_id") == other.get("video_id"):
                 continue
-            
-            sim = similarity(claim.get("text", ""), other.get("text", ""))
-            if sim >= similarity_threshold:
+            if sim[i, j] >= similarity_threshold:
                 cluster.append(other)
                 used.add(j)
-        
+
         clusters.append(cluster)
-    
+
     return clusters
 
 

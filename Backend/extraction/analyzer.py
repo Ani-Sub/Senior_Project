@@ -20,9 +20,10 @@ log = logging.getLogger(__name__)
 MAX_RETRIES = 5
 RETRY_CODES = {429, 500, 502, 503, 504}  # Rate limit + server errors
 
-# Rate limit delay (seconds between calls)
-# Groq: 12k TPM, ~2k per call = 6 calls/min = 10s between calls
-CALL_DELAY = 10  # seconds between API calls
+# Rate limit delay (seconds between calls).
+# Groq free tier: 30 req/min. 3s between calls = 20 req/min with headroom.
+# Actual 429s are handled by the exponential backoff retry loop above.
+CALL_DELAY = 3  # seconds between API calls
 
 
 def call_llm(prompt: str, max_tokens: int | None = None) -> str | None:

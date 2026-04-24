@@ -89,7 +89,7 @@ def get_recent_channel_videos(
         maxResults=max_results
     ).execute()
 
-    return [item["id"]["videoId"] for item in response["items"]]
+    return [item["id"]["videoId"] for item in response.get("items", [])]
 
 
 def parse_iso_duration(iso_duration: str | None) -> int:
