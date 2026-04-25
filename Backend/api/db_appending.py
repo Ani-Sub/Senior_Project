@@ -139,7 +139,7 @@ def _insert_claims(db, id_map: dict):
                  'ON CONFLICT DO NOTHING'),
             {"video_id": c["video_id"], "narrative_id": db_narrative_id,
              "video_title": c["video_title"], "claim_text": c["claim_text"],
-             "claim_type": c["claim_type"], "confidence_score": c["confidence_score"],
+             "claim_type": CLAIM_TYPE_MAP.get(c["claim_type"], "factual"), "confidence_score": c["confidence_score"],
              "risk_level": c["risk_level"],
              "processed_at": datetime.fromisoformat(c["processed_at"]),
              "is_verified": c["is_verified"], "accuracy_rating": c.get("accuracy_rating")}
