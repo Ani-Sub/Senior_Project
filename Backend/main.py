@@ -294,7 +294,7 @@ def run_pipeline(
 
         from sqlalchemy import create_engine, text as sa_text
         from sqlalchemy.orm import sessionmaker
-        from db_appending import import_pipeline_data
+        from db_appending import import_channels_and_videos, import_narrative_data
 
         _engine = create_engine(database_url, connect_args={"sslmode": "require"})
         _Session = sessionmaker(bind=_engine)
@@ -305,13 +305,26 @@ def run_pipeline(
         finally:
             _db.close()
 
-        log.info(f"  Found {len(board_ids)} board(s)")
+        has_narratives = bool(synthesis.get("narratives"))
+        log.info(f"  Found {len(board_ids)} board(s) — narratives available: {has_narratives}")
+
         for board_id in board_ids:
+            # Phase 1: always commit channels + videos
             try:
-                import_pipeline_data(board_id)
-                log.info(f"  ✓ Board {board_id}")
+                import_channels_and_videos(board_id)
+                log.info(f"  ✓ Board {board_id}: channels and videos imported")
             except Exception as e:
-                log.error(f"  ✗ Board {board_id}: {e}")
+                log.error(f"  ✗ Board {board_id} (channels/videos): {e}")
+
+            # Phase 2: only commit narratives + claims + trends if synthesis worked
+            if has_narratives:
+                try:
+                    import_narrative_data(board_id)
+                    log.info(f"  ✓ Board {board_id}: narratives, claims, and trends imported")
+                except Exception as e:
+                    log.error(f"  ✗ Board {board_id} (narratives/claims/trends): {e}")
+            else:
+                log.warning(f"  ⚠ Board {board_id}: skipping narratives/claims/trends — synthesis produced no narratives (check Groq rate limits)")
 
     # ══════════════════════════════════════════════════════════════════════
     # DONE

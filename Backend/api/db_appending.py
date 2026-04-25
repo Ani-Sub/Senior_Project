@@ -217,7 +217,8 @@ def _insert_trends(db, board_id: str, id_map: dict):
             else:
                 db.execute(
                     text('INSERT INTO "TrendData" (trend_id, narrative_id, label, color, data, direction) '
-                         'VALUES (:trend_id, :narrative_id, :label, :color, :data, :direction)'),
+                         'VALUES (:trend_id, :narrative_id, :label, :color, :data, :direction) '
+                         'ON CONFLICT (trend_id, narrative_id) DO NOTHING'),
                     {"trend_id": trend_id, "narrative_id": db_narrative_id,
                      "label": n["name"], "color": _trend_color(n["pattern"]),
                      "data": data, "direction": n["pattern"]}
@@ -235,20 +236,55 @@ def _insert_trends(db, board_id: str, id_map: dict):
                     if tt["narrative_id"] == n["narrative_id"]]
             db.execute(
                 text('INSERT INTO "TrendData" (trend_id, narrative_id, label, color, data, direction) '
-                     'VALUES (:trend_id, :narrative_id, :label, :color, :data, :direction)'),
+                     'VALUES (:trend_id, :narrative_id, :label, :color, :data, :direction) '
+                     'ON CONFLICT (trend_id, narrative_id) DO NOTHING'),
                 {"trend_id": trend_id, "narrative_id": db_narrative_id,
                  "label": n["name"], "color": _trend_color(n["pattern"]),
                  "data": data, "direction": n["pattern"]}
             )
 
 
-# ── Public entry point ────────────────────────────────────────────────────────
+# ── Public entry points ───────────────────────────────────────────────────────
+
+def import_channels_and_videos(board_id: str):
+    """
+    Phase 1: always-safe import of channels and videos.
+    Runs unconditionally — commits even when synthesis failed.
+    """
+    db = SessionLocal()
+    try:
+        _insert_channels(db, board_id)
+        _insert_videos(db, board_id)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
+
+
+def import_narrative_data(board_id: str):
+    """
+    Phase 2: narratives, claims, and trends.
+    Only call this when synthesis succeeded and id_map is populated.
+    """
+    db = SessionLocal()
+    try:
+        id_map = _insert_narratives(db, board_id)
+        _insert_claims(db, id_map)
+        _insert_trends(db, board_id, id_map)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
+
 
 def import_pipeline_data(board_id: str):
     """
-    Import the latest pipeline output into the database for a given board.
-    All five insert steps share one session and one transaction — either
-    everything commits or everything rolls back.
+    Full import used by the dashboard creation API endpoint.
+    All steps in one transaction — either everything commits or everything rolls back.
     """
     db = SessionLocal()
     try:

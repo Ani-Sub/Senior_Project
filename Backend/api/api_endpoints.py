@@ -188,7 +188,10 @@ def create_dashboard(body: CreateDashboardBody, db: db_dependency, user_id: str 
     if not os.path.exists(output_path):
         return board
 
-    import_pipeline_data(board["board_id"])
+    try:
+        import_pipeline_data(board["board_id"])
+    except Exception as e:
+        print(f"[ERROR] Pipeline import failed for board {board['board_id']}: {e}")
 
     return board
  
