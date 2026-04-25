@@ -36,6 +36,6 @@ LLM_MAX_TOKENS = 4000   # Reduced - JSON responses don't need 8k
 #=====================================
 # chunking parameters
 #=====================================
-CHUNK_SIZE = 3000       # Characters per chunk (~750 tokens)
-CHUNK_OVERLAP = 200     # Overlap between chunks
+CHUNK_SIZE = 1500       # Characters per chunk (~375 tokens), stays under 6.5K TPM
+CHUNK_OVERLAP = 100     # Overlap between chunks
 
