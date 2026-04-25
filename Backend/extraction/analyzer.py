@@ -23,7 +23,7 @@ RETRY_CODES = {429, 500, 502, 503, 504}  # Rate limit + server errors
 # Rate limit delay (seconds between calls).
 # Groq free tier: 30 req/min. 3s between calls = 20 req/min with headroom.
 # Actual 429s are handled by the exponential backoff retry loop above.
-CALL_DELAY = 5  # seconds between API calls
+CALL_DELAY = 12  # seconds between API calls — 5 calls/min × ~1,200 tokens ≈ 6K TPM
 
 
 def call_llm(prompt: str, max_tokens: int | None = None) -> str | None:
@@ -139,7 +139,7 @@ def analyze_video(
 
     # -- Comment extraction --
     if comments:
-        MAX_COMMENTS_PER_CALL = 15
+        MAX_COMMENTS_PER_CALL = 10
         comment_claims = []
 
         for batch_start in range(0, len(comments), MAX_COMMENTS_PER_CALL):
