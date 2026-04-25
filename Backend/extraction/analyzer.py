@@ -24,6 +24,7 @@ RETRY_CODES = {429, 500, 502, 503, 504}  # Rate limit + server errors
 # Groq free tier: 30 req/min. 3s between calls = 20 req/min with headroom.
 # Actual 429s are handled by the exponential backoff retry loop above.
 CALL_DELAY = 12  # seconds between API calls — 5 calls/min × ~1,200 tokens ≈ 6K TPM
+MAX_RETRY_WAIT = 120  # if Groq retry-after exceeds this, skip the call rather than blocking
 
 
 def call_llm(prompt: str, max_tokens: int | None = None) -> str | None:
@@ -52,7 +53,10 @@ def call_llm(prompt: str, max_tokens: int | None = None) -> str | None:
             if response.status_code in RETRY_CODES:
                 if response.status_code == 429:
                     retry_after = int(response.headers.get("retry-after", 60))
-                    log.warning(f"Groq rate limit hit, waiting {retry_after}s (attempt {attempt + 1}/{MAX_RETRIES})")
+                    log.warning(f"Groq rate limit hit, retry-after={retry_after}s (attempt {attempt + 1}/{MAX_RETRIES}) — body: {response.text[:300]}")
+                    if retry_after > MAX_RETRY_WAIT:
+                        log.warning(f"  → retry-after {retry_after}s exceeds cap ({MAX_RETRY_WAIT}s), skipping call")
+                        return None
                     time.sleep(retry_after + CALL_DELAY)  # extra buffer so bucket fully refills before retry
                 else:
                     wait_time = 2 ** attempt  # 1s, 2s, 4s, 8s, 16s
