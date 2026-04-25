@@ -50,9 +50,14 @@ def call_llm(prompt: str, max_tokens: int | None = None) -> str | None:
             
             # Check for retryable errors
             if response.status_code in RETRY_CODES:
-                wait_time = 2 ** attempt  # 1s, 2s, 4s, 8s, 16s
-                log.warning(f"Groq API error {response.status_code}, retrying in {wait_time}s (attempt {attempt + 1}/{MAX_RETRIES})")
-                time.sleep(wait_time)
+                if response.status_code == 429:
+                    retry_after = int(response.headers.get("retry-after", 60))
+                    log.warning(f"Groq rate limit hit, waiting {retry_after}s (attempt {attempt + 1}/{MAX_RETRIES})")
+                    time.sleep(retry_after)
+                else:
+                    wait_time = 2 ** attempt  # 1s, 2s, 4s, 8s, 16s
+                    log.warning(f"Groq API error {response.status_code}, retrying in {wait_time}s (attempt {attempt + 1}/{MAX_RETRIES})")
+                    time.sleep(wait_time)
                 continue
             
             if response.status_code != 200:
