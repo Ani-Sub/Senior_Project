@@ -104,7 +104,11 @@ def analyze_video(
     - Comments are processed after transcript so they can reference existing claims
     - Every claim is tagged with its source ("transcript" or "comment")
     """
+    MAX_CHUNKS_PER_VIDEO = 10
     chunks = chunk_text(transcript)
+    if len(chunks) > MAX_CHUNKS_PER_VIDEO:
+        log.warning(f"  → Truncating {len(chunks)} chunks to {MAX_CHUNKS_PER_VIDEO} to stay under TPM budget")
+        chunks = chunks[:MAX_CHUNKS_PER_VIDEO]
     log.info(f"  → {len(chunks)} chunk(s) for video {video_id}")
 
     all_topics = []
