@@ -53,7 +53,7 @@ def call_llm(prompt: str, max_tokens: int | None = None) -> str | None:
                 if response.status_code == 429:
                     retry_after = int(response.headers.get("retry-after", 60))
                     log.warning(f"Groq rate limit hit, waiting {retry_after}s (attempt {attempt + 1}/{MAX_RETRIES})")
-                    time.sleep(retry_after)
+                    time.sleep(retry_after + CALL_DELAY)  # extra buffer so bucket fully refills before retry
                 else:
                     wait_time = 2 ** attempt  # 1s, 2s, 4s, 8s, 16s
                     log.warning(f"Groq API error {response.status_code}, retrying in {wait_time}s (attempt {attempt + 1}/{MAX_RETRIES})")
@@ -104,7 +104,11 @@ def analyze_video(
     - Comments are processed after transcript so they can reference existing claims
     - Every claim is tagged with its source ("transcript" or "comment")
     """
+    MAX_CHUNKS_PER_VIDEO = 10
     chunks = chunk_text(transcript)
+    if len(chunks) > MAX_CHUNKS_PER_VIDEO:
+        log.warning(f"  → Truncating {len(chunks)} chunks to {MAX_CHUNKS_PER_VIDEO} to stay under TPM budget")
+        chunks = chunks[:MAX_CHUNKS_PER_VIDEO]
     log.info(f"  → {len(chunks)} chunk(s) for video {video_id}")
 
     all_topics = []
