@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderClaims();
 });
 
+window.addEventListener('resize', () => {
+  overviewChartInstance?.resize();
+  trendsChartInstance?.resize();
+});
+
 // ── LOAD DASHBOARD META FROM API ─────────────────────────────
 async function loadDashboardMeta() {
   const params = new URLSearchParams(window.location.search);
@@ -119,9 +124,9 @@ function renderOverview() {
   }
 
   const legend = document.getElementById('overviewLegend');
-  legend.innerHTML = (trendData?.datasets || []).map(d => `
+  legend.innerHTML = (trendData?.datasets || []).map((d, i) => `
     <div class="legend-item">
-      <div class="legend-dot" style="background:${escHtml(d.color)}"></div>
+      <div class="legend-dot" style="background:${escHtml(datasetColor(d, i))}"></div>
       <span>${escHtml(d.label)}</span>
     </div>
   `).join('');
@@ -130,17 +135,20 @@ function renderOverview() {
 function buildOverviewChart() {
   const ctx = document.getElementById('overviewChart').getContext('2d');
   const labels = trendData?.labels || [];
-  const datasets = (trendData?.datasets || []).map(d => ({
-    label: d.label,
-    data: d.data,
-    borderColor: d.color,
-    backgroundColor: d.color + '15',
-    borderWidth: 2,
-    pointRadius: 3,
-    pointHoverRadius: 5,
-    tension: 0.4,
-    fill: false,
-  }));
+  const datasets = (trendData?.datasets || []).map((d, i) => {
+    const color = datasetColor(d, i);
+    return {
+      label: d.label,
+      data: d.data,
+      borderColor: color,
+      backgroundColor: color + '15',
+      borderWidth: 2,
+      pointRadius: 3,
+      pointHoverRadius: 5,
+      tension: 0.4,
+      fill: false,
+    };
+  });
   overviewChartInstance = new Chart(ctx, {
     type: 'line',
     data: { labels, datasets },
@@ -191,16 +199,19 @@ function renderTrends() {
 function buildTrendsChart() {
   const ctx = document.getElementById('trendsChart').getContext('2d');
   const labels = trendData?.labels || [];
-  const datasets = (trendData?.datasets || []).map(d => ({
-    label: d.label,
-    data: d.data,
-    borderColor: d.color,
-    backgroundColor: d.color + '10',
-    borderWidth: 2,
-    pointRadius: 3,
-    tension: 0.4,
-    fill: true,
-  }));
+  const datasets = (trendData?.datasets || []).map((d, i) => {
+    const color = datasetColor(d, i);
+    return {
+      label: d.label,
+      data: d.data,
+      borderColor: color,
+      backgroundColor: color + '10',
+      borderWidth: 2,
+      pointRadius: 3,
+      tension: 0.4,
+      fill: true,
+    };
+  });
   trendsChartInstance = new Chart(ctx, {
     type: 'line',
     data: { labels, datasets },
@@ -327,9 +338,18 @@ function feedClaimHTML(c) {
 }
 
 // ── CHART OPTIONS ─────────────────────────────────────────────
+const CHART_COLORS = ['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4','#84CC16'];
+
+function datasetColor(d, i) {
+  // Prefer the narrative's assigned palette color, fall back to index-based
+  const fromNarrative = narratives.find(n => n.narrative_id === d.narrative_id)?.color;
+  return fromNarrative || d.color || CHART_COLORS[i % CHART_COLORS.length];
+}
+
 function chartOptions() {
   return {
     responsive: true,
+    maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { display: false },
