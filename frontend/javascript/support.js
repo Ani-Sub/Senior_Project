@@ -7,13 +7,4 @@ document.querySelectorAll(".faq-item").forEach(item => {
   });
 });
 
-// Fake submit handler
-document.getElementById("supportForm")
-  .addEventListener("submit", function(e){
-    e.preventDefault();
-    document.getElementById("formStatus").textContent =
-      "Message sent! Our team will respond shortly.";
-    this.reset();
-  });
 
-  
