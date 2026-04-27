@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # ---------- PYTHON ----------
       - name: Set up Python
@@ -28,11 +28,12 @@ jobs:
           else
             echo "No Python files found."
           fi
+
       # ---------- JAVASCRIPT ----------
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Check JavaScript syntax
         run: |
@@ -42,20 +43,3 @@ jobs:
           else
             echo "No JavaScript files found."
           fi
-
-
-
-
-      
-
-       
-
-
-
-
-
-
-
-
-       
-      
