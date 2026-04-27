@@ -115,7 +115,7 @@
             <div class="card-title">Narrative Activity</div>
             <div class="chart-legend" id="overviewLegend"></div>
           </div>
-          <canvas id="overviewChart" height="200"></canvas>
+          <div class="chart-wrapper"><canvas id="overviewChart"></canvas></div>
         </div>
 
         <div class="side-panel">
@@ -149,7 +149,7 @@
             <button class="filter-btn" onclick="setTrendRange(this,'2w')">2W</button>
           </div>
         </div>
-        <canvas id="trendsChart" height="140"></canvas>
+        <div class="chart-wrapper" style="height:200px"><canvas id="trendsChart"></canvas></div>
       </div>
 
       <div class="trends-body">
@@ -182,17 +182,23 @@
           <div class="filter-section">
             <div class="filter-title">Claim Type</div>
             <label class="filter-check">
-              <input type="checkbox" checked onchange="filterClaims()"> Factual
+              <input id="filterFactual" type="checkbox" checked onchange="filterClaims()"> Factual
             </label>
             <label class="filter-check">
-              <input type="checkbox" checked onchange="filterClaims()"> Opinion
+              <input id="filterOpinion" type="checkbox" checked onchange="filterClaims()"> Opinion
+            </label>
+            <label class="filter-check">
+              <input id="filterPrediction" type="checkbox" checked onchange="filterClaims()"> Prediction
+            </label>
+            <label class="filter-check">
+              <input id="filterStatistic" type="checkbox" checked onchange="filterClaims()"> Statistic
             </label>
           </div>
           <div class="filter-section">
             <div class="filter-title">Risk Level</div>
-            <label class="filter-check"><input type="checkbox" checked onchange="filterClaims()"> Low</label>
-            <label class="filter-check"><input type="checkbox" checked onchange="filterClaims()"> Medium</label>
-            <label class="filter-check"><input type="checkbox" checked onchange="filterClaims()"> High</label>
+            <label class="filter-check"><input id="filterLow" type="checkbox" checked onchange="filterClaims()"> Low</label>
+            <label class="filter-check"><input id="filterMedium" type="checkbox" checked onchange="filterClaims()"> Medium</label>
+            <label class="filter-check"><input id="filterHigh" type="checkbox" checked onchange="filterClaims()"> High</label>
           </div>
           <div class="filter-section">
             <div class="filter-title">Channel</div>

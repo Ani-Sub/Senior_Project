@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.env
+
+# Pipeline output — local runs (not needed in repo)
+Backend/output/
+Backend/api/output/
+
+# Channel cache (regenerated automatically)
+Backend/channel_cache.json

@@ -214,7 +214,7 @@ def verify_with_llm(
     for flag in borderline:
         prompt = build_verification_prompt(flag)
         try:
-            response = llm_call_fn(prompt, num_predict=300)
+            response = llm_call_fn(prompt, max_tokens=300)
             if response:
                 is_risk, confidence, reasoning = parse_llm_verification(response)
                 flag.confidence = confidence
@@ -336,21 +336,23 @@ def assess_video_risk(
     comments_scanned = 0
     
     # Scan transcript
+    transcript_flag_count = 0
     if transcript:
         transcript_flags = scan_text_keywords(transcript, "transcript", video_id)
         all_flags.extend(transcript_flags)
+        transcript_flag_count = len(transcript_flags)
         transcript_scanned = True
-        log.info(f"  → Scanned transcript: {len(transcript_flags)} potential flags")
-    
+        log.info(f"  → Scanned transcript: {transcript_flag_count} potential flags")
+
     # Scan comments
     if comments:
         for comment in comments:
-            text = comment.get("text", "")
-            if text:
-                comment_flags = scan_text_keywords(text, "comment", video_id)
+            comment_text = comment.get("text", "")
+            if comment_text:
+                comment_flags = scan_text_keywords(comment_text, "comment", video_id)
                 all_flags.extend(comment_flags)
                 comments_scanned += 1
-        log.info(f"  → Scanned {comments_scanned} comments: {len(all_flags) - len(transcript_flags) if transcript else len(all_flags)} potential flags")
+        log.info(f"  → Scanned {comments_scanned} comments: {len(all_flags) - transcript_flag_count} potential flags")
     
     # Deduplicate
     all_flags = deduplicate_flags(all_flags)

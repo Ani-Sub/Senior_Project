@@ -70,8 +70,7 @@ function closeUserMenu() {
 }
 
 function handleLogout() {
-  auth.clearSession();
-  window.location.href = '/';
+  authActions.logout();
 }
 
 //GLOBAL LISTENERS
@@ -82,12 +81,3 @@ document.addEventListener('keydown', e => {
 });
 
 
-// HELPER
-function getInitials(name = "") {
-  return name
-    .split(" ")
-    .map(w => w[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-}

@@ -8,7 +8,9 @@ let currentPage = 1;
 let filteredClaims = [];
 
 function getDashboardId() {
-  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+  const id = localStorage.getItem('niq_dashboard_id');
+  if (!id) { window.location.href = getRoot() + 'index.html'; return null; }
+  return id;
 }
 
 // ── INIT ──────────────────────────────────────────────────────
@@ -16,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await fetchClaims();
   buildNarrativeFilters();
   buildChannelFilters();
-  checkURLParams();
+  applyURLParams();
   filterClaims();
 });
 
@@ -54,17 +56,13 @@ async function fetchClaims() {
 }
 
 // ── URL PARAM PRE-SELECTION ───────────────────────────────────
-function checkURLParams() {
+function applyURLParams() {
   const params = new URLSearchParams(window.location.search);
   const narrativeId = params.get('narrative');
-  if (narrativeId) {
-    // Deactivate all narrative filter options, then activate only the matching one
-    setTimeout(() => {
-      document.querySelectorAll('[data-narrative]').forEach(el => {
-        el.classList.toggle('active', el.dataset.narrative === narrativeId);
-      });
-    }, 0);
-  }
+  if (!narrativeId) return;
+  document.querySelectorAll('[data-narrative]').forEach(el => {
+    el.classList.toggle('active', el.dataset.narrative === narrativeId);
+  });
 }
 
 // ── BUILD FILTER PANELS ───────────────────────────────────────
@@ -108,7 +106,7 @@ function filterClaims() {
   filteredClaims = MOCK_CLAIMS.filter(c => {
     const matchSearch    = !search || c.text.toLowerCase().includes(search) || c.channel.toLowerCase().includes(search);
     const matchNarrative = activeNarratives.length === 0 || activeNarratives.includes(c.narrative);
-    const matchChannel   = activeChannels.includes(c.channel);
+    const matchChannel   = activeChannels.length === 0 || activeChannels.includes(c.channel);
     const matchType      = (c.type === 'factual' && showFactual) || (c.type === 'opinion' && showOpinion);
     const matchRisk      = (c.risk === 'low' && showLow) || (c.risk === 'medium' && showMedium) || (c.risk === 'high' && showHigh);
     const matchFrom      = !dateFrom || c.date >= dateFrom;
@@ -219,10 +217,10 @@ function feedClaimHTML(c) {
       <div class="feed-claim-header">
         <span class="claim-type-badge ${c.type}">${c.type}</span>
         <span class="risk-badge ${c.risk}">${c.risk} risk</span>
-        <span class="claim-channel" style="flex:1;margin-left:4px">${c.channel}</span>
+        <span class="claim-channel" style="flex:1;margin-left:4px">${escHtml(c.channel || '—')}</span>
         <span class="claim-date">${dateFormatted}</span>
       </div>
-      <div class="feed-claim-text">${c.text}</div>
+      <div class="feed-claim-text">${escHtml(c.text)}</div>
       <div class="feed-claim-footer">
         <span class="narrative-tag">${narr?.name || c.narrative}</span>
         <div class="confidence-bar"><div class="confidence-fill" style="width:${conf}%"></div></div>

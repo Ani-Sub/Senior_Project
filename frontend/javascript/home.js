@@ -87,6 +87,7 @@ function renderDashboards() {
   const count = document.getElementById('dashCount');
 
   count.textContent = `${dashboards.length} dashboard${dashboards.length !== 1 ? 's' : ''}`;
+  updateSidebarLimit(dashboards.length);
 
   if (dashboards.length === 0) {
     grid.innerHTML = '';
@@ -101,13 +102,11 @@ function renderDashboards() {
     .sort((a, b) => b.createdAt - a.createdAt)
     .map(d => dashCardHTML(d))
     .join('');
-
-  updateSidebarLimit(dashboards.length);
 }
 
 function dashCardHTML(d) {
   const date = new Date(d.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  const tagsHTML = d.tags.slice(0, 3).map(t => `<span class="tag-chip">${t}</span>`).join('');
+  const tagsHTML = d.tags.slice(0, 3).map(t => `<span class="tag-chip">${escHtml(t)}</span>`).join('');
   const extraTags = d.tags.length > 3 ? `<span class="tag-chip">+${d.tags.length - 3}</span>` : '';
 
   return `
@@ -361,7 +360,6 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-document.addEventListener('click', () => closeUserMenu());
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {

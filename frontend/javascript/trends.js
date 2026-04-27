@@ -5,13 +5,19 @@ let trendsLabels = [];
 let trendsDatasets = [];
 
 function getDashboardId() {
-  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+  const id = localStorage.getItem('niq_dashboard_id');
+  if (!id) { window.location.href = getRoot() + 'index.html'; return null; }
+  return id;
 }
+
+const CHART_COLORS = ['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4','#84CC16'];
 
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await fetchTrends(currentRange);
 });
+
+window.addEventListener('resize', () => { chartInstance?.resize(); });
 
 // ── FETCH FROM API ────────────────────────────────────────────
 async function fetchTrends(range) {
@@ -34,7 +40,9 @@ async function fetchTrends(range) {
     color:     d.color,
     direction: d.direction,
     claims:    d.data.reduce((a, b) => a + b, 0),
-    change:    d.data.length >= 2 ? d.data[d.data.length - 1] - d.data[d.data.length - 2] : 0,
+    change:    d.data.length >= 2 && d.data[d.data.length - 2] > 0
+                 ? Math.round(((d.data[d.data.length - 1] - d.data[d.data.length - 2]) / d.data[d.data.length - 2]) * 100)
+                 : 0,
   }));
 
   renderLegend();
@@ -46,9 +54,9 @@ async function fetchTrends(range) {
 
 // ── LEGEND ────────────────────────────────────────────────────
 function renderLegend() {
-  document.getElementById('trendsLegend').innerHTML = MOCK_NARRATIVES.map(n => `
+  document.getElementById('trendsLegend').innerHTML = MOCK_NARRATIVES.map((n, i) => `
     <div class="legend-item">
-      <div class="legend-dot" style="background:${n.color}"></div>
+      <div class="legend-dot" style="background:${n.color || CHART_COLORS[i % CHART_COLORS.length]}"></div>
       <span>${n.name}</span>
     </div>
   `).join('');
@@ -58,17 +66,20 @@ function renderLegend() {
 function buildChart() {
   if (chartInstance) chartInstance.destroy();
 
-  const datasets = trendsDatasets.map(d => ({
-    label: d.label,
-    data: d.data,
-    borderColor: d.color,
-    backgroundColor: d.color + '12',
-    borderWidth: 2,
-    pointRadius: 3,
-    pointHoverRadius: 5,
-    tension: 0.4,
-    fill: false,
-  }));
+  const datasets = trendsDatasets.map((d, i) => {
+    const color = d.color || CHART_COLORS[i % CHART_COLORS.length];
+    return {
+      label: d.label,
+      data: d.data,
+      borderColor: color,
+      backgroundColor: color + '12',
+      borderWidth: 2,
+      pointRadius: 3,
+      pointHoverRadius: 5,
+      tension: 0.4,
+      fill: false,
+    };
+  });
 
   const ctx = document.getElementById('mainTrendsChart').getContext('2d');
   chartInstance = new Chart(ctx, {
@@ -76,6 +87,7 @@ function buildChart() {
     data: { labels: trendsLabels, datasets },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },

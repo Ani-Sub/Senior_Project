@@ -4,6 +4,8 @@ let overviewChartInstance = null;
 let trendsChartInstance = null;
 let narratives = [];
 let claims = [];
+let channels = [];
+let totalClaims = 0;
 let trendData = null; // { labels: [], datasets: [] }
 let dashboardId = null;
 
@@ -14,6 +16,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderOverview();
   renderTrends();
   renderClaims();
+});
+
+window.addEventListener('resize', () => {
+  overviewChartInstance?.resize();
+  trendsChartInstance?.resize();
 });
 
 // ── LOAD DASHBOARD META FROM API ─────────────────────────────
@@ -44,7 +51,10 @@ async function loadDashboardMeta() {
 
     if (!dashRes.error) dash = dashRes.data;
     if (!narrativesRes.error) narratives = narrativesRes.data || [];
-    if (!claimsRes.error) claims = claimsRes.data?.claims || [];
+    if (!claimsRes.error) {
+      claims = claimsRes.data?.claims || [];
+      totalClaims = claimsRes.data?.total || 0;
+    }
     if (!trendsRes.error && trendsRes.data?.length > 0) trendData = trendsRes.data[0];
   }
 
@@ -57,7 +67,7 @@ async function loadDashboardMeta() {
   document.getElementById('dashUpdated').textContent = 'Created ' + new Date(dash.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
   const chips = document.getElementById('searchTermChips');
-  chips.innerHTML = (dash.search_terms || []).map(t => `<span class="term-chip">${t}</span>`).join('');
+  chips.innerHTML = (dash.search_terms || []).map(t => `<span class="term-chip">${escHtml(t)}</span>`).join('');
 
   switchLayout(dash.layout || 'overview');
 }
@@ -89,9 +99,9 @@ function renderOverview() {
     list.innerHTML = narratives.map((n, i) => `
       <div class="narrative-item">
         <span class="narrative-rank">#${i + 1}</span>
-        <span class="narrative-name">${n.title}</span>
+        <span class="narrative-name">${escHtml(n.title)}</span>
         <div class="narrative-bar-wrap">
-          <div class="narrative-bar" style="width:${((n.claim_count || 0) / max * 100).toFixed(0)}%;background:${n.color}"></div>
+          <div class="narrative-bar" style="width:${((n.claim_count || 0) / max * 100).toFixed(0)}%;background:${escHtml(n.color)}"></div>
         </div>
         <span class="narrative-count">${n.claim_count || 0}</span>
       </div>
@@ -101,7 +111,7 @@ function renderOverview() {
   // Stat cards
   const uniqueChannels = new Set(claims.map(c => c.channel_id).filter(Boolean));
   const highRisk = claims.filter(c => c.risk_level === 'high').length;
-  document.getElementById('statTotalClaims').textContent    = claims.length.toLocaleString();
+  document.getElementById('statTotalClaims').textContent    = totalClaims.toLocaleString();
   document.getElementById('statNarrativesFound').textContent = narratives.length;
   document.getElementById('statChannelsTracked').textContent = uniqueChannels.size;
   document.getElementById('statHighRiskClaims').textContent  = highRisk;
@@ -114,10 +124,10 @@ function renderOverview() {
   }
 
   const legend = document.getElementById('overviewLegend');
-  legend.innerHTML = (trendData?.datasets || []).map(d => `
+  legend.innerHTML = (trendData?.datasets || []).map((d, i) => `
     <div class="legend-item">
-      <div class="legend-dot" style="background:${d.color}"></div>
-      <span>${d.label}</span>
+      <div class="legend-dot" style="background:${escHtml(datasetColor(d, i))}"></div>
+      <span>${escHtml(d.label)}</span>
     </div>
   `).join('');
 }
@@ -125,17 +135,20 @@ function renderOverview() {
 function buildOverviewChart() {
   const ctx = document.getElementById('overviewChart').getContext('2d');
   const labels = trendData?.labels || [];
-  const datasets = (trendData?.datasets || []).map(d => ({
-    label: d.label,
-    data: d.data,
-    borderColor: d.color,
-    backgroundColor: d.color + '15',
-    borderWidth: 2,
-    pointRadius: 3,
-    pointHoverRadius: 5,
-    tension: 0.4,
-    fill: false,
-  }));
+  const datasets = (trendData?.datasets || []).map((d, i) => {
+    const color = datasetColor(d, i);
+    return {
+      label: d.label,
+      data: d.data,
+      borderColor: color,
+      backgroundColor: color + '15',
+      borderWidth: 2,
+      pointRadius: 3,
+      pointHoverRadius: 5,
+      tension: 0.4,
+      fill: false,
+    };
+  });
   overviewChartInstance = new Chart(ctx, {
     type: 'line',
     data: { labels, datasets },
@@ -158,9 +171,9 @@ function renderTrends() {
       const direction = directionMap[n.narrative_id] || 'stable';
       return `
         <div class="breakdown-item">
-          <div class="breakdown-dot" style="background:${n.color}"></div>
+          <div class="breakdown-dot" style="background:${escHtml(n.color)}"></div>
           <div class="breakdown-info">
-            <div class="breakdown-name">${n.title}</div>
+            <div class="breakdown-name">${escHtml(n.title)}</div>
             <div class="breakdown-sub">${n.claim_count || 0} claims this period</div>
           </div>
           <span class="breakdown-dir ${direction}">${dirLabel(direction)}</span>
@@ -176,7 +189,7 @@ function renderTrends() {
   document.getElementById('risingList').innerHTML = rising.length > 0
     ? rising.map(n => `
         <div class="rising-item">
-          <div class="rising-name">${n.title}</div>
+          <div class="rising-name">${escHtml(n.title)}</div>
           <div class="rising-stat">${n.claim_count || 0} claims</div>
         </div>
       `).join('')
@@ -186,16 +199,19 @@ function renderTrends() {
 function buildTrendsChart() {
   const ctx = document.getElementById('trendsChart').getContext('2d');
   const labels = trendData?.labels || [];
-  const datasets = (trendData?.datasets || []).map(d => ({
-    label: d.label,
-    data: d.data,
-    borderColor: d.color,
-    backgroundColor: d.color + '10',
-    borderWidth: 2,
-    pointRadius: 3,
-    tension: 0.4,
-    fill: true,
-  }));
+  const datasets = (trendData?.datasets || []).map((d, i) => {
+    const color = datasetColor(d, i);
+    return {
+      label: d.label,
+      data: d.data,
+      borderColor: color,
+      backgroundColor: color + '10',
+      borderWidth: 2,
+      pointRadius: 3,
+      tension: 0.4,
+      fill: true,
+    };
+  });
   trendsChartInstance = new Chart(ctx, {
     type: 'line',
     data: { labels, datasets },
@@ -203,10 +219,20 @@ function buildTrendsChart() {
   });
 }
 
-function setTrendRange(btn, _range) {
+async function setTrendRange(btn, range) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  // TODO: re-fetch trend data by range when API supports it
+  if (!dashboardId) return;
+  const res = await api.get(`/dashboards/${dashboardId}/trends?range=${range}`);
+  if (!res.error && res.data?.length > 0) {
+    trendData = res.data[0];
+    if (trendsChartInstance) {
+      trendsChartInstance.destroy();
+      trendsChartInstance = null;
+    }
+    buildTrendsChart();
+    renderTrends();
+  }
 }
 
 function dirLabel(d) {
@@ -217,16 +243,16 @@ function dirLabel(d) {
 function renderClaims() {
   const nFilters = document.getElementById('narrativeFilters');
   nFilters.innerHTML = narratives.map(n => `
-    <div class="filter-option active" onclick="toggleFilter(this)" data-narrative="${n.narrative_id}">
-      <div class="filter-dot" style="background:${n.color}"></div>
-      ${n.title}
+    <div class="filter-option active" onclick="toggleFilter(this)" data-narrative="${escHtml(n.narrative_id)}">
+      <div class="filter-dot" style="background:${escHtml(n.color)}"></div>
+      ${escHtml(n.title)}
     </div>
   `).join('');
 
-  const channels = [...new Set(claims.map(c => c.channel_name).filter(Boolean))];
+  channels = [...new Set(claims.map(c => c.channel_name).filter(Boolean))];
   document.getElementById('channelFilters').innerHTML = channels.map(ch => `
-    <div class="filter-option active" onclick="toggleFilter(this)" data-channel="${ch}">
-      ${ch}
+    <div class="filter-option active" onclick="toggleFilter(this)" data-channel="${escHtml(ch)}">
+      ${escHtml(ch)}
     </div>
   `).join('');
 
@@ -244,18 +270,22 @@ function filterClaims() {
   const activeNarratives = [...document.querySelectorAll('[data-narrative].active')].map(el => el.dataset.narrative);
   const activeChannels = [...document.querySelectorAll('[data-channel].active')].map(el => el.dataset.channel);
 
-  const typeChecks = [...document.querySelectorAll('.filter-check input')];
-  const showFactual = typeChecks[0]?.checked;
-  const showOpinion = typeChecks[1]?.checked;
-  const showLow     = typeChecks[2]?.checked;
-  const showMedium  = typeChecks[3]?.checked;
-  const showHigh    = typeChecks[4]?.checked;
+  const showFactual    = document.getElementById('filterFactual')?.checked ?? true;
+  const showOpinion    = document.getElementById('filterOpinion')?.checked ?? true;
+  const showPrediction = document.getElementById('filterPrediction')?.checked ?? true;
+  const showStatistic  = document.getElementById('filterStatistic')?.checked ?? true;
+  const showLow        = document.getElementById('filterLow')?.checked ?? true;
+  const showMedium     = document.getElementById('filterMedium')?.checked ?? true;
+  const showHigh       = document.getElementById('filterHigh')?.checked ?? true;
 
   const filtered = claims.filter(c => {
     const matchSearch    = !search || c.claim_text.toLowerCase().includes(search) || (c.channel_name || '').toLowerCase().includes(search);
     const matchNarrative = narratives.length === 0 || activeNarratives.includes(c.narrative_id);
     const matchChannel   = channels.length === 0 || activeChannels.includes(c.channel_name);
-    const matchType      = (c.claim_type === 'factual' && showFactual) || (c.claim_type === 'opinion' && showOpinion);
+    const matchType      = (c.claim_type === 'factual'    && showFactual)    ||
+                           (c.claim_type === 'opinion'    && showOpinion)    ||
+                           (c.claim_type === 'prediction' && showPrediction) ||
+                           (c.claim_type === 'statistic'  && showStatistic);
     const matchRisk      = (c.risk_level === 'low' && showLow) || (c.risk_level === 'medium' && showMedium) || (c.risk_level === 'high' && showHigh);
     return matchSearch && matchNarrative && matchChannel && matchType && matchRisk;
   });
@@ -283,7 +313,7 @@ function claimCardHTML(c) {
         <span class="claim-channel">${c.channel_name || '—'}</span>
         <span class="claim-date">${date}</span>
       </div>
-      <div class="claim-text">${c.claim_text}</div>
+      <div class="claim-text">${escHtml(c.claim_text)}</div>
     </div>`;
 }
 
@@ -298,7 +328,7 @@ function feedClaimHTML(c) {
         <span class="claim-channel" style="flex:1;margin-left:4px">${c.channel_name || '—'}</span>
         <span class="claim-date">${date}</span>
       </div>
-      <div class="feed-claim-text">${c.claim_text}</div>
+      <div class="feed-claim-text">${escHtml(c.claim_text)}</div>
       <div class="feed-claim-footer">
         <span class="narrative-tag">${c.narrative_name || '—'}</span>
         <div class="confidence-bar"><div class="confidence-fill" style="width:${conf}%"></div></div>
@@ -308,9 +338,18 @@ function feedClaimHTML(c) {
 }
 
 // ── CHART OPTIONS ─────────────────────────────────────────────
+const CHART_COLORS = ['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4','#84CC16'];
+
+function datasetColor(d, i) {
+  // Prefer the narrative's assigned palette color, fall back to index-based
+  const fromNarrative = narratives.find(n => n.narrative_id === d.narrative_id)?.color;
+  return fromNarrative || d.color || CHART_COLORS[i % CHART_COLORS.length];
+}
+
 function chartOptions() {
   return {
     responsive: true,
+    maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { display: false },

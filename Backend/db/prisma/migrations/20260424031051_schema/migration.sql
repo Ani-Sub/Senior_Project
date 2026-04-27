@@ -11,7 +11,7 @@ CREATE TYPE "Layout" AS ENUM ('overview', 'trends', 'claims');
 CREATE TYPE "RiskLevel" AS ENUM ('low', 'medium', 'high');
 
 -- CreateEnum
-CREATE TYPE "ClaimType" AS ENUM ('factual', 'opinion');
+CREATE TYPE "ClaimType" AS ENUM ('factual', 'opinion', 'prediction', 'statistic');
 
 -- CreateEnum
 CREATE TYPE "Direction" AS ENUM ('rising', 'peaking', 'declining', 'stable');
@@ -72,51 +72,13 @@ CREATE TABLE "Video" (
     "processed" BOOLEAN NOT NULL DEFAULT false,
     "processed_at" TIMESTAMP(3),
 
-    CONSTRAINT "Video_pkey" PRIMARY KEY ("video_id")
-);
-
--- CreateTable
-CREATE TABLE "Transcript" (
-    "transcript_id" SERIAL NOT NULL,
-    "video_id" VARCHAR(20) NOT NULL,
-    "channel_id" VARCHAR(50),
-    "video_title" VARCHAR(500) NOT NULL,
-    "transcript" TEXT NOT NULL,
-    "processed_at" TIMESTAMP(3),
-
-    CONSTRAINT "Transcript_pkey" PRIMARY KEY ("transcript_id")
-);
-
--- CreateTable
-CREATE TABLE "TranscriptChunk" (
-    "chunk_id" SERIAL NOT NULL,
-    "transcript_id" INTEGER NOT NULL,
-    "video_title" VARCHAR(500) NOT NULL,
-    "chunk_text" TEXT NOT NULL,
-    "chunk_number" INTEGER NOT NULL,
-    "processed_at" TIMESTAMP(3),
-
-    CONSTRAINT "TranscriptChunk_pkey" PRIMARY KEY ("chunk_id")
-);
-
--- CreateTable
-CREATE TABLE "Comment" (
-    "comment_id" VARCHAR(50) NOT NULL,
-    "video_id" VARCHAR(20) NOT NULL,
-    "commenter_name" VARCHAR(50) NOT NULL,
-    "comment_text" VARCHAR(500) NOT NULL,
-    "published_date" VARCHAR(500) NOT NULL,
-    "is_reply" BOOLEAN NOT NULL DEFAULT false,
-    "top_level_comment_id" VARCHAR(50),
-    "processed_at" TIMESTAMP(3),
-
-    CONSTRAINT "Comment_pkey" PRIMARY KEY ("comment_id")
+    CONSTRAINT "Video_pkey" PRIMARY KEY ("video_id","board_id")
 );
 
 -- CreateTable
 CREATE TABLE "Claim" (
     "claim_id" UUID NOT NULL DEFAULT gen_random_uuid(),
-    "video_id" TEXT NOT NULL,
+    "video_id" VARCHAR(20) NOT NULL,
     "narrative_id" TEXT,
     "video_title" VARCHAR(500) NOT NULL,
     "claim_text" TEXT NOT NULL,
@@ -142,7 +104,7 @@ CREATE TABLE "Narrative" (
     "first_seen_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "last_seen_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Narrative_pkey" PRIMARY KEY ("narrative_id")
+    CONSTRAINT "Narrative_pkey" PRIMARY KEY ("narrative_id","board_id")
 );
 
 -- CreateTable
@@ -181,7 +143,10 @@ CREATE TABLE "BoardChannel" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Transcript_video_id_key" ON "Transcript"("video_id");
+CREATE UNIQUE INDEX "Video_video_id_key" ON "Video"("video_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Narrative_narrative_id_key" ON "Narrative"("narrative_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "TrendData_trend_id_narrative_id_key" ON "TrendData"("trend_id", "narrative_id");
@@ -194,18 +159,6 @@ ALTER TABLE "Video" ADD CONSTRAINT "Video_board_id_fkey" FOREIGN KEY ("board_id"
 
 -- AddForeignKey
 ALTER TABLE "Video" ADD CONSTRAINT "Video_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Transcript" ADD CONSTRAINT "Transcript_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Transcript" ADD CONSTRAINT "Transcript_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Channel"("channel_id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "TranscriptChunk" ADD CONSTRAINT "TranscriptChunk_transcript_id_fkey" FOREIGN KEY ("transcript_id") REFERENCES "Transcript"("transcript_id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Comment" ADD CONSTRAINT "Comment_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Claim" ADD CONSTRAINT "Claim_video_id_fkey" FOREIGN KEY ("video_id") REFERENCES "Video"("video_id") ON DELETE CASCADE ON UPDATE CASCADE;

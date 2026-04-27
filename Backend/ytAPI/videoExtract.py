@@ -89,7 +89,7 @@ def get_recent_channel_videos(
         maxResults=max_results
     ).execute()
 
-    return [item["id"]["videoId"] for item in response["items"]]
+    return [item["id"]["videoId"] for item in response.get("items", [])]
 
 
 def parse_iso_duration(iso_duration: str | None) -> int:
@@ -186,7 +186,7 @@ def filter_videos(
     selected = []
     rejected = []
 
-    for item in response["items"]:
+    for item in response("items", []):
         vid_id = item["id"]
         stats = item["statistics"]
         snippet = item["snippet"]
@@ -397,7 +397,8 @@ def discover_videos(
     days: int = 30,
     use_cache: bool = True,
     cache_max_age_days: int = 30,
-    search_mode: SearchMode = "videos"
+    search_mode: SearchMode = "videos",
+    max_videos: int = 50
 ) -> list[dict]:
     """
     Full discovery pipeline with quota optimization.
@@ -413,12 +414,13 @@ def discover_videos(
         search_mode: "videos" (recommended) or "channels"
             - "videos": Search videos first, extract channels (catches more relevant creators)
             - "channels": Search channels by name (original method)
+        max_videos: Maximum number of videos to return (default 50)
     
     Returns:
         List of video metadata dicts
     """
     if search_mode == "videos":
-        return discover_videos_via_video_search(
+        videos = discover_videos_via_video_search(
             search_keywords=search_keywords,
             channel_sub_min=channel_sub_min,
             video_view_min=video_view_min,
@@ -427,6 +429,7 @@ def discover_videos(
             use_cache=use_cache,
             cache_max_age_days=cache_max_age_days
         )
+        return videos[:max_videos]
     
     # Original channel-first mode
     channels = None
@@ -477,7 +480,7 @@ def discover_videos(
         )
     
     log.info(f"Discovered {len(videos)} videos total")
-    return videos
+    return videos[:max_videos]
 
 
 

@@ -29,13 +29,13 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 if not GROQ_API_KEY:
     raise EnvironmentError("GROQ_API_KEY not set. Add it to your .env file.")
 
-LLM_MODEL = "llama-3.3-70b-versatile"
+LLM_MODEL = "llama-3.1-8b-instant"
 LLM_URL = "https://api.groq.com/openai/v1/chat/completions"
-LLM_MAX_TOKENS = 5000  # Groq llama3 max output
+LLM_MAX_TOKENS = 4000   # Reduced - JSON responses don't need 8k
 
 #=====================================
 # chunking parameters
 #=====================================
-CHUNK_SIZE = 2000       # Characters per chunk (Groq has 8k context)
-CHUNK_OVERLAP = 200     # Overlap between chunks
+CHUNK_SIZE = 1500       # Characters per chunk (~375 tokens), stays under 6.5K TPM
+CHUNK_OVERLAP = 100     # Overlap between chunks
 

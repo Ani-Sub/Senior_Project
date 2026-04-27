@@ -2,7 +2,9 @@ let allCreators = [];
 let chartInstance = null;
 
 function getDashboardId() {
-  return localStorage.getItem('niq_dashboard_id') || "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+  const id = localStorage.getItem('niq_dashboard_id');
+  if (!id) { window.location.href = getRoot() + 'index.html'; return null; }
+  return id;
 }
 
 // ── INIT ──────────────────────────────────────────────────────
