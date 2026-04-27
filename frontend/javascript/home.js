@@ -8,7 +8,7 @@ let currentStep = 1;
 
 // ── INIT ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
-  auth.requireAuth();
+  //auth.requireAuth();
   await initDashboards();
   applyUserInfo();
   renderDashboards();

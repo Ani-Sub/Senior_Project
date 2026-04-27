@@ -17,6 +17,23 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+
+
+body {
+  display: flex;
+  margin: 0;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+
 body {
   background: var(--bg);
   color: var(--text);
