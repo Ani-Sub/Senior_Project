@@ -165,6 +165,47 @@ class OutputManager:
         transcripts = self._extract_transcripts(video_results, processed_at)
         comments = self._extract_comments(video_results, processed_at)
         claims = self._extract_claims(video_results, risk, processed_at)
+
+
+        #COMPUTE CHANNEL RISK STATS; NEW
+        channel_stats = {}
+
+        #Initialize stats
+        for ch in channels:
+            channel_stats[ch["channel_id"]] = {
+                "total": 0,
+                "flagged": 0,
+                "confidence_sum": 0.0
+            }
+
+        #Get channel data from claims
+        for claim in claims:
+            ch_id = claim.get("channel_id")
+            if not ch_id or ch_id not in channel_stats:
+                continue
+            channel_stats[ch_id]["total"] += 1
+            channel_stats[ch_id]["confidence_sum"] += claim.get("confidence_score", 0)
+            if claim.get("risk_level") in ["medium", "high"]:
+                channel_stats[ch_id]["flagged"] += 1
+
+        #Apply stats back to channels
+        for ch in channels:
+            ch_id = ch["channel_id"]
+            stats = channel_stats.get(ch_id, {})
+
+            total = stats.get("total", 0)
+            flagged = stats.get("flagged", 0)
+            confidence_sum = stats.get("confidence_sum", 0.0)
+
+            ch["total_claims"] = total
+            ch["flagged_claims"] = flagged
+            ch["accuracy_rate"] = (confidence_sum / total) if total > 0 else 0
+
+            risk_score = (flagged / total) if total > 0 else 0
+            ch["risk_score"] = risk_score
+            ch["risk_level"] = self._confidence_to_risk_level(risk_score)
+            ch["processed_at"] = processed_at
+
         narratives = self._extract_narratives(synthesis, video_results)
         narrative_videos = self._extract_narrative_videos(synthesis)
         risk_flags = self._extract_risk_flags(risk)
@@ -369,26 +410,14 @@ class OutputManager:
         if not claim_text or not video_flags:
             return "low"
         
-        claim_lower = claim_text.lower()
+        claim_lower = claim_text.lower().strip()
         highest_confidence = 0.0
         
         for flag in video_flags:
-            excerpt = (flag.get("excerpt") or "").lower()
-            context = (flag.get("context") or "").lower()
+            excerpt = (flag.get("excerpt") or "").lower().strip()
             
-            # Check if claim text overlaps with flagged content
-            # Use substring matching - if significant portion of claim is in excerpt/context
-            words_in_claim = set(claim_lower.split())
-            words_in_excerpt = set(excerpt.split())
-            words_in_context = set(context.split())
-            
-            # Check for word overlap (at least 3 matching words or 50% of claim words)
-            excerpt_overlap = len(words_in_claim & words_in_excerpt)
-            context_overlap = len(words_in_claim & words_in_context)
-            
-            min_match = min(3, len(words_in_claim) * 0.5)
-            
-            if excerpt_overlap >= min_match or context_overlap >= min_match:
+           # Exact match only (prevents false positives)
+            if claim_lower.strip() == excerpt.strip():
                 flag_confidence = float(flag.get("confidence") or 0.5)
                 highest_confidence = max(highest_confidence, flag_confidence)
         
@@ -430,6 +459,7 @@ class OutputManager:
                 claims.append({
                     "claim_id": claim_id,
                     "video_id": video_id,
+                    "channel_id": result.get("video_metadata", {}).get("channel_id"), 
                     "narrative_id": None,  # To be linked later
                     "video_title": video_title,
                     "claim_text": claim_text,
