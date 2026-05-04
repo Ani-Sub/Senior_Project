@@ -317,7 +317,7 @@ def get_narrative(narrative_id: str, db: db_dependency, _user_id: str = Depends(
 @app.get("/api/v1/dashboards/{dashboard_id}/trends")
 def get_trends(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user), range: str = "3m"):
 
-    range_to_periods = {"1m": 1, "3m": 3, "6m": 6, "1y": 12}
+    range_to_periods = {"2w": 2, "1m": 4, "3m": 13, "6m": 26, "1y": 52}
     max_periods = range_to_periods.get(range)  # None = "all", no slicing
 
     t = text("SELECT * FROM \"Trend\" WHERE board_id = :board_id ORDER BY created_at DESC LIMIT 1")

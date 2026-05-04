@@ -502,6 +502,9 @@ class OutputManager:
         
         # New structure: synthesis has "narratives" array
         for idx, narrative in enumerate(synthesis.get("narratives", [])):
+            if not narrative.get("name"):
+                continue
+
             video_ids = narrative.get("video_ids", [])
             
             # Collect claims and timestamps for this narrative

@@ -24,10 +24,20 @@ def _insert_channels(db, board_id: str):
                  'accuracy_rate, risk_level, risk_score, last_assessed_at) '
                  'VALUES (:channel_id, :channel_name, :total_claims, :flagged_claims, '
                  ':accuracy_rate, :risk_level, :risk_score, :last_assessed_at) '
-                 'ON CONFLICT (channel_id) DO NOTHING'),
+                 'ON CONFLICT (channel_id) DO UPDATE SET '
+                 'total_claims = EXCLUDED.total_claims, '
+                 'flagged_claims = EXCLUDED.flagged_claims, '
+                 'accuracy_rate = EXCLUDED.accuracy_rate, '
+                 'risk_level = EXCLUDED.risk_level, '
+                 'risk_score = EXCLUDED.risk_score, '
+                 'last_assessed_at = EXCLUDED.last_assessed_at'),
             {"channel_id": c["channel_id"], "channel_name": c["channel_name"],
-             "total_claims": 0, "flagged_claims": 0, "accuracy_rate": 0.0,
-             "risk_level": "low", "risk_score": 0.0, "last_assessed_at": date}
+             "total_claims": c.get("total_claims", 0),
+             "flagged_claims": c.get("flagged_claims", 0),
+             "accuracy_rate": c.get("accuracy_rate", 0.0),
+             "risk_level": c.get("risk_level", "low"),
+             "risk_score": c.get("risk_score", 0.0),
+             "last_assessed_at": date}
         )
         db.execute(
             text('INSERT INTO "BoardChannel" (board_id, channel_id) '

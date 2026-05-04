@@ -3,6 +3,7 @@ let currentRange = '1m';
 let chartInstance = null;
 let trendsLabels = [];
 let trendsDatasets = [];
+let narrativeColorMap = {};
 
 function getDashboardId() {
   const id = localStorage.getItem('niq_dashboard_id');
@@ -14,6 +15,10 @@ const CHART_COLORS = ['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899
 
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
+  const dashboardId = getDashboardId();
+  if (!dashboardId) return;
+  const { data: narData } = await api.get(`/dashboards/${dashboardId}/narratives`);
+  (narData || []).forEach(n => { narrativeColorMap[n.narrative_id] = n.color; });
   await fetchTrends(currentRange);
 });
 
@@ -34,10 +39,10 @@ async function fetchTrends(range) {
   trendsLabels   = first.labels || [];
   trendsDatasets = first.datasets || [];
 
-  MOCK_NARRATIVES = trendsDatasets.map(d => ({
+  MOCK_NARRATIVES = trendsDatasets.map((d, i) => ({
     id:        d.narrative_id,
     name:      d.label,
-    color:     d.color,
+    color:     narrativeColorMap[d.narrative_id] || CHART_COLORS[i % CHART_COLORS.length],
     direction: d.direction,
     claims:    d.data.reduce((a, b) => a + b, 0),
     change:    d.data.length >= 2 && d.data[d.data.length - 2] > 0
@@ -67,7 +72,7 @@ function buildChart() {
   if (chartInstance) chartInstance.destroy();
 
   const datasets = trendsDatasets.map((d, i) => {
-    const color = d.color || CHART_COLORS[i % CHART_COLORS.length];
+    const color = narrativeColorMap[d.narrative_id] || CHART_COLORS[i % CHART_COLORS.length];
     return {
       label: d.label,
       data: d.data,

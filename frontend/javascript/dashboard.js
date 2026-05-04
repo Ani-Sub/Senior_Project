@@ -220,18 +220,37 @@ function buildTrendsChart() {
 }
 
 async function setTrendRange(btn, range) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   if (!dashboardId) return;
   const res = await api.get(`/dashboards/${dashboardId}/trends?range=${range}`);
   if (!res.error && res.data?.length > 0) {
     trendData = res.data[0];
+
     if (trendsChartInstance) {
       trendsChartInstance.destroy();
       trendsChartInstance = null;
     }
     buildTrendsChart();
     renderTrends();
+
+    if (overviewChartInstance) {
+      overviewChartInstance.destroy();
+      overviewChartInstance = null;
+    }
+    if (currentLayout === 'overview') {
+      buildOverviewChart();
+      // refresh legend
+      const legend = document.getElementById('overviewLegend');
+      if (legend) {
+        legend.innerHTML = (trendData?.datasets || []).map((d, i) => `
+          <div class="legend-item">
+            <div class="legend-dot" style="background:${escHtml(datasetColor(d, i))}"></div>
+            <span>${escHtml(d.label)}</span>
+          </div>
+        `).join('');
+      }
+    }
   }
 }
 
