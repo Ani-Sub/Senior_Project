@@ -262,20 +262,31 @@ def synthesize_trends(all_results: list[dict]) -> dict | None:
     # ─── PASS 2: Merge similar themes ───────────────────────────────────
     if len(batches) > 1:
         log.info("  → Pass 2: Merging similar themes...")
-        
-        merge_prompt = build_theme_merge_prompt(all_batch_themes)
-        merge_response = call_llm(merge_prompt)
-        
-        if not merge_response:
-            log.warning("  → Merge failed, using unmerged themes")
-            merged_themes = all_batch_themes
-        else:
+
+        MERGE_BATCH_SIZE = 20
+        merge_batches = [
+            all_batch_themes[i:i + MERGE_BATCH_SIZE]
+            for i in range(0, len(all_batch_themes), MERGE_BATCH_SIZE)
+        ]
+
+        merged_themes = []
+        for mb_idx, merge_batch in enumerate(merge_batches):
+            log.info(f"    → Merging batch {mb_idx + 1}/{len(merge_batches)} ({len(merge_batch)} themes)")
+            merge_prompt = build_theme_merge_prompt(merge_batch)
+            merge_response = call_llm(merge_prompt)
+
+            if not merge_response:
+                log.warning(f"    → Merge batch {mb_idx + 1} failed, keeping unmerged themes")
+                merged_themes.extend(merge_batch)
+                continue
+
             parsed = parse_json_response(merge_response)
             if parsed and "merged_themes" in parsed:
-                merged_themes = parsed["merged_themes"]
-                log.info(f"  → Merged into {len(merged_themes)} themes")
+                merged_themes.extend(parsed["merged_themes"])
             else:
-                merged_themes = all_batch_themes
+                merged_themes.extend(merge_batch)
+
+        log.info(f"  → Merged into {len(merged_themes)} themes")
     else:
         merged_themes = all_batch_themes
     
