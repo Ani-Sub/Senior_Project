@@ -5,6 +5,7 @@ let trendsChartInstance = null;
 let narratives = [];
 let claims = [];
 let channels = [];
+let creators = [];
 let totalClaims = 0;
 let trendData = null; // { labels: [], datasets: [] }
 let dashboardId = null;
@@ -42,11 +43,12 @@ async function loadDashboardMeta() {
   let dash = null;
 
   if (dashboardId) {
-    const [dashRes, narrativesRes, claimsRes, trendsRes] = await Promise.all([
+    const [dashRes, narrativesRes, claimsRes, trendsRes, creatorsRes] = await Promise.all([
       api.get(`/dashboards/${dashboardId}`),
       api.get(`/dashboards/${dashboardId}/narratives`),
       api.get(`/dashboards/${dashboardId}/claims`),
       api.get(`/dashboards/${dashboardId}/trends`),
+      api.get(`/dashboards/${dashboardId}/creators`),
     ]);
 
     if (!dashRes.error) dash = dashRes.data;
@@ -56,6 +58,7 @@ async function loadDashboardMeta() {
       totalClaims = claimsRes.data?.total || 0;
     }
     if (!trendsRes.error && trendsRes.data?.length > 0) trendData = trendsRes.data[0];
+    if (!creatorsRes.error) creators = creatorsRes.data || [];
   }
 
   if (!dash) {
@@ -109,11 +112,10 @@ function renderOverview() {
   }
 
   // Stat cards
-  const uniqueChannels = new Set(claims.map(c => c.channel_id).filter(Boolean));
   const highRisk = claims.filter(c => c.risk_level === 'high').length;
-  document.getElementById('statTotalClaims').textContent    = totalClaims.toLocaleString();
+  document.getElementById('statTotalClaims').textContent     = totalClaims.toLocaleString();
   document.getElementById('statNarrativesFound').textContent = narratives.length;
-  document.getElementById('statChannelsTracked').textContent = uniqueChannels.size;
+  document.getElementById('statChannelsTracked').textContent = creators.length;
   document.getElementById('statHighRiskClaims').textContent  = highRisk;
 
   const grid = document.getElementById('overviewClaims');
