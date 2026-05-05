@@ -179,14 +179,23 @@ class OutputManager:
             }
 
         #Get channel data from claims
+        claims_with_channel = 0
+        claims_without_channel = 0
         for claim in claims:
             ch_id = claim.get("channel_id")
             if not ch_id or ch_id not in channel_stats:
+                claims_without_channel += 1
                 continue
+            claims_with_channel += 1
             channel_stats[ch_id]["total"] += 1
             channel_stats[ch_id]["confidence_sum"] += claim.get("confidence_score", 0)
             if claim.get("risk_level") in ["medium", "high"]:
                 channel_stats[ch_id]["flagged"] += 1
+
+        log.info(f"  → Channel stats: {len(channels)} channels, {len(claims)} total claims, "
+                 f"{claims_with_channel} matched to channels, {claims_without_channel} unmatched")
+        for ch_id, s in channel_stats.items():
+            log.info(f"    {ch_id}: total={s['total']} flagged={s['flagged']}")
 
         #Apply stats back to channels
         for ch in channels:
