@@ -356,5 +356,5 @@ if __name__ == "__main__":
         use_cache=True,
         cache_max_age_days=30,
         search_mode="videos",
-        max_videos=5,
+        max_videos=20,
     )
