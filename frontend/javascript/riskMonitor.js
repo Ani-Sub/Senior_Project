@@ -84,11 +84,16 @@ function creatorCardHTML(c) {
   const total      = c.total_claims || 0;
   const accuracy   = c.accuracy_rate != null ? `${Math.round(c.accuracy_rate * 100)}% accuracy` : '';
 
-  const body = c.risk_level === 'low'
-    ? `<div class="verified">✔ Low risk — ${flagged} flagged out of ${total} claims${accuracy ? ' · ' + accuracy : ''}</div>`
-    : `<div class="violation-section">
+  let body;
+  if (total === 0) {
+    body = `<div class="verified" style="color:var(--muted)">— Not yet analyzed</div>`;
+  } else if (c.risk_level === 'low') {
+    body = `<div class="verified">✔ Low risk — ${flagged} flagged out of ${total} claims${accuracy ? ' · ' + accuracy : ''}</div>`;
+  } else {
+    body = `<div class="violation-section">
         <div class="violation-title">⚠ ${flagged} flagged claim${flagged !== 1 ? 's' : ''} out of ${total}${accuracy ? ' · ' + accuracy : ''}</div>
        </div>`;
+  }
 
   return `
     <div class="creator-card" data-name="${c.channel_name.toLowerCase()}">
