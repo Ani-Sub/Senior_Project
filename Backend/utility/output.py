@@ -189,8 +189,19 @@ class OutputManager:
             claims_with_channel += 1
             channel_stats[ch_id]["total"] += 1
             channel_stats[ch_id]["confidence_sum"] += claim.get("confidence_score", 0)
-            if claim.get("risk_level") in ["medium", "high"]:
-                channel_stats[ch_id]["flagged"] += 1
+
+        # Count flagged claims from risk flags (flag count per video, by channel)
+        # This replaces exact-text matching which never fires in practice
+        if risk:
+            video_to_channel = {
+                r.get("video_id"): r.get("video_metadata", {}).get("channel_id")
+                for r in video_results if r.get("video_id")
+            }
+            for video_risk in risk.get("per_video", []):
+                vid = video_risk.get("video_id")
+                ch_id = video_to_channel.get(vid)
+                if ch_id and ch_id in channel_stats:
+                    channel_stats[ch_id]["flagged"] += len(video_risk.get("flags", []))
 
         log.info(f"  → Channel stats: {len(channels)} channels, {len(claims)} total claims, "
                  f"{claims_with_channel} matched to channels, {claims_without_channel} unmatched")

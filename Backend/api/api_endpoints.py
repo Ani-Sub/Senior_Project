@@ -220,10 +220,10 @@ def delete_dashboard(dashboard_id: str, db: db_dependency, user_id: str = Depend
  
 
 @app.get("/api/v1/dashboards/{dashboard_id}/claims")
-def get_claims(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user), page: int = 1, limit: int = 20, claim_type: str = None, risk: str = None, narrative: str = None, channel: str = None, search: str = None):
+def get_claims(dashboard_id: str, db: db_dependency, user_id: str = Depends(get_current_user), page: int = 1, limit: int = 5000, claim_type: str = None, risk: str = None, narrative: str = None, channel: str = None, search: str = None):
 
-    if limit > 100:
-        limit = 100
+    if limit > 5000:
+        limit = 5000
 
     offset = (page - 1) * limit
     where_clause = "WHERE v.board_id = :board_id"
