@@ -294,7 +294,7 @@ def run_pipeline(
 
         from sqlalchemy import create_engine, text as sa_text
         from sqlalchemy.orm import sessionmaker
-        from db_appending import import_channels_and_videos, import_narrative_data
+        from db_appending import import_channels_and_videos, import_narrative_data  # type: ignore
 
         _engine = create_engine(database_url, connect_args={"sslmode": "require"})
         _Session = sessionmaker(bind=_engine)
